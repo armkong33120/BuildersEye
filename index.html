@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mail OneDrive Org Graph</title>
+  </head>
+  <body>
+    <div id="app">
+      <main class="stage">
+        <canvas id="scene"></canvas>
+        <div id="labels"></div>
+      </main>
+
+      <header class="topbar" id="topbar">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div>
+            <h1>Mail + OneDrive Org Graph</h1>
+            <p>3D identity network for reporting lines and personal workspace ownership</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <label class="select-field">
+            <span>Focus Person</span>
+            <select id="personSelect"></select>
+          </label>
+          <button id="focusCeo" class="icon-button" title="Focus CEO" aria-label="Focus CEO"></button>
+          <button id="resetCamera" class="icon-button" title="Reset camera" aria-label="Reset camera"></button>
+        </div>
+      </header>
+
+      <button
+        id="toggleTopbar"
+        class="topbar-toggle"
+        type="button"
+        aria-expanded="true"
+        title="Hide top bar"
+        aria-label="Hide top bar"
+      ></button>
+
+      <button
+        id="togglePanel"
+        class="panel-toggle"
+        type="button"
+        aria-expanded="true"
+        title="Hide panels"
+        aria-label="Hide panels"
+      ></button>
+
+      <aside class="side-panel" id="sidePanel">
+        <section class="metric-section collapsible-panel" data-panel="metrics">
+          <div class="collapse-header">
+            <span>Overview</span>
+            <button class="collapse-button" type="button" data-collapse="metrics" aria-expanded="true" aria-label="Collapse overview"></button>
+          </div>
+          <div class="metric-strip collapsible-body" id="metricStrip"></div>
+        </section>
+
+        <section class="control-section collapsible-panel" data-panel="scope">
+          <div class="section-title collapse-header">
+            <span>Graph Scope</span>
+            <div class="section-actions">
+              <button id="toggleLabels" class="seg-button" type="button">Key Labels</button>
+              <button class="collapse-button" type="button" data-collapse="scope" aria-expanded="true" aria-label="Collapse graph scope"></button>
+            </div>
+          </div>
+          <div class="collapsible-body">
+            <label class="select-field wide">
+              <span>Department</span>
+              <select id="departmentSelect"></select>
+            </label>
+            <label class="select-field wide">
+              <span>Line Visibility</span>
+              <select id="lineModeSelect">
+                <option value="all">All reporting lines</option>
+                <option value="chain">Selected chain only</option>
+                <option value="subtree">Selected subtree</option>
+              </select>
+            </label>
+            <div class="level-label-control">
+              <div class="control-label">Label Levels</div>
+              <div class="level-toggle-row" id="levelLabelToggles"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="legend-section collapsible-panel" data-panel="legend">
+          <div class="section-title collapse-header">
+            <span>Department Colors</span>
+            <button class="collapse-button" type="button" data-collapse="legend" aria-expanded="true" aria-label="Collapse department colors"></button>
+          </div>
+          <div class="department-legend collapsible-body" id="departmentLegend"></div>
+        </section>
+
+        <section class="detail-section collapsible-panel" data-panel="detail">
+          <div class="section-title collapse-header">
+            <span>Selected Account</span>
+            <button class="collapse-button" type="button" data-collapse="detail" aria-expanded="true" aria-label="Collapse selected account"></button>
+          </div>
+          <div class="detail-body collapsible-body" id="detailPanel">
+            <div class="empty-detail">Select a person</div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="rag-chat" id="ragChat" aria-label="RAG assistant chat">
+        <div class="rag-chat-header">
+          <div>
+            <div class="rag-title">RAG Assistant</div>
+            <div class="rag-status">Org graph retrieval online</div>
+          </div>
+          <button
+            id="toggleChat"
+            class="chat-toggle-button"
+            type="button"
+            aria-expanded="true"
+            title="Collapse chat"
+            aria-label="Collapse chat"
+          ></button>
+        </div>
+
+        <div class="rag-chat-body" id="chatMessages">
+          <article class="chat-message assistant">
+            <div class="message-meta">RAG · 13:02</div>
+            <p>พบข้อมูล employee graph ทั้งหมด 150 accounts, 149 reporting lines และ 150 OneDrive sites.</p>
+            <div class="source-row">
+              <span>identity-graph.json</span>
+              <span>Employees_Source</span>
+            </div>
+          </article>
+          <article class="chat-message user">
+            <div class="message-meta">You · 13:04</div>
+            <p>ใครอยู่ใต้ CEO และมี OneDrive quota สูงสุด?</p>
+          </article>
+          <article class="chat-message assistant">
+            <div class="message-meta">RAG · 13:04</div>
+            <p>กลุ่มผู้บริหารและ department heads อยู่ใน chain หลักใต้ CEO. เลือก Focus Person หรือใช้ subtree mode เพื่อดูสายงานพร้อมบัญชี OneDrive ที่เกี่ยวข้อง.</p>
+            <div class="source-row">
+              <span>managerChainPks</span>
+              <span>oneDriveQuotaGb</span>
+            </div>
+          </article>
+        </div>
+
+        <form class="rag-chat-form" id="chatForm">
+          <input id="chatInput" type="text" autocomplete="off" placeholder="ถามจาก org graph..." />
+          <button id="sendChat" class="chat-send-button" type="submit" title="Send" aria-label="Send"></button>
+        </form>
+      </section>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

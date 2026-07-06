@@ -1,0 +1,22 @@
+{
+  "name": "mail-onedrive-org-graph",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare:data": "python3 scripts/build_identity_data.py",
+    "dev": "vite --host 0.0.0.0 --port 5174",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4174",
+    "verify": "node scripts/verify-scene.mjs"
+  },
+  "dependencies": {
+    "lucide": "^0.468.0",
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.61.1",
+    "pngjs": "^7.0.0",
+    "vite": "^6.0.3"
+  }
+}

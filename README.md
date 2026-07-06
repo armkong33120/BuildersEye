@@ -1,6 +1,6 @@
-# OrbitRAG
+# BuildersEye
 
-OrbitRAG is an experimental frontend for exploring how enterprise RAG systems can make identity, reporting lines, and workspace ownership visible before an answer is generated.
+BuildersEye is an experimental frontend for exploring how enterprise RAG systems can make identity, reporting lines, and workspace ownership visible before an answer is generated.
 
 The current prototype renders a 3D organizational identity sphere where people, departments, reporting relationships, and OneDrive ownership are represented as interactive graph objects. The goal is not only to visualize an org chart, but to help non-AI users understand what an AI system is inspecting, why a context was selected, and where governance rules should intervene.
 

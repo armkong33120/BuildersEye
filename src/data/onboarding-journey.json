@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 79,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 2,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 94,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 3,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 71,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 4,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 85,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 5,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 76,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 6,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 98,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 7,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 89,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 8,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 90,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 9,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 75,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 10,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 86,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 11,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 91,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 12,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 76,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 13,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 86,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 14,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 70,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 15,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 85,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 16,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 75,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 17,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 94,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 18,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 73,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 19,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 88,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 20,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 68,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 21,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 91,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 22,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 23,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 76,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 24,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 72,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 25,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 66,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 26,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 85,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 27,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 98,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 28,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 65,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 29,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 74,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 30,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 31,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 90,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 32,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 90,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 33,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 77,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 34,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 94,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 35,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 94,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 36,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 87,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 37,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 69,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 38,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 89,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 39,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 77,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 40,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 96,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 41,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 70,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 42,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 95,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 43,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 83,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 44,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 79,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 45,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 85,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 46,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 78,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 47,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 92,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 48,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 68,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 49,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 83,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 50,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 97,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 51,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 78,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 52,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 96,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 53,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 68,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 54,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 88,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 55,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 65,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 56,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 70,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 57,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 92,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 58,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 67,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 59,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 96,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 60,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 98,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 61,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 71,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 62,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 96,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 63,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 73,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 64,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 70,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 65,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 66,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 81,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 67,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 88,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 68,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 97,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 69,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 81,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 70,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 93,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 71,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 89,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 72,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 85,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 73,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 73,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 74,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 76,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 75,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 98,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 76,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 68,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 77,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 66,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 78,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 84,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 79,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 76,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 80,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 84,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 81,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 92,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 82,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 95,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 83,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 68,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 84,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 82,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 85,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 72,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 86,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 88,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 87,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 84,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 88,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 89,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 92,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 90,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 97,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 91,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 80,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 92,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 87,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 93,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 98,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 94,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 65,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 95,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 69,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 96,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 67,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 97,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 98,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 98,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 88,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 99,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 91,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 100,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 96,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 101,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 89,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 102,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 65,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 103,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 98,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 104,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 79,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 105,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 95,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 106,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 79,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 107,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 88,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 108,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 74,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 109,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 86,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 110,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 84,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 111,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 79,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 112,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 66,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 113,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 75,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 114,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 74,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 115,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 82,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 116,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 74,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 117,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 81,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 118,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 88,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 119,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 65,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 120,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 69,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 121,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 71,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 122,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 83,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 123,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 66,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 124,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 97,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 125,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 85,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 126,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 94,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 127,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 94,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 128,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 83,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 129,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 85,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 130,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 81,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 131,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 78,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 132,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 71,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 133,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 89,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 134,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 68,
+    "Buddy_Name": "Fiona Ng"
+  },
+  {
+    "employeeId": 135,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 88,
+    "Buddy_Name": "Hannah Koh"
+  },
+  {
+    "employeeId": 136,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 90,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 137,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 89,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 138,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 74,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 139,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 89,
+    "Buddy_Name": "George Teo"
+  },
+  {
+    "employeeId": 140,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 75,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 141,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 88,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 142,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 85,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 143,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 88,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 144,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 75,
+    "Buddy_Name": "Alice Wong"
+  },
+  {
+    "employeeId": 145,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 71,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 146,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Charlie Lim"
+  },
+  {
+    "employeeId": 147,
+    "Culture_Fit_Score": 5,
+    "Interview_Score": 98,
+    "Buddy_Name": "Diana Chen"
+  },
+  {
+    "employeeId": 148,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 83,
+    "Buddy_Name": "Evan Lee"
+  },
+  {
+    "employeeId": 149,
+    "Culture_Fit_Score": 3,
+    "Interview_Score": 93,
+    "Buddy_Name": "Bob Tan"
+  },
+  {
+    "employeeId": 150,
+    "Culture_Fit_Score": 4,
+    "Interview_Score": 66,
+    "Buddy_Name": "Fiona Ng"
+  }
+]

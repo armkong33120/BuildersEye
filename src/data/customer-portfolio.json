@@ -1,0 +1,627 @@
+[
+  {
+    "customer_id": "CUS001",
+    "customer_name": "บริษัท แสนสิริ จำกัด (มหาชน)",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 30913851,
+    "status": "Active",
+    "account_manager_emp_id": 29,
+    "products_purchased": [
+      "PRD010",
+      "PRD019",
+      "PRD013",
+      "PRD001"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS002",
+    "customer_name": "บริษัท อนันดา ดีเวลลอปเม้นท์ จำกัด",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 16091109,
+    "status": "Active",
+    "account_manager_emp_id": 32,
+    "products_purchased": [
+      "PRD003",
+      "PRD006",
+      "PRD017",
+      "PRD008",
+      "PRD014"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS003",
+    "customer_name": "บริษัท แลนด์ แอนด์ เฮ้าส์ จำกัด (มหาชน)",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 44426958,
+    "status": "Completed",
+    "account_manager_emp_id": 31,
+    "products_purchased": [
+      "PRD010",
+      "PRD013"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS004",
+    "customer_name": "บริษัท พฤกษา เรียลเอสเตท จำกัด (มหาชน)",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 92722136,
+    "status": "Active",
+    "account_manager_emp_id": 7,
+    "products_purchased": [
+      "PRD003",
+      "PRD017",
+      "PRD019",
+      "PRD015"
+    ],
+    "relationship_since_year": 2016,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS005",
+    "customer_name": "บริษัท เอพี ไทยแลนด์ จำกัด (มหาชน)",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 100784308,
+    "status": "Completed",
+    "account_manager_emp_id": 21,
+    "products_purchased": [
+      "PRD002",
+      "PRD010",
+      "PRD016",
+      "PRD009",
+      "PRD013"
+    ],
+    "relationship_since_year": 2017,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS006",
+    "customer_name": "การเคหะแห่งชาติ",
+    "industry": "Government",
+    "contract_value_thb": 44490019,
+    "status": "Active",
+    "account_manager_emp_id": 25,
+    "products_purchased": [
+      "PRD016",
+      "PRD006",
+      "PRD010",
+      "PRD011",
+      "PRD015"
+    ],
+    "relationship_since_year": 2012,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS007",
+    "customer_name": "กรมโยธาธิการและผังเมือง",
+    "industry": "Government",
+    "contract_value_thb": 8051138,
+    "status": "On Hold",
+    "account_manager_emp_id": 33,
+    "products_purchased": [
+      "PRD006",
+      "PRD005",
+      "PRD012"
+    ],
+    "relationship_since_year": 2012,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS008",
+    "customer_name": "กระทรวงสาธารณสุข",
+    "industry": "Government",
+    "contract_value_thb": 59453460,
+    "status": "Active",
+    "account_manager_emp_id": 10,
+    "products_purchased": [
+      "PRD006",
+      "PRD009",
+      "PRD002",
+      "PRD014"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS009",
+    "customer_name": "องค์การบริหารส่วนจังหวัดชลบุรี",
+    "industry": "Government",
+    "contract_value_thb": 45798346,
+    "status": "Active",
+    "account_manager_emp_id": 8,
+    "products_purchased": [
+      "PRD014",
+      "PRD001",
+      "PRD012",
+      "PRD005"
+    ],
+    "relationship_since_year": 2018,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS010",
+    "customer_name": "โรงพยาบาลบำรุงราษฎร์",
+    "industry": "Healthcare",
+    "contract_value_thb": 37838216,
+    "status": "On Hold",
+    "account_manager_emp_id": 27,
+    "products_purchased": [
+      "PRD014",
+      "PRD017",
+      "PRD015"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS011",
+    "customer_name": "โรงพยาบาลกรุงเทพ",
+    "industry": "Healthcare",
+    "contract_value_thb": 89597229,
+    "status": "On Hold",
+    "account_manager_emp_id": 22,
+    "products_purchased": [
+      "PRD009",
+      "PRD007",
+      "PRD017"
+    ],
+    "relationship_since_year": 2016,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS012",
+    "customer_name": "โรงพยาบาลสมิติเวช",
+    "industry": "Healthcare",
+    "contract_value_thb": 109640397,
+    "status": "Active",
+    "account_manager_emp_id": 16,
+    "products_purchased": [
+      "PRD011",
+      "PRD017",
+      "PRD020",
+      "PRD019",
+      "PRD014"
+    ],
+    "relationship_since_year": 2019,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS013",
+    "customer_name": "โรงแรมดุสิตธานี",
+    "industry": "Hospitality",
+    "contract_value_thb": 25399168,
+    "status": "Active",
+    "account_manager_emp_id": 22,
+    "products_purchased": [
+      "PRD010",
+      "PRD012",
+      "PRD009",
+      "PRD019"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS014",
+    "customer_name": "โรงแรมเซ็นทารา แกรนด์",
+    "industry": "Hospitality",
+    "contract_value_thb": 50360500,
+    "status": "Completed",
+    "account_manager_emp_id": 22,
+    "products_purchased": [
+      "PRD012",
+      "PRD003",
+      "PRD002",
+      "PRD005",
+      "PRD020"
+    ],
+    "relationship_since_year": 2017,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS015",
+    "customer_name": "โรงแรมอนันตรา",
+    "industry": "Hospitality",
+    "contract_value_thb": 23723314,
+    "status": "Active",
+    "account_manager_emp_id": 23,
+    "products_purchased": [
+      "PRD002",
+      "PRD008",
+      "PRD014",
+      "PRD004"
+    ],
+    "relationship_since_year": 2020,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS016",
+    "customer_name": "บริษัท ปตท. จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 18089737,
+    "status": "Completed",
+    "account_manager_emp_id": 29,
+    "products_purchased": [
+      "PRD014",
+      "PRD009",
+      "PRD006",
+      "PRD005"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS017",
+    "customer_name": "บริษัท ปูนซิเมนต์ไทย จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 111328468,
+    "status": "Active",
+    "account_manager_emp_id": 17,
+    "products_purchased": [
+      "PRD012",
+      "PRD010"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS018",
+    "customer_name": "บริษัท โตโยต้า มอเตอร์ ประเทศไทย จำกัด",
+    "industry": "Industrial",
+    "contract_value_thb": 69672749,
+    "status": "Completed",
+    "account_manager_emp_id": 19,
+    "products_purchased": [
+      "PRD003",
+      "PRD005"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS019",
+    "customer_name": "บริษัท ซีพี ออลล์ จำกัด (มหาชน)",
+    "industry": "Retail",
+    "contract_value_thb": 91129137,
+    "status": "Completed",
+    "account_manager_emp_id": 12,
+    "products_purchased": [
+      "PRD005",
+      "PRD007",
+      "PRD015",
+      "PRD009",
+      "PRD018"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS020",
+    "customer_name": "เซ็นทรัลพัฒนา จำกัด (มหาชน)",
+    "industry": "Retail",
+    "contract_value_thb": 4820621,
+    "status": "Active",
+    "account_manager_emp_id": 24,
+    "products_purchased": [
+      "PRD012",
+      "PRD007",
+      "PRD001",
+      "PRD019"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS021",
+    "customer_name": "บริษัท เดอะมอลล์ กรุ๊ป จำกัด",
+    "industry": "Retail",
+    "contract_value_thb": 114043868,
+    "status": "Active",
+    "account_manager_emp_id": 17,
+    "products_purchased": [
+      "PRD017",
+      "PRD015",
+      "PRD011",
+      "PRD003"
+    ],
+    "relationship_since_year": 2016,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS022",
+    "customer_name": "มหาวิทยาลัยอุบลราชธานี",
+    "industry": "Education",
+    "contract_value_thb": 101338604,
+    "status": "Completed",
+    "account_manager_emp_id": 12,
+    "products_purchased": [
+      "PRD009",
+      "PRD020",
+      "PRD017",
+      "PRD005",
+      "PRD001"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS023",
+    "customer_name": "จุฬาลงกรณ์มหาวิทยาลัย",
+    "industry": "Education",
+    "contract_value_thb": 107508791,
+    "status": "Active",
+    "account_manager_emp_id": 18,
+    "products_purchased": [
+      "PRD001",
+      "PRD004",
+      "PRD006",
+      "PRD015",
+      "PRD018"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS024",
+    "customer_name": "มหาวิทยาลัยธรรมศาสตร์",
+    "industry": "Education",
+    "contract_value_thb": 97580947,
+    "status": "Active",
+    "account_manager_emp_id": 17,
+    "products_purchased": [
+      "PRD018",
+      "PRD016",
+      "PRD015"
+    ],
+    "relationship_since_year": 2017,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS025",
+    "customer_name": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "industry": "Real Estate Developer",
+    "contract_value_thb": 21727997,
+    "status": "Active",
+    "account_manager_emp_id": 28,
+    "products_purchased": [
+      "PRD006",
+      "PRD014"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS026",
+    "customer_name": "เทศบาลนครเชียงใหม่",
+    "industry": "Government",
+    "contract_value_thb": 26397745,
+    "status": "On Hold",
+    "account_manager_emp_id": 22,
+    "products_purchased": [
+      "PRD017",
+      "PRD012",
+      "PRD004"
+    ],
+    "relationship_since_year": 2018,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS027",
+    "customer_name": "โรงแรม แมริออท มาร์คีส์ ควีนส์ พาร์ค",
+    "industry": "Hospitality",
+    "contract_value_thb": 73089023,
+    "status": "Active",
+    "account_manager_emp_id": 26,
+    "products_purchased": [
+      "PRD008",
+      "PRD019"
+    ],
+    "relationship_since_year": 2019,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS028",
+    "customer_name": "บริษัท ทรู คอร์ปอเรชั่น จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 117022637,
+    "status": "Active",
+    "account_manager_emp_id": 26,
+    "products_purchased": [
+      "PRD005",
+      "PRD007",
+      "PRD017",
+      "PRD006"
+    ],
+    "relationship_since_year": 2016,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS029",
+    "customer_name": "บริษัท ทางด่วนและรถไฟฟ้ากรุงเทพ จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 99234272,
+    "status": "Completed",
+    "account_manager_emp_id": 19,
+    "products_purchased": [
+      "PRD004",
+      "PRD005",
+      "PRD002",
+      "PRD003"
+    ],
+    "relationship_since_year": 2014,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS030",
+    "customer_name": "โรงพยาบาลศิริราช",
+    "industry": "Healthcare",
+    "contract_value_thb": 116757409,
+    "status": "Completed",
+    "account_manager_emp_id": 14,
+    "products_purchased": [
+      "PRD001",
+      "PRD010"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS031",
+    "customer_name": "บริษัท อมตะ คอร์ปอเรชั่น จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 119253811,
+    "status": "Completed",
+    "account_manager_emp_id": 29,
+    "products_purchased": [
+      "PRD005",
+      "PRD020"
+    ],
+    "relationship_since_year": 2017,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS032",
+    "customer_name": "บริษัท วิศวกรรมธรณีและฐานราก จำกัด",
+    "industry": "Industrial",
+    "contract_value_thb": 30817770,
+    "status": "Active",
+    "account_manager_emp_id": 33,
+    "products_purchased": [
+      "PRD003",
+      "PRD010",
+      "PRD002"
+    ],
+    "relationship_since_year": 2021,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS033",
+    "customer_name": "โครงการพัฒนาที่อยู่อาศัยชุมชนคลองเตย",
+    "industry": "Government",
+    "contract_value_thb": 33010547,
+    "status": "On Hold",
+    "account_manager_emp_id": 9,
+    "products_purchased": [
+      "PRD009",
+      "PRD014",
+      "PRD017",
+      "PRD005"
+    ],
+    "relationship_since_year": 2020,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS034",
+    "customer_name": "สนามบินสุวรรณภูมิ (ทอท.)",
+    "industry": "Government",
+    "contract_value_thb": 112637266,
+    "status": "Active",
+    "account_manager_emp_id": 9,
+    "products_purchased": [
+      "PRD015",
+      "PRD005",
+      "PRD013",
+      "PRD010",
+      "PRD017"
+    ],
+    "relationship_since_year": 2016,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS035",
+    "customer_name": "โรงแรม ดับเบิ้ลยู กรุงเทพ",
+    "industry": "Hospitality",
+    "contract_value_thb": 38375464,
+    "status": "On Hold",
+    "account_manager_emp_id": 23,
+    "products_purchased": [
+      "PRD005",
+      "PRD008"
+    ],
+    "relationship_since_year": 2021,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS036",
+    "customer_name": "พาราไดซ์ พาร์ค - เอ็ม บี เค",
+    "industry": "Retail",
+    "contract_value_thb": 48037987,
+    "status": "Active",
+    "account_manager_emp_id": 18,
+    "products_purchased": [
+      "PRD004",
+      "PRD005"
+    ],
+    "relationship_since_year": 2018,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS037",
+    "customer_name": "มหาวิทยาลัยเกษตรศาสตร์",
+    "industry": "Education",
+    "contract_value_thb": 25756493,
+    "status": "Active",
+    "account_manager_emp_id": 24,
+    "products_purchased": [
+      "PRD005",
+      "PRD017",
+      "PRD013"
+    ],
+    "relationship_since_year": 2019,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS038",
+    "customer_name": "โรงพยาบาลปิยะเวท",
+    "industry": "Healthcare",
+    "contract_value_thb": 30285209,
+    "status": "On Hold",
+    "account_manager_emp_id": 12,
+    "products_purchased": [
+      "PRD010",
+      "PRD013",
+      "PRD003",
+      "PRD008",
+      "PRD012"
+    ],
+    "relationship_since_year": 2020,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS039",
+    "customer_name": "บริษัท อิตาเลียนไทย ดีเวล๊อปเมนต์ จำกัด (มหาชน)",
+    "industry": "Industrial",
+    "contract_value_thb": 109024162,
+    "status": "Active",
+    "account_manager_emp_id": 7,
+    "products_purchased": [
+      "PRD011",
+      "PRD001",
+      "PRD007",
+      "PRD018",
+      "PRD009"
+    ],
+    "relationship_since_year": 2013,
+    "project_ids": []
+  },
+  {
+    "customer_id": "CUS040",
+    "customer_name": "การทางพิเศษแห่งประเทศไทย",
+    "industry": "Government",
+    "contract_value_thb": 27832949,
+    "status": "Completed",
+    "account_manager_emp_id": 9,
+    "products_purchased": [
+      "PRD001",
+      "PRD013",
+      "PRD004"
+    ],
+    "relationship_since_year": 2015,
+    "project_ids": []
+  }
+]

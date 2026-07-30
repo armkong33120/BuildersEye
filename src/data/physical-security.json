@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-23",
+    "Last_Badge_Swipe": "09:11"
+  },
+  {
+    "employeeId": 2,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-117",
+    "Last_Badge_Swipe": "10:41"
+  },
+  {
+    "employeeId": 3,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-177",
+    "Last_Badge_Swipe": "09:04"
+  },
+  {
+    "employeeId": 4,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-159",
+    "Last_Badge_Swipe": "07:04"
+  },
+  {
+    "employeeId": 5,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-21",
+    "Last_Badge_Swipe": "10:14"
+  },
+  {
+    "employeeId": 6,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-176",
+    "Last_Badge_Swipe": "09:46"
+  },
+  {
+    "employeeId": 7,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-61",
+    "Last_Badge_Swipe": "08:08"
+  },
+  {
+    "employeeId": 8,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-184",
+    "Last_Badge_Swipe": "06:19"
+  },
+  {
+    "employeeId": 9,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-83",
+    "Last_Badge_Swipe": "06:33"
+  },
+  {
+    "employeeId": 10,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-106",
+    "Last_Badge_Swipe": "07:25"
+  },
+  {
+    "employeeId": 11,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-162",
+    "Last_Badge_Swipe": "06:31"
+  },
+  {
+    "employeeId": 12,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-84",
+    "Last_Badge_Swipe": "10:20"
+  },
+  {
+    "employeeId": 13,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-192",
+    "Last_Badge_Swipe": "09:02"
+  },
+  {
+    "employeeId": 14,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-95",
+    "Last_Badge_Swipe": "06:34"
+  },
+  {
+    "employeeId": 15,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-155",
+    "Last_Badge_Swipe": "06:46"
+  },
+  {
+    "employeeId": 16,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-99",
+    "Last_Badge_Swipe": "08:45"
+  },
+  {
+    "employeeId": 17,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-90",
+    "Last_Badge_Swipe": "06:23"
+  },
+  {
+    "employeeId": 18,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-109",
+    "Last_Badge_Swipe": "08:29"
+  },
+  {
+    "employeeId": 19,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-66",
+    "Last_Badge_Swipe": "07:10"
+  },
+  {
+    "employeeId": 20,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-73",
+    "Last_Badge_Swipe": "10:10"
+  },
+  {
+    "employeeId": 21,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-149",
+    "Last_Badge_Swipe": "07:05"
+  },
+  {
+    "employeeId": 22,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-37",
+    "Last_Badge_Swipe": "10:59"
+  },
+  {
+    "employeeId": 23,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-183",
+    "Last_Badge_Swipe": "09:55"
+  },
+  {
+    "employeeId": 24,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-48",
+    "Last_Badge_Swipe": "08:17"
+  },
+  {
+    "employeeId": 25,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-115",
+    "Last_Badge_Swipe": "10:03"
+  },
+  {
+    "employeeId": 26,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-159",
+    "Last_Badge_Swipe": "10:48"
+  },
+  {
+    "employeeId": 27,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-26",
+    "Last_Badge_Swipe": "08:37"
+  },
+  {
+    "employeeId": 28,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-108",
+    "Last_Badge_Swipe": "09:01"
+  },
+  {
+    "employeeId": 29,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-1",
+    "Last_Badge_Swipe": "06:21"
+  },
+  {
+    "employeeId": 30,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-10",
+    "Last_Badge_Swipe": "07:06"
+  },
+  {
+    "employeeId": 31,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-102",
+    "Last_Badge_Swipe": "10:09"
+  },
+  {
+    "employeeId": 32,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-81",
+    "Last_Badge_Swipe": "08:06"
+  },
+  {
+    "employeeId": 33,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-173",
+    "Last_Badge_Swipe": "06:12"
+  },
+  {
+    "employeeId": 34,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-1",
+    "Last_Badge_Swipe": "09:51"
+  },
+  {
+    "employeeId": 35,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-58",
+    "Last_Badge_Swipe": "07:24"
+  },
+  {
+    "employeeId": 36,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-101",
+    "Last_Badge_Swipe": "09:07"
+  },
+  {
+    "employeeId": 37,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-182",
+    "Last_Badge_Swipe": "08:54"
+  },
+  {
+    "employeeId": 38,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-68",
+    "Last_Badge_Swipe": "10:53"
+  },
+  {
+    "employeeId": 39,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-139",
+    "Last_Badge_Swipe": "10:39"
+  },
+  {
+    "employeeId": 40,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-43",
+    "Last_Badge_Swipe": "07:22"
+  },
+  {
+    "employeeId": 41,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-14",
+    "Last_Badge_Swipe": "10:16"
+  },
+  {
+    "employeeId": 42,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-184",
+    "Last_Badge_Swipe": "06:07"
+  },
+  {
+    "employeeId": 43,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-153",
+    "Last_Badge_Swipe": "08:44"
+  },
+  {
+    "employeeId": 44,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-81",
+    "Last_Badge_Swipe": "09:21"
+  },
+  {
+    "employeeId": 45,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-100",
+    "Last_Badge_Swipe": "10:05"
+  },
+  {
+    "employeeId": 46,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-44",
+    "Last_Badge_Swipe": "08:33"
+  },
+  {
+    "employeeId": 47,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-166",
+    "Last_Badge_Swipe": "07:37"
+  },
+  {
+    "employeeId": 48,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-74",
+    "Last_Badge_Swipe": "07:07"
+  },
+  {
+    "employeeId": 49,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-124",
+    "Last_Badge_Swipe": "09:34"
+  },
+  {
+    "employeeId": 50,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-63",
+    "Last_Badge_Swipe": "06:41"
+  },
+  {
+    "employeeId": 51,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-103",
+    "Last_Badge_Swipe": "10:07"
+  },
+  {
+    "employeeId": 52,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-3",
+    "Last_Badge_Swipe": "07:35"
+  },
+  {
+    "employeeId": 53,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-28",
+    "Last_Badge_Swipe": "10:18"
+  },
+  {
+    "employeeId": 54,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-189",
+    "Last_Badge_Swipe": "10:23"
+  },
+  {
+    "employeeId": 55,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-103",
+    "Last_Badge_Swipe": "08:29"
+  },
+  {
+    "employeeId": 56,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-95",
+    "Last_Badge_Swipe": "08:31"
+  },
+  {
+    "employeeId": 57,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-125",
+    "Last_Badge_Swipe": "06:38"
+  },
+  {
+    "employeeId": 58,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-93",
+    "Last_Badge_Swipe": "08:20"
+  },
+  {
+    "employeeId": 59,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-96",
+    "Last_Badge_Swipe": "06:58"
+  },
+  {
+    "employeeId": 60,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-15",
+    "Last_Badge_Swipe": "10:36"
+  },
+  {
+    "employeeId": 61,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-153",
+    "Last_Badge_Swipe": "09:04"
+  },
+  {
+    "employeeId": 62,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-182",
+    "Last_Badge_Swipe": "06:29"
+  },
+  {
+    "employeeId": 63,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-34",
+    "Last_Badge_Swipe": "09:03"
+  },
+  {
+    "employeeId": 64,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-153",
+    "Last_Badge_Swipe": "09:44"
+  },
+  {
+    "employeeId": 65,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-158",
+    "Last_Badge_Swipe": "09:46"
+  },
+  {
+    "employeeId": 66,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-71",
+    "Last_Badge_Swipe": "09:18"
+  },
+  {
+    "employeeId": 67,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-187",
+    "Last_Badge_Swipe": "09:57"
+  },
+  {
+    "employeeId": 68,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-138",
+    "Last_Badge_Swipe": "10:11"
+  },
+  {
+    "employeeId": 69,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-35",
+    "Last_Badge_Swipe": "10:49"
+  },
+  {
+    "employeeId": 70,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-39",
+    "Last_Badge_Swipe": "09:22"
+  },
+  {
+    "employeeId": 71,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-14",
+    "Last_Badge_Swipe": "09:21"
+  },
+  {
+    "employeeId": 72,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-59",
+    "Last_Badge_Swipe": "09:37"
+  },
+  {
+    "employeeId": 73,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-37",
+    "Last_Badge_Swipe": "08:53"
+  },
+  {
+    "employeeId": 74,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-8",
+    "Last_Badge_Swipe": "08:01"
+  },
+  {
+    "employeeId": 75,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-199",
+    "Last_Badge_Swipe": "10:14"
+  },
+  {
+    "employeeId": 76,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-51",
+    "Last_Badge_Swipe": "07:25"
+  },
+  {
+    "employeeId": 77,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-108",
+    "Last_Badge_Swipe": "08:13"
+  },
+  {
+    "employeeId": 78,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-39",
+    "Last_Badge_Swipe": "06:39"
+  },
+  {
+    "employeeId": 79,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-45",
+    "Last_Badge_Swipe": "07:48"
+  },
+  {
+    "employeeId": 80,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-101",
+    "Last_Badge_Swipe": "06:44"
+  },
+  {
+    "employeeId": 81,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-125",
+    "Last_Badge_Swipe": "08:51"
+  },
+  {
+    "employeeId": 82,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-194",
+    "Last_Badge_Swipe": "08:42"
+  },
+  {
+    "employeeId": 83,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-179",
+    "Last_Badge_Swipe": "07:06"
+  },
+  {
+    "employeeId": 84,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-64",
+    "Last_Badge_Swipe": "06:06"
+  },
+  {
+    "employeeId": 85,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-169",
+    "Last_Badge_Swipe": "08:10"
+  },
+  {
+    "employeeId": 86,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-153",
+    "Last_Badge_Swipe": "06:35"
+  },
+  {
+    "employeeId": 87,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-66",
+    "Last_Badge_Swipe": "10:33"
+  },
+  {
+    "employeeId": 88,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-178",
+    "Last_Badge_Swipe": "08:22"
+  },
+  {
+    "employeeId": 89,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-149",
+    "Last_Badge_Swipe": "10:02"
+  },
+  {
+    "employeeId": 90,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-108",
+    "Last_Badge_Swipe": "08:52"
+  },
+  {
+    "employeeId": 91,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-172",
+    "Last_Badge_Swipe": "09:38"
+  },
+  {
+    "employeeId": 92,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-143",
+    "Last_Badge_Swipe": "07:57"
+  },
+  {
+    "employeeId": 93,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-134",
+    "Last_Badge_Swipe": "10:32"
+  },
+  {
+    "employeeId": 94,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-90",
+    "Last_Badge_Swipe": "10:35"
+  },
+  {
+    "employeeId": 95,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-162",
+    "Last_Badge_Swipe": "10:10"
+  },
+  {
+    "employeeId": 96,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-125",
+    "Last_Badge_Swipe": "07:00"
+  },
+  {
+    "employeeId": 97,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-26",
+    "Last_Badge_Swipe": "06:46"
+  },
+  {
+    "employeeId": 98,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-31",
+    "Last_Badge_Swipe": "06:31"
+  },
+  {
+    "employeeId": 99,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-102",
+    "Last_Badge_Swipe": "07:48"
+  },
+  {
+    "employeeId": 100,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-141",
+    "Last_Badge_Swipe": "06:59"
+  },
+  {
+    "employeeId": 101,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-41",
+    "Last_Badge_Swipe": "08:09"
+  },
+  {
+    "employeeId": 102,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-20",
+    "Last_Badge_Swipe": "10:33"
+  },
+  {
+    "employeeId": 103,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-198",
+    "Last_Badge_Swipe": "07:17"
+  },
+  {
+    "employeeId": 104,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-15",
+    "Last_Badge_Swipe": "10:22"
+  },
+  {
+    "employeeId": 105,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-161",
+    "Last_Badge_Swipe": "08:41"
+  },
+  {
+    "employeeId": 106,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-124",
+    "Last_Badge_Swipe": "10:24"
+  },
+  {
+    "employeeId": 107,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-75",
+    "Last_Badge_Swipe": "09:26"
+  },
+  {
+    "employeeId": 108,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-130",
+    "Last_Badge_Swipe": "10:12"
+  },
+  {
+    "employeeId": 109,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-113",
+    "Last_Badge_Swipe": "07:17"
+  },
+  {
+    "employeeId": 110,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-86",
+    "Last_Badge_Swipe": "08:28"
+  },
+  {
+    "employeeId": 111,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-80",
+    "Last_Badge_Swipe": "09:54"
+  },
+  {
+    "employeeId": 112,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-175",
+    "Last_Badge_Swipe": "09:20"
+  },
+  {
+    "employeeId": 113,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-189",
+    "Last_Badge_Swipe": "09:55"
+  },
+  {
+    "employeeId": 114,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-108",
+    "Last_Badge_Swipe": "08:03"
+  },
+  {
+    "employeeId": 115,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-64",
+    "Last_Badge_Swipe": "10:34"
+  },
+  {
+    "employeeId": 116,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-65",
+    "Last_Badge_Swipe": "10:20"
+  },
+  {
+    "employeeId": 117,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-106",
+    "Last_Badge_Swipe": "06:48"
+  },
+  {
+    "employeeId": 118,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-15",
+    "Last_Badge_Swipe": "08:35"
+  },
+  {
+    "employeeId": 119,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-133",
+    "Last_Badge_Swipe": "07:33"
+  },
+  {
+    "employeeId": 120,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-142",
+    "Last_Badge_Swipe": "07:29"
+  },
+  {
+    "employeeId": 121,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-17",
+    "Last_Badge_Swipe": "06:18"
+  },
+  {
+    "employeeId": 122,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-36",
+    "Last_Badge_Swipe": "10:33"
+  },
+  {
+    "employeeId": 123,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-141",
+    "Last_Badge_Swipe": "08:53"
+  },
+  {
+    "employeeId": 124,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-46",
+    "Last_Badge_Swipe": "10:09"
+  },
+  {
+    "employeeId": 125,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-41",
+    "Last_Badge_Swipe": "07:51"
+  },
+  {
+    "employeeId": 126,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-48",
+    "Last_Badge_Swipe": "07:39"
+  },
+  {
+    "employeeId": 127,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-62",
+    "Last_Badge_Swipe": "07:42"
+  },
+  {
+    "employeeId": 128,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-6",
+    "Last_Badge_Swipe": "08:15"
+  },
+  {
+    "employeeId": 129,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-147",
+    "Last_Badge_Swipe": "08:13"
+  },
+  {
+    "employeeId": 130,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-74",
+    "Last_Badge_Swipe": "08:09"
+  },
+  {
+    "employeeId": 131,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-117",
+    "Last_Badge_Swipe": "06:07"
+  },
+  {
+    "employeeId": 132,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-124",
+    "Last_Badge_Swipe": "08:26"
+  },
+  {
+    "employeeId": 133,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-55",
+    "Last_Badge_Swipe": "08:06"
+  },
+  {
+    "employeeId": 134,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-172",
+    "Last_Badge_Swipe": "06:44"
+  },
+  {
+    "employeeId": 135,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-9",
+    "Last_Badge_Swipe": "06:59"
+  },
+  {
+    "employeeId": 136,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-187",
+    "Last_Badge_Swipe": "08:20"
+  },
+  {
+    "employeeId": 137,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-95",
+    "Last_Badge_Swipe": "08:17"
+  },
+  {
+    "employeeId": 138,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-118",
+    "Last_Badge_Swipe": "09:31"
+  },
+  {
+    "employeeId": 139,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-71",
+    "Last_Badge_Swipe": "08:22"
+  },
+  {
+    "employeeId": 140,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-90",
+    "Last_Badge_Swipe": "09:54"
+  },
+  {
+    "employeeId": 141,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-129",
+    "Last_Badge_Swipe": "10:42"
+  },
+  {
+    "employeeId": 142,
+    "Access_Zone": "Zone C - Operations",
+    "Parking_Slot": "P-63",
+    "Last_Badge_Swipe": "07:05"
+  },
+  {
+    "employeeId": 143,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-16",
+    "Last_Badge_Swipe": "10:29"
+  },
+  {
+    "employeeId": 144,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-8",
+    "Last_Badge_Swipe": "10:55"
+  },
+  {
+    "employeeId": 145,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-190",
+    "Last_Badge_Swipe": "07:31"
+  },
+  {
+    "employeeId": 146,
+    "Access_Zone": "Zone A - Executive Wing",
+    "Parking_Slot": "P-176",
+    "Last_Badge_Swipe": "10:53"
+  },
+  {
+    "employeeId": 147,
+    "Access_Zone": "Zone D - Warehouse",
+    "Parking_Slot": "P-145",
+    "Last_Badge_Swipe": "10:18"
+  },
+  {
+    "employeeId": 148,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-172",
+    "Last_Badge_Swipe": "09:27"
+  },
+  {
+    "employeeId": 149,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-21",
+    "Last_Badge_Swipe": "10:39"
+  },
+  {
+    "employeeId": 150,
+    "Access_Zone": "Zone B - Office",
+    "Parking_Slot": "P-76",
+    "Last_Badge_Swipe": "10:52"
+  }
+]

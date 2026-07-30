@@ -1,0 +1,1192 @@
+[
+  {
+    "employeeId": 1,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 1,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 1,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 2,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 2,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 2,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 3,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 3,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 3,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 4,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 4,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 4,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 5,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 5,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 5,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 6,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 9450",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 6,
+    "Asset_Type": "Tablet",
+    "Brand": "iPad Pro 13-inch",
+    "Cost_THB": 30000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 6,
+    "Asset_Type": "Mobile Phone",
+    "Brand": "iPhone 16 Pro Max",
+    "Cost_THB": 40000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 7,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 8,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 9,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 10,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 11,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 12,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 13,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 14,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 15,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 16,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 17,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 18,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 19,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 20,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 21,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 22,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 23,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 24,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 25,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 26,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 27,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 28,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 29,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 30,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 31,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 32,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 33,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 34,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 35,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 36,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 37,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 38,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 39,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 40,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 41,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 42,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 43,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 44,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 45,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 46,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 47,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 48,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 49,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 50,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 51,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 52,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 53,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 54,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 55,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 56,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 57,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 58,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 59,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 60,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 61,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 62,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 63,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 64,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 65,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 66,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 67,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 68,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 69,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 70,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 71,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 72,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 73,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 74,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 75,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 76,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 77,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 78,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 79,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 80,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 81,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 82,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 83,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 84,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 85,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 86,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 87,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 88,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 89,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 90,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 91,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 92,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 93,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 94,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 95,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 96,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 97,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 98,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 99,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 100,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 101,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 102,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 103,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 104,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 105,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 106,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 107,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 108,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 109,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 110,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 111,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 112,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 113,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 114,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 115,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 116,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 117,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 118,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 119,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 120,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 121,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 122,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 123,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 124,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 125,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 126,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 127,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 128,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 129,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 130,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 131,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 132,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 133,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 134,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 135,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 136,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 137,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 138,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 139,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 140,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 141,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 142,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 143,
+    "Asset_Type": "Notebook",
+    "Brand": "MacBook Pro 16-inch",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 143,
+    "Asset_Type": "Monitor 1",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 143,
+    "Asset_Type": "Monitor 2",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 144,
+    "Asset_Type": "Notebook",
+    "Brand": "MacBook Pro 16-inch",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 144,
+    "Asset_Type": "Monitor 1",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 144,
+    "Asset_Type": "Monitor 2",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 145,
+    "Asset_Type": "Notebook",
+    "Brand": "MacBook Pro 16-inch",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 145,
+    "Asset_Type": "Monitor 1",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 145,
+    "Asset_Type": "Monitor 2",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 146,
+    "Asset_Type": "Notebook",
+    "Brand": "MacBook Pro 16-inch",
+    "Cost_THB": 60000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 146,
+    "Asset_Type": "Monitor 1",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 146,
+    "Asset_Type": "Monitor 2",
+    "Brand": "Dell UltraSharp U2723QE",
+    "Cost_THB": 5000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 147,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 148,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 149,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  },
+  {
+    "employeeId": 150,
+    "Asset_Type": "Notebook",
+    "Brand": "Dell Latitude 5450",
+    "Cost_THB": 25000,
+    "Status": "Active"
+  }
+]

@@ -1,0 +1,752 @@
+[
+  {
+    "employeeId": 1,
+    "Billable_Hours_Pct": 83,
+    "Admin_Hours_Pct": 17
+  },
+  {
+    "employeeId": 2,
+    "Billable_Hours_Pct": 62,
+    "Admin_Hours_Pct": 38
+  },
+  {
+    "employeeId": 3,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 4,
+    "Billable_Hours_Pct": 63,
+    "Admin_Hours_Pct": 37
+  },
+  {
+    "employeeId": 5,
+    "Billable_Hours_Pct": 81,
+    "Admin_Hours_Pct": 19
+  },
+  {
+    "employeeId": 6,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 7,
+    "Billable_Hours_Pct": 81,
+    "Admin_Hours_Pct": 19
+  },
+  {
+    "employeeId": 8,
+    "Billable_Hours_Pct": 82,
+    "Admin_Hours_Pct": 18
+  },
+  {
+    "employeeId": 9,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 10,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 11,
+    "Billable_Hours_Pct": 85,
+    "Admin_Hours_Pct": 15
+  },
+  {
+    "employeeId": 12,
+    "Billable_Hours_Pct": 66,
+    "Admin_Hours_Pct": 34
+  },
+  {
+    "employeeId": 13,
+    "Billable_Hours_Pct": 67,
+    "Admin_Hours_Pct": 33
+  },
+  {
+    "employeeId": 14,
+    "Billable_Hours_Pct": 86,
+    "Admin_Hours_Pct": 14
+  },
+  {
+    "employeeId": 15,
+    "Billable_Hours_Pct": 65,
+    "Admin_Hours_Pct": 35
+  },
+  {
+    "employeeId": 16,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 17,
+    "Billable_Hours_Pct": 68,
+    "Admin_Hours_Pct": 32
+  },
+  {
+    "employeeId": 18,
+    "Billable_Hours_Pct": 90,
+    "Admin_Hours_Pct": 10
+  },
+  {
+    "employeeId": 19,
+    "Billable_Hours_Pct": 69,
+    "Admin_Hours_Pct": 31
+  },
+  {
+    "employeeId": 20,
+    "Billable_Hours_Pct": 88,
+    "Admin_Hours_Pct": 12
+  },
+  {
+    "employeeId": 21,
+    "Billable_Hours_Pct": 93,
+    "Admin_Hours_Pct": 7
+  },
+  {
+    "employeeId": 22,
+    "Billable_Hours_Pct": 77,
+    "Admin_Hours_Pct": 23
+  },
+  {
+    "employeeId": 23,
+    "Billable_Hours_Pct": 80,
+    "Admin_Hours_Pct": 20
+  },
+  {
+    "employeeId": 24,
+    "Billable_Hours_Pct": 91,
+    "Admin_Hours_Pct": 9
+  },
+  {
+    "employeeId": 25,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 26,
+    "Billable_Hours_Pct": 70,
+    "Admin_Hours_Pct": 30
+  },
+  {
+    "employeeId": 27,
+    "Billable_Hours_Pct": 68,
+    "Admin_Hours_Pct": 32
+  },
+  {
+    "employeeId": 28,
+    "Billable_Hours_Pct": 69,
+    "Admin_Hours_Pct": 31
+  },
+  {
+    "employeeId": 29,
+    "Billable_Hours_Pct": 80,
+    "Admin_Hours_Pct": 20
+  },
+  {
+    "employeeId": 30,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 31,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 32,
+    "Billable_Hours_Pct": 83,
+    "Admin_Hours_Pct": 17
+  },
+  {
+    "employeeId": 33,
+    "Billable_Hours_Pct": 70,
+    "Admin_Hours_Pct": 30
+  },
+  {
+    "employeeId": 34,
+    "Billable_Hours_Pct": 90,
+    "Admin_Hours_Pct": 10
+  },
+  {
+    "employeeId": 35,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 36,
+    "Billable_Hours_Pct": 77,
+    "Admin_Hours_Pct": 23
+  },
+  {
+    "employeeId": 37,
+    "Billable_Hours_Pct": 95,
+    "Admin_Hours_Pct": 5
+  },
+  {
+    "employeeId": 38,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 39,
+    "Billable_Hours_Pct": 75,
+    "Admin_Hours_Pct": 25
+  },
+  {
+    "employeeId": 40,
+    "Billable_Hours_Pct": 91,
+    "Admin_Hours_Pct": 9
+  },
+  {
+    "employeeId": 41,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 42,
+    "Billable_Hours_Pct": 68,
+    "Admin_Hours_Pct": 32
+  },
+  {
+    "employeeId": 43,
+    "Billable_Hours_Pct": 86,
+    "Admin_Hours_Pct": 14
+  },
+  {
+    "employeeId": 44,
+    "Billable_Hours_Pct": 80,
+    "Admin_Hours_Pct": 20
+  },
+  {
+    "employeeId": 45,
+    "Billable_Hours_Pct": 78,
+    "Admin_Hours_Pct": 22
+  },
+  {
+    "employeeId": 46,
+    "Billable_Hours_Pct": 78,
+    "Admin_Hours_Pct": 22
+  },
+  {
+    "employeeId": 47,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 48,
+    "Billable_Hours_Pct": 92,
+    "Admin_Hours_Pct": 8
+  },
+  {
+    "employeeId": 49,
+    "Billable_Hours_Pct": 62,
+    "Admin_Hours_Pct": 38
+  },
+  {
+    "employeeId": 50,
+    "Billable_Hours_Pct": 61,
+    "Admin_Hours_Pct": 39
+  },
+  {
+    "employeeId": 51,
+    "Billable_Hours_Pct": 60,
+    "Admin_Hours_Pct": 40
+  },
+  {
+    "employeeId": 52,
+    "Billable_Hours_Pct": 80,
+    "Admin_Hours_Pct": 20
+  },
+  {
+    "employeeId": 53,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 54,
+    "Billable_Hours_Pct": 77,
+    "Admin_Hours_Pct": 23
+  },
+  {
+    "employeeId": 55,
+    "Billable_Hours_Pct": 86,
+    "Admin_Hours_Pct": 14
+  },
+  {
+    "employeeId": 56,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 57,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 58,
+    "Billable_Hours_Pct": 88,
+    "Admin_Hours_Pct": 12
+  },
+  {
+    "employeeId": 59,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 60,
+    "Billable_Hours_Pct": 86,
+    "Admin_Hours_Pct": 14
+  },
+  {
+    "employeeId": 61,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 62,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 63,
+    "Billable_Hours_Pct": 62,
+    "Admin_Hours_Pct": 38
+  },
+  {
+    "employeeId": 64,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 65,
+    "Billable_Hours_Pct": 78,
+    "Admin_Hours_Pct": 22
+  },
+  {
+    "employeeId": 66,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 67,
+    "Billable_Hours_Pct": 81,
+    "Admin_Hours_Pct": 19
+  },
+  {
+    "employeeId": 68,
+    "Billable_Hours_Pct": 83,
+    "Admin_Hours_Pct": 17
+  },
+  {
+    "employeeId": 69,
+    "Billable_Hours_Pct": 85,
+    "Admin_Hours_Pct": 15
+  },
+  {
+    "employeeId": 70,
+    "Billable_Hours_Pct": 72,
+    "Admin_Hours_Pct": 28
+  },
+  {
+    "employeeId": 71,
+    "Billable_Hours_Pct": 67,
+    "Admin_Hours_Pct": 33
+  },
+  {
+    "employeeId": 72,
+    "Billable_Hours_Pct": 92,
+    "Admin_Hours_Pct": 8
+  },
+  {
+    "employeeId": 73,
+    "Billable_Hours_Pct": 94,
+    "Admin_Hours_Pct": 6
+  },
+  {
+    "employeeId": 74,
+    "Billable_Hours_Pct": 67,
+    "Admin_Hours_Pct": 33
+  },
+  {
+    "employeeId": 75,
+    "Billable_Hours_Pct": 91,
+    "Admin_Hours_Pct": 9
+  },
+  {
+    "employeeId": 76,
+    "Billable_Hours_Pct": 92,
+    "Admin_Hours_Pct": 8
+  },
+  {
+    "employeeId": 77,
+    "Billable_Hours_Pct": 61,
+    "Admin_Hours_Pct": 39
+  },
+  {
+    "employeeId": 78,
+    "Billable_Hours_Pct": 85,
+    "Admin_Hours_Pct": 15
+  },
+  {
+    "employeeId": 79,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 80,
+    "Billable_Hours_Pct": 84,
+    "Admin_Hours_Pct": 16
+  },
+  {
+    "employeeId": 81,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 82,
+    "Billable_Hours_Pct": 87,
+    "Admin_Hours_Pct": 13
+  },
+  {
+    "employeeId": 83,
+    "Billable_Hours_Pct": 71,
+    "Admin_Hours_Pct": 29
+  },
+  {
+    "employeeId": 84,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 85,
+    "Billable_Hours_Pct": 63,
+    "Admin_Hours_Pct": 37
+  },
+  {
+    "employeeId": 86,
+    "Billable_Hours_Pct": 77,
+    "Admin_Hours_Pct": 23
+  },
+  {
+    "employeeId": 87,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 88,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 89,
+    "Billable_Hours_Pct": 90,
+    "Admin_Hours_Pct": 10
+  },
+  {
+    "employeeId": 90,
+    "Billable_Hours_Pct": 71,
+    "Admin_Hours_Pct": 29
+  },
+  {
+    "employeeId": 91,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 92,
+    "Billable_Hours_Pct": 93,
+    "Admin_Hours_Pct": 7
+  },
+  {
+    "employeeId": 93,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 94,
+    "Billable_Hours_Pct": 84,
+    "Admin_Hours_Pct": 16
+  },
+  {
+    "employeeId": 95,
+    "Billable_Hours_Pct": 70,
+    "Admin_Hours_Pct": 30
+  },
+  {
+    "employeeId": 96,
+    "Billable_Hours_Pct": 92,
+    "Admin_Hours_Pct": 8
+  },
+  {
+    "employeeId": 97,
+    "Billable_Hours_Pct": 61,
+    "Admin_Hours_Pct": 39
+  },
+  {
+    "employeeId": 98,
+    "Billable_Hours_Pct": 84,
+    "Admin_Hours_Pct": 16
+  },
+  {
+    "employeeId": 99,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 100,
+    "Billable_Hours_Pct": 65,
+    "Admin_Hours_Pct": 35
+  },
+  {
+    "employeeId": 101,
+    "Billable_Hours_Pct": 87,
+    "Admin_Hours_Pct": 13
+  },
+  {
+    "employeeId": 102,
+    "Billable_Hours_Pct": 70,
+    "Admin_Hours_Pct": 30
+  },
+  {
+    "employeeId": 103,
+    "Billable_Hours_Pct": 84,
+    "Admin_Hours_Pct": 16
+  },
+  {
+    "employeeId": 104,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 105,
+    "Billable_Hours_Pct": 87,
+    "Admin_Hours_Pct": 13
+  },
+  {
+    "employeeId": 106,
+    "Billable_Hours_Pct": 71,
+    "Admin_Hours_Pct": 29
+  },
+  {
+    "employeeId": 107,
+    "Billable_Hours_Pct": 60,
+    "Admin_Hours_Pct": 40
+  },
+  {
+    "employeeId": 108,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 109,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 110,
+    "Billable_Hours_Pct": 78,
+    "Admin_Hours_Pct": 22
+  },
+  {
+    "employeeId": 111,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 112,
+    "Billable_Hours_Pct": 70,
+    "Admin_Hours_Pct": 30
+  },
+  {
+    "employeeId": 113,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 114,
+    "Billable_Hours_Pct": 95,
+    "Admin_Hours_Pct": 5
+  },
+  {
+    "employeeId": 115,
+    "Billable_Hours_Pct": 91,
+    "Admin_Hours_Pct": 9
+  },
+  {
+    "employeeId": 116,
+    "Billable_Hours_Pct": 88,
+    "Admin_Hours_Pct": 12
+  },
+  {
+    "employeeId": 117,
+    "Billable_Hours_Pct": 74,
+    "Admin_Hours_Pct": 26
+  },
+  {
+    "employeeId": 118,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 119,
+    "Billable_Hours_Pct": 84,
+    "Admin_Hours_Pct": 16
+  },
+  {
+    "employeeId": 120,
+    "Billable_Hours_Pct": 62,
+    "Admin_Hours_Pct": 38
+  },
+  {
+    "employeeId": 121,
+    "Billable_Hours_Pct": 71,
+    "Admin_Hours_Pct": 29
+  },
+  {
+    "employeeId": 122,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 123,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 124,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 125,
+    "Billable_Hours_Pct": 85,
+    "Admin_Hours_Pct": 15
+  },
+  {
+    "employeeId": 126,
+    "Billable_Hours_Pct": 82,
+    "Admin_Hours_Pct": 18
+  },
+  {
+    "employeeId": 127,
+    "Billable_Hours_Pct": 89,
+    "Admin_Hours_Pct": 11
+  },
+  {
+    "employeeId": 128,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 129,
+    "Billable_Hours_Pct": 77,
+    "Admin_Hours_Pct": 23
+  },
+  {
+    "employeeId": 130,
+    "Billable_Hours_Pct": 60,
+    "Admin_Hours_Pct": 40
+  },
+  {
+    "employeeId": 131,
+    "Billable_Hours_Pct": 76,
+    "Admin_Hours_Pct": 24
+  },
+  {
+    "employeeId": 132,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 133,
+    "Billable_Hours_Pct": 78,
+    "Admin_Hours_Pct": 22
+  },
+  {
+    "employeeId": 134,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 135,
+    "Billable_Hours_Pct": 93,
+    "Admin_Hours_Pct": 7
+  },
+  {
+    "employeeId": 136,
+    "Billable_Hours_Pct": 66,
+    "Admin_Hours_Pct": 34
+  },
+  {
+    "employeeId": 137,
+    "Billable_Hours_Pct": 95,
+    "Admin_Hours_Pct": 5
+  },
+  {
+    "employeeId": 138,
+    "Billable_Hours_Pct": 82,
+    "Admin_Hours_Pct": 18
+  },
+  {
+    "employeeId": 139,
+    "Billable_Hours_Pct": 68,
+    "Admin_Hours_Pct": 32
+  },
+  {
+    "employeeId": 140,
+    "Billable_Hours_Pct": 75,
+    "Admin_Hours_Pct": 25
+  },
+  {
+    "employeeId": 141,
+    "Billable_Hours_Pct": 93,
+    "Admin_Hours_Pct": 7
+  },
+  {
+    "employeeId": 142,
+    "Billable_Hours_Pct": 79,
+    "Admin_Hours_Pct": 21
+  },
+  {
+    "employeeId": 143,
+    "Billable_Hours_Pct": 64,
+    "Admin_Hours_Pct": 36
+  },
+  {
+    "employeeId": 144,
+    "Billable_Hours_Pct": 82,
+    "Admin_Hours_Pct": 18
+  },
+  {
+    "employeeId": 145,
+    "Billable_Hours_Pct": 67,
+    "Admin_Hours_Pct": 33
+  },
+  {
+    "employeeId": 146,
+    "Billable_Hours_Pct": 66,
+    "Admin_Hours_Pct": 34
+  },
+  {
+    "employeeId": 147,
+    "Billable_Hours_Pct": 63,
+    "Admin_Hours_Pct": 37
+  },
+  {
+    "employeeId": 148,
+    "Billable_Hours_Pct": 73,
+    "Admin_Hours_Pct": 27
+  },
+  {
+    "employeeId": 149,
+    "Billable_Hours_Pct": 60,
+    "Admin_Hours_Pct": 40
+  },
+  {
+    "employeeId": 150,
+    "Billable_Hours_Pct": 87,
+    "Admin_Hours_Pct": 13
+  }
+]

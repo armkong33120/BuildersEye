@@ -152,6 +152,8 @@ Possible metrics:
 
 ## Development
 
+### Frontend
+
 Install dependencies:
 
 ```bash
@@ -175,6 +177,50 @@ Preview production build:
 ```bash
 npm run preview
 ```
+
+### Local RAG Backend
+
+The project includes a Node.js Express backend that indexes 150 employee Excel files from a local OneDrive sync folder and exposes a chat search API.
+
+**Setup (first time):**
+
+```bash
+cd server && npm install
+```
+
+**Index HR data:**
+
+```bash
+npm run index:hr
+```
+
+Expected output: `150 files, ~60500 records, ~3500 tokens`
+
+**Start backend:**
+
+```bash
+npm run dev:backend
+```
+
+The backend runs on `http://localhost:5199`.
+
+**Endpoints:**
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | /api/health | Server status + file count |
+| GET | /api/index/status | Index statistics |
+| POST | /api/chat | Search query → JSON results |
+
+**Start both frontend + backend:**
+
+```bash
+npx concurrently "npm run dev" "npm run dev:backend"
+```
+
+**How it works:**
+
+The RAG chat in the frontend (`.src/main.js`) first tries the backend via `fetch()` to `localhost:5199/api/chat`. If the backend is available, it returns real search results from the indexed Excel files and highlights matched employees in the 3D graph. If the backend is offline, the chat falls back to the existing demo mode.
 
 ## Data Notice
 

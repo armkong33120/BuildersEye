@@ -101,6 +101,26 @@ buildScene();
 selectPerson(graph.ceoPk, false);
 animate();
 
+  // Add New Chat button
+  var resetButton = document.querySelector('#resetChat');
+  if (!resetButton) {
+    resetButton = document.createElement('button');
+    resetButton.id = 'resetChat';
+    resetButton.className = 'chat-reset-button';
+    resetButton.innerHTML = '<i data-lucide=\'refresh-cw\'></i>';
+    resetButton.title = 'New Chat';
+    resetButton.setAttribute('aria-label', 'New Chat');
+    var chatHeader = ragChat.querySelector('.rag-chat-header');
+    if (chatHeader) {
+      chatHeader.appendChild(resetButton);
+      createIcons({ icons });
+    }
+    resetButton.addEventListener('click', function() {
+      chatMessages.innerHTML = '';
+      currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+    });
+  }
+
 function setupIcons() {
   focusCeoButton.innerHTML = '<i data-lucide="scan-face"></i>';
   resetCameraButton.innerHTML = '<i data-lucide="rotate-ccw"></i>';
@@ -281,13 +301,39 @@ function updateLevelToggleState() {
   });
 }
 
-function handleChatSubmit(event) {
+async function handleChatSubmit(event) {
   event.preventDefault();
   const prompt = chatInput.value.trim();
   if (!prompt) return;
 
   appendChatMessage('user', 'You', prompt);
   chatInput.value = '';
+
+  // Loading state
+  var thinkingEl = document.createElement('article');
+  thinkingEl.className = 'chat-message assistant thinking';
+  thinkingEl.innerHTML = '<div class="message-meta">RAG</div><p class="thinking-dots">🔍 กำลังค้นหาจาก 150 ไฟล์...</p>';
+  chatMessages.append(thinkingEl);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+
+  // Try RAG backend first
+  var ragData = await callRagBackend(prompt);
+  thinkingEl.remove();
+
+  if (ragData && ragData.answer) {
+    var sources = (ragData.sources || []).slice(0, 4).map(function(s) { return s.fileName || s.file + ':' + s.sheetName; });
+    var structuredSources = ragData.sources && ragData.sources.length > 0 ? ragData.sources : null;
+    appendChatMessage('assistant', 'RAG', ragData.answer, sources, {
+      policy: ragData.policy,
+      responseTimeMs: ragData.responseTimeMs,
+      matchersUsed: ragData.matchersUsed,
+      matchedEmployeePks: ragData.matchedEmployeePks,
+      structuredSources: structuredSources,
+    });
+    highlightRagResults(ragData);
+    return;
+  }
+
   const department = findDepartmentPrompt(prompt);
   if (department) {
     startDepartmentScan(department);
@@ -306,7 +352,7 @@ function handleChatSubmit(event) {
   }, 180);
 }
 
-function appendChatMessage(role, label, text, sources = []) {
+function appendChatMessage(role, label, text, sources = [], extras = {}) {
   const message = document.createElement('article');
   message.className = `chat-message ${role}`;
   const time = new Intl.DateTimeFormat('th-TH', {
@@ -314,16 +360,94 @@ function appendChatMessage(role, label, text, sources = []) {
     minute: '2-digit',
     hour12: false,
   }).format(new Date());
-  message.innerHTML = `
-    <div class="message-meta">${escapeHtml(label)} · ${escapeHtml(time)}</div>
-    <p>${escapeHtml(text)}</p>
-    ${
-      sources.length
-        ? `<div class="source-row">${sources.map((source) => `<span>${escapeHtml(source)}</span>`).join('')}</div>`
-        : ''
+
+  var policyHtml = '';
+  if (extras.policy && extras.policy.status) {
+    var status = extras.policy.status;
+    var badgeText = '● ' + status;
+    if (status === 'Redacted' && extras.policy.redactedCount > 0) {
+      badgeText = '● Redacted (' + extras.policy.redactedCount + ')';
     }
-  `;
+    var badgeClass = 'allowed';
+    if (status === 'Redacted') badgeClass = 'redacted';
+    else if (status === 'Blocked') badgeClass = 'blocked';
+    policyHtml = '<span class="policy-badge ' + badgeClass + '">' + escapeHtml(badgeText) + '</span>';
+  }
+
+  var metaHtml = '';
+  if (extras.responseTimeMs !== undefined) {
+    var matchersText = (extras.matchersUsed || []).join(', ');
+    metaHtml = '<div class="response-meta">⚡ ' + extras.responseTimeMs + 'ms';
+    if (matchersText) metaHtml += ' · ' + escapeHtml(matchersText);
+    metaHtml += '</div>';
+  }
+
+  // Matched employees list
+  var matchedEmpHtml = '';
+  if (extras.matchedEmployeePks && extras.matchedEmployeePks.length > 0) {
+    var empItems = extras.matchedEmployeePks.map(function(pk) {
+      var emp = employeesByPk.get(pk);
+      if (!emp) return '';
+      var shortName = shortPersonName(emp.name);
+      return '<div class="matched-emp-item" data-pk="' + pk + '">' +
+        escapeHtml(emp.code) + ' ' + escapeHtml(shortName) +
+        ' <span class="emp-dept">· ' + escapeHtml(emp.department) + '</span></div>';
+    }).join('');
+    matchedEmpHtml = '<div class="matched-employees">' +
+      '<button class="matched-employees-toggle" type="button">👥 ' + extras.matchedEmployeePks.length + ' พนักงานที่พบ</button>' +
+      '<div class="matched-employees-list">' + empItems + '</div></div>';
+  }
+
+  // Source drawer
+  var sourceHtml = '';
+  if (extras.structuredSources && extras.structuredSources.length > 0) {
+    var srcItems = extras.structuredSources.map(function(s) {
+      return '<div class="source-drawer-item">' + escapeHtml(s.fileName || s.file || '') +
+        ' <span class="src-sheet">→ ' + escapeHtml(s.sheetName || '') + '</span>' +
+        (s.rowNumber ? ' (row ' + s.rowNumber + ')' : '') + '</div>';
+    }).join('');
+    sourceHtml = '<div class="source-drawer">' +
+      '<button class="source-drawer-toggle" type="button">📎 ' + extras.structuredSources.length + ' sources</button>' +
+      '<div class="source-drawer-list">' + srcItems + '</div></div>';
+  } else if (sources.length) {
+    // Fallback: plain source-row
+    sourceHtml = '<div class="source-row">' + sources.map(function(source) {
+      return '<span>' + escapeHtml(source) + '</span>';
+    }).join('') + '</div>';
+  }
+
+  message.innerHTML = '<div class="message-meta">' + escapeHtml(label) + ' · ' + escapeHtml(time) + policyHtml + '</div>' +
+    '<p>' + escapeHtml(text) + '</p>' + metaHtml + sourceHtml + matchedEmpHtml;
+
+  // Attach event listeners after DOM insertion
   chatMessages.append(message);
+
+  // Toggle: matched employees list
+  var empToggle = message.querySelector('.matched-employees-toggle');
+  if (empToggle) {
+    empToggle.addEventListener('click', function() {
+      var list = message.querySelector('.matched-employees-list');
+      if (list) list.classList.toggle('is-open');
+    });
+  }
+
+  // Toggle: source drawer
+  var srcToggle = message.querySelector('.source-drawer-toggle');
+  if (srcToggle) {
+    srcToggle.addEventListener('click', function() {
+      var list = message.querySelector('.source-drawer-list');
+      if (list) list.classList.toggle('is-open');
+    });
+  }
+
+  // Click: matched employee item → focus in 3D graph
+  message.addEventListener('click', function(e) {
+    var item = e.target.closest('.matched-emp-item');
+    if (!item) return;
+    var pk = parseInt(item.dataset.pk);
+    if (pk && !isNaN(pk)) selectPerson(pk);
+  });
+
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
@@ -396,6 +520,44 @@ function resumeAutoRotate() {
     state.autoRotateTimer = null;
   }
   controls.autoRotate = true;
+}
+
+
+// RAG backend integration
+const RAG_BACKEND = 'http://localhost:5199';
+var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+
+async function callRagBackend(query) {
+  try {
+    const res = await fetch(RAG_BACKEND + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: query, conversationId: currentConversationId }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) { return null; }
+}
+
+function highlightRagResults(data) {
+  clearScanEffects();
+  var nodePks = new Set(data.scan?.employeePks || data.matchedEmployeePks || []);
+  var edgeKeys = new Set();
+  lineObjects.forEach(function(line) {
+    if (nodePks.has(line.userData.sourcePk) && nodePks.has(line.userData.targetPk)) {
+      edgeKeys.add(edgeKey(line.userData.sourcePk, line.userData.targetPk));
+    }
+  });
+  if (nodePks.size > 0) {
+    createScanNodeHalos(nodePks, '#63d8ff');
+    if (edgeKeys.size > 0) createScanPathLines(edgeKeys, '#ffd166');
+    pauseAutoRotate(7000);
+  }
+  state.scan = {
+    startedAt: performance.now(), duration: 7000,
+    sourcePk: graph.ceoPk, nodePks: nodePks, edgeKeys: edgeKeys, mode: 'rag-search',
+  };
 }
 
 function applyDepartmentFocus(departmentName, nodePks, edgeKeys) {

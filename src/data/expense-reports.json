@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Travel_THB": 65222,
+    "Entertainment_THB": 39900,
+    "Office_Supplies_THB": 4598
+  },
+  {
+    "employeeId": 2,
+    "Travel_THB": 34296,
+    "Entertainment_THB": 27983,
+    "Office_Supplies_THB": 2965
+  },
+  {
+    "employeeId": 3,
+    "Travel_THB": 93851,
+    "Entertainment_THB": 14182,
+    "Office_Supplies_THB": 3404
+  },
+  {
+    "employeeId": 4,
+    "Travel_THB": 65593,
+    "Entertainment_THB": 19425,
+    "Office_Supplies_THB": 4105
+  },
+  {
+    "employeeId": 5,
+    "Travel_THB": 51283,
+    "Entertainment_THB": 31487,
+    "Office_Supplies_THB": 450
+  },
+  {
+    "employeeId": 6,
+    "Travel_THB": 59545,
+    "Entertainment_THB": 7088,
+    "Office_Supplies_THB": 1389
+  },
+  {
+    "employeeId": 7,
+    "Travel_THB": 40669,
+    "Entertainment_THB": 19395,
+    "Office_Supplies_THB": 1859
+  },
+  {
+    "employeeId": 8,
+    "Travel_THB": 37749,
+    "Entertainment_THB": 4507,
+    "Office_Supplies_THB": 2219
+  },
+  {
+    "employeeId": 9,
+    "Travel_THB": 47073,
+    "Entertainment_THB": 10794,
+    "Office_Supplies_THB": 2440
+  },
+  {
+    "employeeId": 10,
+    "Travel_THB": 39681,
+    "Entertainment_THB": 16177,
+    "Office_Supplies_THB": 4258
+  },
+  {
+    "employeeId": 11,
+    "Travel_THB": 10038,
+    "Entertainment_THB": 17413,
+    "Office_Supplies_THB": 3006
+  },
+  {
+    "employeeId": 12,
+    "Travel_THB": 10710,
+    "Entertainment_THB": 1120,
+    "Office_Supplies_THB": 1779
+  },
+  {
+    "employeeId": 13,
+    "Travel_THB": 8379,
+    "Entertainment_THB": 2592,
+    "Office_Supplies_THB": 1135
+  },
+  {
+    "employeeId": 14,
+    "Travel_THB": 8712,
+    "Entertainment_THB": 2378,
+    "Office_Supplies_THB": 1903
+  },
+  {
+    "employeeId": 15,
+    "Travel_THB": 3829,
+    "Entertainment_THB": 1311,
+    "Office_Supplies_THB": 3228
+  },
+  {
+    "employeeId": 16,
+    "Travel_THB": 5821,
+    "Entertainment_THB": 2593,
+    "Office_Supplies_THB": 4803
+  },
+  {
+    "employeeId": 17,
+    "Travel_THB": 11416,
+    "Entertainment_THB": 4230,
+    "Office_Supplies_THB": 2854
+  },
+  {
+    "employeeId": 18,
+    "Travel_THB": 13050,
+    "Entertainment_THB": 1604,
+    "Office_Supplies_THB": 4698
+  },
+  {
+    "employeeId": 19,
+    "Travel_THB": 3267,
+    "Entertainment_THB": 1091,
+    "Office_Supplies_THB": 566
+  },
+  {
+    "employeeId": 20,
+    "Travel_THB": 14556,
+    "Entertainment_THB": 4068,
+    "Office_Supplies_THB": 3859
+  },
+  {
+    "employeeId": 21,
+    "Travel_THB": 6497,
+    "Entertainment_THB": 1153,
+    "Office_Supplies_THB": 3359
+  },
+  {
+    "employeeId": 22,
+    "Travel_THB": 7007,
+    "Entertainment_THB": 609,
+    "Office_Supplies_THB": 517
+  },
+  {
+    "employeeId": 23,
+    "Travel_THB": 12899,
+    "Entertainment_THB": 337,
+    "Office_Supplies_THB": 2349
+  },
+  {
+    "employeeId": 24,
+    "Travel_THB": 6741,
+    "Entertainment_THB": 3439,
+    "Office_Supplies_THB": 643
+  },
+  {
+    "employeeId": 25,
+    "Travel_THB": 4627,
+    "Entertainment_THB": 4814,
+    "Office_Supplies_THB": 1380
+  },
+  {
+    "employeeId": 26,
+    "Travel_THB": 11804,
+    "Entertainment_THB": 2071,
+    "Office_Supplies_THB": 3337
+  },
+  {
+    "employeeId": 27,
+    "Travel_THB": 14930,
+    "Entertainment_THB": 4904,
+    "Office_Supplies_THB": 856
+  },
+  {
+    "employeeId": 28,
+    "Travel_THB": 4729,
+    "Entertainment_THB": 2092,
+    "Office_Supplies_THB": 2725
+  },
+  {
+    "employeeId": 29,
+    "Travel_THB": 534,
+    "Entertainment_THB": 1895,
+    "Office_Supplies_THB": 378
+  },
+  {
+    "employeeId": 30,
+    "Travel_THB": 8368,
+    "Entertainment_THB": 92,
+    "Office_Supplies_THB": 2426
+  },
+  {
+    "employeeId": 31,
+    "Travel_THB": 12240,
+    "Entertainment_THB": 3213,
+    "Office_Supplies_THB": 4542
+  },
+  {
+    "employeeId": 32,
+    "Travel_THB": 8352,
+    "Entertainment_THB": 3399,
+    "Office_Supplies_THB": 2925
+  },
+  {
+    "employeeId": 33,
+    "Travel_THB": 5861,
+    "Entertainment_THB": 1207,
+    "Office_Supplies_THB": 494
+  },
+  {
+    "employeeId": 34,
+    "Travel_THB": 2989,
+    "Entertainment_THB": 3768,
+    "Office_Supplies_THB": 3845
+  },
+  {
+    "employeeId": 35,
+    "Travel_THB": 21715,
+    "Entertainment_THB": 17686,
+    "Office_Supplies_THB": 818
+  },
+  {
+    "employeeId": 36,
+    "Travel_THB": 9502,
+    "Entertainment_THB": 697,
+    "Office_Supplies_THB": 3399
+  },
+  {
+    "employeeId": 37,
+    "Travel_THB": 11723,
+    "Entertainment_THB": 819,
+    "Office_Supplies_THB": 4816
+  },
+  {
+    "employeeId": 38,
+    "Travel_THB": 8994,
+    "Entertainment_THB": 314,
+    "Office_Supplies_THB": 1922
+  },
+  {
+    "employeeId": 39,
+    "Travel_THB": 6727,
+    "Entertainment_THB": 3969,
+    "Office_Supplies_THB": 4117
+  },
+  {
+    "employeeId": 40,
+    "Travel_THB": 9394,
+    "Entertainment_THB": 4966,
+    "Office_Supplies_THB": 433
+  },
+  {
+    "employeeId": 41,
+    "Travel_THB": 12032,
+    "Entertainment_THB": 3428,
+    "Office_Supplies_THB": 1380
+  },
+  {
+    "employeeId": 42,
+    "Travel_THB": 7949,
+    "Entertainment_THB": 3535,
+    "Office_Supplies_THB": 2973
+  },
+  {
+    "employeeId": 43,
+    "Travel_THB": 9729,
+    "Entertainment_THB": 4826,
+    "Office_Supplies_THB": 2216
+  },
+  {
+    "employeeId": 44,
+    "Travel_THB": 6300,
+    "Entertainment_THB": 2591,
+    "Office_Supplies_THB": 3407
+  },
+  {
+    "employeeId": 45,
+    "Travel_THB": 8411,
+    "Entertainment_THB": 14402,
+    "Office_Supplies_THB": 2825
+  },
+  {
+    "employeeId": 46,
+    "Travel_THB": 2824,
+    "Entertainment_THB": 1999,
+    "Office_Supplies_THB": 787
+  },
+  {
+    "employeeId": 47,
+    "Travel_THB": 12714,
+    "Entertainment_THB": 1192,
+    "Office_Supplies_THB": 1518
+  },
+  {
+    "employeeId": 48,
+    "Travel_THB": 6559,
+    "Entertainment_THB": 771,
+    "Office_Supplies_THB": 3516
+  },
+  {
+    "employeeId": 49,
+    "Travel_THB": 11133,
+    "Entertainment_THB": 2543,
+    "Office_Supplies_THB": 3641
+  },
+  {
+    "employeeId": 50,
+    "Travel_THB": 5230,
+    "Entertainment_THB": 839,
+    "Office_Supplies_THB": 4689
+  },
+  {
+    "employeeId": 51,
+    "Travel_THB": 13628,
+    "Entertainment_THB": 3675,
+    "Office_Supplies_THB": 2133
+  },
+  {
+    "employeeId": 52,
+    "Travel_THB": 3180,
+    "Entertainment_THB": 4945,
+    "Office_Supplies_THB": 4445
+  },
+  {
+    "employeeId": 53,
+    "Travel_THB": 1360,
+    "Entertainment_THB": 1288,
+    "Office_Supplies_THB": 369
+  },
+  {
+    "employeeId": 54,
+    "Travel_THB": 9606,
+    "Entertainment_THB": 3591,
+    "Office_Supplies_THB": 1924
+  },
+  {
+    "employeeId": 55,
+    "Travel_THB": 6038,
+    "Entertainment_THB": 1555,
+    "Office_Supplies_THB": 4206
+  },
+  {
+    "employeeId": 56,
+    "Travel_THB": 8605,
+    "Entertainment_THB": 1545,
+    "Office_Supplies_THB": 4974
+  },
+  {
+    "employeeId": 57,
+    "Travel_THB": 3457,
+    "Entertainment_THB": 3376,
+    "Office_Supplies_THB": 2526
+  },
+  {
+    "employeeId": 58,
+    "Travel_THB": 1233,
+    "Entertainment_THB": 952,
+    "Office_Supplies_THB": 642
+  },
+  {
+    "employeeId": 59,
+    "Travel_THB": 1083,
+    "Entertainment_THB": 4579,
+    "Office_Supplies_THB": 2210
+  },
+  {
+    "employeeId": 60,
+    "Travel_THB": 8088,
+    "Entertainment_THB": 1195,
+    "Office_Supplies_THB": 4357
+  },
+  {
+    "employeeId": 61,
+    "Travel_THB": 13235,
+    "Entertainment_THB": 4459,
+    "Office_Supplies_THB": 4581
+  },
+  {
+    "employeeId": 62,
+    "Travel_THB": 572,
+    "Entertainment_THB": 712,
+    "Office_Supplies_THB": 1450
+  },
+  {
+    "employeeId": 63,
+    "Travel_THB": 11112,
+    "Entertainment_THB": 4421,
+    "Office_Supplies_THB": 443
+  },
+  {
+    "employeeId": 64,
+    "Travel_THB": 9365,
+    "Entertainment_THB": 7615,
+    "Office_Supplies_THB": 1175
+  },
+  {
+    "employeeId": 65,
+    "Travel_THB": 15036,
+    "Entertainment_THB": 17507,
+    "Office_Supplies_THB": 4300
+  },
+  {
+    "employeeId": 66,
+    "Travel_THB": 42820,
+    "Entertainment_THB": 12007,
+    "Office_Supplies_THB": 2207
+  },
+  {
+    "employeeId": 67,
+    "Travel_THB": 24123,
+    "Entertainment_THB": 14633,
+    "Office_Supplies_THB": 3437
+  },
+  {
+    "employeeId": 68,
+    "Travel_THB": 44502,
+    "Entertainment_THB": 4363,
+    "Office_Supplies_THB": 1517
+  },
+  {
+    "employeeId": 69,
+    "Travel_THB": 12210,
+    "Entertainment_THB": 1545,
+    "Office_Supplies_THB": 1465
+  },
+  {
+    "employeeId": 70,
+    "Travel_THB": 6463,
+    "Entertainment_THB": 1316,
+    "Office_Supplies_THB": 4330
+  },
+  {
+    "employeeId": 71,
+    "Travel_THB": 10740,
+    "Entertainment_THB": 3796,
+    "Office_Supplies_THB": 771
+  },
+  {
+    "employeeId": 72,
+    "Travel_THB": 8917,
+    "Entertainment_THB": 658,
+    "Office_Supplies_THB": 3269
+  },
+  {
+    "employeeId": 73,
+    "Travel_THB": 2038,
+    "Entertainment_THB": 2663,
+    "Office_Supplies_THB": 280
+  },
+  {
+    "employeeId": 74,
+    "Travel_THB": 9521,
+    "Entertainment_THB": 351,
+    "Office_Supplies_THB": 1623
+  },
+  {
+    "employeeId": 75,
+    "Travel_THB": 14269,
+    "Entertainment_THB": 4619,
+    "Office_Supplies_THB": 1898
+  },
+  {
+    "employeeId": 76,
+    "Travel_THB": 4183,
+    "Entertainment_THB": 2993,
+    "Office_Supplies_THB": 4228
+  },
+  {
+    "employeeId": 77,
+    "Travel_THB": 9561,
+    "Entertainment_THB": 4556,
+    "Office_Supplies_THB": 1118
+  },
+  {
+    "employeeId": 78,
+    "Travel_THB": 1221,
+    "Entertainment_THB": 3779,
+    "Office_Supplies_THB": 3286
+  },
+  {
+    "employeeId": 79,
+    "Travel_THB": 3928,
+    "Entertainment_THB": 3370,
+    "Office_Supplies_THB": 971
+  },
+  {
+    "employeeId": 80,
+    "Travel_THB": 2226,
+    "Entertainment_THB": 4604,
+    "Office_Supplies_THB": 2458
+  },
+  {
+    "employeeId": 81,
+    "Travel_THB": 5096,
+    "Entertainment_THB": 822,
+    "Office_Supplies_THB": 4976
+  },
+  {
+    "employeeId": 82,
+    "Travel_THB": 7058,
+    "Entertainment_THB": 1371,
+    "Office_Supplies_THB": 4096
+  },
+  {
+    "employeeId": 83,
+    "Travel_THB": 5037,
+    "Entertainment_THB": 968,
+    "Office_Supplies_THB": 3489
+  },
+  {
+    "employeeId": 84,
+    "Travel_THB": 3397,
+    "Entertainment_THB": 1286,
+    "Office_Supplies_THB": 4667
+  },
+  {
+    "employeeId": 85,
+    "Travel_THB": 7818,
+    "Entertainment_THB": 917,
+    "Office_Supplies_THB": 3505
+  },
+  {
+    "employeeId": 86,
+    "Travel_THB": 8765,
+    "Entertainment_THB": 4227,
+    "Office_Supplies_THB": 2679
+  },
+  {
+    "employeeId": 87,
+    "Travel_THB": 2774,
+    "Entertainment_THB": 3397,
+    "Office_Supplies_THB": 3627
+  },
+  {
+    "employeeId": 88,
+    "Travel_THB": 6798,
+    "Entertainment_THB": 3,
+    "Office_Supplies_THB": 1062
+  },
+  {
+    "employeeId": 89,
+    "Travel_THB": 3493,
+    "Entertainment_THB": 4611,
+    "Office_Supplies_THB": 4215
+  },
+  {
+    "employeeId": 90,
+    "Travel_THB": 10050,
+    "Entertainment_THB": 451,
+    "Office_Supplies_THB": 3337
+  },
+  {
+    "employeeId": 91,
+    "Travel_THB": 11789,
+    "Entertainment_THB": 4376,
+    "Office_Supplies_THB": 4325
+  },
+  {
+    "employeeId": 92,
+    "Travel_THB": 6942,
+    "Entertainment_THB": 3097,
+    "Office_Supplies_THB": 2550
+  },
+  {
+    "employeeId": 93,
+    "Travel_THB": 13502,
+    "Entertainment_THB": 599,
+    "Office_Supplies_THB": 3312
+  },
+  {
+    "employeeId": 94,
+    "Travel_THB": 4420,
+    "Entertainment_THB": 1888,
+    "Office_Supplies_THB": 406
+  },
+  {
+    "employeeId": 95,
+    "Travel_THB": 722,
+    "Entertainment_THB": 597,
+    "Office_Supplies_THB": 3687
+  },
+  {
+    "employeeId": 96,
+    "Travel_THB": 3086,
+    "Entertainment_THB": 2375,
+    "Office_Supplies_THB": 766
+  },
+  {
+    "employeeId": 97,
+    "Travel_THB": 6001,
+    "Entertainment_THB": 3441,
+    "Office_Supplies_THB": 2296
+  },
+  {
+    "employeeId": 98,
+    "Travel_THB": 9317,
+    "Entertainment_THB": 2284,
+    "Office_Supplies_THB": 1835
+  },
+  {
+    "employeeId": 99,
+    "Travel_THB": 10068,
+    "Entertainment_THB": 567,
+    "Office_Supplies_THB": 899
+  },
+  {
+    "employeeId": 100,
+    "Travel_THB": 8548,
+    "Entertainment_THB": 3379,
+    "Office_Supplies_THB": 829
+  },
+  {
+    "employeeId": 101,
+    "Travel_THB": 39621,
+    "Entertainment_THB": 11363,
+    "Office_Supplies_THB": 372
+  },
+  {
+    "employeeId": 102,
+    "Travel_THB": 13399,
+    "Entertainment_THB": 712,
+    "Office_Supplies_THB": 4318
+  },
+  {
+    "employeeId": 103,
+    "Travel_THB": 1463,
+    "Entertainment_THB": 4066,
+    "Office_Supplies_THB": 4333
+  },
+  {
+    "employeeId": 104,
+    "Travel_THB": 14708,
+    "Entertainment_THB": 519,
+    "Office_Supplies_THB": 4570
+  },
+  {
+    "employeeId": 105,
+    "Travel_THB": 8539,
+    "Entertainment_THB": 1939,
+    "Office_Supplies_THB": 839
+  },
+  {
+    "employeeId": 106,
+    "Travel_THB": 5956,
+    "Entertainment_THB": 4691,
+    "Office_Supplies_THB": 3776
+  },
+  {
+    "employeeId": 107,
+    "Travel_THB": 11637,
+    "Entertainment_THB": 1635,
+    "Office_Supplies_THB": 2077
+  },
+  {
+    "employeeId": 108,
+    "Travel_THB": 14232,
+    "Entertainment_THB": 1661,
+    "Office_Supplies_THB": 1764
+  },
+  {
+    "employeeId": 109,
+    "Travel_THB": 10060,
+    "Entertainment_THB": 4477,
+    "Office_Supplies_THB": 526
+  },
+  {
+    "employeeId": 110,
+    "Travel_THB": 5849,
+    "Entertainment_THB": 1748,
+    "Office_Supplies_THB": 1140
+  },
+  {
+    "employeeId": 111,
+    "Travel_THB": 12105,
+    "Entertainment_THB": 4144,
+    "Office_Supplies_THB": 4879
+  },
+  {
+    "employeeId": 112,
+    "Travel_THB": 12014,
+    "Entertainment_THB": 2801,
+    "Office_Supplies_THB": 2481
+  },
+  {
+    "employeeId": 113,
+    "Travel_THB": 47937,
+    "Entertainment_THB": 16125,
+    "Office_Supplies_THB": 724
+  },
+  {
+    "employeeId": 114,
+    "Travel_THB": 2599,
+    "Entertainment_THB": 4333,
+    "Office_Supplies_THB": 3959
+  },
+  {
+    "employeeId": 115,
+    "Travel_THB": 3931,
+    "Entertainment_THB": 4371,
+    "Office_Supplies_THB": 2654
+  },
+  {
+    "employeeId": 116,
+    "Travel_THB": 3172,
+    "Entertainment_THB": 1580,
+    "Office_Supplies_THB": 2197
+  },
+  {
+    "employeeId": 117,
+    "Travel_THB": 2004,
+    "Entertainment_THB": 3369,
+    "Office_Supplies_THB": 1526
+  },
+  {
+    "employeeId": 118,
+    "Travel_THB": 14261,
+    "Entertainment_THB": 1480,
+    "Office_Supplies_THB": 3295
+  },
+  {
+    "employeeId": 119,
+    "Travel_THB": 14619,
+    "Entertainment_THB": 84,
+    "Office_Supplies_THB": 1877
+  },
+  {
+    "employeeId": 120,
+    "Travel_THB": 9578,
+    "Entertainment_THB": 3425,
+    "Office_Supplies_THB": 2396
+  },
+  {
+    "employeeId": 121,
+    "Travel_THB": 4990,
+    "Entertainment_THB": 752,
+    "Office_Supplies_THB": 490
+  },
+  {
+    "employeeId": 122,
+    "Travel_THB": 11020,
+    "Entertainment_THB": 4098,
+    "Office_Supplies_THB": 4200
+  },
+  {
+    "employeeId": 123,
+    "Travel_THB": 7638,
+    "Entertainment_THB": 1113,
+    "Office_Supplies_THB": 4758
+  },
+  {
+    "employeeId": 124,
+    "Travel_THB": 3391,
+    "Entertainment_THB": 2302,
+    "Office_Supplies_THB": 3525
+  },
+  {
+    "employeeId": 125,
+    "Travel_THB": 36483,
+    "Entertainment_THB": 4249,
+    "Office_Supplies_THB": 4813
+  },
+  {
+    "employeeId": 126,
+    "Travel_THB": 930,
+    "Entertainment_THB": 2754,
+    "Office_Supplies_THB": 1453
+  },
+  {
+    "employeeId": 127,
+    "Travel_THB": 8475,
+    "Entertainment_THB": 3962,
+    "Office_Supplies_THB": 4058
+  },
+  {
+    "employeeId": 128,
+    "Travel_THB": 1655,
+    "Entertainment_THB": 3894,
+    "Office_Supplies_THB": 1349
+  },
+  {
+    "employeeId": 129,
+    "Travel_THB": 9205,
+    "Entertainment_THB": 3106,
+    "Office_Supplies_THB": 2052
+  },
+  {
+    "employeeId": 130,
+    "Travel_THB": 11244,
+    "Entertainment_THB": 1528,
+    "Office_Supplies_THB": 2104
+  },
+  {
+    "employeeId": 131,
+    "Travel_THB": 6765,
+    "Entertainment_THB": 2307,
+    "Office_Supplies_THB": 3284
+  },
+  {
+    "employeeId": 132,
+    "Travel_THB": 8876,
+    "Entertainment_THB": 2215,
+    "Office_Supplies_THB": 3904
+  },
+  {
+    "employeeId": 133,
+    "Travel_THB": 10204,
+    "Entertainment_THB": 961,
+    "Office_Supplies_THB": 2510
+  },
+  {
+    "employeeId": 134,
+    "Travel_THB": 9708,
+    "Entertainment_THB": 2804,
+    "Office_Supplies_THB": 3893
+  },
+  {
+    "employeeId": 135,
+    "Travel_THB": 33231,
+    "Entertainment_THB": 18218,
+    "Office_Supplies_THB": 4726
+  },
+  {
+    "employeeId": 136,
+    "Travel_THB": 13042,
+    "Entertainment_THB": 4041,
+    "Office_Supplies_THB": 2170
+  },
+  {
+    "employeeId": 137,
+    "Travel_THB": 588,
+    "Entertainment_THB": 806,
+    "Office_Supplies_THB": 3366
+  },
+  {
+    "employeeId": 138,
+    "Travel_THB": 1925,
+    "Entertainment_THB": 2421,
+    "Office_Supplies_THB": 3200
+  },
+  {
+    "employeeId": 139,
+    "Travel_THB": 12219,
+    "Entertainment_THB": 3782,
+    "Office_Supplies_THB": 3508
+  },
+  {
+    "employeeId": 140,
+    "Travel_THB": 14750,
+    "Entertainment_THB": 2767,
+    "Office_Supplies_THB": 734
+  },
+  {
+    "employeeId": 141,
+    "Travel_THB": 1630,
+    "Entertainment_THB": 865,
+    "Office_Supplies_THB": 2674
+  },
+  {
+    "employeeId": 142,
+    "Travel_THB": 6520,
+    "Entertainment_THB": 3495,
+    "Office_Supplies_THB": 1068
+  },
+  {
+    "employeeId": 143,
+    "Travel_THB": 25011,
+    "Entertainment_THB": 5865,
+    "Office_Supplies_THB": 2140
+  },
+  {
+    "employeeId": 144,
+    "Travel_THB": 13733,
+    "Entertainment_THB": 625,
+    "Office_Supplies_THB": 233
+  },
+  {
+    "employeeId": 145,
+    "Travel_THB": 14020,
+    "Entertainment_THB": 4003,
+    "Office_Supplies_THB": 4439
+  },
+  {
+    "employeeId": 146,
+    "Travel_THB": 12043,
+    "Entertainment_THB": 666,
+    "Office_Supplies_THB": 3928
+  },
+  {
+    "employeeId": 147,
+    "Travel_THB": 41564,
+    "Entertainment_THB": 2856,
+    "Office_Supplies_THB": 4299
+  },
+  {
+    "employeeId": 148,
+    "Travel_THB": 3974,
+    "Entertainment_THB": 2697,
+    "Office_Supplies_THB": 2327
+  },
+  {
+    "employeeId": 149,
+    "Travel_THB": 13750,
+    "Entertainment_THB": 238,
+    "Office_Supplies_THB": 1687
+  },
+  {
+    "employeeId": 150,
+    "Travel_THB": 14782,
+    "Entertainment_THB": 4205,
+    "Office_Supplies_THB": 3567
+  }
+]

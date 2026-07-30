@@ -1,0 +1,3896 @@
+[
+  {
+    "employeeId": 1,
+    "code": "M16",
+    "name": "ธนกฤต ศรีสุวรรณ",
+    "department": "Executive",
+    "jobTitle": "CEO / Managing Director",
+    "hierarchyDepth": 0,
+    "joinDate": "2015-01-15",
+    "tenureMonths": 137,
+    "startingPosition": "Management Trainee",
+    "currentPositionStartDate": "2016-08-14",
+    "promotionCount": 4,
+    "careerArcSummary": "ร่วมก่อตั้งและพัฒนาองค์กรจากManagement Trainee สู่บทบาทCEO / Managing Director",
+    "mainStrength": "Board Communication",
+    "mainWeakness": "Over-delegation",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 2,
+    "code": "M16",
+    "name": "ณัฐพล บุญมี",
+    "department": "Executive",
+    "jobTitle": "COO / Operations Director",
+    "hierarchyDepth": 1,
+    "joinDate": "2016-02-06",
+    "tenureMonths": 125,
+    "startingPosition": "Management Trainee",
+    "currentPositionStartDate": "2017-12-18",
+    "promotionCount": 2,
+    "careerArcSummary": "ร่วมก่อตั้งและพัฒนาองค์กรจากManagement Trainee สู่บทบาทCOO / Operations Director",
+    "mainStrength": "M&A Execution",
+    "mainWeakness": "Too hands-off with operations",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 3,
+    "code": "M16",
+    "name": "กิตติพงศ์ วิริยะกุล",
+    "department": "Executive",
+    "jobTitle": "CFO / Finance Director",
+    "hierarchyDepth": 1,
+    "joinDate": "2016-12-11",
+    "tenureMonths": 114,
+    "startingPosition": "Management Trainee",
+    "currentPositionStartDate": "2018-07-13",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางจากManagement Trainee สร้างผลงานสำคัญในExecutive จนถึงCFO / Finance Director",
+    "mainStrength": "Strategic Vision",
+    "mainWeakness": "Over-optimistic on timelines",
+    "mistakeThemeCodes": [
+      "M15"
+    ],
+    "mistakeThemes": [
+      "Wrong Sensitivity Label Applied"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 4,
+    "code": "M16",
+    "name": "ภาคิน กาญจนกุล",
+    "department": "Executive",
+    "jobTitle": "Head of Sales",
+    "hierarchyDepth": 1,
+    "joinDate": "2018-11-28",
+    "tenureMonths": 91,
+    "startingPosition": "Management Trainee",
+    "currentPositionStartDate": "2020-03-10",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางจากManagement Trainee สร้างผลงานสำคัญในExecutive จนถึงHead of Sales",
+    "mainStrength": "Team Leadership",
+    "mainWeakness": "Too hands-off with operations",
+    "mistakeThemeCodes": [
+      "M15"
+    ],
+    "mistakeThemes": [
+      "Wrong Sensitivity Label Applied"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "High",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 5,
+    "code": "M16",
+    "name": "วรพล สุวรรณกิจ",
+    "department": "Executive",
+    "jobTitle": "Head of Construction",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-11-20",
+    "tenureMonths": 67,
+    "startingPosition": "Finance Manager",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 2,
+    "careerArcSummary": "จากFinance Manager พัฒนาสู่ Head of Construction ผ่านผลงานExecutive ที่โดดเด่น",
+    "mainStrength": "M&A Execution",
+    "mainWeakness": "Over-delegation",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 6,
+    "code": "M16",
+    "name": "ศุภชัย มหานิยม",
+    "department": "Executive",
+    "jobTitle": "Executive Secretary",
+    "hierarchyDepth": 1,
+    "joinDate": "2018-02-03",
+    "tenureMonths": 101,
+    "startingPosition": "Management Trainee",
+    "currentPositionStartDate": "2019-06-15",
+    "promotionCount": 3,
+    "careerArcSummary": "เริ่มจากManagement Trainee เติบโตผ่าน 3 การเลื่อนตำแหน่ง สู่ Executive Secretary",
+    "mainStrength": "M&A Execution",
+    "mainWeakness": "Over-optimistic on timelines",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Medium",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 7,
+    "code": "M16",
+    "name": "ธนวัฒน์ วงศ์วัฒนะ",
+    "department": "Sales",
+    "jobTitle": "Sales Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-07-21",
+    "tenureMonths": 107,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากAccount Executive เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M06",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 8,
+    "code": "M16",
+    "name": "ปกรณ์ แสงทอง",
+    "department": "Sales",
+    "jobTitle": "Sales Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-04-27",
+    "tenureMonths": 74,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางSales จากAccount Executive เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "High",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 9,
+    "code": "M16",
+    "name": "นราธิป กิตติธนากร",
+    "department": "Sales",
+    "jobTitle": "Branch Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-07-19",
+    "tenureMonths": 71,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากSales Coordinator เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 10,
+    "code": "M16",
+    "name": "ชยพล บุญส่ง",
+    "department": "Sales",
+    "jobTitle": "Branch Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-11-21",
+    "tenureMonths": 79,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-02-07",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางSales จากTelesales เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M16",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 11,
+    "code": "M16",
+    "name": "อารยา วัฒนชัย",
+    "department": "Sales",
+    "jobTitle": "Branch Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-01-27",
+    "tenureMonths": 65,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 1,
+    "careerArcSummary": "จากTelesales พัฒนาสู่ Branch Manager ผ่านผลงานSales ที่โดดเด่น",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M06",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 12,
+    "code": "M16",
+    "name": "พิชญา สิริกุล",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-08-25",
+    "tenureMonths": 46,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-02-07",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "High",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 13,
+    "code": "M16",
+    "name": "กัญญารัตน์ สุขประเสริฐ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-03-30",
+    "tenureMonths": 75,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากAccount Executive สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 14,
+    "code": "M16",
+    "name": "ปรียาภรณ์ รุ่งเรืองกิจ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-06-10",
+    "tenureMonths": 61,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางSales จากSales Coordinator สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M06"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 15,
+    "code": "M16",
+    "name": "ณิชาภัทร เพชรนิยม",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2023-06-26",
+    "tenureMonths": 36,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M16",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 16,
+    "code": "M16",
+    "name": "ศิริพร สุทธิกุล",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-12-11",
+    "tenureMonths": 66,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานAccount Executive",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 17,
+    "code": "M16",
+    "name": "กมลชนก บุญญาภา",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2023-07-30",
+    "tenureMonths": 35,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-11-03",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งAccount Executive กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 18,
+    "code": "M16",
+    "name": "วรรณภา เรืองเดช",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2024-04-08",
+    "tenureMonths": 27,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2025-08-30",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Tender Preparation",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 19,
+    "code": "M16",
+    "name": "พิมพ์ชนก วัฒนากุล",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-11-14",
+    "tenureMonths": 67,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-12-03",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งTelesales กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M14",
+      "M06"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 20,
+    "code": "M16",
+    "name": "สุภัสสรา พงษ์ไพโรจน์",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-08-27",
+    "tenureMonths": 46,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานTelesales",
+    "mainStrength": "Tender Preparation",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M06"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 21,
+    "code": "M16",
+    "name": "อัครเดช หิรัญญา",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-04-16",
+    "tenureMonths": 74,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-09-04",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งAccount Executive กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Undocumented verbal agreements",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 22,
+    "code": "M16",
+    "name": "ภูริณัฐ ไชยรัตน์",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-04-05",
+    "tenureMonths": 75,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-03-08",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากSales Coordinator สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M01",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 23,
+    "code": "M16",
+    "name": "รัชพล เกตุแก้ว",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-01-09",
+    "tenureMonths": 66,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Market Analysis",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M14",
+      "M06"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 24,
+    "code": "M16",
+    "name": "จักริน ตั้งเจริญ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-07-13",
+    "tenureMonths": 71,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-12-03",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานAccount Executive",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M06",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 25,
+    "code": "M16",
+    "name": "สิรวิชญ์ อินทรักษา",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-08-08",
+    "tenureMonths": 59,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2024-09-04",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Pressure-driven shortcuts",
+    "mistakeThemeCodes": [
+      "M16",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 26,
+    "code": "M16",
+    "name": "ธนพัฒน์ ทรัพย์สมบัติ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-09-10",
+    "tenureMonths": 57,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2023-06-12",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งSales Coordinator กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M16",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 27,
+    "code": "M16",
+    "name": "กรวิชญ์ ชาญกิจ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-10-28",
+    "tenureMonths": 68,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2023-03-14",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นSales ในตำแหน่งAccount Executive กำลังพัฒนาสู่Sales Consultant",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M13",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 28,
+    "code": "M16",
+    "name": "ศักรินทร์ อัศวเมธา",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-02-12",
+    "tenureMonths": 64,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2022-12-14",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากAccount Executive สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 29,
+    "code": "M16",
+    "name": "ณัฐวุฒิ ทองประเสริฐ",
+    "department": "Sales",
+    "jobTitle": "Sales Consultant",
+    "hierarchyDepth": 4,
+    "joinDate": "2024-01-25",
+    "tenureMonths": 29,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2025-08-30",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานAccount Executive",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M01",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 30,
+    "code": "M16",
+    "name": "วริศ เกียรติไพบูลย์",
+    "department": "Sales",
+    "jobTitle": "Sales Coordinator",
+    "hierarchyDepth": 4,
+    "joinDate": "2023-12-31",
+    "tenureMonths": 30,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-09-04",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางSales จากTelesales สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M16",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 31,
+    "code": "M16",
+    "name": "ชลธิชา ใจดี",
+    "department": "Sales",
+    "jobTitle": "Sales Coordinator",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-10-02",
+    "tenureMonths": 45,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-11-03",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานAccount Executive",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 32,
+    "code": "M16",
+    "name": "ปวีณา เจริญผล",
+    "department": "Sales",
+    "jobTitle": "Sales Coordinator",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-05-12",
+    "tenureMonths": 61,
+    "startingPosition": "Telesales",
+    "currentPositionStartDate": "2024-12-03",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานTelesales",
+    "mainStrength": "Pipeline Management",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M01",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 33,
+    "code": "M16",
+    "name": "มนัสนันท์ พรหมพิทักษ์",
+    "department": "Sales",
+    "jobTitle": "Sales Coordinator",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-05-12",
+    "tenureMonths": 49,
+    "startingPosition": "Account Executive",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายSales จากพื้นฐานAccount Executive",
+    "mainStrength": "Relationship Building",
+    "mainWeakness": "Skip internal approval steps",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 34,
+    "code": "M16",
+    "name": "ธัญญารัตน์ จิรภัทร",
+    "department": "Sales",
+    "jobTitle": "Sales Coordinator",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-05-06",
+    "tenureMonths": 62,
+    "startingPosition": "Sales Coordinator",
+    "currentPositionStartDate": "2025-01-02",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางSales จากSales Coordinator สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Client Negotiation",
+    "mainWeakness": "Over-promising to clients",
+    "mistakeThemeCodes": [
+      "M14",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 35,
+    "code": "M16",
+    "name": "นภัสสร ปัญญาดี",
+    "department": "Marketing",
+    "jobTitle": "Marketing Manager",
+    "hierarchyDepth": 1,
+    "joinDate": "2018-04-11",
+    "tenureMonths": 98,
+    "startingPosition": "Marketing Coordinator",
+    "currentPositionStartDate": "2020-01-26",
+    "promotionCount": 2,
+    "careerArcSummary": "ร่วมก่อตั้งและพัฒนาองค์กรจากMarketing Coordinator สู่บทบาทMarketing Manager",
+    "mainStrength": "Decision Making",
+    "mainWeakness": "Over-reliance on agencies",
+    "mistakeThemeCodes": [
+      "M01",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 36,
+    "code": "M16",
+    "name": "ศศิธร จันทร์หอม",
+    "department": "Marketing",
+    "jobTitle": "Digital Marketing Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-03-26",
+    "tenureMonths": 111,
+    "startingPosition": "Marketing Assistant",
+    "currentPositionStartDate": "2020-12-24",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางMarketing จากMarketing Assistant เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "SEO/SEM",
+    "mainWeakness": "Chasing trends over strategy",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "High",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 37,
+    "code": "M16",
+    "name": "ชนากานต์ ธรรมรักษ์",
+    "department": "Marketing",
+    "jobTitle": "Digital Marketing Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-04-30",
+    "tenureMonths": 74,
+    "startingPosition": "Content Writer",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 3,
+    "careerArcSummary": "จากContent Writer พัฒนาสู่ Digital Marketing Officer ผ่านผลงานMarketing ที่โดดเด่น",
+    "mainStrength": "Digital Campaigns",
+    "mainWeakness": "Inconsistent brand voice",
+    "mistakeThemeCodes": [
+      "M16",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 38,
+    "code": "M16",
+    "name": "อรทัย ศิริวัฒน์",
+    "department": "Marketing",
+    "jobTitle": "Digital Marketing Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-05-25",
+    "tenureMonths": 97,
+    "startingPosition": "Graphic Designer",
+    "currentPositionStartDate": "2023-10-10",
+    "promotionCount": 3,
+    "careerArcSummary": "จากGraphic Designer พัฒนาสู่ Digital Marketing Officer ผ่านผลงานMarketing ที่โดดเด่น",
+    "mainStrength": "Brand Strategy",
+    "mainWeakness": "Over-reliance on agencies",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 39,
+    "code": "M16",
+    "name": "แพรวพรรณ ภักดีวงศ์",
+    "department": "Marketing",
+    "jobTitle": "Content Creator",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-04-03",
+    "tenureMonths": 75,
+    "startingPosition": "Marketing Assistant",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางMarketing จากMarketing Assistant เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Event Management",
+    "mainWeakness": "Budget overruns on campaigns",
+    "mistakeThemeCodes": [
+      "M11",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 40,
+    "code": "M16",
+    "name": "จิราภา รุ่งพิทักษ์",
+    "department": "Marketing",
+    "jobTitle": "Content Creator",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-04-13",
+    "tenureMonths": 110,
+    "startingPosition": "Marketing Assistant",
+    "currentPositionStartDate": "2021-12-19",
+    "promotionCount": 1,
+    "careerArcSummary": "จากMarketing Assistant พัฒนาสู่ Content Creator ผ่านผลงานMarketing ที่โดดเด่น",
+    "mainStrength": "SEO/SEM",
+    "mainWeakness": "Inconsistent brand voice",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 41,
+    "code": "M16",
+    "name": "เอกชัย ศรีสุวรรณ",
+    "department": "Marketing",
+    "jobTitle": "Graphic Designer",
+    "hierarchyDepth": 2,
+    "joinDate": "2019-01-13",
+    "tenureMonths": 89,
+    "startingPosition": "Graphic Designer",
+    "currentPositionStartDate": "2022-06-17",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางMarketing จากGraphic Designer เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Brand Strategy",
+    "mainWeakness": "Chasing trends over strategy",
+    "mistakeThemeCodes": [
+      "M14",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Medium",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 42,
+    "code": "M16",
+    "name": "สมชาย บุญมี",
+    "department": "Marketing",
+    "jobTitle": "Graphic Designer",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-09-30",
+    "tenureMonths": 69,
+    "startingPosition": "Marketing Assistant",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางMarketing จากMarketing Assistant เติบโตอย่างมั่นคงด้วย 3 การเลื่อนขั้น",
+    "mainStrength": "Event Management",
+    "mainWeakness": "Chasing trends over strategy",
+    "mistakeThemeCodes": [
+      "M01",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 43,
+    "code": "M16",
+    "name": "วิเชียร วิริยะกุล",
+    "department": "Marketing",
+    "jobTitle": "CRM / Event Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-05-31",
+    "tenureMonths": 73,
+    "startingPosition": "Content Writer",
+    "currentPositionStartDate": "2022-10-15",
+    "promotionCount": 1,
+    "careerArcSummary": "จากContent Writer พัฒนาสู่ CRM / Event Officer ผ่านผลงานMarketing ที่โดดเด่น",
+    "mainStrength": "SEO/SEM",
+    "mainWeakness": "Budget overruns on campaigns",
+    "mistakeThemeCodes": [
+      "M11",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 44,
+    "code": "M16",
+    "name": "ประเสริฐ กาญจนกุล",
+    "department": "Marketing",
+    "jobTitle": "CRM / Event Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-05-02",
+    "tenureMonths": 74,
+    "startingPosition": "Content Writer",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางMarketing จากContent Writer เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Brand Strategy",
+    "mainWeakness": "Inconsistent brand voice",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 45,
+    "code": "M16",
+    "name": "สันติ สุวรรณกิจ",
+    "department": "Design & Architecture",
+    "jobTitle": "Design Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-09-29",
+    "tenureMonths": 69,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากDraftsman เติบโตอย่างมั่นคงด้วย 3 การเลื่อนขั้น",
+    "mainStrength": "Sustainable Design",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M16",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 46,
+    "code": "M16",
+    "name": "อนุชา มหานิยม",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-09-05",
+    "tenureMonths": 82,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากArchitectural Intern เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Sustainable Design",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 47,
+    "code": "M16",
+    "name": "ธีรพงษ์ วงศ์วัฒนะ",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-07-20",
+    "tenureMonths": 59,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากArchitectural Intern เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Sustainable Design",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M14",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 48,
+    "code": "M16",
+    "name": "ภาณุวัฒน์ แสงทอง",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-05-05",
+    "tenureMonths": 86,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2023-06-12",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากArchitectural Intern เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Creative Design",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M01",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 49,
+    "code": "M16",
+    "name": "ธนากร กิตติธนากร",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-07-21",
+    "tenureMonths": 59,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2023-03-14",
+    "promotionCount": 1,
+    "careerArcSummary": "จากArchitectural Intern พัฒนาสู่ Architect ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Client Presentation",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 50,
+    "code": "M16",
+    "name": "กฤษณะ บุญส่ง",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-02-22",
+    "tenureMonths": 76,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2023-02-12",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากDraftsman เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Client Presentation",
+    "mainWeakness": "Over-reliance on single tool",
+    "mistakeThemeCodes": [
+      "M11",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 51,
+    "code": "M16",
+    "name": "สุรีย์พร วัฒนชัย",
+    "department": "Design & Architecture",
+    "jobTitle": "Architect",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-04-14",
+    "tenureMonths": 62,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2024-08-05",
+    "promotionCount": 2,
+    "careerArcSummary": "จากArchitectural Intern พัฒนาสู่ Architect ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Client Presentation",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 52,
+    "code": "M16",
+    "name": "สายใจ สิริกุล",
+    "department": "Design & Architecture",
+    "jobTitle": "Interior Designer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-04-14",
+    "tenureMonths": 50,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2024-11-03",
+    "promotionCount": 2,
+    "careerArcSummary": "จากDraftsman พัฒนาสู่ Interior Designer ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Creative Design",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 53,
+    "code": "M16",
+    "name": "นงลักษณ์ สุขประเสริฐ",
+    "department": "Design & Architecture",
+    "jobTitle": "Interior Designer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-05-19",
+    "tenureMonths": 61,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2024-02-07",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากDraftsman เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Creative Design",
+    "mainWeakness": "Scope creep from creativity",
+    "mistakeThemeCodes": [
+      "M13",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 54,
+    "code": "M16",
+    "name": "รุ่งนภา รุ่งเรืองกิจ",
+    "department": "Design & Architecture",
+    "jobTitle": "Interior Designer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-12-19",
+    "tenureMonths": 42,
+    "startingPosition": "Interior Designer Trainee",
+    "currentPositionStartDate": "2024-12-03",
+    "promotionCount": 1,
+    "careerArcSummary": "จากInterior Designer Trainee พัฒนาสู่ Interior Designer ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Client Presentation",
+    "mainWeakness": "Scope creep from creativity",
+    "mistakeThemeCodes": [
+      "M04",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 55,
+    "code": "M16",
+    "name": "กุลธิดา เพชรนิยม",
+    "department": "Design & Architecture",
+    "jobTitle": "Draftsman",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-06-23",
+    "tenureMonths": 60,
+    "startingPosition": "Interior Designer Trainee",
+    "currentPositionStartDate": "2023-07-12",
+    "promotionCount": 1,
+    "careerArcSummary": "จากInterior Designer Trainee พัฒนาสู่ Draftsman ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Sustainable Design",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M11",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 56,
+    "code": "M16",
+    "name": "สุวิมล สุทธิกุล",
+    "department": "Design & Architecture",
+    "jobTitle": "Draftsman",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-05-15",
+    "tenureMonths": 49,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 2,
+    "careerArcSummary": "จากDraftsman พัฒนาสู่ Draftsman ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Creative Design",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 57,
+    "code": "M16",
+    "name": "พัชราภา บุญญาภา",
+    "department": "Design & Architecture",
+    "jobTitle": "Draftsman",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-12-15",
+    "tenureMonths": 66,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางDesign & Architecture จากArchitectural Intern เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Client Presentation",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 58,
+    "code": "M16",
+    "name": "เมธาวี เรืองเดช",
+    "department": "Design & Architecture",
+    "jobTitle": "Draftsman",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-02-23",
+    "tenureMonths": 64,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2024-12-03",
+    "promotionCount": 1,
+    "careerArcSummary": "จากDraftsman พัฒนาสู่ Draftsman ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "BIM Proficiency",
+    "mainWeakness": "Over-reliance on single tool",
+    "mistakeThemeCodes": [
+      "M04",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 59,
+    "code": "M16",
+    "name": "อรอนงค์ วัฒนากุล",
+    "department": "Design & Architecture",
+    "jobTitle": "Draftsman",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-07-20",
+    "tenureMonths": 83,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 2,
+    "careerArcSummary": "จากArchitectural Intern พัฒนาสู่ Draftsman ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Space Planning",
+    "mainWeakness": "Conflict avoidance with clients",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 60,
+    "code": "M16",
+    "name": "วิภาวี พงษ์ไพโรจน์",
+    "department": "Design & Architecture",
+    "jobTitle": "BOQ / Estimator",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-09-13",
+    "tenureMonths": 57,
+    "startingPosition": "Draftsman",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 2,
+    "careerArcSummary": "จากDraftsman พัฒนาสู่ BOQ / Estimator ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Space Planning",
+    "mainWeakness": "Over-reliance on single tool",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Medium",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 61,
+    "code": "M16",
+    "name": "ธนกฤต หิรัญญา",
+    "department": "Design & Architecture",
+    "jobTitle": "BOQ / Estimator",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-06-01",
+    "tenureMonths": 85,
+    "startingPosition": "Interior Designer Trainee",
+    "currentPositionStartDate": "2022-06-17",
+    "promotionCount": 2,
+    "careerArcSummary": "จากInterior Designer Trainee พัฒนาสู่ BOQ / Estimator ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "BIM Proficiency",
+    "mainWeakness": "Late-night work culture",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 62,
+    "code": "M16",
+    "name": "ณัฐพล ไชยรัตน์",
+    "department": "Design & Architecture",
+    "jobTitle": "BOQ / Estimator",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-05-28",
+    "tenureMonths": 49,
+    "startingPosition": "Architectural Intern",
+    "currentPositionStartDate": "2025-02-01",
+    "promotionCount": 2,
+    "careerArcSummary": "จากArchitectural Intern พัฒนาสู่ BOQ / Estimator ผ่านผลงานDesign & Architecture ที่โดดเด่น",
+    "mainStrength": "Space Planning",
+    "mainWeakness": "Over-reliance on single tool",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 63,
+    "code": "M16",
+    "name": "กิตติพงศ์ เกตุแก้ว",
+    "department": "Engineering & Construction",
+    "jobTitle": "Construction Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-02-01",
+    "tenureMonths": 53,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากCivil Engineer เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M16",
+      "M03"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 64,
+    "code": "M16",
+    "name": "ภาคิน ตั้งเจริญ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Construction Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-01-19",
+    "tenureMonths": 53,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากProject Coordinator เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 65,
+    "code": "M16",
+    "name": "วรพล อินทรักษา",
+    "department": "Engineering & Construction",
+    "jobTitle": "Construction Manager",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-04-01",
+    "tenureMonths": 63,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2023-12-09",
+    "promotionCount": 1,
+    "careerArcSummary": "จากForeman พัฒนาสู่ Construction Manager ผ่านผลงานEngineering & Construction ที่โดดเด่น",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M01",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 66,
+    "code": "M16",
+    "name": "ศุภชัย ทรัพย์สมบัติ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Project Manager",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-12-15",
+    "tenureMonths": 42,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากJunior Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M13",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 67,
+    "code": "M16",
+    "name": "ธนวัฒน์ ชาญกิจ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Project Manager",
+    "hierarchyDepth": 4,
+    "joinDate": "2022-11-13",
+    "tenureMonths": 43,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งCivil Engineer กำลังพัฒนาสู่Project Manager",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M04",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 68,
+    "code": "M16",
+    "name": "ปกรณ์ อัศวเมธา",
+    "department": "Engineering & Construction",
+    "jobTitle": "Project Manager",
+    "hierarchyDepth": 4,
+    "joinDate": "2024-03-30",
+    "tenureMonths": 27,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2025-02-01",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากCivil Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 69,
+    "code": "M16",
+    "name": "นราธิป ทองประเสริฐ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-04-09",
+    "tenureMonths": 39,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งJunior Engineer กำลังพัฒนาสู่Site Engineer",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M01",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 70,
+    "code": "M16",
+    "name": "ชยพล เกียรติไพบูลย์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-05-07",
+    "tenureMonths": 38,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2025-02-01",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งCivil Engineer กำลังพัฒนาสู่Site Engineer",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 71,
+    "code": "M16",
+    "name": "อารยา ใจดี",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-12-12",
+    "tenureMonths": 30,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2025-01-02",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากJunior Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M13",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 72,
+    "code": "M16",
+    "name": "พิชญา เจริญผล",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-07-11",
+    "tenureMonths": 36,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2025-05-02",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานJunior Engineer",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M01",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 73,
+    "code": "M16",
+    "name": "กัญญารัตน์ พรหมพิทักษ์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-03-17",
+    "tenureMonths": 39,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2025-07-31",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานCivil Engineer",
+    "mainStrength": "Structural Analysis",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M16",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 74,
+    "code": "M16",
+    "name": "ปรียาภรณ์ จิรภัทร",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2025-01-16",
+    "tenureMonths": 17,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2025-10-29",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานJunior Engineer",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M04",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 75,
+    "code": "M16",
+    "name": "ณิชาภัทร ปัญญาดี",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2022-05-12",
+    "tenureMonths": 49,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งForeman กำลังพัฒนาสู่Site Engineer",
+    "mainStrength": "Structural Analysis",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 76,
+    "code": "M16",
+    "name": "ศิริพร จันทร์หอม",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-03-31",
+    "tenureMonths": 39,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งProject Coordinator กำลังพัฒนาสู่Site Engineer",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 77,
+    "code": "M16",
+    "name": "กมลชนก ธรรมรักษ์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2021-04-30",
+    "tenureMonths": 62,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2023-02-12",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากForeman สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Structural Analysis",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 78,
+    "code": "M16",
+    "name": "วรรณภา ศิริวัฒน์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2021-05-11",
+    "tenureMonths": 61,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งProject Coordinator กำลังพัฒนาสู่Site Engineer",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M13",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 79,
+    "code": "M16",
+    "name": "พิมพ์ชนก ภักดีวงศ์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2023-10-21",
+    "tenureMonths": 32,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2025-05-02",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานJunior Engineer",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M03"
+    ],
+    "mistakeThemes": [
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 80,
+    "code": "M16",
+    "name": "สุภัสสรา รุ่งพิทักษ์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2024-01-02",
+    "tenureMonths": 30,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2024-11-03",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานProject Coordinator",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M13",
+      "M03"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 81,
+    "code": "M16",
+    "name": "อัครเดช ศรีสุวรรณ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2022-11-05",
+    "tenureMonths": 44,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2025-04-02",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากJunior Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 82,
+    "code": "M16",
+    "name": "ภูริณัฐ บุญมี",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2021-01-02",
+    "tenureMonths": 66,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2023-12-09",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานJunior Engineer",
+    "mainStrength": "Structural Analysis",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M13",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 83,
+    "code": "M16",
+    "name": "รัชพล วิริยะกุล",
+    "department": "Engineering & Construction",
+    "jobTitle": "Site Engineer",
+    "hierarchyDepth": 5,
+    "joinDate": "2021-01-16",
+    "tenureMonths": 65,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2025-02-01",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานProject Coordinator",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M04",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 84,
+    "code": "M16",
+    "name": "จักริน กาญจนกุล",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2024-11-30",
+    "tenureMonths": 19,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2025-05-02",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากProject Coordinator สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M14",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 85,
+    "code": "M16",
+    "name": "สิรวิชญ์ สุวรรณกิจ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2022-01-30",
+    "tenureMonths": 53,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2023-07-12",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งForeman กำลังพัฒนาสู่Foreman",
+    "mainStrength": "Vendor Coordination",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 86,
+    "code": "M16",
+    "name": "ธนพัฒน์ มหานิยม",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2022-11-11",
+    "tenureMonths": 43,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากForeman สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M01",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 87,
+    "code": "M16",
+    "name": "กรวิชญ์ วงศ์วัฒนะ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2024-02-25",
+    "tenureMonths": 28,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2025-03-03",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากProject Coordinator สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M01",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 88,
+    "code": "M16",
+    "name": "ศักรินทร์ แสงทอง",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2022-05-08",
+    "tenureMonths": 50,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2024-06-06",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานProject Coordinator",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 89,
+    "code": "M16",
+    "name": "ณัฐวุฒิ กิตติธนากร",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2024-06-07",
+    "tenureMonths": 25,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2024-09-04",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งJunior Engineer กำลังพัฒนาสู่Foreman",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M13",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 90,
+    "code": "M16",
+    "name": "วริศ บุญส่ง",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2022-02-25",
+    "tenureMonths": 52,
+    "startingPosition": "Junior Engineer",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากJunior Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M03",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Budget Overrun (Project)",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การยอมรับ feedback และปรับตัวอย่างต่อเนื่อง",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 91,
+    "code": "M16",
+    "name": "ชลธิชา วัฒนชัย",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2025-01-13",
+    "tenureMonths": 17,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2025-03-03",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งForeman กำลังพัฒนาสู่Foreman",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M13",
+      "M03"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การยอมรับ feedback และปรับตัวอย่างต่อเนื่อง",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 92,
+    "code": "M16",
+    "name": "ปวีณา สิริกุล",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2025-08-20",
+    "tenureMonths": 10,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2025-09-29",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากForeman สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 93,
+    "code": "M16",
+    "name": "มนัสนันท์ สุขประเสริฐ",
+    "department": "Engineering & Construction",
+    "jobTitle": "Foreman",
+    "hierarchyDepth": 6,
+    "joinDate": "2023-08-29",
+    "tenureMonths": 34,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากForeman สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 94,
+    "code": "M16",
+    "name": "ธัญญารัตน์ รุ่งเรืองกิจ",
+    "department": "Engineering & Construction",
+    "jobTitle": "QA/QC Officer",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-07-02",
+    "tenureMonths": 72,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2022-10-15",
+    "promotionCount": 0,
+    "careerArcSummary": "เส้นทางEngineering & Construction จากCivil Engineer สั่งสมประสบการณ์อย่างต่อเนื่อง",
+    "mainStrength": "Vendor Coordination",
+    "mainWeakness": "Underestimating soft costs",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 95,
+    "code": "M16",
+    "name": "นภัสสร เพชรนิยม",
+    "department": "Engineering & Construction",
+    "jobTitle": "QA/QC Officer",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-12-04",
+    "tenureMonths": 67,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2022-11-14",
+    "promotionCount": 1,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งForeman กำลังพัฒนาสู่QA/QC Officer",
+    "mainStrength": "Cost Estimation",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M03",
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Budget Overrun (Project)",
+      "Design Error / Rework"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 96,
+    "code": "M16",
+    "name": "ศศิธร สุทธิกุล",
+    "department": "Engineering & Construction",
+    "jobTitle": "QA/QC Officer",
+    "hierarchyDepth": 4,
+    "joinDate": "2021-02-02",
+    "tenureMonths": 65,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2022-11-14",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานProject Coordinator",
+    "mainStrength": "Structural Analysis",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 97,
+    "code": "M16",
+    "name": "ชนากานต์ บุญญาภา",
+    "department": "Engineering & Construction",
+    "jobTitle": "Safety Officer (จป.)",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-10-28",
+    "tenureMonths": 68,
+    "startingPosition": "Foreman",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 0,
+    "careerArcSummary": "เริ่มต้นEngineering & Construction ในตำแหน่งForeman กำลังพัฒนาสู่Safety Officer (จป.)",
+    "mainStrength": "Vendor Coordination",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 98,
+    "code": "M16",
+    "name": "อรทัย เรืองเดช",
+    "department": "Engineering & Construction",
+    "jobTitle": "Safety Officer (จป.)",
+    "hierarchyDepth": 4,
+    "joinDate": "2023-02-19",
+    "tenureMonths": 40,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2025-02-01",
+    "promotionCount": 0,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานCivil Engineer",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Perfectionism causing delays",
+    "mistakeThemeCodes": [
+      "M01",
+      "M03"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 99,
+    "code": "M16",
+    "name": "แพรวพรรณ วัฒนากุล",
+    "department": "Engineering & Construction",
+    "jobTitle": "Planning Engineer",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-11-13",
+    "tenureMonths": 67,
+    "startingPosition": "Civil Engineer",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานCivil Engineer",
+    "mainStrength": "Site Management",
+    "mainWeakness": "Reluctance to escalate early",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 100,
+    "code": "M16",
+    "name": "จิราภา พงษ์ไพโรจน์",
+    "department": "Engineering & Construction",
+    "jobTitle": "Planning Engineer",
+    "hierarchyDepth": 4,
+    "joinDate": "2020-04-23",
+    "tenureMonths": 74,
+    "startingPosition": "Project Coordinator",
+    "currentPositionStartDate": "2024-03-08",
+    "promotionCount": 1,
+    "careerArcSummary": "กำลังเรียนรู้และเติบโตในสายEngineering & Construction จากพื้นฐานProject Coordinator",
+    "mainStrength": "Quality Control",
+    "mainWeakness": "Poor documentation habits",
+    "mistakeThemeCodes": [
+      "M04"
+    ],
+    "mistakeThemes": [
+      "Design Error / Rework"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 101,
+    "code": "M16",
+    "name": "เอกชัย หิรัญญา",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Procurement Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-04-09",
+    "tenureMonths": 99,
+    "startingPosition": "Inventory Assistant",
+    "currentPositionStartDate": "2023-02-12",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากInventory Assistant เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Decision Making",
+    "mainWeakness": "Informal vendor agreements",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 102,
+    "code": "M16",
+    "name": "สมชาย ไชยรัตน์",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Purchasing Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-03-21",
+    "tenureMonths": 87,
+    "startingPosition": "Warehouse Clerk",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 2,
+    "careerArcSummary": "จากWarehouse Clerk พัฒนาสู่ Purchasing Officer ผ่านผลงานProcurement & Warehouse ที่โดดเด่น",
+    "mainStrength": "Cost Reduction",
+    "mainWeakness": "Single-source supplier dependency",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 103,
+    "code": "M16",
+    "name": "วิเชียร เกตุแก้ว",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Purchasing Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-04-21",
+    "tenureMonths": 74,
+    "startingPosition": "Inventory Assistant",
+    "currentPositionStartDate": "2022-06-17",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากInventory Assistant เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Inventory Optimization",
+    "mainWeakness": "Informal vendor agreements",
+    "mistakeThemeCodes": [
+      "M13",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การยอมรับ feedback และปรับตัวอย่างต่อเนื่อง",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 104,
+    "code": "M16",
+    "name": "ประเสริฐ ตั้งเจริญ",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Purchasing Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-01-01",
+    "tenureMonths": 78,
+    "startingPosition": "Warehouse Clerk",
+    "currentPositionStartDate": "2024-03-08",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากWarehouse Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Contract Management",
+    "mainWeakness": "Single-source supplier dependency",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 105,
+    "code": "M16",
+    "name": "สันติ อินทรักษา",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Purchasing Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-10-01",
+    "tenureMonths": 69,
+    "startingPosition": "Inventory Assistant",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 1,
+    "careerArcSummary": "จากInventory Assistant พัฒนาสู่ Purchasing Officer ผ่านผลงานProcurement & Warehouse ที่โดดเด่น",
+    "mainStrength": "Inventory Optimization",
+    "mainWeakness": "Informal vendor agreements",
+    "mistakeThemeCodes": [
+      "M16",
+      "M05"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Vendor / Supplier Dispute"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 106,
+    "code": "M16",
+    "name": "อนุชา ทรัพย์สมบัติ",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Purchasing Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-02-13",
+    "tenureMonths": 88,
+    "startingPosition": "Logistics Coordinator",
+    "currentPositionStartDate": "2021-11-19",
+    "promotionCount": 1,
+    "careerArcSummary": "จากLogistics Coordinator พัฒนาสู่ Purchasing Officer ผ่านผลงานProcurement & Warehouse ที่โดดเด่น",
+    "mainStrength": "Logistics Planning",
+    "mainWeakness": "Single-source supplier dependency",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 107,
+    "code": "M16",
+    "name": "ธีรพงษ์ ชาญกิจ",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Warehouse Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-11-25",
+    "tenureMonths": 79,
+    "startingPosition": "Logistics Coordinator",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากLogistics Coordinator เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Cost Reduction",
+    "mainWeakness": "Delayed inventory updates",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 108,
+    "code": "M16",
+    "name": "ภาณุวัฒน์ อัศวเมธา",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Warehouse Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-09-15",
+    "tenureMonths": 81,
+    "startingPosition": "Warehouse Clerk",
+    "currentPositionStartDate": "2022-05-18",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากWarehouse Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Supplier Negotiation",
+    "mainWeakness": "Stockpile without demand signal",
+    "mistakeThemeCodes": [
+      "M14",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 109,
+    "code": "M16",
+    "name": "ธนากร ทองประเสริฐ",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Warehouse Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-03-30",
+    "tenureMonths": 51,
+    "startingPosition": "Inventory Assistant",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 1,
+    "careerArcSummary": "จากInventory Assistant พัฒนาสู่ Warehouse Officer ผ่านผลงานProcurement & Warehouse ที่โดดเด่น",
+    "mainStrength": "Inventory Optimization",
+    "mainWeakness": "Single-source supplier dependency",
+    "mistakeThemeCodes": [
+      "M16",
+      "M03"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Budget Overrun (Project)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 110,
+    "code": "M16",
+    "name": "กฤษณะ เกียรติไพบูลย์",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Warehouse Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-05-13",
+    "tenureMonths": 85,
+    "startingPosition": "Logistics Coordinator",
+    "currentPositionStartDate": "2023-10-10",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากLogistics Coordinator เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Cost Reduction",
+    "mainWeakness": "Stockpile without demand signal",
+    "mistakeThemeCodes": [
+      "M11",
+      "M14"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 111,
+    "code": "M16",
+    "name": "สุรีย์พร ใจดี",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Logistics Coordinator",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-08-26",
+    "tenureMonths": 58,
+    "startingPosition": "Warehouse Clerk",
+    "currentPositionStartDate": "2024-03-08",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากWarehouse Clerk เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Inventory Optimization",
+    "mainWeakness": "Stockpile without demand signal",
+    "mistakeThemeCodes": [
+      "M05",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Vendor / Supplier Dispute",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 112,
+    "code": "M16",
+    "name": "สายใจ เจริญผล",
+    "department": "Procurement & Warehouse",
+    "jobTitle": "Logistics Coordinator",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-05-28",
+    "tenureMonths": 49,
+    "startingPosition": "Warehouse Clerk",
+    "currentPositionStartDate": "2023-11-09",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางProcurement & Warehouse จากWarehouse Clerk เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Contract Management",
+    "mainWeakness": "Informal vendor agreements",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 113,
+    "code": "M16",
+    "name": "นงลักษณ์ พรหมพิทักษ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-09-30",
+    "tenureMonths": 93,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2024-02-07",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Team Leadership",
+    "mainWeakness": "Over-promise resolution timeline",
+    "mistakeThemeCodes": [
+      "M06",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Customer Complaint Escalation",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 114,
+    "code": "M16",
+    "name": "รุ่งนภา จิรภัทร",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-11-23",
+    "tenureMonths": 55,
+    "startingPosition": "Warranty Clerk",
+    "currentPositionStartDate": "2024-09-04",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากWarranty Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Service Recovery",
+    "mainWeakness": "Burnout from emotional load",
+    "mistakeThemeCodes": [
+      "M14",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 115,
+    "code": "M16",
+    "name": "กุลธิดา ปัญญาดี",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-11-23",
+    "tenureMonths": 67,
+    "startingPosition": "Warranty Clerk",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากWarranty Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Service Recovery",
+    "mainWeakness": "Over-promise resolution timeline",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้จาก mentor และ senior ในองค์กร",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 116,
+    "code": "M16",
+    "name": "สุวิมล จันทร์หอม",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-09-08",
+    "tenureMonths": 46,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2023-09-10",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "SLA Management",
+    "mainWeakness": "Delay in escalation",
+    "mistakeThemeCodes": [
+      "M13",
+      "M06"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 117,
+    "code": "M16",
+    "name": "พัชราภา ธรรมรักษ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-06-20",
+    "tenureMonths": 48,
+    "startingPosition": "Warranty Clerk",
+    "currentPositionStartDate": "2024-08-05",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากWarranty Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "SLA Management",
+    "mainWeakness": "Burnout from emotional load",
+    "mistakeThemeCodes": [
+      "M13",
+      "M06"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error",
+      "Customer Complaint Escalation"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "High",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 118,
+    "code": "M16",
+    "name": "เมธาวี ศิริวัฒน์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Customer Service Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-02-15",
+    "tenureMonths": 52,
+    "startingPosition": "Warranty Clerk",
+    "currentPositionStartDate": "2024-04-07",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากWarranty Clerk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Customer Retention",
+    "mainWeakness": "Delay in escalation",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 119,
+    "code": "M16",
+    "name": "อรอนงค์ ภักดีวงศ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Warranty Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-10-07",
+    "tenureMonths": 45,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2023-10-10",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Service Recovery",
+    "mainWeakness": "Delay in escalation",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 120,
+    "code": "M16",
+    "name": "วิภาวี รุ่งพิทักษ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Warranty Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-04-06",
+    "tenureMonths": 63,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2024-02-07",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Warranty Processing",
+    "mainWeakness": "Over-promise resolution timeline",
+    "mistakeThemeCodes": [
+      "M14",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 121,
+    "code": "M16",
+    "name": "ภาคิน จันทร์หอม",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Warranty Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-06-07",
+    "tenureMonths": 85,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2022-02-17",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Warranty Processing",
+    "mainWeakness": "Delay in escalation",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 122,
+    "code": "M16",
+    "name": "วรพล ธรรมรักษ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Warranty Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-04-16",
+    "tenureMonths": 86,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2023-06-12",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Complaint Resolution",
+    "mainWeakness": "Burnout from emotional load",
+    "mistakeThemeCodes": [
+      "M13"
+    ],
+    "mistakeThemes": [
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 123,
+    "code": "M16",
+    "name": "ศุภชัย ศิริวัฒน์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Call Center",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-05-04",
+    "tenureMonths": 50,
+    "startingPosition": "Call Center Agent",
+    "currentPositionStartDate": "2023-07-12",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางCustomer Service & Warranty จากCall Center Agent เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "SLA Management",
+    "mainWeakness": "Delay in escalation",
+    "mistakeThemeCodes": [
+      "M16",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 124,
+    "code": "M16",
+    "name": "ธนวัฒน์ ภักดีวงศ์",
+    "department": "Customer Service & Warranty",
+    "jobTitle": "Call Center",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-08-27",
+    "tenureMonths": 82,
+    "startingPosition": "Warranty Clerk",
+    "currentPositionStartDate": "2024-07-06",
+    "promotionCount": 1,
+    "careerArcSummary": "จากWarranty Clerk พัฒนาสู่ Call Center ผ่านผลงานCustomer Service & Warranty ที่โดดเด่น",
+    "mainStrength": "SLA Management",
+    "mainWeakness": "Over-promise resolution timeline",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 125,
+    "code": "M16",
+    "name": "ปกรณ์ รุ่งพิทักษ์",
+    "department": "Finance & Accounting",
+    "jobTitle": "Finance & Accounting Manager",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-09-06",
+    "tenureMonths": 94,
+    "startingPosition": "Accounts Payable Clerk",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 2,
+    "careerArcSummary": "จากAccounts Payable Clerk พัฒนาสู่ Finance & Accounting Manager ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Team Leadership",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 126,
+    "code": "M16",
+    "name": "นราธิป ศรีสุวรรณ",
+    "department": "Finance & Accounting",
+    "jobTitle": "AP Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-03-17",
+    "tenureMonths": 63,
+    "startingPosition": "Audit Assistant",
+    "currentPositionStartDate": "2023-01-13",
+    "promotionCount": 1,
+    "careerArcSummary": "จากAudit Assistant พัฒนาสู่ AP Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Cash Flow Management",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M15"
+    ],
+    "mistakeThemes": [
+      "Wrong Sensitivity Label Applied"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 127,
+    "code": "M16",
+    "name": "ชยพล บุญมี",
+    "department": "Finance & Accounting",
+    "jobTitle": "AP Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-12-12",
+    "tenureMonths": 54,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2024-10-04",
+    "promotionCount": 1,
+    "careerArcSummary": "จากFinancial Analyst Trainee พัฒนาสู่ AP Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Budget Forecasting",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 128,
+    "code": "M16",
+    "name": "อารยา วิริยะกุล",
+    "department": "Finance & Accounting",
+    "jobTitle": "AR Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-04-16",
+    "tenureMonths": 62,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2024-01-08",
+    "promotionCount": 2,
+    "careerArcSummary": "จากFinancial Analyst Trainee พัฒนาสู่ AR Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Financial Modeling",
+    "mainWeakness": "Over-cautious on spending",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 129,
+    "code": "M16",
+    "name": "พิชญา กาญจนกุล",
+    "department": "Finance & Accounting",
+    "jobTitle": "AR Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-10-25",
+    "tenureMonths": 56,
+    "startingPosition": "Audit Assistant",
+    "currentPositionStartDate": "2023-08-11",
+    "promotionCount": 2,
+    "careerArcSummary": "จากAudit Assistant พัฒนาสู่ AR Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Financial Modeling",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M15"
+    ],
+    "mistakeThemes": [
+      "Wrong Sensitivity Label Applied"
+    ],
+    "learningTheme": "การปรับตัวกับเทคโนโลยีและเครื่องมือใหม่",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 130,
+    "code": "M16",
+    "name": "กัญญารัตน์ สุวรรณกิจ",
+    "department": "Finance & Accounting",
+    "jobTitle": "GL Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-10-06",
+    "tenureMonths": 69,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางFinance & Accounting จากFinancial Analyst Trainee เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Budget Forecasting",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M02",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Missed Regulatory Deadline",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้การจัดการเวลาและ priority",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 131,
+    "code": "M16",
+    "name": "ปรียาภรณ์ มหานิยม",
+    "department": "Finance & Accounting",
+    "jobTitle": "GL Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2021-10-18",
+    "tenureMonths": 56,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางFinance & Accounting จากFinancial Analyst Trainee เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Cash Flow Management",
+    "mainWeakness": "Over-cautious on spending",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 132,
+    "code": "M16",
+    "name": "ณิชาภัทร วงศ์วัฒนะ",
+    "department": "Finance & Accounting",
+    "jobTitle": "Cost Accounting Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2019-06-03",
+    "tenureMonths": 85,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2022-02-17",
+    "promotionCount": 1,
+    "careerArcSummary": "จากFinancial Analyst Trainee พัฒนาสู่ Cost Accounting Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Tax Compliance",
+    "mainWeakness": "Manual processes not automated",
+    "mistakeThemeCodes": [
+      "M14",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านความล้มเหลวของโครงการ",
+    "retentionRisk": "Low",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 133,
+    "code": "M16",
+    "name": "ศิริพร แสงทอง",
+    "department": "Finance & Accounting",
+    "jobTitle": "Cost Accounting Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2022-03-03",
+    "tenureMonths": 52,
+    "startingPosition": "Financial Analyst Trainee",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 1,
+    "careerArcSummary": "จากFinancial Analyst Trainee พัฒนาสู่ Cost Accounting Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Tax Compliance",
+    "mainWeakness": "Manual processes not automated",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 134,
+    "code": "M16",
+    "name": "กมลชนก กิตติธนากร",
+    "department": "Finance & Accounting",
+    "jobTitle": "Treasury Officer",
+    "hierarchyDepth": 3,
+    "joinDate": "2020-03-06",
+    "tenureMonths": 76,
+    "startingPosition": "Accounts Payable Clerk",
+    "currentPositionStartDate": "2023-10-10",
+    "promotionCount": 2,
+    "careerArcSummary": "จากAccounts Payable Clerk พัฒนาสู่ Treasury Officer ผ่านผลงานFinance & Accounting ที่โดดเด่น",
+    "mainStrength": "Budget Forecasting",
+    "mainWeakness": "Resistance to new software",
+    "mistakeThemeCodes": [
+      "M16",
+      "M13"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)",
+      "KPI / Performance Data Error"
+    ],
+    "learningTheme": "จาก silo thinking สู่ holistic business view",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 135,
+    "code": "M16",
+    "name": "วรรณภา บุญส่ง",
+    "department": "HR & Admin",
+    "jobTitle": "HR & Admin Manager",
+    "hierarchyDepth": 1,
+    "joinDate": "2017-05-09",
+    "tenureMonths": 110,
+    "startingPosition": "HR Assistant",
+    "currentPositionStartDate": "2018-12-30",
+    "promotionCount": 3,
+    "careerArcSummary": "เริ่มจากHR Assistant เติบโตผ่าน 3 การเลื่อนตำแหน่ง สู่ HR & Admin Manager",
+    "mainStrength": "Talent Acquisition",
+    "mainWeakness": "Reactive rather than proactive",
+    "mistakeThemeCodes": [
+      "M01",
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Medium",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 136,
+    "code": "M16",
+    "name": "พิมพ์ชนก วัฒนชัย",
+    "department": "HR & Admin",
+    "jobTitle": "Recruiter",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-04-25",
+    "tenureMonths": 98,
+    "startingPosition": "Recruitment Coordinator",
+    "currentPositionStartDate": "2021-10-20",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางHR & Admin จากRecruitment Coordinator เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Employee Relations",
+    "mainWeakness": "Reactive rather than proactive",
+    "mistakeThemeCodes": [
+      "M02"
+    ],
+    "mistakeThemes": [
+      "Missed Regulatory Deadline"
+    ],
+    "learningTheme": "จากความผิดพลาดสู่การปรับปรุงกระบวนการทำงาน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 137,
+    "code": "M16",
+    "name": "สุภัสสรา สิริกุล",
+    "department": "HR & Admin",
+    "jobTitle": "Recruiter",
+    "hierarchyDepth": 2,
+    "joinDate": "2019-01-20",
+    "tenureMonths": 89,
+    "startingPosition": "Payroll Clerk",
+    "currentPositionStartDate": "2023-06-12",
+    "promotionCount": 3,
+    "careerArcSummary": "จากPayroll Clerk พัฒนาสู่ Recruiter ผ่านผลงานHR & Admin ที่โดดเด่น",
+    "mainStrength": "Talent Acquisition",
+    "mainWeakness": "Paper-heavy processes",
+    "mistakeThemeCodes": [
+      "M09",
+      "M02"
+    ],
+    "mistakeThemes": [
+      "Hiring / HR Process Error",
+      "Missed Regulatory Deadline"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 138,
+    "code": "M16",
+    "name": "อัครเดช สุขประเสริฐ",
+    "department": "HR & Admin",
+    "jobTitle": "Payroll Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-08-23",
+    "tenureMonths": 94,
+    "startingPosition": "Recruitment Coordinator",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 2,
+    "careerArcSummary": "จากRecruitment Coordinator พัฒนาสู่ Payroll Officer ผ่านผลงานHR & Admin ที่โดดเด่น",
+    "mainStrength": "Policy Development",
+    "mainWeakness": "Paper-heavy processes",
+    "mistakeThemeCodes": [
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การพัฒนาความฉลาดทางอารมณ์ในที่ทำงาน",
+    "retentionRisk": "Medium",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 139,
+    "code": "M16",
+    "name": "ภูริณัฐ รุ่งเรืองกิจ",
+    "department": "HR & Admin",
+    "jobTitle": "HR Admin",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-03-12",
+    "tenureMonths": 75,
+    "startingPosition": "Recruitment Coordinator",
+    "currentPositionStartDate": "2022-06-17",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางHR & Admin จากRecruitment Coordinator เติบโตอย่างมั่นคงด้วย 3 การเลื่อนขั้น",
+    "mainStrength": "Compensation Planning",
+    "mainWeakness": "Slow policy rollout",
+    "mistakeThemeCodes": [
+      "M11",
+      "M02"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment",
+      "Missed Regulatory Deadline"
+    ],
+    "learningTheme": "จากปัญหาซ้ำซากสู่ root cause analysis",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 140,
+    "code": "M16",
+    "name": "รัชพล เพชรนิยม",
+    "department": "HR & Admin",
+    "jobTitle": "HR Admin",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-01-29",
+    "tenureMonths": 77,
+    "startingPosition": "Payroll Clerk",
+    "currentPositionStartDate": "2024-05-07",
+    "promotionCount": 2,
+    "careerArcSummary": "จากPayroll Clerk พัฒนาสู่ HR Admin ผ่านผลงานHR & Admin ที่โดดเด่น",
+    "mainStrength": "Talent Acquisition",
+    "mainWeakness": "Reactive rather than proactive",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 141,
+    "code": "M16",
+    "name": "จักริน สุทธิกุล",
+    "department": "HR & Admin",
+    "jobTitle": "General Admin",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-03-30",
+    "tenureMonths": 99,
+    "startingPosition": "Recruitment Coordinator",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางHR & Admin จากRecruitment Coordinator เติบโตอย่างมั่นคงด้วย 3 การเลื่อนขั้น",
+    "mainStrength": "Policy Development",
+    "mainWeakness": "Slow policy rollout",
+    "mistakeThemeCodes": [
+      "M09"
+    ],
+    "mistakeThemes": [
+      "Hiring / HR Process Error"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 142,
+    "code": "M16",
+    "name": "สิรวิชญ์ บุญญาภา",
+    "department": "HR & Admin",
+    "jobTitle": "General Admin",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-03-16",
+    "tenureMonths": 111,
+    "startingPosition": "Admin Officer",
+    "currentPositionStartDate": "2021-10-20",
+    "promotionCount": 2,
+    "careerArcSummary": "เส้นทางHR & Admin จากAdmin Officer เติบโตอย่างมั่นคงด้วย 2 การเลื่อนขั้น",
+    "mainStrength": "Training Design",
+    "mainWeakness": "Avoids difficult conversations",
+    "mistakeThemeCodes": [
+      "M09"
+    ],
+    "mistakeThemes": [
+      "Hiring / HR Process Error"
+    ],
+    "learningTheme": "จาก technical expert สู่ people leader",
+    "retentionRisk": "High",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 143,
+    "code": "M16",
+    "name": "Pattharawadee Sukata",
+    "department": "IT",
+    "jobTitle": "IT Manager",
+    "hierarchyDepth": 1,
+    "joinDate": "2018-01-28",
+    "tenureMonths": 101,
+    "startingPosition": "IT Support Technician",
+    "currentPositionStartDate": "2019-12-27",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางจากIT Support Technician สร้างผลงานสำคัญในIT จนถึงIT Manager",
+    "mainStrength": "Cybersecurity",
+    "mainWeakness": "Poor user communication",
+    "mistakeThemeCodes": [
+      "M07",
+      "M01"
+    ],
+    "mistakeThemes": [
+      "Security Incident (Minor)",
+      "Unauthorized Data Sharing"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 144,
+    "code": "M16",
+    "name": "กรวิชญ์ วัฒนากุล",
+    "department": "IT",
+    "jobTitle": "System / Network Admin",
+    "hierarchyDepth": 2,
+    "joinDate": "2019-08-24",
+    "tenureMonths": 82,
+    "startingPosition": "Help Desk",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 1,
+    "careerArcSummary": "จากHelp Desk พัฒนาสู่ System / Network Admin ผ่านผลงานIT ที่โดดเด่น",
+    "mainStrength": "Incident Response",
+    "mainWeakness": "Firefighting over planning",
+    "mistakeThemeCodes": [
+      "M01",
+      "M07"
+    ],
+    "mistakeThemes": [
+      "Unauthorized Data Sharing",
+      "Security Incident (Minor)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 145,
+    "code": "M16",
+    "name": "ศักรินทร์ พงษ์ไพโรจน์",
+    "department": "IT",
+    "jobTitle": "IT Support",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-10-27",
+    "tenureMonths": 104,
+    "startingPosition": "Network Administrator Trainee",
+    "currentPositionStartDate": "2022-10-15",
+    "promotionCount": 3,
+    "careerArcSummary": "จากNetwork Administrator Trainee พัฒนาสู่ IT Support ผ่านผลงานIT ที่โดดเด่น",
+    "mainStrength": "Cybersecurity",
+    "mainWeakness": "Tech debt accumulation",
+    "mistakeThemeCodes": [
+      "M07",
+      "M15"
+    ],
+    "mistakeThemes": [
+      "Security Incident (Minor)",
+      "Wrong Sensitivity Label Applied"
+    ],
+    "learningTheme": "การพัฒนาทักษะการนำเสนอและการโน้มน้าว",
+    "retentionRisk": "Medium",
+    "successionPotential": "Not Identified"
+  },
+  {
+    "employeeId": 146,
+    "code": "M16",
+    "name": "ณัฐวุฒิ หิรัญญา",
+    "department": "IT",
+    "jobTitle": "IT Support",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-03-11",
+    "tenureMonths": 100,
+    "startingPosition": "Help Desk",
+    "currentPositionStartDate": "2021-06-22",
+    "promotionCount": 1,
+    "careerArcSummary": "เส้นทางIT จากHelp Desk เติบโตอย่างมั่นคงด้วย 1 การเลื่อนขั้น",
+    "mainStrength": "Cloud Migration",
+    "mainWeakness": "Poor user communication",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การยอมรับ feedback และปรับตัวอย่างต่อเนื่อง",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 147,
+    "code": "M16",
+    "name": "วริศ ไชยรัตน์",
+    "department": "Legal",
+    "jobTitle": "Legal Manager",
+    "hierarchyDepth": 1,
+    "joinDate": "2017-01-25",
+    "tenureMonths": 113,
+    "startingPosition": "Legal Assistant",
+    "currentPositionStartDate": "2018-03-15",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางจากLegal Assistant สร้างผลงานสำคัญในLegal จนถึงLegal Manager",
+    "mainStrength": "Policy Writing",
+    "mainWeakness": "Slow contract turnaround",
+    "mistakeThemeCodes": [
+      "M16"
+    ],
+    "mistakeThemes": [
+      "Process Bypass (Shortcut)"
+    ],
+    "learningTheme": "การเรียนรู้ผ่านการทำงานข้ามแผนก",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  },
+  {
+    "employeeId": 148,
+    "code": "M16",
+    "name": "ชลธิชา เกตุแก้ว",
+    "department": "Legal",
+    "jobTitle": "Legal Officer",
+    "hierarchyDepth": 2,
+    "joinDate": "2018-01-06",
+    "tenureMonths": 102,
+    "startingPosition": "Paralegal",
+    "currentPositionStartDate": "2023-05-13",
+    "promotionCount": 3,
+    "careerArcSummary": "เส้นทางLegal จากParalegal เติบโตอย่างมั่นคงด้วย 3 การเลื่อนขั้น",
+    "mainStrength": "Litigation Support",
+    "mainWeakness": "Jargon-heavy communication",
+    "mistakeThemeCodes": [
+      "M11"
+    ],
+    "mistakeThemes": [
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การจัดการความเสี่ยงและการตัดสินใจภายใต้ความไม่แน่นอน",
+    "retentionRisk": "Low",
+    "successionPotential": "3-5 Years"
+  },
+  {
+    "employeeId": 149,
+    "code": "M16",
+    "name": "ปวีณา ตั้งเจริญ",
+    "department": "Office Support",
+    "jobTitle": "Housekeeper",
+    "hierarchyDepth": 2,
+    "joinDate": "2020-07-26",
+    "tenureMonths": 71,
+    "startingPosition": "Receptionist",
+    "currentPositionStartDate": "2023-04-13",
+    "promotionCount": 2,
+    "careerArcSummary": "จากReceptionist พัฒนาสู่ Housekeeper ผ่านผลงานOffice Support ที่โดดเด่น",
+    "mainStrength": "Event Coordination",
+    "mainWeakness": "Taken for granted by other depts",
+    "mistakeThemeCodes": [
+      "M14",
+      "M11"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded",
+      "Communication / Stakeholder Misalignment"
+    ],
+    "learningTheme": "การพัฒนาทักษะการสื่อสารกับผู้มีส่วนได้ส่วนเสีย",
+    "retentionRisk": "Low",
+    "successionPotential": "1-2 Years"
+  },
+  {
+    "employeeId": 150,
+    "code": "M16",
+    "name": "มนัสนันท์ อินทรักษา",
+    "department": "Office Support",
+    "jobTitle": "Executive Driver",
+    "hierarchyDepth": 2,
+    "joinDate": "2017-12-25",
+    "tenureMonths": 102,
+    "startingPosition": "Receptionist",
+    "currentPositionStartDate": "2021-09-20",
+    "promotionCount": 1,
+    "careerArcSummary": "จากReceptionist พัฒนาสู่ Executive Driver ผ่านผลงานOffice Support ที่โดดเด่น",
+    "mainStrength": "Office Administration",
+    "mainWeakness": "Lack of career development focus",
+    "mistakeThemeCodes": [
+      "M14"
+    ],
+    "mistakeThemes": [
+      "OneDrive Quota Exceeded"
+    ],
+    "learningTheme": "การสร้างความไว้วางใจกับทีมและลูกค้า",
+    "retentionRisk": "Low",
+    "successionPotential": "Ready Now"
+  }
+]

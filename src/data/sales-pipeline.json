@@ -1,0 +1,454 @@
+[
+  {
+    "deal_id": "DEAL001",
+    "deal_name": "พัฒนา Smart Factory อมตะนคร",
+    "customer_id": "CUS023",
+    "owner_emp_id": 8,
+    "products": [
+      "PRD017"
+    ],
+    "deal_value_thb": 33159497,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-10-13",
+    "created_date": "2024-07-14"
+  },
+  {
+    "deal_id": "DEAL002",
+    "deal_name": "ออกแบบ-สร้าง Premium Villa เขาใหญ่",
+    "customer_id": "CUS033",
+    "owner_emp_id": 20,
+    "products": [
+      "PRD005"
+    ],
+    "deal_value_thb": 6422748,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-10-14",
+    "created_date": "2024-01-09"
+  },
+  {
+    "deal_id": "DEAL003",
+    "deal_name": "ระบบ Solar Rooftop สำหรับโรงงาน",
+    "customer_id": "CUS021",
+    "owner_emp_id": 19,
+    "products": [
+      "PRD014",
+      "PRD019"
+    ],
+    "deal_value_thb": 7751407,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-12-28",
+    "created_date": "2024-05-12"
+  },
+  {
+    "deal_id": "DEAL004",
+    "deal_name": "ระบบ BIM สำหรับโครงการรถไฟฟ้าสายสีส้ม",
+    "customer_id": "CUS001",
+    "owner_emp_id": 13,
+    "products": [
+      "PRD001",
+      "PRD014",
+      "PRD008"
+    ],
+    "deal_value_thb": 38901694,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-03-03",
+    "created_date": "2024-07-28"
+  },
+  {
+    "deal_id": "DEAL005",
+    "deal_name": "ระบบ BIM สำหรับโครงการรถไฟฟ้าสายสีส้ม",
+    "customer_id": "CUS032",
+    "owner_emp_id": 17,
+    "products": [
+      "PRD015"
+    ],
+    "deal_value_thb": 7367822,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-11-03",
+    "created_date": "2024-03-22"
+  },
+  {
+    "deal_id": "DEAL006",
+    "deal_name": "วางระบบ BMS อาคารจอดรถ สุวรรณภูมิ",
+    "customer_id": "CUS019",
+    "owner_emp_id": 10,
+    "products": [
+      "PRD003",
+      "PRD006",
+      "PRD014"
+    ],
+    "deal_value_thb": 41968578,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-04-19",
+    "created_date": "2024-04-11"
+  },
+  {
+    "deal_id": "DEAL007",
+    "deal_name": "ก่อสร้างอาคารเรียน มหาวิทยาลัยธรรมศาสตร์",
+    "customer_id": "CUS008",
+    "owner_emp_id": 19,
+    "products": [
+      "PRD006"
+    ],
+    "deal_value_thb": 8940404,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-06-16",
+    "created_date": "2024-12-01"
+  },
+  {
+    "deal_id": "DEAL008",
+    "deal_name": "ออกแบบสวนสาธารณะชุมชนคลองเตย",
+    "customer_id": "CUS036",
+    "owner_emp_id": 13,
+    "products": [
+      "PRD007",
+      "PRD005"
+    ],
+    "deal_value_thb": 45054856,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-02-28",
+    "created_date": "2024-04-12"
+  },
+  {
+    "deal_id": "DEAL009",
+    "deal_name": "ก่อสร้างโรงพยาบาลเอกชน ระยอง",
+    "customer_id": "CUS038",
+    "owner_emp_id": 30,
+    "products": [
+      "PRD016"
+    ],
+    "deal_value_thb": 2772880,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-06-04",
+    "created_date": "2024-08-23"
+  },
+  {
+    "deal_id": "DEAL010",
+    "deal_name": "ปรับปรุงระบบ MEP โรงแรม ภูเก็ต",
+    "customer_id": "CUS016",
+    "owner_emp_id": 19,
+    "products": [
+      "PRD018",
+      "PRD012",
+      "PRD020"
+    ],
+    "deal_value_thb": 25695791,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-04-02",
+    "created_date": "2024-03-19"
+  },
+  {
+    "deal_id": "DEAL011",
+    "deal_name": "ขยายโรงงานผลิตชิ้นส่วนยานยนต์",
+    "customer_id": "CUS015",
+    "owner_emp_id": 25,
+    "products": [
+      "PRD015",
+      "PRD013",
+      "PRD008"
+    ],
+    "deal_value_thb": 33626629,
+    "stage": "Proposal",
+    "probability_pct": 50,
+    "expected_close_date": "2025-03-08",
+    "created_date": "2024-05-17"
+  },
+  {
+    "deal_id": "DEAL012",
+    "deal_name": "ก่อสร้างอาคารเรียน มหาวิทยาลัยธรรมศาสตร์",
+    "customer_id": "CUS019",
+    "owner_emp_id": 28,
+    "products": [
+      "PRD012",
+      "PRD014",
+      "PRD010"
+    ],
+    "deal_value_thb": 28931879,
+    "stage": "Proposal",
+    "probability_pct": 50,
+    "expected_close_date": "2025-11-05",
+    "created_date": "2024-06-28"
+  },
+  {
+    "deal_id": "DEAL013",
+    "deal_name": "ก่อสร้างหอพักนักศึกษา ม.อุบลฯ",
+    "customer_id": "CUS014",
+    "owner_emp_id": 32,
+    "products": [
+      "PRD017",
+      "PRD010"
+    ],
+    "deal_value_thb": 29355721,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-12-02",
+    "created_date": "2024-11-12"
+  },
+  {
+    "deal_id": "DEAL014",
+    "deal_name": "ระบบ Smart Building อาคารรัฐสภาใหม่",
+    "customer_id": "CUS025",
+    "owner_emp_id": 29,
+    "products": [
+      "PRD009",
+      "PRD008"
+    ],
+    "deal_value_thb": 47868193,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-08-24",
+    "created_date": "2024-11-27"
+  },
+  {
+    "deal_id": "DEAL015",
+    "deal_name": "พัฒนา Smart Factory อมตะนคร",
+    "customer_id": "CUS032",
+    "owner_emp_id": 7,
+    "products": [
+      "PRD013",
+      "PRD009",
+      "PRD018"
+    ],
+    "deal_value_thb": 39346877,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-11-07",
+    "created_date": "2024-06-03"
+  },
+  {
+    "deal_id": "DEAL016",
+    "deal_name": "ประมูลก่อสร้างสนามบินเบตง",
+    "customer_id": "CUS037",
+    "owner_emp_id": 34,
+    "products": [
+      "PRD010",
+      "PRD004"
+    ],
+    "deal_value_thb": 45303764,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-11-25",
+    "created_date": "2024-04-23"
+  },
+  {
+    "deal_id": "DEAL017",
+    "deal_name": "ระบบ Smart Building อาคารรัฐสภาใหม่",
+    "customer_id": "CUS033",
+    "owner_emp_id": 20,
+    "products": [
+      "PRD008",
+      "PRD002",
+      "PRD015"
+    ],
+    "deal_value_thb": 42788999,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-11-15",
+    "created_date": "2024-02-26"
+  },
+  {
+    "deal_id": "DEAL018",
+    "deal_name": "ก่อสร้าง Data Center บางนา",
+    "customer_id": "CUS033",
+    "owner_emp_id": 30,
+    "products": [
+      "PRD009"
+    ],
+    "deal_value_thb": 7903007,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-09-19",
+    "created_date": "2024-01-22"
+  },
+  {
+    "deal_id": "DEAL019",
+    "deal_name": "รีโนเวทโรงแรม พัทยา Phase 2",
+    "customer_id": "CUS033",
+    "owner_emp_id": 26,
+    "products": [
+      "PRD014",
+      "PRD020"
+    ],
+    "deal_value_thb": 17251807,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-10-14",
+    "created_date": "2024-05-08"
+  },
+  {
+    "deal_id": "DEAL020",
+    "deal_name": "ก่อสร้าง Resort 5 ดาว เกาะสมุย",
+    "customer_id": "CUS034",
+    "owner_emp_id": 26,
+    "products": [
+      "PRD014",
+      "PRD002",
+      "PRD013"
+    ],
+    "deal_value_thb": 14884367,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-08-05",
+    "created_date": "2024-07-28"
+  },
+  {
+    "deal_id": "DEAL021",
+    "deal_name": "ออกแบบ-สร้าง อาคารสำนักงาน 15 ชั้น",
+    "customer_id": "CUS038",
+    "owner_emp_id": 7,
+    "products": [
+      "PRD012",
+      "PRD009",
+      "PRD018"
+    ],
+    "deal_value_thb": 2747744,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-10-25",
+    "created_date": "2024-11-17"
+  },
+  {
+    "deal_id": "DEAL022",
+    "deal_name": "ก่อสร้างโรงพยาบาลเอกชน ระยอง",
+    "customer_id": "CUS001",
+    "owner_emp_id": 30,
+    "products": [
+      "PRD008",
+      "PRD006"
+    ],
+    "deal_value_thb": 12257157,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-06-09",
+    "created_date": "2024-01-13"
+  },
+  {
+    "deal_id": "DEAL023",
+    "deal_name": "ก่อสร้างโกดังสินค้า ลาดกระบัง",
+    "customer_id": "CUS032",
+    "owner_emp_id": 28,
+    "products": [
+      "PRD020"
+    ],
+    "deal_value_thb": 46583281,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-02-20",
+    "created_date": "2024-04-24"
+  },
+  {
+    "deal_id": "DEAL024",
+    "deal_name": "ออกแบบสวนสาธารณะชุมชนคลองเตย",
+    "customer_id": "CUS001",
+    "owner_emp_id": 11,
+    "products": [
+      "PRD012",
+      "PRD016",
+      "PRD014"
+    ],
+    "deal_value_thb": 37411328,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-07-04",
+    "created_date": "2024-05-12"
+  },
+  {
+    "deal_id": "DEAL025",
+    "deal_name": "ก่อสร้าง Resort 5 ดาว เกาะสมุย",
+    "customer_id": "CUS024",
+    "owner_emp_id": 32,
+    "products": [
+      "PRD018"
+    ],
+    "deal_value_thb": 3670208,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-07-22",
+    "created_date": "2024-07-13"
+  },
+  {
+    "deal_id": "DEAL026",
+    "deal_name": "รีโนเวทโรงแรม พัทยา Phase 2",
+    "customer_id": "CUS015",
+    "owner_emp_id": 10,
+    "products": [
+      "PRD014"
+    ],
+    "deal_value_thb": 3444966,
+    "stage": "Prospecting",
+    "probability_pct": 10,
+    "expected_close_date": "2025-03-16",
+    "created_date": "2024-06-22"
+  },
+  {
+    "deal_id": "DEAL027",
+    "deal_name": "Fit-out Co-Working Space 5 สาขา",
+    "customer_id": "CUS008",
+    "owner_emp_id": 8,
+    "products": [
+      "PRD017",
+      "PRD012"
+    ],
+    "deal_value_thb": 32917265,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-07-10",
+    "created_date": "2024-12-23"
+  },
+  {
+    "deal_id": "DEAL028",
+    "deal_name": "ประมูลสร้างสะพานข้ามแม่น้ำท่าจีน",
+    "customer_id": "CUS040",
+    "owner_emp_id": 21,
+    "products": [
+      "PRD008",
+      "PRD016"
+    ],
+    "deal_value_thb": 44561701,
+    "stage": "Proposal",
+    "probability_pct": 50,
+    "expected_close_date": "2025-12-10",
+    "created_date": "2024-01-27"
+  },
+  {
+    "deal_id": "DEAL029",
+    "deal_name": "Green Building Certification อาคาร SET",
+    "customer_id": "CUS032",
+    "owner_emp_id": 21,
+    "products": [
+      "PRD019",
+      "PRD020",
+      "PRD010"
+    ],
+    "deal_value_thb": 34986258,
+    "stage": "Qualified",
+    "probability_pct": 30,
+    "expected_close_date": "2025-03-13",
+    "created_date": "2024-07-08"
+  },
+  {
+    "deal_id": "DEAL030",
+    "deal_name": "ก่อสร้างโรงพยาบาลเอกชน ระยอง",
+    "customer_id": "CUS011",
+    "owner_emp_id": 17,
+    "products": [
+      "PRD010",
+      "PRD003"
+    ],
+    "deal_value_thb": 3409832,
+    "stage": "Negotiation",
+    "probability_pct": 70,
+    "expected_close_date": "2025-11-02",
+    "created_date": "2024-04-17"
+  }
+]

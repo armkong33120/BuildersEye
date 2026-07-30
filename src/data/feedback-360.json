@@ -1,0 +1,752 @@
+[
+  {
+    "employeeId": 1,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 2,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 3,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 4,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 5,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 6,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 7,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 8,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 9,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 10,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 11,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 12,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 13,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 14,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 15,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 16,
+    "Reviewer_Type": "Manager",
+    "Comment": "Sometimes micromanages — should delegate more."
+  },
+  {
+    "employeeId": 17,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 18,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 19,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 20,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 21,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 22,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 23,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 24,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 25,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 26,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 27,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 28,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 29,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 30,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 31,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 32,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 33,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 34,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 35,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 36,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 37,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 38,
+    "Reviewer_Type": "Manager",
+    "Comment": "Sometimes micromanages — should delegate more."
+  },
+  {
+    "employeeId": 39,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 40,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 41,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 42,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 43,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 44,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 45,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 46,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 47,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 48,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 49,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 50,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 51,
+    "Reviewer_Type": "Manager",
+    "Comment": "Sometimes micromanages — should delegate more."
+  },
+  {
+    "employeeId": 52,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 53,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 54,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 55,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 56,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 57,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 58,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 59,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 60,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 61,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 62,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 63,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 64,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 65,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 66,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 67,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 68,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 69,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 70,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 71,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 72,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 73,
+    "Reviewer_Type": "Manager",
+    "Comment": "Sometimes micromanages — should delegate more."
+  },
+  {
+    "employeeId": 74,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 75,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 76,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 77,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 78,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 79,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 80,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 81,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 82,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 83,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 84,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 85,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 86,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 87,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 88,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Too hands-off — needs more guidance on complex tasks."
+  },
+  {
+    "employeeId": 89,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 90,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 91,
+    "Reviewer_Type": "Manager",
+    "Comment": "Needs to improve communication with cross-functional teams."
+  },
+  {
+    "employeeId": 92,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 93,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 94,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 95,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 96,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 97,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 98,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 99,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 100,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 101,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 102,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 103,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 104,
+    "Reviewer_Type": "Peer",
+    "Comment": "Great collaborator, always willing to help."
+  },
+  {
+    "employeeId": 105,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 106,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 107,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 108,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 109,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 110,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 111,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 112,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 113,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 114,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 115,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 116,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 117,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 118,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 119,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 120,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 121,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 122,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 123,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 124,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 125,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 126,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 127,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 128,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 129,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 130,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 131,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 132,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 133,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 134,
+    "Reviewer_Type": "Peer",
+    "Comment": "Very reliable and detail-oriented."
+  },
+  {
+    "employeeId": 135,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  },
+  {
+    "employeeId": 136,
+    "Reviewer_Type": "Manager",
+    "Comment": "Excellent leadership. Drives results consistently."
+  },
+  {
+    "employeeId": 137,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 138,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 139,
+    "Reviewer_Type": "Peer",
+    "Comment": "Could improve on giving constructive feedback."
+  },
+  {
+    "employeeId": 140,
+    "Reviewer_Type": "Peer",
+    "Comment": "Sometimes misses deadlines due to overcommitting."
+  },
+  {
+    "employeeId": 141,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 142,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 143,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 144,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 145,
+    "Reviewer_Type": "Manager",
+    "Comment": "Very strategic thinker. Great at mentoring juniors."
+  },
+  {
+    "employeeId": 146,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Fair and transparent in performance reviews."
+  },
+  {
+    "employeeId": 147,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 148,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Supportive manager, empowers the team."
+  },
+  {
+    "employeeId": 149,
+    "Reviewer_Type": "Manager",
+    "Comment": "Sometimes micromanages — should delegate more."
+  },
+  {
+    "employeeId": 150,
+    "Reviewer_Type": "Subordinate",
+    "Comment": "Great mentor, always has time for 1-on-1s."
+  }
+]

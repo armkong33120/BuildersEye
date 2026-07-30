@@ -1,0 +1,1394 @@
+[
+  {
+    "employeeId": 1,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 2,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 3,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 4,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 5,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 6,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 7,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 8,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 9,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 10,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 11,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 12,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 13,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 14,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 15,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 16,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 17,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 18,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 19,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 20,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 21,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 22,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 23,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 24,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 25,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 26,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 27,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 28,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 29,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 30,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 31,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 32,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 33,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 34,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 35,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 36,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 37,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 38,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 39,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 40,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 41,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 41,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 41,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 42,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 42,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 42,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 43,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 44,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 45,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 45,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 45,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 46,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 46,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 46,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 47,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 47,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 47,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 48,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 48,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 48,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 49,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 49,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 49,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 50,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 50,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 50,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 51,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 51,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 51,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 52,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 52,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 52,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 53,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 53,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 53,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 54,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 54,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 54,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 55,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 55,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 55,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 56,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 56,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 56,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 57,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 57,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 57,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 58,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 58,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 58,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 59,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 59,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 59,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 60,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 60,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 60,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 61,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 61,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 61,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 62,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 62,
+    "License_Name": "Adobe Creative Cloud",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4080
+  },
+  {
+    "employeeId": 62,
+    "License_Name": "AutoCAD LT",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 1340
+  },
+  {
+    "employeeId": 63,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 63,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 64,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 64,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 65,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 65,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 66,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 66,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 67,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 67,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 68,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 68,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 69,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 69,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 70,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 70,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 71,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 71,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 72,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 72,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 73,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 73,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 74,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 74,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 75,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 75,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 76,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 76,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 77,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 77,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 78,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 78,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 79,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 79,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 80,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 80,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 81,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 81,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 82,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 82,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 83,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 83,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 84,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 84,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 85,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 85,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 86,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 86,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 87,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 87,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 88,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 88,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 89,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 89,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 90,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 90,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 91,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 91,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 92,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 92,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 93,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 93,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 94,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 94,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 95,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 95,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 96,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 96,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 97,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 97,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 98,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 98,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 99,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 99,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 100,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 100,
+    "License_Name": "AutoCAD",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 4750
+  },
+  {
+    "employeeId": 101,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 102,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 103,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 104,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 105,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 106,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 107,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 108,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 109,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 110,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 111,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 112,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 113,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 114,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 115,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 116,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 117,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 118,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 119,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 120,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 121,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 122,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 123,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 124,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 125,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 126,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 127,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 128,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 129,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 130,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 131,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 132,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 133,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 134,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 135,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 136,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 137,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 138,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 139,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 140,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 141,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 142,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 143,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 143,
+    "License_Name": "GitHub Copilot",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 665
+  },
+  {
+    "employeeId": 144,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 144,
+    "License_Name": "GitHub Copilot",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 665
+  },
+  {
+    "employeeId": 145,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 145,
+    "License_Name": "GitHub Copilot",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 665
+  },
+  {
+    "employeeId": 146,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 146,
+    "License_Name": "GitHub Copilot",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 665
+  },
+  {
+    "employeeId": 147,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 148,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 149,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  },
+  {
+    "employeeId": 150,
+    "License_Name": "Microsoft 365 Business Standard",
+    "Status": "Active",
+    "Cost_Per_Seat_THB": 448
+  }
+]

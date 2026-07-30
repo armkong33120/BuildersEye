@@ -1,0 +1,202 @@
+[
+  {
+    "product_id": "PRD001",
+    "product_name": "งานออกแบบสถาปัตยกรรม",
+    "category": "Design Service",
+    "owner_department": "Design & Architecture",
+    "unit_price_thb": 800000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 5.0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD002",
+    "product_name": "งานออกแบบตกแต่งภายใน (Interior Design)",
+    "category": "Design Service",
+    "owner_department": "Design & Architecture",
+    "unit_price_thb": 350000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 5.5,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD003",
+    "product_name": "งานออกแบบโครงสร้าง (Structural Design)",
+    "category": "Design Service",
+    "owner_department": "Design & Architecture",
+    "unit_price_thb": 600000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 4.5,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD004",
+    "product_name": "BIM Consulting & Modeling",
+    "category": "Consulting",
+    "owner_department": "Design & Architecture",
+    "unit_price_thb": 450000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 6.0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD005",
+    "product_name": "งานก่อสร้างบ้านพักอาศัย",
+    "category": "Construction",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 25000,
+    "unit": "ตร.ม.",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD006",
+    "product_name": "งานก่อสร้างอาคารพาณิชย์",
+    "category": "Construction",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 30000,
+    "unit": "ตร.ม.",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD007",
+    "product_name": "งานรีโนเวท/ปรับปรุงอาคาร",
+    "category": "Construction",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 15000,
+    "unit": "ตร.ม.",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD008",
+    "product_name": "งานระบบ MEP (ไฟฟ้า/ประปา/แอร์)",
+    "category": "Construction",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 5000000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD009",
+    "product_name": "งาน Fit-out สำนักงาน",
+    "category": "Construction",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 12000,
+    "unit": "ตร.ม.",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD010",
+    "product_name": "ตรวจสอบรับประกัน (Warranty Inspection)",
+    "category": "Warranty",
+    "owner_department": "Customer Service & Warranty",
+    "unit_price_thb": 25000,
+    "unit": "ครั้ง",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD011",
+    "product_name": "ซ่อมแซมฉุกเฉิน (Emergency Repair)",
+    "category": "Warranty",
+    "owner_department": "Customer Service & Warranty",
+    "unit_price_thb": 80000,
+    "unit": "ครั้ง",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD012",
+    "product_name": "สัญญาบำรุงรักษารายปี (Maintenance Contract)",
+    "category": "Maintenance",
+    "owner_department": "Customer Service & Warranty",
+    "unit_price_thb": 300000,
+    "unit": "ปี",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD013",
+    "product_name": "จัดหาวัสดุก่อสร้าง (Material Sourcing)",
+    "category": "Procurement",
+    "owner_department": "Procurement & Warehouse",
+    "unit_price_thb": 0,
+    "unit": "ตามสัญญา",
+    "cost_rate_pct": 8.0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD014",
+    "product_name": "บริการให้เช่าเครื่องจักร/นั่งร้าน",
+    "category": "Rental",
+    "owner_department": "Procurement & Warehouse",
+    "unit_price_thb": 150000,
+    "unit": "เดือน",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD015",
+    "product_name": "ระบบ Smart Home & IoT",
+    "category": "IT Solution",
+    "owner_department": "IT",
+    "unit_price_thb": 1500000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD016",
+    "product_name": "ระบบบริหารอาคาร (BMS)",
+    "category": "IT Solution",
+    "owner_department": "IT",
+    "unit_price_thb": 2500000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD017",
+    "product_name": "ที่ปรึกษาบริหารโครงการ (PM Consulting)",
+    "category": "Consulting",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 200000,
+    "unit": "เดือน",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD018",
+    "product_name": "ประเมินราคา/ถอดแบบ (Cost Estimation)",
+    "category": "Consulting",
+    "owner_department": "Finance & Accounting",
+    "unit_price_thb": 150000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD019",
+    "product_name": "ตรวจสอบความปลอดภัย (Safety Audit)",
+    "category": "Compliance",
+    "owner_department": "Engineering & Construction",
+    "unit_price_thb": 120000,
+    "unit": "ครั้ง",
+    "cost_rate_pct": 0,
+    "is_active": true
+  },
+  {
+    "product_id": "PRD020",
+    "product_name": "ขอรับรองอาคารเขียว (Green Building Certification)",
+    "category": "Compliance",
+    "owner_department": "Design & Architecture",
+    "unit_price_thb": 500000,
+    "unit": "โครงการ",
+    "cost_rate_pct": 0,
+    "is_active": true
+  }
+]

@@ -8,13 +8,17 @@
     "dev": "vite --host 0.0.0.0 --port 5174",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4174",
-    "verify": "node scripts/verify-scene.mjs"
+    "verify": "node scripts/verify-scene.mjs",
+    "dev:backend": "cd server && node --watch index.js",
+    "index:hr": "cd server && node index.js --reindex",
+    "dev:all": "concurrently -n frontend,backend -c cyan,yellow \"vite --host 0.0.0.0 --port 5174\" \"cd server && node --watch index.js\""
   },
   "dependencies": {
     "lucide": "^0.468.0",
     "three": "^0.171.0"
   },
   "devDependencies": {
+    "concurrently": "^10.0.3",
     "playwright": "^1.61.1",
     "pngjs": "^7.0.0",
     "vite": "^6.0.3"

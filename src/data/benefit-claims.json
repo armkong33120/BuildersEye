@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Medical_THB": 9944,
+    "Dental_THB": 4729,
+    "Wellness_THB": 1304
+  },
+  {
+    "employeeId": 2,
+    "Medical_THB": 22015,
+    "Dental_THB": 2142,
+    "Wellness_THB": 4083
+  },
+  {
+    "employeeId": 3,
+    "Medical_THB": 3309,
+    "Dental_THB": 2614,
+    "Wellness_THB": 4016
+  },
+  {
+    "employeeId": 4,
+    "Medical_THB": 8244,
+    "Dental_THB": 5417,
+    "Wellness_THB": 71
+  },
+  {
+    "employeeId": 5,
+    "Medical_THB": 19066,
+    "Dental_THB": 2556,
+    "Wellness_THB": 4170
+  },
+  {
+    "employeeId": 6,
+    "Medical_THB": 13701,
+    "Dental_THB": 1838,
+    "Wellness_THB": 2270
+  },
+  {
+    "employeeId": 7,
+    "Medical_THB": 571,
+    "Dental_THB": 514,
+    "Wellness_THB": 101
+  },
+  {
+    "employeeId": 8,
+    "Medical_THB": 7075,
+    "Dental_THB": 6770,
+    "Wellness_THB": 4253
+  },
+  {
+    "employeeId": 9,
+    "Medical_THB": 4879,
+    "Dental_THB": 327,
+    "Wellness_THB": 4070
+  },
+  {
+    "employeeId": 10,
+    "Medical_THB": 4674,
+    "Dental_THB": 2456,
+    "Wellness_THB": 1738
+  },
+  {
+    "employeeId": 11,
+    "Medical_THB": 20883,
+    "Dental_THB": 1990,
+    "Wellness_THB": 3073
+  },
+  {
+    "employeeId": 12,
+    "Medical_THB": 16022,
+    "Dental_THB": 5066,
+    "Wellness_THB": 4615
+  },
+  {
+    "employeeId": 13,
+    "Medical_THB": 13750,
+    "Dental_THB": 6611,
+    "Wellness_THB": 3932
+  },
+  {
+    "employeeId": 14,
+    "Medical_THB": 10291,
+    "Dental_THB": 5696,
+    "Wellness_THB": 4695
+  },
+  {
+    "employeeId": 15,
+    "Medical_THB": 13019,
+    "Dental_THB": 4686,
+    "Wellness_THB": 3542
+  },
+  {
+    "employeeId": 16,
+    "Medical_THB": 15977,
+    "Dental_THB": 2673,
+    "Wellness_THB": 3242
+  },
+  {
+    "employeeId": 17,
+    "Medical_THB": 4127,
+    "Dental_THB": 4909,
+    "Wellness_THB": 4158
+  },
+  {
+    "employeeId": 18,
+    "Medical_THB": 6236,
+    "Dental_THB": 737,
+    "Wellness_THB": 1428
+  },
+  {
+    "employeeId": 19,
+    "Medical_THB": 21279,
+    "Dental_THB": 651,
+    "Wellness_THB": 555
+  },
+  {
+    "employeeId": 20,
+    "Medical_THB": 20611,
+    "Dental_THB": 7028,
+    "Wellness_THB": 4571
+  },
+  {
+    "employeeId": 21,
+    "Medical_THB": 14903,
+    "Dental_THB": 2968,
+    "Wellness_THB": 3437
+  },
+  {
+    "employeeId": 22,
+    "Medical_THB": 20647,
+    "Dental_THB": 3338,
+    "Wellness_THB": 214
+  },
+  {
+    "employeeId": 23,
+    "Medical_THB": 7357,
+    "Dental_THB": 7398,
+    "Wellness_THB": 4080
+  },
+  {
+    "employeeId": 24,
+    "Medical_THB": 8094,
+    "Dental_THB": 763,
+    "Wellness_THB": 3150
+  },
+  {
+    "employeeId": 25,
+    "Medical_THB": 18919,
+    "Dental_THB": 636,
+    "Wellness_THB": 4792
+  },
+  {
+    "employeeId": 26,
+    "Medical_THB": 11856,
+    "Dental_THB": 5856,
+    "Wellness_THB": 1711
+  },
+  {
+    "employeeId": 27,
+    "Medical_THB": 23470,
+    "Dental_THB": 1212,
+    "Wellness_THB": 1216
+  },
+  {
+    "employeeId": 28,
+    "Medical_THB": 11415,
+    "Dental_THB": 572,
+    "Wellness_THB": 308
+  },
+  {
+    "employeeId": 29,
+    "Medical_THB": 20170,
+    "Dental_THB": 5228,
+    "Wellness_THB": 4349
+  },
+  {
+    "employeeId": 30,
+    "Medical_THB": 14781,
+    "Dental_THB": 5666,
+    "Wellness_THB": 3567
+  },
+  {
+    "employeeId": 31,
+    "Medical_THB": 18020,
+    "Dental_THB": 3959,
+    "Wellness_THB": 1674
+  },
+  {
+    "employeeId": 32,
+    "Medical_THB": 10622,
+    "Dental_THB": 629,
+    "Wellness_THB": 2803
+  },
+  {
+    "employeeId": 33,
+    "Medical_THB": 7470,
+    "Dental_THB": 2032,
+    "Wellness_THB": 305
+  },
+  {
+    "employeeId": 34,
+    "Medical_THB": 1452,
+    "Dental_THB": 1005,
+    "Wellness_THB": 4438
+  },
+  {
+    "employeeId": 35,
+    "Medical_THB": 4334,
+    "Dental_THB": 275,
+    "Wellness_THB": 1262
+  },
+  {
+    "employeeId": 36,
+    "Medical_THB": 21692,
+    "Dental_THB": 157,
+    "Wellness_THB": 4744
+  },
+  {
+    "employeeId": 37,
+    "Medical_THB": 9055,
+    "Dental_THB": 3833,
+    "Wellness_THB": 2158
+  },
+  {
+    "employeeId": 38,
+    "Medical_THB": 11236,
+    "Dental_THB": 6068,
+    "Wellness_THB": 2843
+  },
+  {
+    "employeeId": 39,
+    "Medical_THB": 17589,
+    "Dental_THB": 2301,
+    "Wellness_THB": 3488
+  },
+  {
+    "employeeId": 40,
+    "Medical_THB": 12771,
+    "Dental_THB": 5612,
+    "Wellness_THB": 3202
+  },
+  {
+    "employeeId": 41,
+    "Medical_THB": 17289,
+    "Dental_THB": 912,
+    "Wellness_THB": 1237
+  },
+  {
+    "employeeId": 42,
+    "Medical_THB": 7531,
+    "Dental_THB": 6065,
+    "Wellness_THB": 2536
+  },
+  {
+    "employeeId": 43,
+    "Medical_THB": 7671,
+    "Dental_THB": 7980,
+    "Wellness_THB": 3057
+  },
+  {
+    "employeeId": 44,
+    "Medical_THB": 20658,
+    "Dental_THB": 1319,
+    "Wellness_THB": 4695
+  },
+  {
+    "employeeId": 45,
+    "Medical_THB": 23791,
+    "Dental_THB": 2237,
+    "Wellness_THB": 515
+  },
+  {
+    "employeeId": 46,
+    "Medical_THB": 21319,
+    "Dental_THB": 5968,
+    "Wellness_THB": 1064
+  },
+  {
+    "employeeId": 47,
+    "Medical_THB": 19686,
+    "Dental_THB": 903,
+    "Wellness_THB": 469
+  },
+  {
+    "employeeId": 48,
+    "Medical_THB": 14662,
+    "Dental_THB": 888,
+    "Wellness_THB": 759
+  },
+  {
+    "employeeId": 49,
+    "Medical_THB": 24686,
+    "Dental_THB": 5858,
+    "Wellness_THB": 4471
+  },
+  {
+    "employeeId": 50,
+    "Medical_THB": 19654,
+    "Dental_THB": 953,
+    "Wellness_THB": 1093
+  },
+  {
+    "employeeId": 51,
+    "Medical_THB": 7957,
+    "Dental_THB": 4815,
+    "Wellness_THB": 3229
+  },
+  {
+    "employeeId": 52,
+    "Medical_THB": 4333,
+    "Dental_THB": 6460,
+    "Wellness_THB": 1501
+  },
+  {
+    "employeeId": 53,
+    "Medical_THB": 24265,
+    "Dental_THB": 6306,
+    "Wellness_THB": 1731
+  },
+  {
+    "employeeId": 54,
+    "Medical_THB": 4710,
+    "Dental_THB": 2970,
+    "Wellness_THB": 4245
+  },
+  {
+    "employeeId": 55,
+    "Medical_THB": 23811,
+    "Dental_THB": 3868,
+    "Wellness_THB": 3086
+  },
+  {
+    "employeeId": 56,
+    "Medical_THB": 21311,
+    "Dental_THB": 2033,
+    "Wellness_THB": 1499
+  },
+  {
+    "employeeId": 57,
+    "Medical_THB": 23381,
+    "Dental_THB": 6262,
+    "Wellness_THB": 974
+  },
+  {
+    "employeeId": 58,
+    "Medical_THB": 22498,
+    "Dental_THB": 229,
+    "Wellness_THB": 2045
+  },
+  {
+    "employeeId": 59,
+    "Medical_THB": 10671,
+    "Dental_THB": 3003,
+    "Wellness_THB": 4030
+  },
+  {
+    "employeeId": 60,
+    "Medical_THB": 3306,
+    "Dental_THB": 3436,
+    "Wellness_THB": 2220
+  },
+  {
+    "employeeId": 61,
+    "Medical_THB": 8044,
+    "Dental_THB": 5353,
+    "Wellness_THB": 1166
+  },
+  {
+    "employeeId": 62,
+    "Medical_THB": 21163,
+    "Dental_THB": 3058,
+    "Wellness_THB": 2337
+  },
+  {
+    "employeeId": 63,
+    "Medical_THB": 9175,
+    "Dental_THB": 7930,
+    "Wellness_THB": 2047
+  },
+  {
+    "employeeId": 64,
+    "Medical_THB": 9299,
+    "Dental_THB": 7339,
+    "Wellness_THB": 921
+  },
+  {
+    "employeeId": 65,
+    "Medical_THB": 23192,
+    "Dental_THB": 1907,
+    "Wellness_THB": 1951
+  },
+  {
+    "employeeId": 66,
+    "Medical_THB": 19818,
+    "Dental_THB": 4864,
+    "Wellness_THB": 4185
+  },
+  {
+    "employeeId": 67,
+    "Medical_THB": 6164,
+    "Dental_THB": 5183,
+    "Wellness_THB": 4392
+  },
+  {
+    "employeeId": 68,
+    "Medical_THB": 2773,
+    "Dental_THB": 5277,
+    "Wellness_THB": 1396
+  },
+  {
+    "employeeId": 69,
+    "Medical_THB": 5700,
+    "Dental_THB": 528,
+    "Wellness_THB": 4773
+  },
+  {
+    "employeeId": 70,
+    "Medical_THB": 2578,
+    "Dental_THB": 6734,
+    "Wellness_THB": 4534
+  },
+  {
+    "employeeId": 71,
+    "Medical_THB": 10946,
+    "Dental_THB": 1466,
+    "Wellness_THB": 1862
+  },
+  {
+    "employeeId": 72,
+    "Medical_THB": 2682,
+    "Dental_THB": 3223,
+    "Wellness_THB": 191
+  },
+  {
+    "employeeId": 73,
+    "Medical_THB": 17513,
+    "Dental_THB": 3812,
+    "Wellness_THB": 2154
+  },
+  {
+    "employeeId": 74,
+    "Medical_THB": 16212,
+    "Dental_THB": 2708,
+    "Wellness_THB": 326
+  },
+  {
+    "employeeId": 75,
+    "Medical_THB": 10507,
+    "Dental_THB": 1604,
+    "Wellness_THB": 2229
+  },
+  {
+    "employeeId": 76,
+    "Medical_THB": 21965,
+    "Dental_THB": 239,
+    "Wellness_THB": 3027
+  },
+  {
+    "employeeId": 77,
+    "Medical_THB": 22484,
+    "Dental_THB": 4938,
+    "Wellness_THB": 1798
+  },
+  {
+    "employeeId": 78,
+    "Medical_THB": 12440,
+    "Dental_THB": 477,
+    "Wellness_THB": 4810
+  },
+  {
+    "employeeId": 79,
+    "Medical_THB": 24577,
+    "Dental_THB": 1834,
+    "Wellness_THB": 4315
+  },
+  {
+    "employeeId": 80,
+    "Medical_THB": 23031,
+    "Dental_THB": 7303,
+    "Wellness_THB": 1677
+  },
+  {
+    "employeeId": 81,
+    "Medical_THB": 5519,
+    "Dental_THB": 2048,
+    "Wellness_THB": 476
+  },
+  {
+    "employeeId": 82,
+    "Medical_THB": 5688,
+    "Dental_THB": 3844,
+    "Wellness_THB": 2819
+  },
+  {
+    "employeeId": 83,
+    "Medical_THB": 14501,
+    "Dental_THB": 4084,
+    "Wellness_THB": 4775
+  },
+  {
+    "employeeId": 84,
+    "Medical_THB": 20300,
+    "Dental_THB": 6636,
+    "Wellness_THB": 1033
+  },
+  {
+    "employeeId": 85,
+    "Medical_THB": 18308,
+    "Dental_THB": 6109,
+    "Wellness_THB": 194
+  },
+  {
+    "employeeId": 86,
+    "Medical_THB": 5775,
+    "Dental_THB": 5859,
+    "Wellness_THB": 3786
+  },
+  {
+    "employeeId": 87,
+    "Medical_THB": 21231,
+    "Dental_THB": 2745,
+    "Wellness_THB": 4199
+  },
+  {
+    "employeeId": 88,
+    "Medical_THB": 9433,
+    "Dental_THB": 6986,
+    "Wellness_THB": 4085
+  },
+  {
+    "employeeId": 89,
+    "Medical_THB": 24000,
+    "Dental_THB": 2809,
+    "Wellness_THB": 1818
+  },
+  {
+    "employeeId": 90,
+    "Medical_THB": 13300,
+    "Dental_THB": 5489,
+    "Wellness_THB": 4093
+  },
+  {
+    "employeeId": 91,
+    "Medical_THB": 10948,
+    "Dental_THB": 4261,
+    "Wellness_THB": 3203
+  },
+  {
+    "employeeId": 92,
+    "Medical_THB": 14617,
+    "Dental_THB": 1954,
+    "Wellness_THB": 76
+  },
+  {
+    "employeeId": 93,
+    "Medical_THB": 12793,
+    "Dental_THB": 4351,
+    "Wellness_THB": 2748
+  },
+  {
+    "employeeId": 94,
+    "Medical_THB": 5473,
+    "Dental_THB": 5604,
+    "Wellness_THB": 2837
+  },
+  {
+    "employeeId": 95,
+    "Medical_THB": 7007,
+    "Dental_THB": 710,
+    "Wellness_THB": 4337
+  },
+  {
+    "employeeId": 96,
+    "Medical_THB": 1115,
+    "Dental_THB": 1586,
+    "Wellness_THB": 3148
+  },
+  {
+    "employeeId": 97,
+    "Medical_THB": 11264,
+    "Dental_THB": 2747,
+    "Wellness_THB": 912
+  },
+  {
+    "employeeId": 98,
+    "Medical_THB": 6272,
+    "Dental_THB": 3116,
+    "Wellness_THB": 201
+  },
+  {
+    "employeeId": 99,
+    "Medical_THB": 2902,
+    "Dental_THB": 3610,
+    "Wellness_THB": 4215
+  },
+  {
+    "employeeId": 100,
+    "Medical_THB": 9355,
+    "Dental_THB": 2236,
+    "Wellness_THB": 2827
+  },
+  {
+    "employeeId": 101,
+    "Medical_THB": 21692,
+    "Dental_THB": 7495,
+    "Wellness_THB": 1723
+  },
+  {
+    "employeeId": 102,
+    "Medical_THB": 22085,
+    "Dental_THB": 4301,
+    "Wellness_THB": 1111
+  },
+  {
+    "employeeId": 103,
+    "Medical_THB": 15656,
+    "Dental_THB": 2237,
+    "Wellness_THB": 4895
+  },
+  {
+    "employeeId": 104,
+    "Medical_THB": 12647,
+    "Dental_THB": 7154,
+    "Wellness_THB": 2448
+  },
+  {
+    "employeeId": 105,
+    "Medical_THB": 7703,
+    "Dental_THB": 1807,
+    "Wellness_THB": 203
+  },
+  {
+    "employeeId": 106,
+    "Medical_THB": 15371,
+    "Dental_THB": 3749,
+    "Wellness_THB": 2458
+  },
+  {
+    "employeeId": 107,
+    "Medical_THB": 10492,
+    "Dental_THB": 3459,
+    "Wellness_THB": 1490
+  },
+  {
+    "employeeId": 108,
+    "Medical_THB": 3283,
+    "Dental_THB": 3696,
+    "Wellness_THB": 1764
+  },
+  {
+    "employeeId": 109,
+    "Medical_THB": 23989,
+    "Dental_THB": 4376,
+    "Wellness_THB": 822
+  },
+  {
+    "employeeId": 110,
+    "Medical_THB": 15148,
+    "Dental_THB": 1293,
+    "Wellness_THB": 3820
+  },
+  {
+    "employeeId": 111,
+    "Medical_THB": 15844,
+    "Dental_THB": 7865,
+    "Wellness_THB": 4491
+  },
+  {
+    "employeeId": 112,
+    "Medical_THB": 20669,
+    "Dental_THB": 4668,
+    "Wellness_THB": 1957
+  },
+  {
+    "employeeId": 113,
+    "Medical_THB": 10931,
+    "Dental_THB": 1255,
+    "Wellness_THB": 4753
+  },
+  {
+    "employeeId": 114,
+    "Medical_THB": 1177,
+    "Dental_THB": 48,
+    "Wellness_THB": 293
+  },
+  {
+    "employeeId": 115,
+    "Medical_THB": 24558,
+    "Dental_THB": 2616,
+    "Wellness_THB": 2276
+  },
+  {
+    "employeeId": 116,
+    "Medical_THB": 12396,
+    "Dental_THB": 1368,
+    "Wellness_THB": 2128
+  },
+  {
+    "employeeId": 117,
+    "Medical_THB": 17102,
+    "Dental_THB": 5738,
+    "Wellness_THB": 923
+  },
+  {
+    "employeeId": 118,
+    "Medical_THB": 15918,
+    "Dental_THB": 6173,
+    "Wellness_THB": 187
+  },
+  {
+    "employeeId": 119,
+    "Medical_THB": 6457,
+    "Dental_THB": 3769,
+    "Wellness_THB": 183
+  },
+  {
+    "employeeId": 120,
+    "Medical_THB": 16392,
+    "Dental_THB": 6673,
+    "Wellness_THB": 3124
+  },
+  {
+    "employeeId": 121,
+    "Medical_THB": 4402,
+    "Dental_THB": 1799,
+    "Wellness_THB": 966
+  },
+  {
+    "employeeId": 122,
+    "Medical_THB": 19592,
+    "Dental_THB": 6572,
+    "Wellness_THB": 918
+  },
+  {
+    "employeeId": 123,
+    "Medical_THB": 18717,
+    "Dental_THB": 4785,
+    "Wellness_THB": 4987
+  },
+  {
+    "employeeId": 124,
+    "Medical_THB": 17834,
+    "Dental_THB": 2741,
+    "Wellness_THB": 3537
+  },
+  {
+    "employeeId": 125,
+    "Medical_THB": 12615,
+    "Dental_THB": 7943,
+    "Wellness_THB": 1993
+  },
+  {
+    "employeeId": 126,
+    "Medical_THB": 2580,
+    "Dental_THB": 293,
+    "Wellness_THB": 2055
+  },
+  {
+    "employeeId": 127,
+    "Medical_THB": 934,
+    "Dental_THB": 358,
+    "Wellness_THB": 2953
+  },
+  {
+    "employeeId": 128,
+    "Medical_THB": 7258,
+    "Dental_THB": 2558,
+    "Wellness_THB": 1778
+  },
+  {
+    "employeeId": 129,
+    "Medical_THB": 12892,
+    "Dental_THB": 6228,
+    "Wellness_THB": 4688
+  },
+  {
+    "employeeId": 130,
+    "Medical_THB": 14367,
+    "Dental_THB": 1911,
+    "Wellness_THB": 2906
+  },
+  {
+    "employeeId": 131,
+    "Medical_THB": 21629,
+    "Dental_THB": 7518,
+    "Wellness_THB": 332
+  },
+  {
+    "employeeId": 132,
+    "Medical_THB": 6628,
+    "Dental_THB": 870,
+    "Wellness_THB": 4179
+  },
+  {
+    "employeeId": 133,
+    "Medical_THB": 13706,
+    "Dental_THB": 4321,
+    "Wellness_THB": 4759
+  },
+  {
+    "employeeId": 134,
+    "Medical_THB": 10424,
+    "Dental_THB": 7671,
+    "Wellness_THB": 4135
+  },
+  {
+    "employeeId": 135,
+    "Medical_THB": 3719,
+    "Dental_THB": 6461,
+    "Wellness_THB": 2355
+  },
+  {
+    "employeeId": 136,
+    "Medical_THB": 13083,
+    "Dental_THB": 4927,
+    "Wellness_THB": 1885
+  },
+  {
+    "employeeId": 137,
+    "Medical_THB": 23008,
+    "Dental_THB": 7627,
+    "Wellness_THB": 2404
+  },
+  {
+    "employeeId": 138,
+    "Medical_THB": 14997,
+    "Dental_THB": 2513,
+    "Wellness_THB": 4897
+  },
+  {
+    "employeeId": 139,
+    "Medical_THB": 12526,
+    "Dental_THB": 2380,
+    "Wellness_THB": 1586
+  },
+  {
+    "employeeId": 140,
+    "Medical_THB": 6291,
+    "Dental_THB": 1498,
+    "Wellness_THB": 966
+  },
+  {
+    "employeeId": 141,
+    "Medical_THB": 18392,
+    "Dental_THB": 2654,
+    "Wellness_THB": 1358
+  },
+  {
+    "employeeId": 142,
+    "Medical_THB": 12600,
+    "Dental_THB": 757,
+    "Wellness_THB": 1038
+  },
+  {
+    "employeeId": 143,
+    "Medical_THB": 19708,
+    "Dental_THB": 4641,
+    "Wellness_THB": 249
+  },
+  {
+    "employeeId": 144,
+    "Medical_THB": 7800,
+    "Dental_THB": 5186,
+    "Wellness_THB": 2137
+  },
+  {
+    "employeeId": 145,
+    "Medical_THB": 14898,
+    "Dental_THB": 739,
+    "Wellness_THB": 4284
+  },
+  {
+    "employeeId": 146,
+    "Medical_THB": 21931,
+    "Dental_THB": 1998,
+    "Wellness_THB": 305
+  },
+  {
+    "employeeId": 147,
+    "Medical_THB": 13480,
+    "Dental_THB": 6257,
+    "Wellness_THB": 4426
+  },
+  {
+    "employeeId": 148,
+    "Medical_THB": 17616,
+    "Dental_THB": 82,
+    "Wellness_THB": 2143
+  },
+  {
+    "employeeId": 149,
+    "Medical_THB": 15902,
+    "Dental_THB": 1834,
+    "Wellness_THB": 4728
+  },
+  {
+    "employeeId": 150,
+    "Medical_THB": 18921,
+    "Dental_THB": 6745,
+    "Wellness_THB": 1243
+  }
+]

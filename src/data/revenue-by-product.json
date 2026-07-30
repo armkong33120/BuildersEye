@@ -1,0 +1,1922 @@
+[
+  {
+    "product_id": "PRD001",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 4905104,
+    "cost_thb": 245255,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2023-Q2",
+    "units_sold": 7,
+    "revenue_thb": 4441231,
+    "cost_thb": 222061,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2023-Q3",
+    "units_sold": 8,
+    "revenue_thb": 2670778,
+    "cost_thb": 133538,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2023-Q4",
+    "units_sold": 7,
+    "revenue_thb": 3453012,
+    "cost_thb": 172650,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2024-Q1",
+    "units_sold": 3,
+    "revenue_thb": 4338089,
+    "cost_thb": 216904,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2024-Q2",
+    "units_sold": 7,
+    "revenue_thb": 5189340,
+    "cost_thb": 259467,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2024-Q3",
+    "units_sold": 3,
+    "revenue_thb": 3611526,
+    "cost_thb": 180576,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2024-Q4",
+    "units_sold": 3,
+    "revenue_thb": 874186,
+    "cost_thb": 43709,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2025-Q1",
+    "units_sold": 5,
+    "revenue_thb": 3608875,
+    "cost_thb": 180443,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2025-Q2",
+    "units_sold": 4,
+    "revenue_thb": 1839392,
+    "cost_thb": 91969,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2025-Q3",
+    "units_sold": 6,
+    "revenue_thb": 1292385,
+    "cost_thb": 64619,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD001",
+    "quarter": "2025-Q4",
+    "units_sold": 8,
+    "revenue_thb": 1072539,
+    "cost_thb": 53626,
+    "profit_margin_pct": 95.0
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2023-Q1",
+    "units_sold": 7,
+    "revenue_thb": 450041,
+    "cost_thb": 24752,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2023-Q2",
+    "units_sold": 3,
+    "revenue_thb": 1480169,
+    "cost_thb": 81409,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2023-Q3",
+    "units_sold": 3,
+    "revenue_thb": 486138,
+    "cost_thb": 26737,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2023-Q4",
+    "units_sold": 10,
+    "revenue_thb": 1072078,
+    "cost_thb": 58964,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2024-Q1",
+    "units_sold": 9,
+    "revenue_thb": 1223859,
+    "cost_thb": 67312,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2024-Q2",
+    "units_sold": 9,
+    "revenue_thb": 890799,
+    "cost_thb": 48993,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2024-Q3",
+    "units_sold": 8,
+    "revenue_thb": 913634,
+    "cost_thb": 50249,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2024-Q4",
+    "units_sold": 9,
+    "revenue_thb": 915578,
+    "cost_thb": 50356,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2025-Q1",
+    "units_sold": 6,
+    "revenue_thb": 1636370,
+    "cost_thb": 90000,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2025-Q2",
+    "units_sold": 10,
+    "revenue_thb": 1304505,
+    "cost_thb": 71747,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2025-Q3",
+    "units_sold": 4,
+    "revenue_thb": 1264217,
+    "cost_thb": 69531,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD002",
+    "quarter": "2025-Q4",
+    "units_sold": 9,
+    "revenue_thb": 1556590,
+    "cost_thb": 85612,
+    "profit_margin_pct": 94.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2023-Q1",
+    "units_sold": 5,
+    "revenue_thb": 2847765,
+    "cost_thb": 128149,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2023-Q2",
+    "units_sold": 6,
+    "revenue_thb": 1364111,
+    "cost_thb": 61384,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2023-Q3",
+    "units_sold": 1,
+    "revenue_thb": 2162850,
+    "cost_thb": 97328,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2023-Q4",
+    "units_sold": 2,
+    "revenue_thb": 932329,
+    "cost_thb": 41954,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2024-Q1",
+    "units_sold": 1,
+    "revenue_thb": 671960,
+    "cost_thb": 30238,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2024-Q2",
+    "units_sold": 6,
+    "revenue_thb": 4089801,
+    "cost_thb": 184041,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2024-Q3",
+    "units_sold": 1,
+    "revenue_thb": 1447600,
+    "cost_thb": 65142,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2024-Q4",
+    "units_sold": 4,
+    "revenue_thb": 652356,
+    "cost_thb": 29356,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2025-Q1",
+    "units_sold": 6,
+    "revenue_thb": 2884104,
+    "cost_thb": 129784,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2025-Q2",
+    "units_sold": 2,
+    "revenue_thb": 2804012,
+    "cost_thb": 126180,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2025-Q3",
+    "units_sold": 2,
+    "revenue_thb": 1529641,
+    "cost_thb": 68833,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD003",
+    "quarter": "2025-Q4",
+    "units_sold": 4,
+    "revenue_thb": 1447990,
+    "cost_thb": 65159,
+    "profit_margin_pct": 95.5
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 2189327,
+    "cost_thb": 131359,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2023-Q2",
+    "units_sold": 4,
+    "revenue_thb": 1364021,
+    "cost_thb": 81841,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2023-Q3",
+    "units_sold": 5,
+    "revenue_thb": 1389376,
+    "cost_thb": 83362,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2023-Q4",
+    "units_sold": 3,
+    "revenue_thb": 1141562,
+    "cost_thb": 68493,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2024-Q1",
+    "units_sold": 2,
+    "revenue_thb": 1703589,
+    "cost_thb": 102215,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2024-Q2",
+    "units_sold": 2,
+    "revenue_thb": 2417569,
+    "cost_thb": 145054,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2024-Q3",
+    "units_sold": 5,
+    "revenue_thb": 1940596,
+    "cost_thb": 116435,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2024-Q4",
+    "units_sold": 5,
+    "revenue_thb": 1003117,
+    "cost_thb": 60187,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2025-Q1",
+    "units_sold": 1,
+    "revenue_thb": 557846,
+    "cost_thb": 33470,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2025-Q2",
+    "units_sold": 4,
+    "revenue_thb": 2374458,
+    "cost_thb": 142467,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 1803699,
+    "cost_thb": 108221,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD004",
+    "quarter": "2025-Q4",
+    "units_sold": 1,
+    "revenue_thb": 2210060,
+    "cost_thb": 132603,
+    "profit_margin_pct": 94.0
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2023-Q1",
+    "units_sold": 5,
+    "revenue_thb": 6655294,
+    "cost_thb": 3786189,
+    "profit_margin_pct": 43.1
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2023-Q2",
+    "units_sold": 2,
+    "revenue_thb": 1327647,
+    "cost_thb": 903514,
+    "profit_margin_pct": 31.9
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2023-Q3",
+    "units_sold": 3,
+    "revenue_thb": 24757145,
+    "cost_thb": 15498828,
+    "profit_margin_pct": 37.4
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2023-Q4",
+    "units_sold": 4,
+    "revenue_thb": 19560431,
+    "cost_thb": 12800665,
+    "profit_margin_pct": 34.6
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2024-Q1",
+    "units_sold": 2,
+    "revenue_thb": 3667400,
+    "cost_thb": 2067265,
+    "profit_margin_pct": 43.6
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2024-Q2",
+    "units_sold": 4,
+    "revenue_thb": 24864435,
+    "cost_thb": 15181057,
+    "profit_margin_pct": 38.9
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2024-Q3",
+    "units_sold": 1,
+    "revenue_thb": 25450811,
+    "cost_thb": 18634562,
+    "profit_margin_pct": 26.8
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2024-Q4",
+    "units_sold": 2,
+    "revenue_thb": 22673400,
+    "cost_thb": 12696407,
+    "profit_margin_pct": 44.0
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2025-Q1",
+    "units_sold": 1,
+    "revenue_thb": 19002771,
+    "cost_thb": 12705030,
+    "profit_margin_pct": 33.1
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2025-Q2",
+    "units_sold": 5,
+    "revenue_thb": 24640201,
+    "cost_thb": 15897063,
+    "profit_margin_pct": 35.5
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 14366455,
+    "cost_thb": 9768108,
+    "profit_margin_pct": 32.0
+  },
+  {
+    "product_id": "PRD005",
+    "quarter": "2025-Q4",
+    "units_sold": 2,
+    "revenue_thb": 36088215,
+    "cost_thb": 22914786,
+    "profit_margin_pct": 36.5
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 14295292,
+    "cost_thb": 8963359,
+    "profit_margin_pct": 37.3
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2023-Q2",
+    "units_sold": 4,
+    "revenue_thb": 26764670,
+    "cost_thb": 19655431,
+    "profit_margin_pct": 26.6
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2023-Q3",
+    "units_sold": 1,
+    "revenue_thb": 28622650,
+    "cost_thb": 20707973,
+    "profit_margin_pct": 27.7
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2023-Q4",
+    "units_sold": 2,
+    "revenue_thb": 18787633,
+    "cost_thb": 12530668,
+    "profit_margin_pct": 33.3
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2024-Q1",
+    "units_sold": 1,
+    "revenue_thb": 10233738,
+    "cost_thb": 6223009,
+    "profit_margin_pct": 39.2
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2024-Q2",
+    "units_sold": 2,
+    "revenue_thb": 2747504,
+    "cost_thb": 1784027,
+    "profit_margin_pct": 35.1
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2024-Q3",
+    "units_sold": 3,
+    "revenue_thb": 35126529,
+    "cost_thb": 22134719,
+    "profit_margin_pct": 37.0
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2024-Q4",
+    "units_sold": 3,
+    "revenue_thb": 19088596,
+    "cost_thb": 12162195,
+    "profit_margin_pct": 36.3
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2025-Q1",
+    "units_sold": 2,
+    "revenue_thb": 23674258,
+    "cost_thb": 13126361,
+    "profit_margin_pct": 44.6
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2025-Q2",
+    "units_sold": 1,
+    "revenue_thb": 610781,
+    "cost_thb": 373678,
+    "profit_margin_pct": 38.8
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 29329568,
+    "cost_thb": 17939612,
+    "profit_margin_pct": 38.8
+  },
+  {
+    "product_id": "PRD006",
+    "quarter": "2025-Q4",
+    "units_sold": 4,
+    "revenue_thb": 32594164,
+    "cost_thb": 19326179,
+    "profit_margin_pct": 40.7
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 17253217,
+    "cost_thb": 12064160,
+    "profit_margin_pct": 30.1
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2023-Q2",
+    "units_sold": 2,
+    "revenue_thb": 6513623,
+    "cost_thb": 4482343,
+    "profit_margin_pct": 31.2
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2023-Q3",
+    "units_sold": 2,
+    "revenue_thb": 19790573,
+    "cost_thb": 11613705,
+    "profit_margin_pct": 41.3
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2023-Q4",
+    "units_sold": 4,
+    "revenue_thb": 10732735,
+    "cost_thb": 7769564,
+    "profit_margin_pct": 27.6
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2024-Q1",
+    "units_sold": 5,
+    "revenue_thb": 18000686,
+    "cost_thb": 12470944,
+    "profit_margin_pct": 30.7
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2024-Q2",
+    "units_sold": 5,
+    "revenue_thb": 20320205,
+    "cost_thb": 12012825,
+    "profit_margin_pct": 40.9
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2024-Q3",
+    "units_sold": 3,
+    "revenue_thb": 6154985,
+    "cost_thb": 4045556,
+    "profit_margin_pct": 34.3
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2024-Q4",
+    "units_sold": 3,
+    "revenue_thb": 2129679,
+    "cost_thb": 1586066,
+    "profit_margin_pct": 25.5
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2025-Q1",
+    "units_sold": 1,
+    "revenue_thb": 11372002,
+    "cost_thb": 7201018,
+    "profit_margin_pct": 36.7
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2025-Q2",
+    "units_sold": 4,
+    "revenue_thb": 5779393,
+    "cost_thb": 3678627,
+    "profit_margin_pct": 36.3
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2025-Q3",
+    "units_sold": 2,
+    "revenue_thb": 14092559,
+    "cost_thb": 9323854,
+    "profit_margin_pct": 33.8
+  },
+  {
+    "product_id": "PRD007",
+    "quarter": "2025-Q4",
+    "units_sold": 3,
+    "revenue_thb": 12140231,
+    "cost_thb": 8232112,
+    "profit_margin_pct": 32.2
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2023-Q1",
+    "units_sold": 1,
+    "revenue_thb": 5331414,
+    "cost_thb": 3685696,
+    "profit_margin_pct": 30.9
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2023-Q2",
+    "units_sold": 0,
+    "revenue_thb": 2829273,
+    "cost_thb": 2118378,
+    "profit_margin_pct": 25.1
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2023-Q3",
+    "units_sold": 0,
+    "revenue_thb": 2510050,
+    "cost_thb": 1610621,
+    "profit_margin_pct": 35.8
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2023-Q4",
+    "units_sold": 2,
+    "revenue_thb": 3529915,
+    "cost_thb": 2341590,
+    "profit_margin_pct": 33.7
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2024-Q1",
+    "units_sold": 1,
+    "revenue_thb": 9134276,
+    "cost_thb": 5103687,
+    "profit_margin_pct": 44.1
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2024-Q2",
+    "units_sold": 1,
+    "revenue_thb": 7056723,
+    "cost_thb": 4742038,
+    "profit_margin_pct": 32.8
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2024-Q3",
+    "units_sold": 1,
+    "revenue_thb": 3363346,
+    "cost_thb": 2221814,
+    "profit_margin_pct": 33.9
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2024-Q4",
+    "units_sold": 1,
+    "revenue_thb": 6736425,
+    "cost_thb": 3706901,
+    "profit_margin_pct": 45.0
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2025-Q1",
+    "units_sold": 0,
+    "revenue_thb": 5759018,
+    "cost_thb": 3735356,
+    "profit_margin_pct": 35.1
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2025-Q2",
+    "units_sold": 1,
+    "revenue_thb": 4753805,
+    "cost_thb": 3154150,
+    "profit_margin_pct": 33.6
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 2467527,
+    "cost_thb": 1568348,
+    "profit_margin_pct": 36.4
+  },
+  {
+    "product_id": "PRD008",
+    "quarter": "2025-Q4",
+    "units_sold": 0,
+    "revenue_thb": 4219409,
+    "cost_thb": 2494086,
+    "profit_margin_pct": 40.9
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2023-Q1",
+    "units_sold": 4,
+    "revenue_thb": 7793928,
+    "cost_thb": 5337496,
+    "profit_margin_pct": 31.5
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2023-Q2",
+    "units_sold": 2,
+    "revenue_thb": 1646127,
+    "cost_thb": 997487,
+    "profit_margin_pct": 39.4
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2023-Q3",
+    "units_sold": 4,
+    "revenue_thb": 6977231,
+    "cost_thb": 4844267,
+    "profit_margin_pct": 30.6
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2023-Q4",
+    "units_sold": 4,
+    "revenue_thb": 2281342,
+    "cost_thb": 1689672,
+    "profit_margin_pct": 25.9
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2024-Q1",
+    "units_sold": 4,
+    "revenue_thb": 3615483,
+    "cost_thb": 2494105,
+    "profit_margin_pct": 31.0
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2024-Q2",
+    "units_sold": 2,
+    "revenue_thb": 4565751,
+    "cost_thb": 2871780,
+    "profit_margin_pct": 37.1
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2024-Q3",
+    "units_sold": 4,
+    "revenue_thb": 7035429,
+    "cost_thb": 5226033,
+    "profit_margin_pct": 25.7
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2024-Q4",
+    "units_sold": 4,
+    "revenue_thb": 6437321,
+    "cost_thb": 4443472,
+    "profit_margin_pct": 31.0
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2025-Q1",
+    "units_sold": 2,
+    "revenue_thb": 5051388,
+    "cost_thb": 2834730,
+    "profit_margin_pct": 43.9
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2025-Q2",
+    "units_sold": 4,
+    "revenue_thb": 813083,
+    "cost_thb": 506108,
+    "profit_margin_pct": 37.8
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2025-Q3",
+    "units_sold": 4,
+    "revenue_thb": 1213503,
+    "cost_thb": 881904,
+    "profit_margin_pct": 27.3
+  },
+  {
+    "product_id": "PRD009",
+    "quarter": "2025-Q4",
+    "units_sold": 2,
+    "revenue_thb": 5425992,
+    "cost_thb": 3338659,
+    "profit_margin_pct": 38.5
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2023-Q1",
+    "units_sold": 13,
+    "revenue_thb": 329068,
+    "cost_thb": 223414,
+    "profit_margin_pct": 32.1
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2023-Q2",
+    "units_sold": 10,
+    "revenue_thb": 330727,
+    "cost_thb": 246894,
+    "profit_margin_pct": 25.3
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2023-Q3",
+    "units_sold": 12,
+    "revenue_thb": 318010,
+    "cost_thb": 177242,
+    "profit_margin_pct": 44.3
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2023-Q4",
+    "units_sold": 13,
+    "revenue_thb": 180832,
+    "cost_thb": 124840,
+    "profit_margin_pct": 31.0
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2024-Q1",
+    "units_sold": 13,
+    "revenue_thb": 208248,
+    "cost_thb": 132935,
+    "profit_margin_pct": 36.2
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2024-Q2",
+    "units_sold": 7,
+    "revenue_thb": 167292,
+    "cost_thb": 106345,
+    "profit_margin_pct": 36.4
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2024-Q3",
+    "units_sold": 7,
+    "revenue_thb": 504469,
+    "cost_thb": 347643,
+    "profit_margin_pct": 31.1
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2024-Q4",
+    "units_sold": 19,
+    "revenue_thb": 297317,
+    "cost_thb": 185074,
+    "profit_margin_pct": 37.8
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2025-Q1",
+    "units_sold": 13,
+    "revenue_thb": 476981,
+    "cost_thb": 308979,
+    "profit_margin_pct": 35.2
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2025-Q2",
+    "units_sold": 7,
+    "revenue_thb": 340905,
+    "cost_thb": 251725,
+    "profit_margin_pct": 26.2
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2025-Q3",
+    "units_sold": 6,
+    "revenue_thb": 517125,
+    "cost_thb": 356200,
+    "profit_margin_pct": 31.1
+  },
+  {
+    "product_id": "PRD010",
+    "quarter": "2025-Q4",
+    "units_sold": 20,
+    "revenue_thb": 184753,
+    "cost_thb": 120485,
+    "profit_margin_pct": 34.8
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2023-Q1",
+    "units_sold": 8,
+    "revenue_thb": 681100,
+    "cost_thb": 376334,
+    "profit_margin_pct": 44.7
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2023-Q2",
+    "units_sold": 5,
+    "revenue_thb": 210940,
+    "cost_thb": 132069,
+    "profit_margin_pct": 37.4
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2023-Q3",
+    "units_sold": 7,
+    "revenue_thb": 408232,
+    "cost_thb": 264320,
+    "profit_margin_pct": 35.3
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2023-Q4",
+    "units_sold": 9,
+    "revenue_thb": 242233,
+    "cost_thb": 176865,
+    "profit_margin_pct": 27.0
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2024-Q1",
+    "units_sold": 8,
+    "revenue_thb": 254201,
+    "cost_thb": 168290,
+    "profit_margin_pct": 33.8
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2024-Q2",
+    "units_sold": 3,
+    "revenue_thb": 997073,
+    "cost_thb": 639012,
+    "profit_margin_pct": 35.9
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2024-Q3",
+    "units_sold": 7,
+    "revenue_thb": 600299,
+    "cost_thb": 398729,
+    "profit_margin_pct": 33.6
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2024-Q4",
+    "units_sold": 15,
+    "revenue_thb": 411450,
+    "cost_thb": 245818,
+    "profit_margin_pct": 40.3
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2025-Q1",
+    "units_sold": 13,
+    "revenue_thb": 1007166,
+    "cost_thb": 728095,
+    "profit_margin_pct": 27.7
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2025-Q2",
+    "units_sold": 11,
+    "revenue_thb": 570001,
+    "cost_thb": 353980,
+    "profit_margin_pct": 37.9
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2025-Q3",
+    "units_sold": 3,
+    "revenue_thb": 532690,
+    "cost_thb": 303200,
+    "profit_margin_pct": 43.1
+  },
+  {
+    "product_id": "PRD011",
+    "quarter": "2025-Q4",
+    "units_sold": 8,
+    "revenue_thb": 510932,
+    "cost_thb": 301013,
+    "profit_margin_pct": 41.1
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2023-Q1",
+    "units_sold": 7,
+    "revenue_thb": 1399038,
+    "cost_thb": 881286,
+    "profit_margin_pct": 37.0
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2023-Q2",
+    "units_sold": 8,
+    "revenue_thb": 468081,
+    "cost_thb": 286452,
+    "profit_margin_pct": 38.8
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2023-Q3",
+    "units_sold": 3,
+    "revenue_thb": 1099873,
+    "cost_thb": 687521,
+    "profit_margin_pct": 37.5
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2023-Q4",
+    "units_sold": 3,
+    "revenue_thb": 429024,
+    "cost_thb": 240455,
+    "profit_margin_pct": 44.0
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2024-Q1",
+    "units_sold": 7,
+    "revenue_thb": 1232179,
+    "cost_thb": 795271,
+    "profit_margin_pct": 35.5
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2024-Q2",
+    "units_sold": 2,
+    "revenue_thb": 1779421,
+    "cost_thb": 1256430,
+    "profit_margin_pct": 29.4
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2024-Q3",
+    "units_sold": 5,
+    "revenue_thb": 1222874,
+    "cost_thb": 853223,
+    "profit_margin_pct": 30.2
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2024-Q4",
+    "units_sold": 4,
+    "revenue_thb": 542031,
+    "cost_thb": 340119,
+    "profit_margin_pct": 37.3
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2025-Q1",
+    "units_sold": 6,
+    "revenue_thb": 732923,
+    "cost_thb": 525952,
+    "profit_margin_pct": 28.2
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2025-Q2",
+    "units_sold": 7,
+    "revenue_thb": 798491,
+    "cost_thb": 488148,
+    "profit_margin_pct": 38.9
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2025-Q3",
+    "units_sold": 2,
+    "revenue_thb": 1348701,
+    "cost_thb": 755619,
+    "profit_margin_pct": 44.0
+  },
+  {
+    "product_id": "PRD012",
+    "quarter": "2025-Q4",
+    "units_sold": 4,
+    "revenue_thb": 3000593,
+    "cost_thb": 1854240,
+    "profit_margin_pct": 38.2
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 4651842,
+    "cost_thb": 372147,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2023-Q2",
+    "units_sold": 3,
+    "revenue_thb": 4477541,
+    "cost_thb": 358203,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2023-Q3",
+    "units_sold": 3,
+    "revenue_thb": 763977,
+    "cost_thb": 61118,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2023-Q4",
+    "units_sold": 1,
+    "revenue_thb": 2077135,
+    "cost_thb": 166170,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2024-Q1",
+    "units_sold": 2,
+    "revenue_thb": 2743459,
+    "cost_thb": 219476,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2024-Q2",
+    "units_sold": 1,
+    "revenue_thb": 2415079,
+    "cost_thb": 193206,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2024-Q3",
+    "units_sold": 1,
+    "revenue_thb": 5167807,
+    "cost_thb": 413424,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2024-Q4",
+    "units_sold": 2,
+    "revenue_thb": 1264558,
+    "cost_thb": 101164,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2025-Q1",
+    "units_sold": 2,
+    "revenue_thb": 755861,
+    "cost_thb": 60468,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2025-Q2",
+    "units_sold": 2,
+    "revenue_thb": 810594,
+    "cost_thb": 64847,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2025-Q3",
+    "units_sold": 2,
+    "revenue_thb": 5372352,
+    "cost_thb": 429788,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD013",
+    "quarter": "2025-Q4",
+    "units_sold": 5,
+    "revenue_thb": 4955336,
+    "cost_thb": 396426,
+    "profit_margin_pct": 92.0
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2023-Q1",
+    "units_sold": 1,
+    "revenue_thb": 745378,
+    "cost_thb": 456640,
+    "profit_margin_pct": 38.7
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2023-Q2",
+    "units_sold": 2,
+    "revenue_thb": 1630637,
+    "cost_thb": 1030897,
+    "profit_margin_pct": 36.8
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2023-Q3",
+    "units_sold": 4,
+    "revenue_thb": 2179934,
+    "cost_thb": 1349595,
+    "profit_margin_pct": 38.1
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2023-Q4",
+    "units_sold": 4,
+    "revenue_thb": 2281468,
+    "cost_thb": 1322209,
+    "profit_margin_pct": 42.0
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2024-Q1",
+    "units_sold": 2,
+    "revenue_thb": 536167,
+    "cost_thb": 340482,
+    "profit_margin_pct": 36.5
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2024-Q2",
+    "units_sold": 2,
+    "revenue_thb": 1157528,
+    "cost_thb": 822349,
+    "profit_margin_pct": 29.0
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2024-Q3",
+    "units_sold": 2,
+    "revenue_thb": 1243893,
+    "cost_thb": 773254,
+    "profit_margin_pct": 37.8
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2024-Q4",
+    "units_sold": 4,
+    "revenue_thb": 1746276,
+    "cost_thb": 1294910,
+    "profit_margin_pct": 25.8
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2025-Q1",
+    "units_sold": 1,
+    "revenue_thb": 760409,
+    "cost_thb": 523014,
+    "profit_margin_pct": 31.2
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2025-Q2",
+    "units_sold": 1,
+    "revenue_thb": 2203565,
+    "cost_thb": 1528793,
+    "profit_margin_pct": 30.6
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 2559239,
+    "cost_thb": 1774728,
+    "profit_margin_pct": 30.7
+  },
+  {
+    "product_id": "PRD014",
+    "quarter": "2025-Q4",
+    "units_sold": 3,
+    "revenue_thb": 2517350,
+    "cost_thb": 1622846,
+    "profit_margin_pct": 35.5
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2023-Q1",
+    "units_sold": 1,
+    "revenue_thb": 3855635,
+    "cost_thb": 2382204,
+    "profit_margin_pct": 38.2
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2023-Q2",
+    "units_sold": 2,
+    "revenue_thb": 4388713,
+    "cost_thb": 3205661,
+    "profit_margin_pct": 27.0
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2023-Q3",
+    "units_sold": 1,
+    "revenue_thb": 4236054,
+    "cost_thb": 2396255,
+    "profit_margin_pct": 43.4
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2023-Q4",
+    "units_sold": 2,
+    "revenue_thb": 4286597,
+    "cost_thb": 3021957,
+    "profit_margin_pct": 29.5
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2024-Q1",
+    "units_sold": 2,
+    "revenue_thb": 1866223,
+    "cost_thb": 1319034,
+    "profit_margin_pct": 29.3
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2024-Q2",
+    "units_sold": 0,
+    "revenue_thb": 3006449,
+    "cost_thb": 1892590,
+    "profit_margin_pct": 37.0
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2024-Q3",
+    "units_sold": 2,
+    "revenue_thb": 1917625,
+    "cost_thb": 1059523,
+    "profit_margin_pct": 44.7
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2024-Q4",
+    "units_sold": 2,
+    "revenue_thb": 4747788,
+    "cost_thb": 2805010,
+    "profit_margin_pct": 40.9
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2025-Q1",
+    "units_sold": 2,
+    "revenue_thb": 3962472,
+    "cost_thb": 2551434,
+    "profit_margin_pct": 35.6
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2025-Q2",
+    "units_sold": 2,
+    "revenue_thb": 2573946,
+    "cost_thb": 1746821,
+    "profit_margin_pct": 32.1
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 4005037,
+    "cost_thb": 2419790,
+    "profit_margin_pct": 39.6
+  },
+  {
+    "product_id": "PRD015",
+    "quarter": "2025-Q4",
+    "units_sold": 0,
+    "revenue_thb": 4967710,
+    "cost_thb": 3107217,
+    "profit_margin_pct": 37.5
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2023-Q1",
+    "units_sold": 0,
+    "revenue_thb": 4984812,
+    "cost_thb": 3307982,
+    "profit_margin_pct": 33.6
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2023-Q2",
+    "units_sold": 0,
+    "revenue_thb": 3885533,
+    "cost_thb": 2410796,
+    "profit_margin_pct": 38.0
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2023-Q3",
+    "units_sold": 0,
+    "revenue_thb": 4803114,
+    "cost_thb": 2919470,
+    "profit_margin_pct": 39.2
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2023-Q4",
+    "units_sold": 1,
+    "revenue_thb": 4390831,
+    "cost_thb": 2684870,
+    "profit_margin_pct": 38.9
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2024-Q1",
+    "units_sold": 1,
+    "revenue_thb": 3888091,
+    "cost_thb": 2496275,
+    "profit_margin_pct": 35.8
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2024-Q2",
+    "units_sold": 0,
+    "revenue_thb": 3565035,
+    "cost_thb": 2355093,
+    "profit_margin_pct": 33.9
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2024-Q3",
+    "units_sold": 1,
+    "revenue_thb": 3254392,
+    "cost_thb": 2139684,
+    "profit_margin_pct": 34.3
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2024-Q4",
+    "units_sold": 0,
+    "revenue_thb": 3465422,
+    "cost_thb": 2592344,
+    "profit_margin_pct": 25.2
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2025-Q1",
+    "units_sold": 0,
+    "revenue_thb": 2842496,
+    "cost_thb": 1723862,
+    "profit_margin_pct": 39.4
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2025-Q2",
+    "units_sold": 0,
+    "revenue_thb": 4575075,
+    "cost_thb": 3227829,
+    "profit_margin_pct": 29.4
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 3819107,
+    "cost_thb": 2248981,
+    "profit_margin_pct": 41.1
+  },
+  {
+    "product_id": "PRD016",
+    "quarter": "2025-Q4",
+    "units_sold": 1,
+    "revenue_thb": 3044809,
+    "cost_thb": 1977474,
+    "profit_margin_pct": 35.1
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 306165,
+    "cost_thb": 170474,
+    "profit_margin_pct": 44.3
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2023-Q2",
+    "units_sold": 3,
+    "revenue_thb": 1069137,
+    "cost_thb": 657086,
+    "profit_margin_pct": 38.5
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2023-Q3",
+    "units_sold": 2,
+    "revenue_thb": 675936,
+    "cost_thb": 496387,
+    "profit_margin_pct": 26.6
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2023-Q4",
+    "units_sold": 1,
+    "revenue_thb": 204068,
+    "cost_thb": 142694,
+    "profit_margin_pct": 30.1
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2024-Q1",
+    "units_sold": 3,
+    "revenue_thb": 952509,
+    "cost_thb": 561120,
+    "profit_margin_pct": 41.1
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2024-Q2",
+    "units_sold": 1,
+    "revenue_thb": 442456,
+    "cost_thb": 319106,
+    "profit_margin_pct": 27.9
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2024-Q3",
+    "units_sold": 3,
+    "revenue_thb": 1092102,
+    "cost_thb": 669918,
+    "profit_margin_pct": 38.7
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2024-Q4",
+    "units_sold": 1,
+    "revenue_thb": 534768,
+    "cost_thb": 296046,
+    "profit_margin_pct": 44.6
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2025-Q1",
+    "units_sold": 3,
+    "revenue_thb": 1442751,
+    "cost_thb": 1012798,
+    "profit_margin_pct": 29.8
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2025-Q2",
+    "units_sold": 5,
+    "revenue_thb": 1174527,
+    "cost_thb": 679301,
+    "profit_margin_pct": 42.2
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2025-Q3",
+    "units_sold": 3,
+    "revenue_thb": 981873,
+    "cost_thb": 671765,
+    "profit_margin_pct": 31.6
+  },
+  {
+    "product_id": "PRD017",
+    "quarter": "2025-Q4",
+    "units_sold": 4,
+    "revenue_thb": 1628685,
+    "cost_thb": 912354,
+    "profit_margin_pct": 44.0
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2023-Q1",
+    "units_sold": 3,
+    "revenue_thb": 514110,
+    "cost_thb": 343885,
+    "profit_margin_pct": 33.1
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2023-Q2",
+    "units_sold": 1,
+    "revenue_thb": 178883,
+    "cost_thb": 127988,
+    "profit_margin_pct": 28.5
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2023-Q3",
+    "units_sold": 4,
+    "revenue_thb": 592497,
+    "cost_thb": 401471,
+    "profit_margin_pct": 32.2
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2023-Q4",
+    "units_sold": 3,
+    "revenue_thb": 260580,
+    "cost_thb": 143613,
+    "profit_margin_pct": 44.9
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2024-Q1",
+    "units_sold": 3,
+    "revenue_thb": 727684,
+    "cost_thb": 422819,
+    "profit_margin_pct": 41.9
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2024-Q2",
+    "units_sold": 3,
+    "revenue_thb": 262362,
+    "cost_thb": 191886,
+    "profit_margin_pct": 26.9
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2024-Q3",
+    "units_sold": 2,
+    "revenue_thb": 639306,
+    "cost_thb": 417380,
+    "profit_margin_pct": 34.7
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2024-Q4",
+    "units_sold": 4,
+    "revenue_thb": 737965,
+    "cost_thb": 536100,
+    "profit_margin_pct": 27.4
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2025-Q1",
+    "units_sold": 1,
+    "revenue_thb": 400813,
+    "cost_thb": 288853,
+    "profit_margin_pct": 27.9
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2025-Q2",
+    "units_sold": 2,
+    "revenue_thb": 401046,
+    "cost_thb": 285780,
+    "profit_margin_pct": 28.7
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2025-Q3",
+    "units_sold": 1,
+    "revenue_thb": 468263,
+    "cost_thb": 261296,
+    "profit_margin_pct": 44.2
+  },
+  {
+    "product_id": "PRD018",
+    "quarter": "2025-Q4",
+    "units_sold": 1,
+    "revenue_thb": 696936,
+    "cost_thb": 451328,
+    "profit_margin_pct": 35.2
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2023-Q1",
+    "units_sold": 6,
+    "revenue_thb": 295142,
+    "cost_thb": 183742,
+    "profit_margin_pct": 37.7
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2023-Q2",
+    "units_sold": 3,
+    "revenue_thb": 207415,
+    "cost_thb": 122210,
+    "profit_margin_pct": 41.1
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2023-Q3",
+    "units_sold": 6,
+    "revenue_thb": 303744,
+    "cost_thb": 174318,
+    "profit_margin_pct": 42.6
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2023-Q4",
+    "units_sold": 3,
+    "revenue_thb": 242161,
+    "cost_thb": 148509,
+    "profit_margin_pct": 38.7
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2024-Q1",
+    "units_sold": 5,
+    "revenue_thb": 567640,
+    "cost_thb": 330126,
+    "profit_margin_pct": 41.8
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2024-Q2",
+    "units_sold": 6,
+    "revenue_thb": 322634,
+    "cost_thb": 238090,
+    "profit_margin_pct": 26.2
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2024-Q3",
+    "units_sold": 5,
+    "revenue_thb": 711919,
+    "cost_thb": 438426,
+    "profit_margin_pct": 38.4
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2024-Q4",
+    "units_sold": 5,
+    "revenue_thb": 625562,
+    "cost_thb": 370190,
+    "profit_margin_pct": 40.8
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2025-Q1",
+    "units_sold": 4,
+    "revenue_thb": 172647,
+    "cost_thb": 112015,
+    "profit_margin_pct": 35.1
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2025-Q2",
+    "units_sold": 6,
+    "revenue_thb": 589915,
+    "cost_thb": 382562,
+    "profit_margin_pct": 35.1
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2025-Q3",
+    "units_sold": 4,
+    "revenue_thb": 625531,
+    "cost_thb": 435385,
+    "profit_margin_pct": 30.4
+  },
+  {
+    "product_id": "PRD019",
+    "quarter": "2025-Q4",
+    "units_sold": 5,
+    "revenue_thb": 537120,
+    "cost_thb": 329314,
+    "profit_margin_pct": 38.7
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2023-Q1",
+    "units_sold": 1,
+    "revenue_thb": 546785,
+    "cost_thb": 366628,
+    "profit_margin_pct": 32.9
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2023-Q2",
+    "units_sold": 0,
+    "revenue_thb": 1129785,
+    "cost_thb": 799367,
+    "profit_margin_pct": 29.2
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2023-Q3",
+    "units_sold": 1,
+    "revenue_thb": 853281,
+    "cost_thb": 545412,
+    "profit_margin_pct": 36.1
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2023-Q4",
+    "units_sold": 0,
+    "revenue_thb": 705111,
+    "cost_thb": 446663,
+    "profit_margin_pct": 36.7
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2024-Q1",
+    "units_sold": 1,
+    "revenue_thb": 922416,
+    "cost_thb": 511203,
+    "profit_margin_pct": 44.6
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2024-Q2",
+    "units_sold": 1,
+    "revenue_thb": 710810,
+    "cost_thb": 422197,
+    "profit_margin_pct": 40.6
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2024-Q3",
+    "units_sold": 0,
+    "revenue_thb": 686095,
+    "cost_thb": 498666,
+    "profit_margin_pct": 27.3
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2024-Q4",
+    "units_sold": 2,
+    "revenue_thb": 1239049,
+    "cost_thb": 685421,
+    "profit_margin_pct": 44.7
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2025-Q1",
+    "units_sold": 0,
+    "revenue_thb": 1476033,
+    "cost_thb": 931860,
+    "profit_margin_pct": 36.9
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2025-Q2",
+    "units_sold": 0,
+    "revenue_thb": 805574,
+    "cost_thb": 478683,
+    "profit_margin_pct": 40.6
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2025-Q3",
+    "units_sold": 2,
+    "revenue_thb": 677290,
+    "cost_thb": 395047,
+    "profit_margin_pct": 41.7
+  },
+  {
+    "product_id": "PRD020",
+    "quarter": "2025-Q4",
+    "units_sold": 1,
+    "revenue_thb": 1352412,
+    "cost_thb": 832523,
+    "profit_margin_pct": 38.4
+  }
+]

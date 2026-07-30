@@ -1,0 +1,52 @@
+[
+  {
+    "employeeId": 5,
+    "Complaint_Type": "Discrimination complaint",
+    "Status": "Investigated"
+  },
+  {
+    "employeeId": 7,
+    "Complaint_Type": "Discrimination complaint",
+    "Status": "Pending"
+  },
+  {
+    "employeeId": 10,
+    "Complaint_Type": "Conflict with manager",
+    "Status": "Resolved"
+  },
+  {
+    "employeeId": 60,
+    "Complaint_Type": "Discrimination complaint",
+    "Status": "Investigated"
+  },
+  {
+    "employeeId": 62,
+    "Complaint_Type": "Harassment report",
+    "Status": "Investigated"
+  },
+  {
+    "employeeId": 81,
+    "Complaint_Type": "Unfair workload distribution",
+    "Status": "Resolved"
+  },
+  {
+    "employeeId": 83,
+    "Complaint_Type": "Discrimination complaint",
+    "Status": "Pending"
+  },
+  {
+    "employeeId": 99,
+    "Complaint_Type": "Pay dispute",
+    "Status": "Resolved"
+  },
+  {
+    "employeeId": 114,
+    "Complaint_Type": "Conflict with manager",
+    "Status": "Pending"
+  },
+  {
+    "employeeId": 150,
+    "Complaint_Type": "Conflict with manager",
+    "Status": "Resolved"
+  }
+]

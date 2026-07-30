@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 18
+  },
+  {
+    "employeeId": 2,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 2
+  },
+  {
+    "employeeId": 3,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 4,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 5,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 6,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 11
+  },
+  {
+    "employeeId": 7,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 8,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 9,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 10,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 11,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 12,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 13,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 11
+  },
+  {
+    "employeeId": 14,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 15,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 16,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 17,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 18,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 19,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 20,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 21,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 22,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 23,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 24,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 25,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 14
+  },
+  {
+    "employeeId": 26,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 14
+  },
+  {
+    "employeeId": 27,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 28,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 14
+  },
+  {
+    "employeeId": 29,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 30,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 31,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 32,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 33,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 34,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 6
+  },
+  {
+    "employeeId": 35,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 36,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 37,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 38,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 39,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 18
+  },
+  {
+    "employeeId": 40,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 1
+  },
+  {
+    "employeeId": 41,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 42,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 43,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 44,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 45,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 46,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 47,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 2
+  },
+  {
+    "employeeId": 48,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 49,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 50,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 51,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 52,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 53,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 54,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 55,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 56,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 57,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 58,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 14
+  },
+  {
+    "employeeId": 59,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 60,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 6
+  },
+  {
+    "employeeId": 61,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 62,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 63,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 64,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 65,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 66,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 6
+  },
+  {
+    "employeeId": 67,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 68,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 69,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 70,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 2
+  },
+  {
+    "employeeId": 71,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 72,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 73,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 74,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 75,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 76,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 77,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 78,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 79,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 2
+  },
+  {
+    "employeeId": 80,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 81,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 82,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 83,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 84,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 85,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 18
+  },
+  {
+    "employeeId": 86,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 87,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 88,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 1
+  },
+  {
+    "employeeId": 89,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 90,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 91,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 92,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 93,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 94,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 95,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 96,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 1
+  },
+  {
+    "employeeId": 97,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 98,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 6
+  },
+  {
+    "employeeId": 99,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 100,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 101,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 102,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 103,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 104,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 105,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 106,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 107,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 11
+  },
+  {
+    "employeeId": 108,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 109,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 15
+  },
+  {
+    "employeeId": 110,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 111,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 112,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 113,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 114,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 115,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 116,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 117,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 118,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 119,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 120,
+    "Sick_Leave_Days": 1,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 121,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 122,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 123,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 124,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 125,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 126,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 6
+  },
+  {
+    "employeeId": 127,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 128,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 20
+  },
+  {
+    "employeeId": 129,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 2,
+    "Late_Arrivals": 13
+  },
+  {
+    "employeeId": 130,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 131,
+    "Sick_Leave_Days": 0,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 132,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 8
+  },
+  {
+    "employeeId": 133,
+    "Sick_Leave_Days": 5,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 134,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 135,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 1
+  },
+  {
+    "employeeId": 136,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 0
+  },
+  {
+    "employeeId": 137,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 138,
+    "Sick_Leave_Days": 2,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 4
+  },
+  {
+    "employeeId": 139,
+    "Sick_Leave_Days": 8,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 18
+  },
+  {
+    "employeeId": 140,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 12
+  },
+  {
+    "employeeId": 141,
+    "Sick_Leave_Days": 9,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 3
+  },
+  {
+    "employeeId": 142,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 143,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 5
+  },
+  {
+    "employeeId": 144,
+    "Sick_Leave_Days": 4,
+    "Personal_Leave_Days": 3,
+    "Late_Arrivals": 7
+  },
+  {
+    "employeeId": 145,
+    "Sick_Leave_Days": 3,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 19
+  },
+  {
+    "employeeId": 146,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 1,
+    "Late_Arrivals": 17
+  },
+  {
+    "employeeId": 147,
+    "Sick_Leave_Days": 7,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 10
+  },
+  {
+    "employeeId": 148,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 5,
+    "Late_Arrivals": 16
+  },
+  {
+    "employeeId": 149,
+    "Sick_Leave_Days": 10,
+    "Personal_Leave_Days": 0,
+    "Late_Arrivals": 9
+  },
+  {
+    "employeeId": 150,
+    "Sick_Leave_Days": 6,
+    "Personal_Leave_Days": 4,
+    "Late_Arrivals": 14
+  }
+]

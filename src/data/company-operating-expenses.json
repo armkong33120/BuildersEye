@@ -1,0 +1,4706 @@
+[
+  {
+    "month": "2023-01",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 111326,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9757,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 41057,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 15351,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 18375,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 137598,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 33244,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 47478,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 70705,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-01",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 28503,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 92590,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9669,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 62939,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19369,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 18438,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 150138,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 41842,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 50314,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 59578,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-02",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 24365,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 111192,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 12326,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 74439,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19650,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 11153,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 126910,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 125153,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 38677,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 34283,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 69150,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-03",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 38936,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 119422,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11350,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 57090,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 17854,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 13738,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 83497,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40616,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 52197,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 71008,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-04",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 27187,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 87656,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 8019,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 42702,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 24177,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 14088,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 159685,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 33305,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 36942,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 70149,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-05",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 21329,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 88575,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 13232,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 59940,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 18229,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16389,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 108859,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 2264,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 39099,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 44638,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 60174,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-06",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 19621,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 107393,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14229,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 67875,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 21282,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 10172,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 140482,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 49741,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 26912,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 75538,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-07",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 34463,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 109731,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 12467,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 52068,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19740,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12055,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 155662,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 49423,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 44847,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 74224,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-08",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 23807,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 102413,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 12584,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 64826,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 21743,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12126,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 86136,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 137012,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 47779,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 40246,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 57256,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-09",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 15533,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 96954,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 13959,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 56702,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 24215,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16062,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 87013,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 34346,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 28608,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 75241,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-10",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 23425,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 105928,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 10251,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 67326,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19356,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 10890,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 176494,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 79343,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 44873,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 30443,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 62696,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-11",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 23136,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 115232,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14642,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 40636,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 16566,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 17791,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 132349,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 49432,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 25186,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 72056,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2023-12",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 28039,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 112994,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 10523,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 61713,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 23534,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 15465,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 83628,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 45150,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 51866,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 79018,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-01",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 28838,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 103741,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 8521,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 64844,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 15305,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 14539,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 117957,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 30148,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 29175,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 57610,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-02",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 20944,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 88545,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11656,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 47708,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 17776,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 10901,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 111723,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 84654,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 47658,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 20748,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 57091,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-03",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 25403,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 104668,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14449,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 46281,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19019,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16506,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 96851,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 35407,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 23212,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 69099,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-04",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 15793,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 94014,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11682,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 45147,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 20947,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 11022,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 133551,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 32373,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 24499,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 75484,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-05",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 21767,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 92858,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11026,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 73585,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 15087,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 14987,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 178368,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 21118,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 48137,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 26954,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 78191,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-06",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 29683,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 87217,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9733,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 58794,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 17329,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 13581,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 133654,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 41840,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 27005,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 68575,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-07",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 15172,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 110309,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11130,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 62617,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 23549,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12458,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 98569,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40153,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 42208,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 58516,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-08",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 34481,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 101138,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14666,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 60302,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 20462,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 11145,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 130446,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 52669,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 49746,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 54049,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 71773,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-09",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 36045,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 106687,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9517,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 74359,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 21810,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 11277,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 173192,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 48992,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 56733,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 73147,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-10",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 39001,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 116102,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 12890,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 60496,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 16667,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 13618,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 87736,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 103689,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40305,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 33624,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 60430,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-11",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 23986,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 105280,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14012,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 71157,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 19115,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12621,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 130125,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 45176,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 59364,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 59401,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2024-12",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 31806,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 97267,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14566,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 71172,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 20778,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 14917,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 168096,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 49037,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 42459,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 58202,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-01",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 30221,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 108792,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 13307,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 59164,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 17079,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 19265,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 85559,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40628,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 56873,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 71169,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-02",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 24525,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 110451,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9972,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 51117,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 15943,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12672,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 146386,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 112058,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 46817,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 41210,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 71024,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-03",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 15770,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 91320,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 13937,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 57304,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 17437,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16817,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 155276,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40000,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 24654,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 67572,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-04",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 27025,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 91202,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 8689,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 49292,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 15113,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 11659,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 167954,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 42231,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 22318,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 74109,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-05",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 33702,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 117685,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 8666,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 76927,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 21764,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 17599,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 189745,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 107972,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 45435,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 44422,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 60177,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-06",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 31273,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 111926,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 12873,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 78992,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 21961,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 13681,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 198301,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 41088,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 39700,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 75292,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-07",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 24000,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 98722,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14113,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 58579,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 20393,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 10938,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 86820,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 41469,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 41025,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 57889,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-08",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 19154,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 110394,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 9123,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 51444,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 23356,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16563,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 112716,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 130057,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 33673,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 48616,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 66500,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-09",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 16312,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 98062,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 14170,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 55989,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 20129,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 16687,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 160626,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 38299,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 48421,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 61033,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-10",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 16233,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 118695,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 8052,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 78808,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 23425,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 12460,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 161471,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าจัดอีเวนต์/นิทรรศการ",
+    "department": "Marketing",
+    "amount_thb": 21594,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 40694,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 21364,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 71101,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-11",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 29783,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าเช่าสำนักงาน",
+    "department": "Shared",
+    "amount_thb": 350000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าเช่าที่จอดรถ",
+    "department": "Shared",
+    "amount_thb": 45000,
+    "vendor": "บริษัท ศุภาลัย จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าอินเทอร์เน็ต (Leased Line + WiFi)",
+    "department": "Shared",
+    "amount_thb": 25000,
+    "vendor": "บริษัท ทรู อินเทอร์เน็ต จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าประกันอาคาร/ทรัพย์สิน",
+    "department": "Shared",
+    "amount_thb": 18000,
+    "vendor": "บริษัท เอไอเอ จำกัด (มหาชน)",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าบริการรักษาความปลอดภัย (รปภ.)",
+    "department": "Shared",
+    "amount_thb": 60000,
+    "vendor": "บริษัท การ์ดฟอร์ซ ซีเคียวริตี้ จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าทำความสะอาด",
+    "department": "Shared",
+    "amount_thb": 35000,
+    "vendor": "บริษัท พีเอส คลีนนิ่ง จำกัด",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าไฟฟ้า",
+    "department": "Shared",
+    "amount_thb": 108527,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าน้ำประปา",
+    "department": "Shared",
+    "amount_thb": 11244,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าน้ำมันรถบริษัท",
+    "department": "Shared",
+    "amount_thb": 72386,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าโทรศัพท์/มือถือองค์กร",
+    "department": "Shared",
+    "amount_thb": 18838,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าขนส่ง/Messenger",
+    "department": "Shared",
+    "amount_thb": 14279,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่ายิง Ad ดิจิทัล (Google/Facebook/LINE)",
+    "department": "Marketing",
+    "amount_thb": 139199,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าลิขสิทธิ์/สมาชิกระบบ Cloud (AWS/Azure)",
+    "department": "IT",
+    "amount_thb": 30268,
+    "vendor": "Various",
+    "payment_status": "Pending"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าบำรุงรักษาเครื่องจักร/เครื่องมือช่าง",
+    "department": "Engineering & Construction",
+    "amount_thb": 48576,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าตรวจสอบบัญชี/ที่ปรึกษากฎหมาย",
+    "department": "Finance & Accounting",
+    "amount_thb": 51925,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  },
+  {
+    "month": "2025-12",
+    "category": "ค่าฝึกอบรมพนักงาน",
+    "department": "HR & Admin",
+    "amount_thb": 29097,
+    "vendor": "Various",
+    "payment_status": "Paid"
+  }
+]

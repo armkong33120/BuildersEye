@@ -1,0 +1,902 @@
+[
+  {
+    "employeeId": 1,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 7.0,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 2,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 3,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 7.6,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 4,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 5,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 6.3,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 6,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 4.1,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 7,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 4.1,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 8,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 4.6,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 9,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 6.9,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 10,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 8.1,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 11,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 12,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.4,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 13,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 4.9,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 14,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 7.5,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 15,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 6.6,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 16,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 4.6,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 17,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 8.2,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 18,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 5.5,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 19,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 8.9,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 20,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 5.9,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 21,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 8.5,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 22,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 5.7,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 23,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 6.5,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 24,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 5.1,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 25,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 4.3,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 26,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 4.9,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 27,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 28,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 9.0,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 29,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 5.1,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 30,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 7.5,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 31,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 5.4,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 32,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 7.0,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 33,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 4.6,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 34,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 8.3,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 35,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 36,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 37,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 7.0,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 38,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 5.7,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 39,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 8.6,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 40,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 5.6,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 41,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 5.9,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 42,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 4.9,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 43,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 44,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 5.7,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 45,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 6.2,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 46,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.3,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 47,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 7.2,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 48,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 4.2,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 49,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 7.1,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 50,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 6.2,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 51,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 52,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 5.0,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 53,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 8.2,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 54,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 5.5,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 55,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 5.5,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 56,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 8.8,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 57,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 5.3,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 58,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 5.4,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 59,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 60,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 6.7,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 61,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 4.5,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 62,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 63,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 6.5,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 64,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 6.0,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 65,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 4.5,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 66,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 8.0,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 67,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 8.6,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 68,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 6.4,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 69,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 6.1,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 70,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 7.4,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 71,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 8.0,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 72,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 8.4,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 73,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 74,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 4.2,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 75,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 6.1,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 76,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 77,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 5.3,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 78,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 5.9,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 79,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 8.6,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 80,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 7.6,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 81,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 82,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 83,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 6.4,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 84,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 4.3,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 85,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 4.4,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 86,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 4.4,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 87,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 5.9,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 88,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 5.1,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 89,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 8.1,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 90,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 5.1,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 91,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.7,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 92,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.5,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 93,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 8.3,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 94,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 4.6,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 95,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 7.9,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 96,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 4.5,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 97,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 7.7,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 98,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.5,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 99,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 8.6,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 100,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 4.2,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 101,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 5.4,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 102,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 103,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 104,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 6.5,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 105,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 4.7,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 106,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 7.8,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 107,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 4.7,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 108,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 5.0,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 109,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 7.8,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 110,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 8.9,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 111,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 4.5,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 112,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 7.9,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 113,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 4.3,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 114,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 5.5,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 115,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 7.5,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 116,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 117,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 118,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 5.7,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 119,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 4.3,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 120,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 8.7,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 121,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 7.4,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 122,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 8.8,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 123,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 5.5,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 124,
+    "Core_Skill": "Excel",
+    "Language_Score_IELTS": 4.1,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 125,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 6.1,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 126,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 127,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 7.6,
+    "Certification": "Google Data Analytics"
+  },
+  {
+    "employeeId": 128,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 7.1,
+    "Certification": "CISSP"
+  },
+  {
+    "employeeId": 129,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 4.6,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 130,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 5.8,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 131,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 5.2,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 132,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 4.7,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 133,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 7.0,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 134,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 9.0,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 135,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 4.5,
+    "Certification": "LEED AP"
+  },
+  {
+    "employeeId": 136,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 5.9,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 137,
+    "Core_Skill": "Public Speaking",
+    "Language_Score_IELTS": 5.4,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 138,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 6.8,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 139,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 5.3,
+    "Certification": "PMP"
+  },
+  {
+    "employeeId": 140,
+    "Core_Skill": "Project Management",
+    "Language_Score_IELTS": 4.9,
+    "Certification": "AWS Solutions Architect"
+  },
+  {
+    "employeeId": 141,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 5.8,
+    "Certification": "ITIL"
+  },
+  {
+    "employeeId": 142,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 6.4,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 143,
+    "Core_Skill": "Leadership",
+    "Language_Score_IELTS": 5.1,
+    "Certification": "CFA"
+  },
+  {
+    "employeeId": 144,
+    "Core_Skill": "SQL",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 145,
+    "Core_Skill": "AutoCAD",
+    "Language_Score_IELTS": 8.1,
+    "Certification": "CPA"
+  },
+  {
+    "employeeId": 146,
+    "Core_Skill": "Data Analysis",
+    "Language_Score_IELTS": 5.6,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 147,
+    "Core_Skill": "Negotiation",
+    "Language_Score_IELTS": 6.1,
+    "Certification": "Six Sigma Green Belt"
+  },
+  {
+    "employeeId": 148,
+    "Core_Skill": "Python",
+    "Language_Score_IELTS": 6.4,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 149,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 8.0,
+    "Certification": "None"
+  },
+  {
+    "employeeId": 150,
+    "Core_Skill": "Communication",
+    "Language_Score_IELTS": 4.8,
+    "Certification": "CPA"
+  }
+]

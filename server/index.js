@@ -105,6 +105,29 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// TEMP diagnostic: report LLM availability + env config (no secrets) + test a DeepSeek call
+app.get('/api/debug-llm', async (req, res) => {
+  const { isLLMAvailable, getClient } = await import('./llmClient.js');
+  const info = {
+    llmAvailable: isLLMAvailable(),
+    hasLLMKey: Boolean(process.env.LLM_API_KEY),
+    hasDeepSeekKey: Boolean(process.env.DEEPSEEK_API_KEY),
+    hasOpenAIKey: Boolean(process.env.OPENAI_API_KEY),
+    llmBaseUrl: process.env.LLM_BASE_URL || '(default api.deepseek.com)',
+    llmModel: process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-chat',
+    llmSkip: process.env.LLM_SKIP,
+  };
+  // Try a real call
+  try {
+    const { generateAnswer } = await import('./llmClient.js');
+    const r = await generateAnswer('say hi', 'test', { rawSql: false });
+    info.directCall = { ok: true, result: r };
+  } catch (e) {
+    info.directCall = { ok: false, error: e.message };
+  }
+  res.json(info);
+});
+
 app.get('/api/index/status', (req, res) => {
   const uniqueFiles = new Set(flatIndex.map(r => r.fileName));
   const uniqueEmps = new Set(flatIndex.map(r => r.employeeId));

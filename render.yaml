@@ -13,7 +13,10 @@ services:
       - key: LLM_API_KEY
         sync: false   # set manually in Render dashboard (DeepSeek API key — never commit real key)
       - key: LLM_BASE_URL
-        value: https://api.deepseek.com
+        value: https://api.deepseek.com    # ← PRIMARY: DeepSeek API (use this for production)
+        # For local GPU (Colab Ollama), override in Render Dashboard manually:
+        #   LLM_BASE_URL = https://<tunnel>.trycloudflare.com/v1
+        #   LLM_MODEL = qwen2.5:7b
       - key: LLM_MODEL
         value: deepseek-chat
       - key: LLM_SKIP

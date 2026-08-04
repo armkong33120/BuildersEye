@@ -34,6 +34,7 @@ const LAYER_COUNT = 4;
 const BALL_RADIUS = 10.0;
 const LAYER_STEP = BALL_RADIUS / LAYER_COUNT;
 const DEPTH_RADII = Array.from({ length: LAYER_COUNT + 1 }, (_, depth) => Number((depth * LAYER_STEP).toFixed(2)));
+const CEO_ZONE = 1.4; // Minimum distance from CEO to C-Level nodes
 const SCAN_DURATION_MS = 3600;
 const DEPARTMENT_SCAN_HOLD_MS = 5200;
 const AUTO_ROTATE_RESUME_MS = 5200;
@@ -146,7 +147,7 @@ function buildIndexes() {
 
   for (const [depth, identities] of identitiesByDepth.entries()) {
     const orderedIdentities = interleaveByDepartment(identities);
-    const innerRadius = DEPTH_RADII[Math.max(0, depth - 1)];
+    const innerRadius = depth === 1 ? CEO_ZONE : DEPTH_RADII[Math.max(0, depth - 1)];
     const outerRadius = DEPTH_RADII[Math.min(depth, DEPTH_RADII.length - 1)] || BALL_RADIUS;
     const slots = layerVolumeSlots(orderedIdentities.length, innerRadius, outerRadius, depth);
     orderedIdentities.forEach((identity, index) => {

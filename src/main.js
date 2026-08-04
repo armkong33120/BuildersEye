@@ -309,10 +309,10 @@ async function handleChatSubmit(event) {
   appendChatMessage('user', 'You', prompt);
   chatInput.value = '';
 
-  // Loading state
+  // Loading state — enhanced with pulse animation
   var thinkingEl = document.createElement('article');
   thinkingEl.className = 'chat-message assistant thinking';
-  thinkingEl.innerHTML = '<div class="message-meta">RAG</div><p class="thinking-dots">🔍 กำลังค้นหาจาก 150 ไฟล์...</p>';
+  thinkingEl.innerHTML = '<div class="message-meta">RAG · กำลังค้นหา</div><p class="thinking-dots"><span class="dot-pulse">🔍</span> กำลังค้นหาจาก 150 ไฟล์...</p>';
   chatMessages.append(thinkingEl);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -390,11 +390,12 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
       if (!emp) return '';
       var shortName = shortPersonName(emp.name);
       return '<div class="matched-emp-item" data-pk="' + pk + '">' +
+        '<span class="emp-dot" style="background:' + (departmentsByName.get(emp.department)?.color || '#888') + '"></span>' +
         escapeHtml(emp.code) + ' ' + escapeHtml(shortName) +
         ' <span class="emp-dept">· ' + escapeHtml(emp.department) + '</span></div>';
     }).join('');
     matchedEmpHtml = '<div class="matched-employees">' +
-      '<button class="matched-employees-toggle" type="button">👥 ' + extras.matchedEmployeePks.length + ' พนักงานที่พบ</button>' +
+      '<button class="matched-employees-toggle" type="button">👥 ' + extras.matchedEmployeePks.length + ' คนที่เกี่ยวข้อง — คลิกดูบนกราฟ</button>' +
       '<div class="matched-employees-list">' + empItems + '</div></div>';
   }
 
@@ -554,12 +555,34 @@ function highlightRagResults(data) {
     }
   });
   if (nodePks.size > 0) {
+    // Stronger halo + glow material for matched nodes
     createScanNodeHalos(nodePks, '#63d8ff');
+    // Add emissive glow directly to matched node meshes
+    nodePks.forEach(function(pk) {
+      var mesh = nodeObjects.get(pk);
+      if (mesh && mesh.material) {
+        // Store original for restore
+        if (!mesh.userData._origEmissive) {
+          mesh.userData._origEmissive = mesh.material.emissive.getHex();
+          mesh.userData._origEmissiveIntensity = mesh.material.emissiveIntensity;
+        }
+        mesh.material.emissive.set('#ffffff');
+        mesh.material.emissiveIntensity = 1.2;
+      }
+    });
     if (edgeKeys.size > 0) createScanPathLines(edgeKeys, '#ffd166');
-    pauseAutoRotate(7000);
+    // Longer hold (12s) + resume auto-rotate after
+    pauseAutoRotate(12000);
+    // Auto-focus camera on first matched node
+    var firstPk = Array.from(nodePks)[0];
+    var firstMesh = nodeObjects.get(firstPk);
+    if (firstMesh) {
+      controls.target.copy(firstMesh.position.clone().multiplyScalar(0.2));
+      controls.update();
+    }
   }
   state.scan = {
-    startedAt: performance.now(), duration: 7000,
+    startedAt: performance.now(), duration: 12000,
     sourcePk: graph.ceoPk, nodePks: nodePks, edgeKeys: edgeKeys, mode: 'rag-search',
   };
 }
@@ -799,6 +822,18 @@ function updateScanEffects(elapsed) {
 
 function clearScanEffects() {
   const hadActiveScan = Boolean(state.scan);
+  // Restore node materials from RAG glow
+  if (state.scan?.nodePks) {
+    state.scan.nodePks.forEach(function(pk) {
+      var mesh = nodeObjects.get(pk);
+      if (mesh && mesh.material && mesh.userData._origEmissive != null) {
+        mesh.material.emissive.setHex(mesh.userData._origEmissive);
+        mesh.material.emissiveIntensity = mesh.userData._origEmissiveIntensity;
+        delete mesh.userData._origEmissive;
+        delete mesh.userData._origEmissiveIntensity;
+      }
+    });
+  }
   scanGroup.children.forEach((object) => {
     object.geometry?.dispose?.();
     object.material?.dispose?.();
@@ -1354,9 +1389,18 @@ function animate() {
   for (const [pk, mesh] of nodeObjects.entries()) {
     if (!mesh.visible) continue;
     const selectedPulse = pk === state.selectedPk ? 1 + Math.sin(elapsed * 2.4) * 0.035 : 1;
-    const scanPulse = state.scan?.nodePks?.has(pk) ? 1 + Math.sin(elapsed * 7 + pk * 0.13) * 0.16 : 1;
+    // Stronger blink for RAG-matched nodes: scale bounce + emissive flicker
+    const isRagMatch = state.scan?.nodePks?.has(pk) && state.scan?.mode === 'rag-search';
+    const scanPulse = isRagMatch
+      ? 1 + Math.sin(elapsed * 8 + pk * 0.17) * 0.22  // faster, stronger blink
+      : (state.scan?.nodePks?.has(pk) ? 1 + Math.sin(elapsed * 7 + pk * 0.13) * 0.16 : 1);
     if (pk === state.selectedPk) mesh.scale.setScalar(1.9 * selectedPulse * scanPulse);
+    else if (isRagMatch) mesh.scale.setScalar(1.45 * scanPulse);
     else if (state.scan?.nodePks?.has(pk)) mesh.scale.setScalar(1.35 * scanPulse);
+    // Emissive pulse for RAG matches
+    if (isRagMatch && mesh.material && mesh.userData._origEmissive != null) {
+      mesh.material.emissiveIntensity = 0.5 + Math.abs(Math.sin(elapsed * 8 + pk * 0.17)) * 0.9;
+    }
   }
   updateScanEffects(elapsed);
   renderer.render(scene, camera);

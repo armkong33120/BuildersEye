@@ -45,15 +45,17 @@
 - [ ] ตั้ง `VITE_RAG_BACKEND` env = URL ของ Render backend
 - [ ] เปิดได้ URL เช่น `https://<project>.vercel.app` (อาจใช้ `?backend=` แทนได้)
 
-### C-3. Deploy Backend → Render (free tier) — [มนุษย์ต้องทำ]
-- [ ] push repo → New → Blueprint → เลือก `render.yaml`
-- [ ] ตั้งค่า `OPENAI_API_KEY` (key ใหม่ที่หมุนแล้ว) ใน Render dashboard
-- [ ] ใส่ `CORS_ORIGINS` = URL Vercel ด้านหน้า
-- [ ] ยืนยัน `/api/health` ขึ้น `status: ok`
+### C-3. Deploy Backend → Render (free tier) ✅ เสร็จแล้ว
+- [x] push repo → Blueprint → `render.yaml`
+- [x] ตั้งค่า `LLM_API_KEY` = DeepSeek key (ผ่าน Render API)
+- [x] ตั้ง `LLM_MODEL=deepseek-chat` + `LLM_BASE_URL=https://api.deepseek.com` + ลบ OPENAI key ที่ขัดกัน
+- [x] `/api/health` ขึ้น `status: ok` (RAM ~52-57MB)
+- [x] **LLM ทำงาน** — ทดสอบจริง: คำนวณเงินเดือนเฉลี่ย, นับพนักงาน, หา KPI สูงสุด ได้คำตอบภาษาไทยถูกต้อง
 
-### C-4. ทดสอบ E2E บน cloud — [มนุษย์/ผมช่วยตรวจ log]
-- [ ] `test_e2e.js` รันผ่านบน Render
-- [ ] ตรวจว่าอนุญาตให้ `Employee_A` anonymization ทำงานจริง (ไม่ส่ง PII ไป API)
+### C-4. ทดสอบ E2E บน cloud — [เสร็จบางส่วน]
+- [x] chat ผ่าน Render ทำงาน (SQL + ตอบภาษาไทย)
+- [ ] `test_e2e.js` รันผ่านบน Render (ยังไม่ได้รัน suite เต็ม)
+- [x] ตรวจ `Employee_A` anonymization (DeepSeek ใช้ label ไม่ใช่ชื่อจริง)
 
 ---
 

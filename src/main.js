@@ -524,7 +524,11 @@ function resumeAutoRotate() {
 
 
 // RAG backend integration
-const RAG_BACKEND = 'http://localhost:5199';
+const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+// Backend URL priority: ?backend= query param > VITE_RAG_BACKEND env > localhost default
+const RAG_BACKEND = (urlParams && urlParams.get('backend'))
+  || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
+  || 'http://localhost:5199';
 var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
 
 async function callRagBackend(query) {

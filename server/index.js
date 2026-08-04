@@ -10,7 +10,7 @@ import path from 'path';
 import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = 5199;
+const PORT = process.env.PORT || 5199;
 
 let flatIndex = [];
 let searchIndex = new Map();
@@ -22,15 +22,31 @@ async function startup() {
   console.log('[ingest] Starting Excel ingestion...');
   const start = Date.now();
 
-  const oneDrivePath = path.join(
-    process.env.HOME || '/Users/arm',
-    'Library/CloudStorage/OneDrive-UbonRatchathaniUniversity/BuildersEye HR Demo Dataset/Employees'
-  );
+  // Data directory priority:
+  // 1. HR_DATA_DIR env var (used on Render/cloud deployments)
+  // 2. OneDrive path (local dev on this machine)
+  // 3. Repo-local demo copy (always present in repo)
+  let dataDir = process.env.HR_DATA_DIR;
+  if (dataDir) {
+    console.log(`[ingest] Using HR_DATA_DIR env: ${dataDir}`);
+    dataDir = path.resolve(dataDir);
+    if (!fs.existsSync(dataDir)) {
+      console.warn('[ingest] HR_DATA_DIR path not found, falling back to OneDrive/local copy');
+      dataDir = null;
+    }
+  }
 
-  let dataDir = oneDrivePath;
-  if (!fs.existsSync(dataDir)) {
-    console.warn('[ingest] OneDrive path not found, using local copy');
-    dataDir = path.join(__dirname, '..', 'src', 'data', 'hr_onedrive_demo');
+  if (!dataDir) {
+    const oneDrivePath = path.join(
+      process.env.HOME || '/Users/arm',
+      'Library/CloudStorage/OneDrive-UbonRatchathaniUniversity/BuildersEye HR Demo Dataset/Employees'
+    );
+
+    dataDir = oneDrivePath;
+    if (!fs.existsSync(dataDir)) {
+      console.warn('[ingest] OneDrive path not found, using local copy');
+      dataDir = path.join(__dirname, '..', 'src', 'data', 'hr_onedrive_demo');
+    }
   }
 
   try {
@@ -58,13 +74,25 @@ async function startup() {
   }
 
   initDatabase(flatIndex);
-  buildVectorIndex(flatIndex);
+  // Vector index is memory-heavy (60k embeddings). Disable on low-RAM hosts via VECTOR_INDEX_DISABLED=true
+  if (process.env.VECTOR_INDEX_DISABLED !== 'true') {
+    try {
+      buildVectorIndex(flatIndex);
+    } catch (e) {
+      console.warn('[vector] buildVectorIndex skipped (err):', e.message);
+    }
+  } else {
+    console.log('[vector] VECTOR_INDEX_DISABLED=true, skipping vector index build');
+  }
   indexReady = true;
   startupTime = new Date().toISOString();
 }
 
 const app = express();
-app.use(cors({ origin: ['http://localhost:5174', 'http://localhost:5173'] }));
+// CORS: allow local dev + Vercel/cloud frontend origins (from env CORS_ORIGINS, comma-separated)
+const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5174,http://localhost:5173')
+  .split(',').map(s => s.trim()).filter(Boolean);
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: '1mb' }));
 
 app.get('/api/health', (req, res) => {

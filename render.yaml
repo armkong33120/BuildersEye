@@ -1,0 +1,24 @@
+# Render Blueprint — BuildersEye RAG backend
+# Deploy via: https://render.com (New → Blueprint) or link this repo
+services:
+  - type: web
+    name: builderseye-backend
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: node index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false   # set manually in Render dashboard (never commit real key)
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: LLM_SKIP
+        value: "false"
+      - key: HR_DATA_DIR
+        value: /opt/render/project/src/src/data/hr_onedrive_demo
+      - key: CORS_ORIGINS
+        value: http://localhost:5174,http://localhost:5173
+      - key: VECTOR_INDEX_DISABLED
+        value: "true"   # Render free tier = 512MB RAM; disable memory-heavy vector index

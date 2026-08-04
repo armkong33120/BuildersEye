@@ -144,8 +144,11 @@
         </div>
 
         <form class="rag-chat-form" id="chatForm">
-          <input id="chatInput" type="text" autocomplete="off" placeholder="ถามจาก org graph..." />
-          <button id="sendChat" class="chat-send-button" type="submit" title="Send" aria-label="Send"></button>
+          <div class="chat-input-row">
+            <input id="chatInput" type="text" autocomplete="off" placeholder="Ask about the org graph…" />
+            <span class="chat-input-hint">⏎ Send</span>
+          </div>
+          <button id="sendChat" class="chat-send-button" type="submit" title="Send message" aria-label="Send message"></button>
         </form>
       </section>
     </div>

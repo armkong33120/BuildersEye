@@ -229,6 +229,11 @@ function buildUi() {
   togglePanelButton.addEventListener('click', toggleSidePanel);
   toggleChatButton.addEventListener('click', toggleChat);
   chatForm.addEventListener('submit', handleChatSubmit);
+  // Dynamic send button — glows when input has text
+  chatInput.addEventListener('input', function() {
+    var hasText = chatInput.value.trim().length > 0;
+    sendChatButton.classList.toggle('is-ready', hasText);
+  });
   document.querySelectorAll('.collapse-button[data-collapse]').forEach((button) => {
     button.addEventListener('click', () => toggleCollapsiblePanel(button));
   });
@@ -308,11 +313,18 @@ async function handleChatSubmit(event) {
 
   appendChatMessage('user', 'You', prompt);
   chatInput.value = '';
+  sendChatButton.classList.remove('is-ready');
 
-  // Loading state — enhanced with pulse animation
+  // Loading state — 3-dot bounce
   var thinkingEl = document.createElement('article');
   thinkingEl.className = 'chat-message assistant thinking';
-  thinkingEl.innerHTML = '<div class="message-meta">RAG · กำลังค้นหา</div><p class="thinking-dots"><span class="dot-pulse">🔍</span> กำลังค้นหาจาก 150 ไฟล์...</p>';
+  thinkingEl.innerHTML =
+    '<div class="thinking-dots">' +
+      '<span class="thinking-dot"></span>' +
+      '<span class="thinking-dot"></span>' +
+      '<span class="thinking-dot"></span>' +
+    '</div>' +
+    '<div class="typing-status">Searching 150 files…</div>';
   chatMessages.append(thinkingEl);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -375,12 +387,6 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
   }
 
   var metaHtml = '';
-  if (extras.responseTimeMs !== undefined) {
-    var matchersText = (extras.matchersUsed || []).join(', ');
-    metaHtml = '<div class="response-meta">⚡ ' + extras.responseTimeMs + 'ms';
-    if (matchersText) metaHtml += ' · ' + escapeHtml(matchersText);
-    metaHtml += '</div>';
-  }
 
   // Matched employees list
   var matchedEmpHtml = '';
@@ -389,9 +395,10 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
       var emp = employeesByPk.get(pk);
       if (!emp) return '';
       var shortName = shortPersonName(emp.name);
-      return '<div class="matched-emp-item" data-pk="' + pk + '">' +
+      return '<div class="matched-emp-item" data-pk="' + pk + '" title="Click to focus on graph">' +
         '<span class="emp-dot" style="background:' + (departmentsByName.get(emp.department)?.color || '#888') + '"></span>' +
-        escapeHtml(emp.code) + ' ' + escapeHtml(shortName) +
+        '<span class="emp-code">' + escapeHtml(emp.code) + '</span>' +
+        escapeHtml(shortName) +
         ' <span class="emp-dept">· ' + escapeHtml(emp.department) + '</span></div>';
     }).join('');
     matchedEmpHtml = '<div class="matched-employees">' +
@@ -417,8 +424,17 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
     }).join('') + '</div>';
   }
 
-  message.innerHTML = '<div class="message-meta">' + escapeHtml(label) + ' · ' + escapeHtml(time) + policyHtml + '</div>' +
-    '<p>' + escapeHtml(text) + '</p>' + metaHtml + sourceHtml + matchedEmpHtml;
+  message.innerHTML =
+    '<div class="message-identity">' +
+      '<div class="message-avatar">' + (role === 'user' ? 'YOU' : 'BE') + '</div>' +
+      '<span class="message-sender">' + escapeHtml(label) + '</span>' +
+    '</div>' +
+    '<p>' + escapeHtml(text) + '</p>' + metaHtml + sourceHtml + matchedEmpHtml +
+    '<div class="message-footer">' +
+      '<span class="message-time">' + escapeHtml(time) + '</span>' +
+      (extras.responseTimeMs !== undefined ? '<span class="response-time">⚡ ' + extras.responseTimeMs + 'ms</span>' : '') +
+      policyHtml +
+    '</div>';
 
   // Attach event listeners after DOM insertion
   chatMessages.append(message);

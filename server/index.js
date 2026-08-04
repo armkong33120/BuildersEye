@@ -5,6 +5,7 @@ import { ingestAll } from './ingestExcel.js';
 import { initDatabase } from './sqlEngine.js';
 import { buildVectorIndex } from './vectorEngine.js';
 import { chatHandler } from './chatController.js';
+import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -154,12 +155,41 @@ app.post('/api/chat', requireAuth, async (req, res) => {
     const { query, conversationId } = req.body;
     if (!query) return res.status(400).json({ error: 'query is required' });
     const viewer = resolveViewer(req.body);
-    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId || '');
+
+    // Save user message to conversation history
+    const convId = conversationId || 'conv-' + Date.now();
+    addMessage(convId, 'user', query);
+
+    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, convId);
+
+    // Save assistant response
+    if (result.answer) {
+      addMessage(convId, 'assistant', result.answer);
+    }
+
+    // Include conversationId in response
+    result.conversationId = convId;
     res.json(result);
   } catch (e) {
     console.error('[chat] Error:', e.message);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// --- Conversation history ---
+app.get('/api/conversations', requireAuth, (req, res) => {
+  res.json(listConversations());
+});
+
+app.get('/api/conversations/:id', requireAuth, (req, res) => {
+  const convo = getConversation(req.params.id);
+  if (!convo) return res.status(404).json({ error: 'Conversation not found' });
+  res.json(convo);
+});
+
+app.delete('/api/conversations/:id', requireAuth, (req, res) => {
+  const ok = deleteConversation(req.params.id);
+  res.json({ success: ok });
 });
 
 const reindex = process.argv.includes('--reindex');

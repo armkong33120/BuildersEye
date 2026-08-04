@@ -104,10 +104,12 @@ animate();
   var resetButton = document.querySelector('#resetChat');
   if (resetButton) {
     resetButton.addEventListener('click', function() {
-      chatMessages.innerHTML = '';
-      currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+      newConversation();
     });
   }
+
+  // Load conversation list on startup
+  refreshConvoList();
 
 function setupIcons() {
   focusCeoButton.innerHTML = '<i data-lucide="scan-face"></i>';
@@ -538,13 +540,110 @@ const RAG_BACKEND = (urlParams && urlParams.get('backend'))
   || 'http://localhost:5199';
 var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
 
+// --- Conversation History ---
+async function loadConversations() {
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/conversations', {
+      headers: authHeaders(),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (e) { return []; }
+}
+
+async function loadConversationMessages(convoId) {
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/conversations/' + convoId, {
+      headers: authHeaders(),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) { return null; }
+}
+
+async function deleteConversationRemote(convoId) {
+  try {
+    await fetch(RAG_BACKEND + '/api/conversations/' + convoId, {
+      method: 'DELETE',
+      headers: authHeaders(),
+      signal: AbortSignal.timeout(3000),
+    });
+  } catch (e) { /* ignore */ }
+}
+
+function authHeaders() {
+  var key = typeof import.meta !== 'undefined' && import.meta.env?.VITE_APP_API_KEY;
+  if (!key) key = window.localStorage?.getItem('builderseye_app_key') || '';
+  return key ? { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+}
+
+function renderConversationList(conversations) {
+  var existing = document.querySelector('#convoList');
+  if (existing) existing.remove();
+
+  if (!conversations || conversations.length === 0) return;
+
+  var list = document.createElement('div');
+  list.id = 'convoList';
+  list.className = 'convo-list';
+
+  conversations.forEach(function(c) {
+    var item = document.createElement('div');
+    item.className = 'convo-item' + (c.id === currentConversationId ? ' is-active' : '');
+    item.innerHTML =
+      '<span class="convo-title">' + escapeHtml(c.title || 'New Chat') + '</span>' +
+      '<span class="convo-meta">' + (c.messageCount || 0) + ' msgs</span>' +
+      '<button class="convo-delete" data-id="' + c.id + '" title="Delete">×</button>';
+    item.addEventListener('click', function(e) {
+      if (e.target.classList.contains('convo-delete')) {
+        e.stopPropagation();
+        deleteConversationRemote(c.id);
+        if (c.id === currentConversationId) newConversation();
+        setTimeout(refreshConvoList, 300);
+        return;
+      }
+      switchConversation(c.id);
+    });
+    list.appendChild(item);
+  });
+
+  // Insert after chat body
+  var body = document.querySelector('#chatMessages');
+  if (body) body.parentNode.insertBefore(list, body.nextSibling);
+}
+
+async function refreshConvoList() {
+  var convos = await loadConversations();
+  renderConversationList(convos);
+}
+
+async function switchConversation(convoId) {
+  currentConversationId = convoId;
+  chatMessages.innerHTML = '';
+  var data = await loadConversationMessages(convoId);
+  if (data && data.messages) {
+    data.messages.forEach(function(m) {
+      appendChatMessage(m.role, m.role === 'user' ? 'You' : 'RAG', m.text);
+    });
+  }
+  refreshConvoList();
+}
+
+function newConversation() {
+  currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
+  chatMessages.innerHTML = '';
+  refreshConvoList();
+}
+
 async function callRagBackend(query) {
   try {
     const res = await fetch(RAG_BACKEND + '/api/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify({ query: query, conversationId: currentConversationId }),
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) return null;
     return await res.json();

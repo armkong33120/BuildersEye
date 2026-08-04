@@ -535,12 +535,35 @@ h1 {
 
 .rag-chat-header {
   min-height: 48px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center;
   padding: 10px 16px;
   background: #0d1117;
 }
-.rag-chat-header .rag-title { font-size: 14px; font-weight: 600; color: #e6edf3; }
-.rag-chat-header .rag-status { font-size: 11px; color: #8b949e; margin-left: 8px; }
+.rag-chat-header > div:first-child {
+  flex: 1; min-width: 0;
+}
+.rag-chat-header .rag-title {
+  font-size: 14px; font-weight: 600; color: #e6edf3;
+}
+.rag-chat-header .rag-status {
+  font-size: 11px; color: #8b949e;
+}
+
+/* Header button group — right side */
+.chat-header-actions {
+  display: flex; align-items: center; gap: 6px;
+  margin-left: 12px; flex-shrink: 0;
+}
+.chat-toggle-button,
+.chat-reset-button {
+  width: 32px; height: 32px; border-radius: 8px;
+  border: 1px solid rgba(240,246,252,0.08);
+  background: transparent; color: #8b949e;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 150ms ease;
+}
+.chat-toggle-button:hover,
+.chat-reset-button:hover { color: #e6edf3; border-color: rgba(240,246,252,0.2); background: rgba(240,246,252,0.04); }
 
 .rag-chat-body {
   min-height: 0; overflow-y: auto; overflow-x: hidden;
@@ -645,14 +668,6 @@ h1 {
   background: #1f6feb; color: #fff;
   box-shadow: 0 0 12px rgba(31,111,235,0.4);
 }
-.chat-toggle-button, .chat-reset-button {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 1px solid rgba(240,246,252,0.08);
-  background: transparent; color: #8b949e;
-  display: inline-flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 150ms ease;
-}
-.chat-toggle-button:hover, .chat-reset-button:hover { color: #e6edf3; border-color: rgba(240,246,252,0.2); }
 
 /* --- Collapsed --- */
 .rag-chat.is-collapsed .rag-chat-body,

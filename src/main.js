@@ -101,20 +101,8 @@ buildScene();
 selectPerson(graph.ceoPk, false);
 animate();
 
-  // Add New Chat button
   var resetButton = document.querySelector('#resetChat');
-  if (!resetButton) {
-    resetButton = document.createElement('button');
-    resetButton.id = 'resetChat';
-    resetButton.className = 'chat-reset-button';
-    resetButton.innerHTML = '<i data-lucide=\'refresh-cw\'></i>';
-    resetButton.title = 'New Chat';
-    resetButton.setAttribute('aria-label', 'New Chat');
-    var chatHeader = ragChat.querySelector('.rag-chat-header');
-    if (chatHeader) {
-      chatHeader.appendChild(resetButton);
-      createIcons({ icons });
-    }
+  if (resetButton) {
     resetButton.addEventListener('click', function() {
       chatMessages.innerHTML = '';
       currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
@@ -128,6 +116,8 @@ function setupIcons() {
   togglePanelButton.innerHTML = '<i data-lucide="panel-right-close"></i>';
   toggleChatButton.innerHTML = '<i data-lucide="minimize-2"></i>';
   sendChatButton.innerHTML = '<i data-lucide="send-horizontal"></i>';
+  var resetBtn = document.querySelector('#resetChat');
+  if (resetBtn) resetBtn.innerHTML = '<i data-lucide="refresh-cw"></i>';
   document.querySelectorAll('.collapse-button').forEach((button) => {
     button.innerHTML = '<i data-lucide="chevron-up"></i>';
   });

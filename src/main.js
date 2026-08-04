@@ -1337,7 +1337,7 @@ function shortPersonName(value) {
 }
 
 function displayLevel(identity) {
-  if (identity.pk === graph.ceoPk) return 1;
+  if (identity.pk === graph.ceoPk) return 0;
   return visualDepth(identity);
 }
 
@@ -1421,7 +1421,10 @@ function isExecutiveIdentity(identity) {
 
 function visualDepth(identity) {
   if (identity.pk === graph.ceoPk) return 0;
-  return Math.max(1, Math.min(4, Number(identity.hierarchyDepth || 1)));
+  const hd = Number(identity.hierarchyDepth || 1);
+  // Map: 1→1(C-Level inner), 2→2(Mgrs middle), 3→4(Staff outermost ring)
+  if (hd >= 3) return 4;
+  return Math.max(1, hd);
 }
 
 function renderDetail(identity) {

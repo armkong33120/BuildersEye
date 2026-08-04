@@ -16,8 +16,6 @@ services:
         value: https://api.deepseek.com
       - key: LLM_MODEL
         value: deepseek-chat
-      - key: OPENAI_API_KEY
-        sync: false   # optional fallback; set only if using OpenAI
       - key: LLM_SKIP
         value: "false"
       - key: HR_DATA_DIR

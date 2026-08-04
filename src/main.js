@@ -146,10 +146,17 @@ function buildIndexes() {
     });
 
   for (const [depth, identities] of identitiesByDepth.entries()) {
-    const orderedIdentities = interleaveByDepartment(identities);
+    // Sort by seniority (most senior first) then interleave departments
+    const sorted = [...identities].sort((a, b) => seniorityScore(a) - seniorityScore(b));
+    const orderedIdentities = interleaveByDepartment(sorted);
     const innerRadius = depth === 1 ? CEO_ZONE : DEPTH_RADII[Math.max(0, depth - 1)];
     const outerRadius = DEPTH_RADII[Math.min(depth, DEPTH_RADII.length - 1)] || BALL_RADIUS;
-    const slots = layerVolumeSlots(orderedIdentities.length, innerRadius, outerRadius, depth);
+    // Compute seniority ratios: 0=most senior(inner), 1=most junior(outer)
+    const ratios = orderedIdentities.map((id) => {
+      const rank = sorted.indexOf(id);
+      return sorted.length > 1 ? rank / (sorted.length - 1) : 0.5;
+    });
+    const slots = layerVolumeSlots(orderedIdentities.length, innerRadius, outerRadius, depth, ratios);
     orderedIdentities.forEach((identity, index) => {
       positionSlotsByPk.set(identity.pk, slots[index]);
     });
@@ -1142,6 +1149,18 @@ function identityPosition(identity) {
   return positionSlotsByPk.get(identity.pk)?.clone() || new THREE.Vector3(0, 0, 0);
 }
 
+function seniorityScore(identity) {
+  // 0 = most senior, higher = less senior
+  let score = 0;
+  if (identity.directReportCount > 0) score -= 3; // managers are senior
+  if (identity.jobTitle && identity.jobTitle.includes('Senior')) score -= 2;
+  if (identity.pk < 50) score -= 1; // lower employee code = earlier hire
+  if (identity.jobTitle && (identity.jobTitle.includes('Junior') || identity.jobTitle.includes('Trainee'))) score += 2;
+  // Add small random jitter to break ties
+  score += seededUnit(identity.pk * 7 + 3) * 0.5;
+  return score;
+}
+
 function interleaveByDepartment(identities) {
   const queues = graph.departments.map((department) =>
     identities
@@ -1168,7 +1187,7 @@ function interleaveByDepartment(identities) {
   return ordered;
 }
 
-function layerVolumeSlots(count, innerRadius, outerRadius, depth) {
+function layerVolumeSlots(count, innerRadius, outerRadius, depth, seniorityRatios) {
   if (count <= 0) return [];
   if (count === 1) return [new THREE.Vector3(0, midpointRadius(innerRadius, outerRadius), 0)];
 
@@ -1182,7 +1201,8 @@ function layerVolumeSlots(count, innerRadius, outerRadius, depth) {
     const y = 1 - t * 2;
     const ring = Math.sqrt(Math.max(0, 1 - y * y));
     const theta = i * goldenAngle + rotation;
-    const radius = volumeRadius(innerRadius, outerRadius, i, depth);
+    const sr = seniorityRatios ? seniorityRatios[i] : seededUnit(i * 97 + depth * 193);
+    const radius = volumeRadius(innerRadius, outerRadius, sr, depth);
     const point = new THREE.Vector3(Math.cos(theta) * ring * radius, y * radius, Math.sin(theta) * ring * radius);
     slots.push(point);
     slots.push(point.clone().multiplyScalar(-1));
@@ -1197,13 +1217,15 @@ function layerVolumeSlots(count, innerRadius, outerRadius, depth) {
   return slots;
 }
 
-function volumeRadius(innerRadius, outerRadius, index, depth) {
+function volumeRadius(innerRadius, outerRadius, ratio, depth) {
   const padding = Math.min(0.18, (outerRadius - innerRadius) * 0.18);
   const minRadius = innerRadius + padding;
   const maxRadius = outerRadius - padding;
   const span = Math.max(0.01, maxRadius - minRadius);
-  const noise = seededUnit(index * 97 + depth * 193);
-  return minRadius + span * noise;
+  // ratio 0=inner(senior), 1=outer(junior). Blend: 70% seniority + 30% noise
+  const noise = seededUnit(Math.round(ratio * 100) * 97 + depth * 193);
+  const blended = ratio * 0.7 + noise * 0.3;
+  return minRadius + span * blended;
 }
 
 function midpointRadius(innerRadius, outerRadius) {

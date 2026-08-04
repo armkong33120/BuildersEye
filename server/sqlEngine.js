@@ -45,7 +45,7 @@ CRITICAL RULES:
 User Query: ${userQuery}
 SQL Query:`;
   
-  const sqlQuery = await generateAnswer(userQuery, prompt);
+  const sqlQuery = await generateAnswer(userQuery, prompt, { rawSql: true });
   if (!sqlQuery) return { error: 'LLM failed to generate SQL' };
 
   const cleanSQL = sqlQuery.replace(/```sql|```/g, '').trim();

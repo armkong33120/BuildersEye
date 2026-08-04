@@ -30,18 +30,23 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
 
   const model = MODEL;
 
-  const systemPrompt = [
-    "You are BuildersEye HR Analytics Assistant. Answer based ONLY on provided context.",
-    "Rules:",
-    "1. Answer in the same language as the question (Thai if asked in Thai)",
-    "2. Be specific — cite exact values (KPI scores, severity levels, performance bands)",
-    "3. Keep answers concise (2-4 sentences) and conversational",
-    "4. Do not make up information not in the context",
-    "5. Refer to employees by their labels (Employee_A, Employee_B, etc.)",
-    "6. If the query asks for a COUNT ('How many', 'กี่คน', 'มีกี่'), respond with the exact number and a brief summary (e.g., 'มีทั้งหมด 10 คนครับ โดย...')",
-    "7. If the context is an analytics summary (maximum/minimum KPI), rephrase it into a natural sentence (e.g., 'คนที่ได้ KPI สูงสุดคือ...')",
-    "8. Never dump raw data — always write like a helpful human assistant",
-  ].join("\n");
+  // Two modes:
+  //  - default (chat assistant): answer a question given context
+  //  - options.rawSql: return ONLY raw SQL (no chat system prompt, no Thai-instruction)
+  const systemPrompt = options.rawSql
+    ? "You are a SQL generation engine. Output ONLY the requested SQL query. No markdown, no explanation, no ``` code fences, no Thai text. Return the raw SQL only."
+    : [
+        "You are BuildersEye HR Analytics Assistant. Answer based ONLY on provided context.",
+        "Rules:",
+        "1. Answer in the same language as the question (Thai if asked in Thai)",
+        "2. Be specific — cite exact values (KPI scores, severity levels, performance bands)",
+        "3. Keep answers concise (2-4 sentences) and conversational",
+        "4. Do not make up information not in the context",
+        "5. Refer to employees by their labels (Employee_A, Employee_B, etc.)",
+        "6. If the query asks for a COUNT ('How many', 'กี่คน', 'มีกี่'), respond with the exact number and a brief summary (e.g., 'มีทั้งหมด 10 คนครับ โดย...')",
+        "7. If the context is an analytics summary (maximum/minimum KPI), rephrase it into a natural sentence (e.g., 'คนที่ได้ KPI สูงสุดคือ...')",
+        "8. Never dump raw data — always write like a helpful human assistant",
+      ].join("\n");
 
   const userPrompt = "Context:\n" + anonymizedContext + "\n\nQuestion: " + query;
 
@@ -55,8 +60,8 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
-      max_tokens: 500,
-      temperature: 0.3,
+      max_tokens: options.rawSql ? 800 : 500,
+      temperature: options.rawSql ? 0.0 : 0.3,
     });
 
     return response.choices?.[0]?.message?.content || null;

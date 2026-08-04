@@ -21,6 +21,10 @@ services:
       - key: HR_DATA_DIR
         value: /opt/render/project/src/src/data/hr_onedrive_demo
       - key: CORS_ORIGINS
-        value: http://localhost:5174,http://localhost:5173
+        value: http://localhost:5174,http://localhost:5173,https://builders-eye.vercel.app
       - key: VECTOR_INDEX_DISABLED
         value: "true"   # Render free tier = 512MB RAM; disable memory-heavy vector index
+      - key: APP_API_KEY
+        sync: false     # REQUIRED for production auth (SECURITY FIX R3-1). Set manually — never commit.
+      - key: APP_VIEWER_ROLE
+        value: "Employee"  # SECURITY FIX R3-1: server-defined role; callers cannot forge CEO

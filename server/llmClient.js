@@ -66,7 +66,9 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
 
     return response.choices?.[0]?.message?.content || null;
   } catch (e) {
-    console.error('[llm] LLM API error:', e.message);
+    // SECURITY FIX R4-2: log only a safe, truncated error (no full message that
+    // could contain URLs/keys/stack internals).
+    console.error('[llm] LLM API error:', String(e?.message || 'unknown').slice(0, 200));
     return null;
   }
 }

@@ -49,13 +49,23 @@ SQL Query:`;
   if (!sqlQuery) return { error: 'LLM failed to generate SQL' };
 
   const cleanSQL = sqlQuery.replace(/```sql|```/g, '').trim();
+
+  // SECURITY FIX R4-1: allowlist — only read-only SELECT queries are allowed.
+  // Blocks destructive statements (DROP/UPDATE/DELETE/INSERT/ALTER/CREATE/PRAGMA/ATTACH).
+  const dangerous = /(^|[;\s])\s*(DROP|UPDATE|DELETE|INSERT|ALTER|CREATE|REPLACE|TRUNCATE|PRAGMA|ATTACH|DETACH|VACUUM|REINDEX)\b/i;
+  if (!/^\s*SELECT\b/i.test(cleanSQL) || dangerous.test(cleanSQL)) {
+    console.warn('[sql] Blocked non-SELECT/destructive SQL rejected.');
+    return { error: 'Blocked: only read-only SELECT queries are permitted' };
+  }
+
   console.log('[sql] SQL:', cleanSQL.substring(0, 200));
 
   try {
     const results = alasql(cleanSQL);
     return { sql: cleanSQL, data: results, error: null };
   } catch (err) {
+    // SECURITY FIX R4-2: do not leak internal DB error details to the caller.
     console.error('[sql] Exec error:', err.message);
-    return { sql: cleanSQL, data: null, error: err.message };
+    return { sql: cleanSQL, data: null, error: 'Query execution failed' };
   }
 }

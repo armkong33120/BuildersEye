@@ -90,10 +90,44 @@ async function startup() {
 
 const app = express();
 // CORS: allow local dev + Vercel/cloud frontend origins (from env CORS_ORIGINS, comma-separated)
-const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5174,http://localhost:5173')
+const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5174,http://localhost:5173,https://builders-eye.vercel.app')
   .split(',').map(s => s.trim()).filter(Boolean);
 app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: '1mb' }));
+
+// --- Authentication (SECURITY FIX R3-1) ---
+// Static API key auth. If APP_API_KEY is set and provided credential does not match,
+// the request is rejected. If APP_API_KEY is NOT set, the protected routes are disabled
+// (return 401) so the public endpoint can never run without a key in production.
+const EXPECTED_API_KEY = process.env.APP_API_KEY || '';
+
+function requireAuth(req, res, next) {
+  if (!EXPECTED_API_KEY) {
+    // No key configured: refuse to serve sensitive endpoints (fail-closed).
+    return res.status(401).json({ error: 'Unauthorized: API key not configured' });
+  }
+  const authz = req.headers.authorization || '';
+  const provided =
+    (req.headers['x-api-key']) ||
+    (authz.startsWith('Bearer ') ? authz.slice(7) : '');
+  if (!provided || provided !== EXPECTED_API_KEY) {
+    return res.status(401).json({ error: 'Unauthorized: invalid API key' });
+  }
+  next();
+}
+
+// Server-defined viewer role (SECURITY FIX R3-1). The role is NOT taken from the
+// client request body — it comes from server config so callers cannot forge CEO.
+const VALID_ROLES = ['CEO', 'HR', 'Manager', 'Employee'];
+const SERVER_ROLE = VALID_ROLES.includes(process.env.APP_VIEWER_ROLE)
+  ? process.env.APP_VIEWER_ROLE
+  : 'Employee';
+
+function resolveViewer(body) {
+  // employeeId is non-sensitive context (which employee is "me"); sanitize to a safe int.
+  const empId = Number(body?.viewer?.employeeId);
+  return { role: SERVER_ROLE, employeeId: Number.isFinite(empId) && empId > 0 ? empId : 1 };
+}
 
 app.get('/api/health', (req, res) => {
   const uniqueFiles = new Set(flatIndex.filter(r => r.sheetName === 'Employee_Profile').map(r => r.fileName));
@@ -115,11 +149,12 @@ app.get('/api/index/status', (req, res) => {
   });
 });
 
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', requireAuth, async (req, res) => {
   try {
-    const { query, viewer, conversationId } = req.body;
+    const { query, conversationId } = req.body;
     if (!query) return res.status(400).json({ error: 'query is required' });
-    const result = await chatHandler(query, viewer || { role: 'CEO', employeeId: 1 }, { flatIndex, searchIndex, identityGraph }, conversationId || '');
+    const viewer = resolveViewer(req.body);
+    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId || '');
     res.json(result);
   } catch (e) {
     console.error('[chat] Error:', e.message);

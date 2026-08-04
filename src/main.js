@@ -29,9 +29,9 @@ const sendChatButton = document.querySelector('#sendChat');
 const focusCeoButton = document.querySelector('#focusCeo');
 const resetCameraButton = document.querySelector('#resetCamera');
 
-const PERSON_RADIUS = 0.135;
-const LAYER_COUNT = 6;
-const BALL_RADIUS = 7.8;
+const PERSON_RADIUS = 0.18;
+const LAYER_COUNT = 4;
+const BALL_RADIUS = 10.0;
 const LAYER_STEP = BALL_RADIUS / LAYER_COUNT;
 const DEPTH_RADII = Array.from({ length: LAYER_COUNT + 1 }, (_, depth) => Number((depth * LAYER_STEP).toFixed(2)));
 const SCAN_DURATION_MS = 3600;
@@ -45,7 +45,7 @@ const state = {
   department: 'ALL',
   lineMode: 'all',
   labelMode: 'key',
-  visibleLabelDepths: new Set([1, 2, 3, 4, 5, 6]),
+  visibleLabelDepths: new Set([1, 2, 3, 4]),
   scan: null,
   autoRotateTimer: null,
 };
@@ -63,7 +63,7 @@ scanGroup.userData = { type: 'scan-effects' };
 scene.add(scanGroup);
 
 const camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.set(11, 8, 13);
+camera.position.set(14, 10, 17);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -83,8 +83,8 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.05;
 controls.autoRotate = true;
 controls.autoRotateSpeed = 0.34;
-controls.minDistance = 5;
-controls.maxDistance = 32;
+controls.minDistance = 6;
+controls.maxDistance = 40;
 controls.target.set(0, 0, 0);
 
 const raycaster = new THREE.Raycaster();
@@ -231,7 +231,7 @@ function buildUi() {
   });
   focusCeoButton.addEventListener('click', () => selectPerson(graph.ceoPk));
   resetCameraButton.addEventListener('click', () => {
-    camera.position.set(11, 8, 13);
+    camera.position.set(14, 10, 17);
     controls.target.set(0, 0, 0);
     controls.autoRotate = true;
     controls.update();
@@ -1013,7 +1013,7 @@ function addGuides() {
 }
 
 function addAtmosphereShells() {
-  const colors = ['#2dd4bf', '#38bdf8', '#60a5fa', '#818cf8', '#a78bfa', '#f0abfc'];
+  const colors = ['#2dd4bf', '#38bdf8', '#818cf8', '#f0abfc'];
 
   DEPTH_RADII.slice(1).forEach((radius, index) => {
     const geometry = new THREE.SphereGeometry(radius, 64, 40);
@@ -1122,11 +1122,11 @@ function addIdentityNodes() {
 
     if (identity.pk === graph.ceoPk) {
       const halo = new THREE.Mesh(
-        new THREE.SphereGeometry(0.52, 32, 32),
+        new THREE.SphereGeometry(0.65, 32, 32),
         new THREE.MeshBasicMaterial({
           color: '#63d8ff',
           transparent: true,
-          opacity: 0.16,
+          opacity: 0.18,
           depthWrite: false,
         }),
       );
@@ -1421,7 +1421,7 @@ function isExecutiveIdentity(identity) {
 
 function visualDepth(identity) {
   if (identity.pk === graph.ceoPk) return 0;
-  return Math.max(1, Math.min(6, Number(identity.hierarchyDepth || 1)));
+  return Math.max(1, Math.min(4, Number(identity.hierarchyDepth || 1)));
 }
 
 function renderDetail(identity) {

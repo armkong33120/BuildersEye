@@ -410,7 +410,10 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
   var sourceHtml = '';
   if (extras.structuredSources && extras.structuredSources.length > 0) {
     var srcItems = extras.structuredSources.map(function(s) {
-      return '<div class="source-drawer-item">' + escapeHtml(s.fileName || s.file || '') +
+      var fname = s.fileName || s.file || '';
+      var url = 'https://github.com/armkong33120/BuildersEye/blob/main/src/data/hr_onedrive_demo/' + fname;
+      return '<div class="source-drawer-item">' +
+        '<a href="' + url + '" target="_blank" class="excel-link">' + escapeHtml(fname) + '</a>' +
         ' <span class="src-sheet">→ ' + escapeHtml(s.sheetName || '') + '</span>' +
         (s.rowNumber ? ' (row ' + s.rowNumber + ')' : '') + '</div>';
     }).join('');
@@ -1323,8 +1326,24 @@ function makeLabel(text, className = '') {
 }
 
 function identityLabel(identity) {
-  const level = `LV${displayLevel(identity)}`;
-  return `${level} ${identityLabelCode(identity)} ${shortPersonName(identity.name)}`;
+  const nick = shortPersonName(identity.name);
+  const pos = shortJobTitle(identity.jobTitle);
+  return `${nick} · ${pos}`;
+}
+
+function shortJobTitle(title) {
+  if (!title) return '';
+  const short = {
+    'CEO / Managing Director': 'CEO',
+    'Chief Operations Officer': 'COO',
+    'Chief Financial Officer': 'CFO',
+    'Chief Marketing Officer': 'CMO',
+    'Executive Secretary to CEO': 'ExecSec',
+  };
+  if (short[title]) return short[title];
+  return title.replace('Manager','Mgr').replace('Specialist','Spec').replace('Engineer','Eng')
+    .replace('Officer','Off').replace('Consultant','Cons').replace('Coordinator','Coord')
+    .replace('Architect','Arch').substring(0, 14);
 }
 
 function identityLabelCode(identity) {
@@ -1464,6 +1483,9 @@ function renderDetail(identity) {
     .map((item) => `${item.code} ${item.name}`)
     .join(', ');
 
+  const excelFile = `${identity.code}_OneDrive_Profile.xlsx`;
+  const fileLink = `https://github.com/armkong33120/BuildersEye/blob/main/src/data/hr_onedrive_demo/${excelFile}`;
+
   detailPanel.innerHTML = `
     <div class="detail-title">${escapeHtml(identity.name)}</div>
     <div class="pill-row">
@@ -1474,7 +1496,7 @@ function renderDetail(identity) {
     <div class="detail-grid">
       ${detailRow('Job Title', identity.jobTitle)}
       ${detailRow('Email', identity.email)}
-      ${detailRow('OneDrive', identity.oneDriveUrl)}
+      ${detailRow('📊 Excel Profile', `<a href="${fileLink}" target="_blank" class="excel-link">${excelFile}</a>`)}
       ${detailRow('Manager', identity.managerPk ? `${identity.managerCode} · ${identity.managerName}` : 'None')}
       ${detailRow('Reports To Chain', chain)}
       ${detailRow('Direct Reports', `${identity.directReportCount}${directReports ? ` · ${directReports}` : ''}`)}

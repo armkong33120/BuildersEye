@@ -748,6 +748,13 @@ h1 {
 .matched-emp-item .emp-code { font-weight: 700; color: #e6edf3; }
 .matched-emp-item .emp-dept { opacity: 0.55; font-size: 10px; }
 
+.excel-link {
+  color: #58a6ff; text-decoration: none; font-weight: 600; font-size: 11px;
+  border-bottom: 1px dashed rgba(88,166,255,0.3); transition: all 150ms ease;
+}
+.excel-link:hover { color: #79c0ff; border-bottom-color: #79c0ff; }
+.excel-link::after { content: ' ↗'; font-size: 9px; opacity: 0.6; }
+
 /* --- Source + Policy --- */
 .source-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
 .source-row span {

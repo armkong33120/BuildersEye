@@ -1,14 +1,5 @@
-import { isLLMAvailable } from './llmClient.js';
+import { isLLMAvailable, getClient } from './llmClient.js';
 import { getHistory } from './chatMemory.js';
-import OpenAI from 'openai';
-
-let client = null;
-function getClient() {
-  if (!client && process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_api_key_here') {
-    client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-  }
-  return client;
-}
 
 export async function parseIntentSemantically(query, viewerContext, flatIndex, conversationId = '') {
   if (!isLLMAvailable()) return null;
@@ -127,7 +118,7 @@ CRITICAL RULES:
     if (!openai) return null;
 
     const response = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+      model: process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-chat',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: "User Query: " + query }

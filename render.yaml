@@ -10,10 +10,14 @@ services:
     startCommand: node index.js
     healthCheckPath: /api/health
     envVars:
+      - key: LLM_API_KEY
+        sync: false   # set manually in Render dashboard (DeepSeek API key — never commit real key)
+      - key: LLM_BASE_URL
+        value: https://api.deepseek.com
+      - key: LLM_MODEL
+        value: deepseek-chat
       - key: OPENAI_API_KEY
-        sync: false   # set manually in Render dashboard (never commit real key)
-      - key: OPENAI_MODEL
-        value: gpt-4o-mini
+        sync: false   # optional fallback; set only if using OpenAI
       - key: LLM_SKIP
         value: "false"
       - key: HR_DATA_DIR

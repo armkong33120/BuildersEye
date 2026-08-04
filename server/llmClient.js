@@ -1,25 +1,34 @@
 import 'dotenv/config';
 import OpenAI from 'openai';
 
+// LLM provider config — supports DeepSeek (default) or any OpenAI-compatible endpoint.
+//   LLM_BASE_URL   (default https://api.deepseek.com for DeepSeek)
+//   LLM_API_KEY    (default: DEEPSEEK_API_KEY, then OPENAI_API_KEY)
+//   LLM_MODEL      (default: deepseek-chat)
+//   OPENAI_API_KEY / OPENAI_MODEL  (kept for backward compat)
+const BASE_URL = process.env.LLM_BASE_URL || 'https://api.deepseek.com';
+const API_KEY = process.env.LLM_API_KEY || process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
+const MODEL = process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-chat';
+
 let client = null;
 
 export function getClient() {
-  if (!client && process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'your_api_key_here') {
-    client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  if (!client && API_KEY && API_KEY !== 'your_api_key_here') {
+    client = new OpenAI({ apiKey: API_KEY, baseURL: BASE_URL });
   }
   return client;
 }
 
 export function isLLMAvailable() {
   const skip = process.env.LLM_SKIP === 'true';
-  const hasKey = Boolean(process.env.OPENAI_API_KEY) && process.env.OPENAI_API_KEY !== 'your_api_key_here';
+  const hasKey = Boolean(API_KEY) && API_KEY !== 'your_api_key_here';
   return !skip && hasKey;
 }
 
 export async function generateAnswer(query, anonymizedContext, options = {}) {
   if (!isLLMAvailable()) return null;
 
-  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+  const model = MODEL;
 
   const systemPrompt = [
     "You are BuildersEye HR Analytics Assistant. Answer based ONLY on provided context.",
@@ -52,7 +61,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
 
     return response.choices?.[0]?.message?.content || null;
   } catch (e) {
-    console.error('[llm] OpenAI API error:', e.message);
+    console.error('[llm] LLM API error:', e.message);
     return null;
   }
 }

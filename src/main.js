@@ -632,6 +632,13 @@ async function apiFetch(url, options, retried) {
   return res;
 }
 
+// Keep the free-tier backend warm while the app is open (ping every 10 min).
+var _keepAliveTimer = null;
+function startKeepAlive() {
+  if (_keepAliveTimer) return;
+  _keepAliveTimer = setInterval(function(){ warmupBackend(8000); }, 10 * 60 * 1000);
+}
+
 // --- Login overlay UI (M3) ---
 function showLoginOverlay(msg) {
   var ov = document.getElementById('loginOverlay');
@@ -644,6 +651,8 @@ function showLoginOverlay(msg) {
   if (uc) uc.classList.add('is-hidden');
   var un = document.getElementById('loginUsername');
   if (un) setTimeout(function(){ un.focus(); }, 60);
+  // Start waking the backend as soon as the login screen appears (free-tier cold start).
+  warmupBackend(20000).then(function(awake){ if (awake) { /* backend ready */ } });
 }
 function hideLoginOverlay() {
   var ov = document.getElementById('loginOverlay');
@@ -681,30 +690,53 @@ async function doLogout() {
   showLoginOverlay('ออกจากระบบแล้ว');
 }
 
-async function doLogin(username, password) {
+// Ping backend to wake it from cold start (free tier). Returns true when reachable.
+async function warmupBackend(timeoutMs) {
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/health', { signal: AbortSignal.timeout(timeoutMs || 8000) });
+    return res.ok;
+  } catch (e) { return false; }
+}
+
+async function doLogin(username, password, attempt) {
   var err = document.getElementById('loginError');
   var btn = document.getElementById('loginSubmit');
+  attempt = attempt || 1;
   if (err) err.textContent = '';
   if (btn) { btn.disabled = true; btn.textContent = 'กำลังเข้าสู่ระบบ…'; }
+
+  // Wake the backend first (free-tier cold start). Show status so user knows to wait.
+  if (err) { err.style.color = '#8b98a9'; err.textContent = 'กำลังปลุกเซิร์ฟเวอร์… (free tier อาจใช้เวลา 30-60 วิ ครั้งแรก)'; }
+  var awake = await warmupBackend(15000);
+  if (err) err.textContent = '';
+
   try {
     var res = await fetch(RAG_BACKEND + '/api/auth/login', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: username, password: password }),
-      signal: AbortSignal.timeout(20000),
+      signal: AbortSignal.timeout(60000),
     });
     var data = await res.json().catch(function(){ return {}; });
     if (!res.ok) {
-      if (err) err.textContent = data.error || ('เข้าสู่ระบบไม่สำเร็จ (HTTP ' + res.status + ')');
+      if (err) { err.style.color = ''; err.textContent = data.error || ('เข้าสู่ระบบไม่สำเร็จ (HTTP ' + res.status + ')'); }
       return false;
     }
     setSession(data.accessToken, data.refreshToken, data.user);
     hideLoginOverlay();
     renderUserChip();
+    startKeepAlive();
     refreshConvoList();
     maybeStartTour();
     return true;
   } catch (e) {
-    if (err) err.textContent = 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ (อาจกำลัง cold start — ลองอีกครั้งใน 30 วิ)';
+    // Network/timeout — likely still cold starting. Auto-retry once after waking it.
+    if (attempt < 2) {
+      if (err) { err.style.color = '#8b98a9'; err.textContent = 'เซิร์ฟเวอร์ยังไม่ตื่น กำลังลองใหม่อัตโนมัติ…'; }
+      await warmupBackend(20000);
+      if (btn) { btn.disabled = false; btn.textContent = 'เข้าสู่ระบบ'; }
+      return doLogin(username, password, attempt + 1);
+    }
+    if (err) { err.style.color = ''; err.textContent = 'เซิร์ฟเวอร์ยังตื่นไม่สมบูรณ์ (cold start) — รอ ~30 วิ แล้วกดเข้าสู่ระบบอีกครั้ง'; }
     return false;
   } finally {
     if (btn) { btn.disabled = false; btn.textContent = 'เข้าสู่ระบบ'; }
@@ -820,6 +852,7 @@ function bootAuth() {
   if (u && getAccessToken()) {
     hideLoginOverlay();
     renderUserChip();
+    startKeepAlive();
     refreshConvoList();
     maybeStartTour();
   } else {

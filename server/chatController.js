@@ -74,6 +74,27 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const policy = { status: redactedCount > 0 ? 'Redacted' : 'Allowed', redactedCount, blockedCount };
   const sources = sr.sources || [];
 
+  // Fallback: extract employee PKs from flatIndex when primary loop yields empty
+  if (matchedPks.length === 0 && matchedDepts.size > 0) {
+    for (const dept of matchedDepts) {
+      for (const rec of flatIndex) {
+        if (rec.department === dept && !matchedPks.includes(rec.employeeId)) {
+          matchedPks.push(rec.employeeId);
+        }
+      }
+    }
+  }
+  // Second fallback: extract from search result sources
+  if (matchedPks.length === 0 && sources.length > 0) {
+    for (const src of sources) {
+      const match = src.fileName?.match(/EMP(\d{3})/i);
+      if (match) {
+        const pk = parseInt(match[1]);
+        if (!matchedPks.includes(pk)) matchedPks.push(pk);
+      }
+    }
+  }
+
   // LLM answer generation & SQL Routing
   let answer = sr.answer;
   let llmUsed = false;

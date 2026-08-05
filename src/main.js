@@ -109,8 +109,8 @@ animate();
     });
   }
 
-  // Load conversation list on startup
-  refreshConvoList();
+  // Auth gate: show login if no session, else load conversations + user chip (M1/M3)
+  bootAuth();
 
 function setupIcons() {
   focusCeoButton.innerHTML = '<i data-lucide="scan-face"></i>';
@@ -548,8 +548,7 @@ var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ?
 // --- Conversation History ---
 async function loadConversations() {
   try {
-    var res = await fetch(RAG_BACKEND + '/api/conversations', {
-      headers: authHeaders(),
+    var res = await apiFetch(RAG_BACKEND + '/api/conversations', {
       signal: AbortSignal.timeout(4000),
     });
     if (!res.ok) return [];
@@ -559,8 +558,7 @@ async function loadConversations() {
 
 async function loadConversationMessages(convoId) {
   try {
-    var res = await fetch(RAG_BACKEND + '/api/conversations/' + convoId, {
-      headers: authHeaders(),
+    var res = await apiFetch(RAG_BACKEND + '/api/conversations/' + convoId, {
       signal: AbortSignal.timeout(4000),
     });
     if (!res.ok) return null;
@@ -570,18 +568,263 @@ async function loadConversationMessages(convoId) {
 
 async function deleteConversationRemote(convoId) {
   try {
-    await fetch(RAG_BACKEND + '/api/conversations/' + convoId, {
+    await apiFetch(RAG_BACKEND + '/api/conversations/' + convoId, {
       method: 'DELETE',
-      headers: authHeaders(),
       signal: AbortSignal.timeout(3000),
     });
   } catch (e) { /* ignore */ }
 }
 
+// --- JWT session management (M1/M3) ---
+function getAccessToken() { return window.localStorage?.getItem('be_access') || ''; }
+function getRefreshToken() { return window.localStorage?.getItem('be_refresh') || ''; }
+function setSession(access, refresh, user) {
+  try {
+    if (access) window.localStorage?.setItem('be_access', access);
+    if (refresh) window.localStorage?.setItem('be_refresh', refresh);
+    if (user) window.localStorage?.setItem('be_user', JSON.stringify(user));
+  } catch (e) { /* ignore */ }
+}
+function clearSession() {
+  try {
+    window.localStorage?.removeItem('be_access');
+    window.localStorage?.removeItem('be_refresh');
+    window.localStorage?.removeItem('be_user');
+  } catch (e) { /* ignore */ }
+}
+function getSessionUser() {
+  try { return JSON.parse(window.localStorage?.getItem('be_user') || 'null'); } catch (e) { return null; }
+}
+
+async function refreshSession() {
+  var rt = getRefreshToken();
+  if (!rt) return false;
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/auth/refresh', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken: rt }),
+    });
+    if (!res.ok) return false;
+    var data = await res.json();
+    setSession(data.accessToken, data.refreshToken, data.user);
+    return true;
+  } catch (e) { return false; }
+}
+
 function authHeaders() {
-  var key = typeof import.meta !== 'undefined' && import.meta.env?.VITE_APP_API_KEY;
-  if (!key) key = window.localStorage?.getItem('builderseye_app_key') || '';
-  return key ? { 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+  var token = getAccessToken();
+  if (!token && typeof import.meta !== 'undefined') token = import.meta.env?.VITE_APP_API_KEY;
+  if (!token) token = window.localStorage?.getItem('builderseye_app_key') || '';
+  return token ? { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+}
+
+// fetch wrapper: on 401 -> try refresh once -> retry; else show login
+async function apiFetch(url, options, retried) {
+  var opts = options || {};
+  opts.headers = Object.assign({}, authHeaders(), opts.headers || {});
+  var res = await fetch(url, opts);
+  if (res.status === 401 && !retried) {
+    var ok = await refreshSession();
+    if (ok) return apiFetch(url, options, true);
+    clearSession();
+    showLoginOverlay('เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่');
+  }
+  return res;
+}
+
+// --- Login overlay UI (M3) ---
+function showLoginOverlay(msg) {
+  var ov = document.getElementById('loginOverlay');
+  if (!ov) return;
+  ov.classList.remove('is-hidden');
+  ov.setAttribute('aria-hidden', 'false');
+  var err = document.getElementById('loginError');
+  if (err) err.textContent = msg || '';
+  var uc = document.getElementById('userChip');
+  if (uc) uc.classList.add('is-hidden');
+  var un = document.getElementById('loginUsername');
+  if (un) setTimeout(function(){ un.focus(); }, 60);
+}
+function hideLoginOverlay() {
+  var ov = document.getElementById('loginOverlay');
+  if (!ov) return;
+  ov.classList.add('is-hidden');
+  ov.setAttribute('aria-hidden', 'true');
+}
+
+function renderUserChip() {
+  var uc = document.getElementById('userChip');
+  if (!uc) return;
+  var u = getSessionUser();
+  if (!u) { uc.classList.add('is-hidden'); return; }
+  var roleColor = { CEO: '#f59e0b', HR: '#a78bfa', Manager: '#38bdf8', Employee: '#34d399' }[u.role] || '#94a3b8';
+  uc.innerHTML =
+    '<span class="user-chip-dot" style="background:' + roleColor + '"></span>' +
+    '<span class="user-chip-name">' + escapeHtml(u.name || u.username || '') + '</span>' +
+    '<span class="user-chip-role">' + escapeHtml(u.role || '') + '</span>' +
+    '<button id="logoutBtn" class="user-chip-logout" title="ออกจากระบบ">ออก</button>';
+  uc.classList.remove('is-hidden');
+  var lb = document.getElementById('logoutBtn');
+  if (lb) lb.addEventListener('click', doLogout);
+}
+
+async function doLogout() {
+  try {
+    var rt = getRefreshToken();
+    await fetch(RAG_BACKEND + '/api/auth/logout', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken: rt }),
+    });
+  } catch (e) { /* ignore */ }
+  clearSession();
+  renderUserChip();
+  showLoginOverlay('ออกจากระบบแล้ว');
+}
+
+async function doLogin(username, password) {
+  var err = document.getElementById('loginError');
+  var btn = document.getElementById('loginSubmit');
+  if (err) err.textContent = '';
+  if (btn) { btn.disabled = true; btn.textContent = 'กำลังเข้าสู่ระบบ…'; }
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/auth/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username, password: password }),
+      signal: AbortSignal.timeout(20000),
+    });
+    var data = await res.json().catch(function(){ return {}; });
+    if (!res.ok) {
+      if (err) err.textContent = data.error || ('เข้าสู่ระบบไม่สำเร็จ (HTTP ' + res.status + ')');
+      return false;
+    }
+    setSession(data.accessToken, data.refreshToken, data.user);
+    hideLoginOverlay();
+    renderUserChip();
+    refreshConvoList();
+    maybeStartTour();
+    return true;
+  } catch (e) {
+    if (err) err.textContent = 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ (อาจกำลัง cold start — ลองอีกครั้งใน 30 วิ)';
+    return false;
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'เข้าสู่ระบบ'; }
+  }
+}
+
+function wireLoginForm() {
+  var form = document.getElementById('loginForm');
+  if (!form) return;
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    var un = (document.getElementById('loginUsername')?.value || '').trim();
+    var pw = document.getElementById('loginPassword')?.value || '';
+    if (!un || !pw) { var er = document.getElementById('loginError'); if (er) er.textContent = 'กรุณากรอก username และ password'; return; }
+    await doLogin(un, pw);
+  });
+}
+
+// --- Test credentials panel (M4, preview/dev only) ---
+async function loadTestCreds() {
+  var panel = document.getElementById('testCredsPanel');
+  if (!panel) return;
+  var enabled = (urlParams && (urlParams.get('preview') === '1' || urlParams.get('testcreds') === '1'))
+    || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_ENABLE_TEST_CREDS === 'true');
+  if (!enabled) return;
+  try {
+    var res = await fetch(RAG_BACKEND + '/api/preview/credentials', { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return;
+    var creds = await res.json();
+    if (!Array.isArray(creds) || creds.length === 0) return;
+    panel.classList.remove('is-hidden');
+    var list = document.getElementById('testCredsList');
+    if (!list) return;
+    list.innerHTML = '';
+    creds.forEach(function(c) {
+      var row = document.createElement('button');
+      row.type = 'button';
+      row.className = 'test-cred-item';
+      row.innerHTML =
+        '<span class="test-cred-role">' + escapeHtml(c.role) + '</span>' +
+        '<span class="test-cred-name">' + escapeHtml(c.name || c.username) + '</span>' +
+        '<span class="test-cred-user">' + escapeHtml(c.username) + ' · ' + escapeHtml(c.password) + '</span>';
+      row.addEventListener('click', async function() {
+        var un = document.getElementById('loginUsername');
+        var pw = document.getElementById('loginPassword');
+        if (un) un.value = c.username;
+        if (pw) pw.value = c.password;
+        await doLogin(c.username, c.password);
+      });
+      list.appendChild(row);
+    });
+  } catch (e) { /* preview creds unavailable */ }
+}
+
+// --- Tour guide (M5) ---
+var TOUR_STEPS = [
+  { sel: '.topbar', title: 'ยินดีต้อนรับสู่ BuildersEye', text: 'แถบด้านบนใช้เลือก Focus Person, โฟกัส CEO และรีเซ็ตกล้อง' },
+  { sel: '.stage', title: '3D Org Graph', text: 'หมุน/ซูม/คลิก node เพื่อดูรายละเอียดบุคคล สีตามแผนก' },
+  { sel: '#departmentLegend', title: 'Department Colors', text: 'legend แสดงสีของแต่ละแผนก ใช้อ้างอิงสี node บนกราฟ' },
+  { sel: '#ragChat', title: 'RAG Chat', text: 'ถามคำถามภาษาไทย/อังกฤษ — node ที่เกี่ยวข้องจะกระพริบบนกราฟ' },
+  { sel: '#convoList', title: 'ประวัติการสนทนา', text: 'ดู/สลับ/ลบบทสนทนาย้อนหลังได้ที่นี่ กดปุ่มเพื่อจบทัวร์' },
+];
+var tourIndex = 0;
+function maybeStartTour() {
+  try { if (window.localStorage?.getItem('be_tour_done')) return; } catch (e) {}
+  tourIndex = 0;
+  showTourStep();
+}
+function showTourStep() {
+  clearTourStep();
+  if (tourIndex >= TOUR_STEPS.length) { endTour(); return; }
+  var step = TOUR_STEPS[tourIndex];
+  var el = document.querySelector(step.sel);
+  var tip = document.createElement('div');
+  tip.className = 'tour-tip';
+  tip.id = 'tourTip';
+  tip.innerHTML =
+    '<div class="tour-tip-title">' + escapeHtml(step.title) + '</div>' +
+    '<div class="tour-tip-text">' + escapeHtml(step.text) + '</div>' +
+    '<div class="tour-tip-actions">' +
+      '<button class="tour-skip" type="button">ข้าม</button>' +
+      '<button class="tour-next" type="button">' + (tourIndex === TOUR_STEPS.length - 1 ? 'เริ่มใช้งาน' : 'ถัดไป') + '</button>' +
+    '</div>';
+  document.body.appendChild(tip);
+  if (el) {
+    el.classList.add('tour-highlight');
+    var r = el.getBoundingClientRect();
+    tip.style.position = 'fixed';
+    tip.style.top = Math.min(window.innerHeight - 190, r.bottom + 12) + 'px';
+    tip.style.left = Math.max(12, Math.min(window.innerWidth - 330, r.left)) + 'px';
+  } else {
+    tip.style.position = 'fixed';
+    tip.style.top = '50%'; tip.style.left = '50%'; tip.style.transform = 'translate(-50%,-50%)';
+  }
+  tip.querySelector('.tour-next').addEventListener('click', function(){ tourIndex++; showTourStep(); });
+  tip.querySelector('.tour-skip').addEventListener('click', endTour);
+}
+function clearTourStep() {
+  var tip = document.getElementById('tourTip');
+  if (tip) tip.remove();
+  document.querySelectorAll('.tour-highlight').forEach(function(el){ el.classList.remove('tour-highlight'); });
+}
+function endTour() {
+  clearTourStep();
+  try { window.localStorage?.setItem('be_tour_done', '1'); } catch (e) {}
+}
+
+// --- Auth boot: decide whether to show login ---
+function bootAuth() {
+  wireLoginForm();
+  loadTestCreds();
+  var u = getSessionUser();
+  if (u && getAccessToken()) {
+    hideLoginOverlay();
+    renderUserChip();
+    refreshConvoList();
+    maybeStartTour();
+  } else {
+    showLoginOverlay('');
+  }
 }
 
 function renderConversationList(conversations) {
@@ -644,10 +887,11 @@ function newConversation() {
 
 async function callRagBackend(query) {
   try {
-    const res = await fetch(RAG_BACKEND + '/api/chat', {
+    var u = getSessionUser() || {};
+    var viewer = (u.role && u.employeeId) ? { role: u.role, employeeId: u.employeeId } : { role: 'CEO', employeeId: 1 };
+    const res = await apiFetch(RAG_BACKEND + '/api/chat', {
       method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({ query: query, conversationId: currentConversationId, viewer: { role: 'CEO', employeeId: 1 } }),
+      body: JSON.stringify({ query: query, conversationId: currentConversationId, viewer: viewer }),
       signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) return null;

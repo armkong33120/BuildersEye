@@ -6,6 +6,7 @@ import { initDatabase } from './sqlEngine.js';
 import { buildVectorIndex } from './vectorEngine.js';
 import { chatHandler } from './chatController.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
+import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials } from './authStore.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -75,6 +76,13 @@ async function startup() {
   }
 
   initDatabase(flatIndex);
+  // Seed user accounts from identity graph (M6) — idempotent
+  try {
+    const count = seedUsers(identityGraph);
+    console.log(`[auth] Users ready: ${count} accounts`);
+  } catch (e) {
+    console.warn('[auth] seedUsers failed:', e.message);
+  }
   // Vector index is memory-heavy (60k embeddings). Disable on low-RAM hosts via VECTOR_INDEX_DISABLED=true
   if (process.env.VECTOR_INDEX_DISABLED !== 'true') {
     try {
@@ -96,40 +104,51 @@ const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5174,http:
 app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: '1mb' }));
 
-// --- Authentication (SECURITY FIX R3-1) ---
-// Static API key auth. If APP_API_KEY is set and provided credential does not match,
-// the request is rejected. If APP_API_KEY is NOT set, the protected routes are disabled
-// (return 401) so the public endpoint can never run without a key in production.
+// --- Authentication (M1: JWT primary, legacy APP_API_KEY fallback for transition) ---
 const EXPECTED_API_KEY = process.env.APP_API_KEY || '';
 
 function requireAuth(req, res, next) {
-  if (!EXPECTED_API_KEY) {
-    // No key configured: refuse to serve sensitive endpoints (fail-closed).
-    return res.status(401).json({ error: 'Unauthorized: API key not configured' });
-  }
   const authz = req.headers.authorization || '';
   const provided =
     (req.headers['x-api-key']) ||
     (authz.startsWith('Bearer ') ? authz.slice(7) : '');
-  if (!provided || provided !== EXPECTED_API_KEY) {
-    return res.status(401).json({ error: 'Unauthorized: invalid API key' });
+
+  if (!provided) {
+    return res.status(401).json({ error: 'Unauthorized: missing credentials' });
   }
-  next();
+
+  // 1) Try JWT access token (per-user role)
+  const user = verifyAccessToken(provided);
+  if (user) {
+    req.authUser = user;
+    req.viewer = { role: user.role, employeeId: user.employeeId };
+    return next();
+  }
+
+  // 2) Legacy static API key (transition). Role falls back to server env / request body.
+  if (EXPECTED_API_KEY && provided === EXPECTED_API_KEY) {
+    req.authUser = null; // legacy shared key — no per-user identity
+    return next();
+  }
+
+  return res.status(401).json({ error: 'Unauthorized: invalid credentials' });
 }
 
-// Server-defined viewer role (SECURITY FIX R3-1).
-// With API-key auth (requireAuth), the role from the request is trusted.
-// DEFAULT_ROLE is used when the client doesn't specify a role.
+// Server-defined viewer role (legacy fallback only). With JWT, role comes from the token.
 const VALID_ROLES = ['CEO', 'HR', 'Manager', 'Employee'];
 const DEFAULT_ROLE = VALID_ROLES.includes(process.env.APP_VIEWER_ROLE)
   ? process.env.APP_VIEWER_ROLE
   : 'CEO';
 
-function resolveViewer(body) {
-  // Trust the role from the authenticated request, fallback to DEFAULT_ROLE
-  const requestedRole = body?.viewer?.role;
+function resolveViewer(req) {
+  // JWT-authenticated: role/employeeId are signed in the token — never trust client body.
+  if (req.viewer && VALID_ROLES.includes(req.viewer.role)) {
+    return { role: req.viewer.role, employeeId: req.viewer.employeeId };
+  }
+  // Legacy API-key path: accept requested role or fall back to server default.
+  const requestedRole = req.body?.viewer?.role;
   const role = VALID_ROLES.includes(requestedRole) ? requestedRole : DEFAULT_ROLE;
-  const empId = Number(body?.viewer?.employeeId);
+  const empId = Number(req.body?.viewer?.employeeId);
   return { role, employeeId: Number.isFinite(empId) && empId > 0 ? empId : 1 };
 }
 
@@ -153,11 +172,54 @@ app.get('/api/index/status', (req, res) => {
   });
 });
 
+// --- Auth routes (M1) ---
+app.post('/api/auth/login', (req, res) => {
+  try {
+    const { username, password } = req.body || {};
+    if (!username || !password) return res.status(400).json({ error: 'username and password are required' });
+    const result = authLogin(username, password, req.ip);
+    res.json(result);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message || 'Login failed' });
+  }
+});
+
+app.post('/api/auth/refresh', (req, res) => {
+  try {
+    const { refreshToken } = req.body || {};
+    const result = authRefresh(refreshToken);
+    res.json(result);
+  } catch (e) {
+    res.status(e.status || 500).json({ error: e.message || 'Refresh failed' });
+  }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  try {
+    const { refreshToken } = req.body || {};
+    res.json(authLogout(refreshToken));
+  } catch (e) {
+    res.json({ success: true });
+  }
+});
+
+app.get('/api/auth/me', requireAuth, (req, res) => {
+  if (!req.authUser) return res.status(200).json({ legacy: true, viewer: req.viewer || null });
+  res.json(req.authUser);
+});
+
+// Preview credentials (M4) — enabled only when ENABLE_TEST_CREDS=true
+app.get('/api/preview/credentials', (req, res) => {
+  const creds = previewCredentials();
+  if (!creds) return res.status(403).json({ error: 'Preview credentials disabled' });
+  res.json(creds);
+});
+
 app.post('/api/chat', requireAuth, async (req, res) => {
   try {
     const { query, conversationId } = req.body;
     if (!query) return res.status(400).json({ error: 'query is required' });
-    const viewer = resolveViewer(req.body);
+    const viewer = resolveViewer(req);
 
     // Save user message to conversation history
     const convId = conversationId || 'conv-' + Date.now();

@@ -796,6 +796,187 @@ h1 {
   50% { transform: scale(1.3); opacity: 1; }
 }
 
+/* ===================== AUTH: Login overlay (M3) ===================== */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 10, 16, 0.82);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+}
+.login-overlay.is-hidden { display: none; }
+
+.login-card {
+  width: min(420px, 94vw);
+  background: #0d1117;
+  border: 1px solid rgba(45, 212, 191, 0.22);
+  border-radius: 20px;
+  padding: 28px 26px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  animation: login-pop 240ms ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+@keyframes login-pop {
+  from { transform: translateY(14px) scale(0.98); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.login-brand h1 { font-size: 20px; margin: 0; color: #e6edf3; }
+.login-brand p { font-size: 12px; margin: 2px 0 0; color: #8b98a9; }
+
+.login-form { display: flex; flex-direction: column; gap: 14px; }
+.login-field { display: flex; flex-direction: column; gap: 6px; }
+.login-field span { font-size: 12px; color: #8b98a9; font-weight: 500; }
+.login-field input {
+  background: #161b22;
+  border: 1px solid rgba(139, 152, 169, 0.25);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #e6edf3;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+.login-field input:focus { border-color: #2dd4bf; }
+
+.login-error {
+  min-height: 16px;
+  font-size: 12px;
+  color: #f87171;
+}
+
+.login-submit {
+  background: #1f6feb;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease;
+}
+.login-submit:hover:not(:disabled) { background: #2b7fff; }
+.login-submit:active:not(:disabled) { transform: scale(0.98); }
+.login-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ---- Test credentials panel (M4) ---- */
+.test-creds {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(139, 152, 169, 0.25);
+}
+.test-creds.is-hidden { display: none; }
+.test-creds-title { font-size: 12px; color: #2dd4bf; font-weight: 600; margin-bottom: 10px; }
+.test-creds-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.test-cred-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  gap: 2px 10px;
+  text-align: left;
+  background: #161b22;
+  border: 1px solid rgba(139, 152, 169, 0.18);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.test-cred-item:hover { border-color: #2dd4bf; background: #1a2230; }
+.test-cred-role {
+  grid-row: 1 / 3;
+  align-self: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: rgba(45, 212, 191, 0.14);
+  color: #2dd4bf;
+}
+.test-cred-name { font-size: 12px; color: #e6edf3; font-weight: 600; }
+.test-cred-user { font-size: 11px; color: #8b98a9; font-family: monospace; }
+
+/* ---- User chip (logged-in indicator) ---- */
+.user-chip {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(13, 17, 23, 0.9);
+  border: 1px solid rgba(139, 152, 169, 0.25);
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+}
+.user-chip.is-hidden { display: none; }
+.user-chip-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.user-chip-name { color: #e6edf3; font-weight: 600; }
+.user-chip-role { color: #8b98a9; font-size: 11px; }
+.user-chip-logout {
+  background: rgba(248, 113, 113, 0.14);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  margin-left: 4px;
+}
+.user-chip-logout:hover { background: rgba(248, 113, 113, 0.28); }
+
+/* ===================== TOUR GUIDE (M5) ===================== */
+.tour-highlight {
+  outline: 2px solid #2dd4bf !important;
+  outline-offset: 4px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 6px rgba(45, 212, 191, 0.15);
+}
+.tour-tip {
+  position: fixed;
+  z-index: 1200;
+  width: min(320px, 88vw);
+  background: #0d1117;
+  border: 1px solid #2dd4bf;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.55);
+  animation: login-pop 200ms ease;
+}
+.tour-tip-title { font-size: 14px; font-weight: 700; color: #2dd4bf; margin-bottom: 6px; }
+.tour-tip-text { font-size: 12px; color: #c9d4e0; line-height: 1.5; margin-bottom: 12px; }
+.tour-tip-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.tour-skip, .tour-next {
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border: none;
+}
+.tour-skip { background: transparent; color: #8b98a9; border: 1px solid rgba(139,152,169,0.3); }
+.tour-next { background: #2dd4bf; color: #06231f; font-weight: 700; }
+.tour-next:hover { background: #5eead4; }
+
 /* ---- Desktop (>= 1025px) — default styles already fine ---- */
 
 /* ---- Tablet (641px - 1024px) ---- */

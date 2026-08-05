@@ -131,6 +131,38 @@
           <button id="sendChat" class="chat-send-button" type="submit" title="Send message" aria-label="Send message"></button>
         </form>
       </section>
+
+      <!-- Login overlay (shown when no valid session) -->
+      <div id="loginOverlay" class="login-overlay is-hidden" aria-hidden="true">
+        <div class="login-card">
+          <div class="login-brand">
+            <div class="brand-mark"></div>
+            <div>
+              <h1>BuildersEye</h1>
+              <p>Org-Graph Intelligence — กรุณาเข้าสู่ระบบ</p>
+            </div>
+          </div>
+          <form id="loginForm" class="login-form" autocomplete="off">
+            <label class="login-field">
+              <span>Username</span>
+              <input id="loginUsername" type="text" autocomplete="username" placeholder="เช่น emp001 / ceo" />
+            </label>
+            <label class="login-field">
+              <span>Password</span>
+              <input id="loginPassword" type="password" autocomplete="current-password" placeholder="รหัสผ่าน" />
+            </label>
+            <div id="loginError" class="login-error" role="alert"></div>
+            <button id="loginSubmit" class="login-submit" type="submit">เข้าสู่ระบบ</button>
+          </form>
+          <div id="testCredsPanel" class="test-creds is-hidden">
+            <div class="test-creds-title">🧪 ทดสอบระบบ (Preview) — เลือกตำแหน่ง</div>
+            <div id="testCredsList" class="test-creds-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logged-in user chip (filled by JS) -->
+      <div id="userChip" class="user-chip is-hidden"></div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

@@ -12,9 +12,11 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "alasql": "^4.17.3",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
     "openai": "^6.45.0",
     "xlsx": "^0.18.5"
   }

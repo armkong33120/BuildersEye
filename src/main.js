@@ -346,22 +346,16 @@ async function handleChatSubmit(event) {
     return;
   }
 
-  const department = findDepartmentPrompt(prompt);
-  if (department) {
-    startDepartmentScan(department);
-    return;
-  }
-
-  const scanResult = startGraphScan(prompt);
-  const selected = employeesByPk.get(state.selectedPk);
-  const visibleAccounts = Array.from(nodeObjects.values()).filter((mesh) => mesh.visible).length;
-  const visibleLines = lineObjects.filter((line) => line.visible).length;
-  const answer = selected
-    ? `กำลังสแกนจาก context ${selected.code} ${selected.jobTitle} ไปยัง ${scanResult.relatedCount} node ที่เกี่ยวข้อง และเชื่อม ${scanResult.pathCount} path จาก org graph. มุมมองปัจจุบันมี ${visibleAccounts} accounts และ ${visibleLines} reporting lines ที่ผ่าน filter.`
-    : `มุมมองปัจจุบันมี ${visibleAccounts} accounts และ ${visibleLines} reporting lines ที่ผ่าน filter.`;
-  window.setTimeout(() => {
-    appendChatMessage('assistant', 'RAG', answer, ['identity-graph.json', 'visible graph state']);
-  }, 180);
+  // RAG backend unavailable — show clear error, DO NOT fall through to graph scan
+  appendChatMessage('assistant', 'RAG',
+    '⚠️ ไม่สามารถเชื่อมต่อกับระบบ RAG ได้ในขณะนี้\n\n' +
+    'สาเหตุที่เป็นไปได้:\n' +
+    '• Backend (Render) อาจกำลัง restart หรือ spin down (free tier)\n' +
+    '• ยังไม่ได้ตั้งค่า VITE_APP_API_KEY บน Vercel\n' +
+    '• Network connectivity issue\n\n' +
+    'ลองถามใหม่อีกครั้งใน 30 วินาทีครับ',
+    [], {});
+  return;
 }
 
 function appendChatMessage(role, label, text, sources = [], extras = {}) {
@@ -653,7 +647,7 @@ async function callRagBackend(query) {
     const res = await fetch(RAG_BACKEND + '/api/chat', {
       method: 'POST',
       headers: authHeaders(),
-      body: JSON.stringify({ query: query, conversationId: currentConversationId }),
+      body: JSON.stringify({ query: query, conversationId: currentConversationId, viewer: { role: 'CEO', employeeId: 1 } }),
       signal: AbortSignal.timeout(15000),
     });
     if (!res.ok) return null;

@@ -977,6 +977,62 @@ h1 {
 .tour-next { background: #2dd4bf; color: #06231f; font-weight: 700; }
 .tour-next:hover { background: #5eead4; }
 
+/* ===================== PREVIEW MODE ===================== */
+.preview-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 10px;
+  color: #8b98a9;
+  font-size: 11px;
+}
+.preview-divider::before, .preview-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(139, 152, 169, 0.2);
+}
+
+.preview-mode-btn {
+  width: 100%;
+  background: rgba(45, 212, 191, 0.12);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease, transform 100ms ease;
+}
+.preview-mode-btn:hover { background: rgba(45, 212, 191, 0.22); }
+.preview-mode-btn:active { transform: scale(0.98); }
+
+.preview-hint {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: #8b98a9;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.preview-role-select {
+  background: #161b22;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  color: #2dd4bf;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.user-chip.is-preview {
+  border-color: rgba(45, 212, 191, 0.45);
+  box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.15), 0 8px 24px rgba(0,0,0,0.35);
+}
+
 /* ---- Desktop (>= 1025px) — default styles already fine ---- */
 
 /* ---- Tablet (641px - 1024px) ---- */

@@ -5,6 +5,12 @@ import { CSS2DObject, CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer
 import { createIcons, icons } from 'lucide';
 import graph from './data/identity-graph.json';
 
+// --- Preview / Demo Mode state (ต้องประกาศก่อน boot sequence เพื่อเลี่ยง TDZ) ---
+var PREVIEW_PARAM = (typeof window !== 'undefined') && /[?&](preview|demo)=1/.test(window.location.search || '');
+var previewActive = false;
+var previewRole = 'CEO'; // ค่าเริ่มต้นให้ "เห็นทุกอย่าง"
+
+
 const canvas = document.querySelector('#scene');
 const labelRoot = document.querySelector('#labels');
 const personSelect = document.querySelector('#personSelect');
@@ -545,6 +551,85 @@ const RAG_BACKEND = (urlParams && urlParams.get('backend'))
   || 'http://localhost:5199';
 var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
 
+// สร้างคำตอบจำลองจากกราฟ local (ใช้ตอน Preview Mode — ไม่ต้องพึ่ง backend/Render)
+function mockRagResponse(query) {
+  var q = (query || '').toLowerCase();
+  var identities = graph.identities || [];
+  function byDept(name) { return identities.filter(function(i){ return i.department === name; }); }
+  function pks(list) { return list.map(function(i){ return i.pk; }); }
+  function sample(list, n) { return list.slice(0, n); }
+  var start = Date.now();
+  var answer = '';
+  var matched = [];
+  var policy = { status: 'Allowed' };
+  var tag = '\n\n_🧪 โหมดทดลอง — ข้อมูลจำลองจากกราฟในเครื่อง (backend ไม่ได้เชื่อม)_';
+
+  // 1) ข้อมูลอ่อนไหว (เงินเดือน/โบนัส) → สาธิต RBAC
+  if (/เงินเดือน|salary|โบนัส|bonus|ค่าจ้าง|compensation|เงิน/.test(q)) {
+    if (previewRole === 'Employee' || previewRole === 'Manager') {
+      answer = '🚫 Query blocked by governance policy.\n\nบทบาท **' + previewRole + '** ไม่มีสิทธิ์ดูข้อมูลเงินเดือนของผู้อื่น — นี่คือการสาธิต RBAC ที่บล็อกข้อมูลอ่อนไหวอัตโนมัติ (ลองสลับ role เป็น CEO ที่มุมซ้ายล่างเพื่อดูความต่าง)' + tag;
+      policy = { status: 'Blocked', reason: 'compensation restricted for ' + previewRole };
+      matched = [];
+    } else {
+      var fin = byDept('Finance & Accounting');
+      answer = '(จำลอง) ภาพรวมค่าตอบแทน: ทีม Finance ดูแล payroll ของพนักงาน 150 คน ค่าเฉลี่ยเงินเดือนอยู่ในช่วง ~40,000–90,000 บาท ขึ้นกับแผนกและระดับอาวุโส\n\nสมาชิก Finance ที่เกี่ยวข้องกระพริบบนกราฟ' + tag;
+      matched = pks(sample(fin, 5));
+    }
+  }
+  // 2) ถามหา CEO
+  else if (/ceo|ซีอีโอ|ผู้บริหารสูงสุด|ประธาน/.test(q)) {
+    var ceo = identities.find(function(i){ return i.pk === graph.ceoPk; }) || identities[0];
+    answer = '(จำลอง) CEO คือ **' + (ceo ? ceo.name : '—') + '** (' + (ceo ? ceo.jobTitle : '') + ')\n\nnode CEO ตรงกลางกราฟกำลังกระพริบ' + tag;
+    matched = ceo ? [ceo.pk] : [];
+  }
+  // 3) KPI / ผลงาน
+  else if (/kpi|okr|ผลงาน|performance|ประเมิน/.test(q)) {
+    var seniors = identities.filter(function(i){ return (i.jobTitle||'').match(/Senior|Manager|Chief|Lead/i); });
+    answer = '(จำลอง) ผลงานเด่นกระจายทั่วทุกฝ่าย — กลุ่ม Senior/Lead มี KPI เฉลี่ยสูงสุด\n\nnode ผู้นำระดับอาวุโสกำลังกระพริบ' + tag;
+    matched = pks(sample(seniors, 8));
+  }
+  // 4) ระบุแผนก
+  else {
+    var deptMap = [
+      [/ไอที|\bit\b|it support|ระบบ/, 'IT'],
+      [/ขาย|sale/, 'Sales'],
+      [/วิศว|ก่อสร้าง|engineer|construction|site/, 'Engineering & Construction'],
+      [/ออกแบบ|สถาปัตย|design|architect/, 'Design & Architecture'],
+      [/การเงิน|บัญชี|finance|account/, 'Finance & Accounting'],
+      [/ทรัพยากร|บุคคล|\bhr\b|recruit/, 'HR & Admin'],
+      [/การตลาด|market/, 'Marketing'],
+      [/จัดซื้อ|คลัง|procure|warehouse|logistic/, 'Procurement & Warehouse'],
+      [/ลูกค้า|รับประกัน|customer|warranty|service/, 'Customer Service & Warranty'],
+      [/กฎหมาย|legal/, 'Legal'],
+    ];
+    var deptName = null;
+    for (var i = 0; i < deptMap.length; i++) { if (deptMap[i][0].test(q)) { deptName = deptMap[i][1]; break; } }
+    if (deptName) {
+      var members = byDept(deptName);
+      var names = sample(members, 4).map(function(m){ return m.name + ' (' + m.jobTitle + ')'; }).join('\n- ');
+      answer = '(จำลอง) แผนก **' + deptName + '** มีสมาชิก ' + members.length + ' คน ได้แก่:\n- ' + names + (members.length > 4 ? '\n- …' : '') + '\n\nสมาชิกแผนกนี้กำลังกระพริบบนกราฟ' + tag;
+      matched = pks(sample(members, 10));
+    } else {
+      // 5) ภาพรวมทั่วไป
+      var leads = identities.filter(function(x){ return x.directReportCount > 0; });
+      answer = '(จำลอง) องค์กรมี 150 คน โครงสร้าง 4 ระดับ (CEO → C-Level → Manager → Staff) แบ่งเป็น 12 แผนก\n\nลองถามเจาะจง เช่น "แผนก IT มีกี่คน", "ใครคือ CEO", "KPI สูงสุด" หรือ "เงินเดือนเฉลี่ย" (เพื่อดู RBAC)\n\nnode ผู้นำแต่ละฝ่ายกำลังกระพริบ' + tag;
+      matched = pks(sample(leads, 8));
+    }
+  }
+
+  return {
+    answer: answer,
+    matchedEmployeePks: matched,
+    sources: [{ fileName: 'identity-graph.json', sheetName: 'Preview (local)', preview: true }],
+    policy: policy,
+    policyStatus: policy.status,
+    responseTimeMs: Date.now() - start,
+    matchersUsed: ['preview-mock'],
+    preview: true,
+  };
+}
+
+
 // --- Conversation History ---
 async function loadConversations() {
   try {
@@ -666,6 +751,31 @@ function renderUserChip() {
   if (!uc) return;
   var u = getSessionUser();
   if (!u) { uc.classList.add('is-hidden'); return; }
+
+  // Preview Mode chip: badge + role switcher + exit
+  if (previewActive) {
+    uc.classList.add('is-preview');
+    uc.innerHTML =
+      '<span class="user-chip-dot" style="background:#2dd4bf"></span>' +
+      '<span class="user-chip-name">🧪 โหมดทดลอง</span>' +
+      '<select id="previewRoleSelect" class="preview-role-select" title="สลับบทบาทเพื่อทดสอบ RBAC">' +
+        ['CEO','HR','Manager','Employee'].map(function(r){
+          return '<option value="' + r + '"' + (r === previewRole ? ' selected' : '') + '>' + r + '</option>';
+        }).join('') +
+      '</select>' +
+      '<button id="exitPreviewBtn" class="user-chip-logout" title="ออกจากโหมดทดลอง">Login จริง</button>';
+    uc.classList.remove('is-hidden');
+    var sel = document.getElementById('previewRoleSelect');
+    if (sel) sel.addEventListener('change', function() {
+      previewRole = sel.value;
+      appendChatMessage('assistant', 'RAG', '🔄 สลับบทบาทเป็น **' + previewRole + '** แล้ว — ลองถาม "เงินเดือนเฉลี่ย" เพื่อดูผล RBAC ที่ต่างกันครับ', [], {});
+    });
+    var ex = document.getElementById('exitPreviewBtn');
+    if (ex) ex.addEventListener('click', exitPreviewMode);
+    return;
+  }
+
+  uc.classList.remove('is-preview');
   var roleColor = { CEO: '#f59e0b', HR: '#a78bfa', Manager: '#38bdf8', Employee: '#34d399' }[u.role] || '#94a3b8';
   uc.innerHTML =
     '<span class="user-chip-dot" style="background:' + roleColor + '"></span>' +
@@ -753,6 +863,9 @@ function wireLoginForm() {
     if (!un || !pw) { var er = document.getElementById('loginError'); if (er) er.textContent = 'กรุณากรอก username และ password'; return; }
     await doLogin(un, pw);
   });
+  // Preview mode button — enter without login
+  var pv = document.getElementById('previewModeBtn');
+  if (pv) pv.addEventListener('click', enterPreviewMode);
 }
 
 // --- Test credentials panel (M4, preview/dev only) ---
@@ -848,6 +961,11 @@ function endTour() {
 function bootAuth() {
   wireLoginForm();
   loadTestCreds();
+  // Preview / Demo mode via URL param (?preview=1 or ?demo=1) — skip login entirely
+  if (PREVIEW_PARAM) {
+    enterPreviewMode();
+    return;
+  }
   var u = getSessionUser();
   if (u && getAccessToken()) {
     hideLoginOverlay();
@@ -919,6 +1037,10 @@ function newConversation() {
 }
 
 async function callRagBackend(query) {
+  // Preview Mode: ตอบแบบจำลองฝั่ง client ทันที (ไม่ต้องพึ่ง backend/Render)
+  if (previewActive) {
+    return mockRagResponse(query);
+  }
   try {
     var u = getSessionUser() || {};
     var viewer = (u.role && u.employeeId) ? { role: u.role, employeeId: u.employeeId } : { role: 'CEO', employeeId: 1 };
@@ -930,6 +1052,31 @@ async function callRagBackend(query) {
     if (!res.ok) return null;
     return await res.json();
   } catch (e) { return null; }
+}
+
+// --- Preview Mode enter/exit ---
+function enterPreviewMode() {
+  previewActive = true;
+  setSession('preview-token-' + Date.now(), '', { username: 'preview', name: 'ผู้เยี่ยมชม', role: previewRole, employeeId: 1, preview: true });
+  hideLoginOverlay();
+  renderUserChip();
+  refreshConvoList();
+  appendChatMessage('assistant', 'RAG',
+    '👋 ยินดีต้อนรับสู่ **โหมดทดลอง (Preview Mode)**\n\n' +
+    '• ดู 3D Org Graph + สำรวจ UI ได้เต็มที่ โดยไม่ต้อง Login\n' +
+    '• ถามคำถามได้ทันที — ระบบจะตอบแบบจำลองจากข้อมูลกราฟในเครื่อง (node ที่เกี่ยวข้องจะกระพริบ)\n' +
+    '• สลับบทบาทที่มุมซ้ายล่างเพื่อทดสอบ RBAC (CEO/HR/Manager/Employee)\n' +
+    '• ทำงานได้แม้ backend กำลัง cold start ✅\n\n' +
+    'ลองพิมพ์: "แผนก IT มีกี่คน" หรือ "เงินเดือนเฉลี่ย" ดูสิครับ',
+    [], {});
+  maybeStartTour();
+}
+
+function exitPreviewMode() {
+  previewActive = false;
+  clearSession();
+  renderUserChip();
+  showLoginOverlay('ออกจากโหมดทดลองแล้ว — เข้าสู่ระบบเพื่อใช้ข้อมูลจริง');
 }
 
 function highlightRagResults(data) {

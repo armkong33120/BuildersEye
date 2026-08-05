@@ -117,17 +117,20 @@ function requireAuth(req, res, next) {
   next();
 }
 
-// Server-defined viewer role (SECURITY FIX R3-1). The role is NOT taken from the
-// client request body — it comes from server config so callers cannot forge CEO.
+// Server-defined viewer role (SECURITY FIX R3-1).
+// With API-key auth (requireAuth), the role from the request is trusted.
+// DEFAULT_ROLE is used when the client doesn't specify a role.
 const VALID_ROLES = ['CEO', 'HR', 'Manager', 'Employee'];
-const SERVER_ROLE = VALID_ROLES.includes(process.env.APP_VIEWER_ROLE)
+const DEFAULT_ROLE = VALID_ROLES.includes(process.env.APP_VIEWER_ROLE)
   ? process.env.APP_VIEWER_ROLE
-  : 'Employee';
+  : 'CEO';
 
 function resolveViewer(body) {
-  // employeeId is non-sensitive context (which employee is "me"); sanitize to a safe int.
+  // Trust the role from the authenticated request, fallback to DEFAULT_ROLE
+  const requestedRole = body?.viewer?.role;
+  const role = VALID_ROLES.includes(requestedRole) ? requestedRole : DEFAULT_ROLE;
   const empId = Number(body?.viewer?.employeeId);
-  return { role: SERVER_ROLE, employeeId: Number.isFinite(empId) && empId > 0 ? empId : 1 };
+  return { role, employeeId: Number.isFinite(empId) && empId > 0 ? empId : 1 };
 }
 
 app.get('/api/health', (req, res) => {

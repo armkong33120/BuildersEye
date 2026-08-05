@@ -89,6 +89,14 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     try { sqlRes = await generateAndRunSQL(query); } 
     catch (e) { sqlRes = { error: e.message }; }
     
+    // Extract employee PKs from SQL results for graph highlighting
+    if (sqlRes.data && Array.isArray(sqlRes.data)) {
+      for (const row of sqlRes.data) {
+        if (row.employeeId && !matchedPks.includes(row.employeeId)) matchedPks.push(row.employeeId);
+        if (row.department) matchedDepts.add(row.department);
+      }
+    }
+    
     const contextData = sqlRes.error 
       ? `Failed to compute SQL: ${sqlRes.error}` 
       : `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(sqlRes.data)}`;
@@ -103,6 +111,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   else if (parsedIntent?.intents?.some(i => i.type === 'VECTOR_SEARCH') || (finalResults.length === 0 && !parsedIntent?.isClarification)) {
     const vectorHits = await semanticSearch(query);
     if (vectorHits.length > 0) {
+      // Extract employee PKs from vector hits for graph highlighting
+      for (const hit of vectorHits) {
+        if (hit.employeeId && !matchedPks.includes(hit.employeeId)) matchedPks.push(hit.employeeId);
+        if (hit.metadata?.department) matchedDepts.add(hit.metadata.department);
+      }
       const contextData = vectorHits.map(h => h.text).join('\n');
       const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + contextData;
       const finalLLMAnswer = await generateAnswer(query, vectorPrompt);

@@ -687,8 +687,8 @@ function highlightRagResults(data) {
       }
     });
     if (edgeKeys.size > 0) createScanPathLines(edgeKeys, '#ffd166');
-    // Longer hold (12s) + resume auto-rotate after
-    pauseAutoRotate(12000);
+    // Longer hold (20s instead of 12s) — keeps blinking longer
+    pauseAutoRotate(20000);
     // Auto-focus camera on first matched node
     var firstPk = Array.from(nodePks)[0];
     var firstMesh = nodeObjects.get(firstPk);
@@ -698,7 +698,7 @@ function highlightRagResults(data) {
     }
   }
   state.scan = {
-    startedAt: performance.now(), duration: 12000,
+    startedAt: performance.now(), duration: 20000,
     sourcePk: graph.ceoPk, nodePks: nodePks, edgeKeys: edgeKeys, mode: 'rag-search',
   };
 }

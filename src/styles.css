@@ -1063,6 +1063,50 @@ h1 {
     font-size: 9px;
     padding: 3px 5px;
   }
+
+  /* Side panel → right drawer overlay สำหรับ tablet+mobile (≤1024px) แก้ปัญหาทับ chat */
+  .side-panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    height: 100dvh;
+    max-height: none;
+    z-index: 46;
+    box-shadow: -24px 0 64px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    pointer-events: auto;
+    -webkit-overflow-scrolling: touch;
+    align-content: start;
+    padding-top: 10px;
+  }
+
+  .side-panel.is-hidden {
+    transform: translateX(110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .rag-chat { z-index: 30; }
+
+  /* ปุ่ม toggle ต้องอยู่เหนือ drawer เพื่อเปิด/ปิดได้ตลอด */
+  .panel-toggle,
+  .topbar-toggle { z-index: 50; }
+
+  /* Backdrop เมื่อเปิดเมนู (tablet+mobile) */
+  .menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 44;
+    background: rgba(4, 8, 12, 0.55);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity 200ms ease;
+  }
+  .menu-backdrop.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 /* ---- Mobile (< 641px) — Fullscreen chat + compact UI ---- */
@@ -1106,19 +1150,47 @@ h1 {
     height: 34px;
   }
 
-  /* Side panel → bottom drawer */
+  /* Side panel → full-height RIGHT drawer overlay (ไม่ทับ chat) */
   .side-panel {
-    top: auto;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    width: auto;
-    max-height: min(42vh, 360px);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: min(86vw, 340px);
+    height: 100dvh;
+    max-height: none;
     font-size: 12px;
+    z-index: 46;
+    box-shadow: -24px 0 64px rgba(0, 0, 0, 0.55);
+    overflow-y: auto;
+    padding-top: 10px;
+    align-content: start;
+    pointer-events: auto;  /* drawer ต้อง scroll/สัมผัสได้เต็มพื้นที่ */
+    -webkit-overflow-scrolling: touch;
   }
 
   .side-panel.is-hidden {
-    transform: translateY(calc(100% + 16px));
+    transform: translateX(110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Chat อยู่ชั้นล่าง drawer */
+  .rag-chat { z-index: 30; }
+
+  /* Backdrop เมื่อเปิดเมนู */
+  .menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 44;
+    background: rgba(4, 8, 12, 0.55);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity 200ms ease;
+  }
+  .menu-backdrop.is-hidden {
+    opacity: 0;
+    pointer-events: none;
   }
 
   .detail-panel {
@@ -1175,21 +1247,34 @@ h1 {
     border-radius: 4px;
   }
 
-  /* Toggle buttons position */
-  .panel-toggle,
-  .topbar-toggle {
-    top: auto;
-    bottom: 8px;
-    width: 34px;
-    height: 34px;
-  }
-
+  /* Toggle buttons — จัดตำแหน่งไม่ให้ทับกัน/ทับ chat */
+  /* panel-toggle (เปิดเมนู drawer): ลอยเหนือ chat ด้านขวา (เข้าถึงนิ้วโป้งง่าย) */
   .panel-toggle {
-    right: 8px;
+    top: auto;
+    bottom: calc(min(52vh, 440px) + 16px);
+    right: 12px;
+    width: 44px;
+    height: 44px;
+    z-index: 50;
+    border-radius: 12px;
   }
 
+  /* topbar-toggle: อยู่มุมซ้ายบน ใกล้ topbar ที่มันควบคุม */
   .topbar-toggle {
-    left: 8px;
+    top: 12px;
+    bottom: auto;
+    left: 12px;
+    width: 40px;
+    height: 40px;
+    z-index: 50;
+    border-radius: 12px;
+  }
+
+  /* user-chip เหนือ chat ด้านซ้าย (ไม่ชน panel-toggle) */
+  .user-chip {
+    bottom: calc(min(52vh, 440px) + 16px);
+    left: 12px;
+    z-index: 35;
   }
 
   .department-legend {

@@ -250,6 +250,14 @@ function buildUi() {
     controls.autoRotate = true;
     controls.update();
   });
+
+  // Drawer mode (tablet+mobile ≤1024px): ซ่อน side panel ไว้ก่อน ให้เห็นกราฟเต็มจอ แล้วค่อยกดเปิด
+  if (window.matchMedia('(max-width: 1024px)').matches) {
+    sidePanel.classList.add('is-hidden');
+    togglePanelButton.setAttribute('aria-expanded', 'false');
+    togglePanelButton.innerHTML = '<i data-lucide="panel-right-open"></i>';
+    createIcons({ icons });
+  }
 }
 
 function toggleChat() {
@@ -273,6 +281,23 @@ function toggleTopbar() {
   createIcons({ icons });
 }
 
+// Menu backdrop (mobile drawer) — สร้างครั้งเดียว ใช้ซ้ำ
+var _menuBackdrop = null;
+function getMenuBackdrop() {
+  if (!_menuBackdrop) {
+    _menuBackdrop = document.createElement('div');
+    _menuBackdrop.className = 'menu-backdrop is-hidden';
+    _menuBackdrop.addEventListener('click', function() {
+      if (!sidePanel.classList.contains('is-hidden')) toggleSidePanel();
+    });
+    document.body.appendChild(_menuBackdrop);
+  }
+  return _menuBackdrop;
+}
+function isMobileDrawer() {
+  return window.matchMedia('(max-width: 1024px)').matches;
+}
+
 function toggleSidePanel() {
   const isNowHidden = sidePanel.classList.toggle('is-hidden');
   togglePanelButton.setAttribute('aria-expanded', String(!isNowHidden));
@@ -282,6 +307,10 @@ function toggleSidePanel() {
     ? '<i data-lucide="panel-right-open"></i>'
     : '<i data-lucide="panel-right-close"></i>';
   createIcons({ icons });
+  // Backdrop เฉพาะโหมด mobile drawer
+  if (isMobileDrawer()) {
+    getMenuBackdrop().classList.toggle('is-hidden', isNowHidden);
+  }
 }
 
 function toggleCollapsiblePanel(button) {

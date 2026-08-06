@@ -7,6 +7,12 @@ import { buildVectorIndex } from './vectorEngine.js';
 import { chatHandler } from './chatController.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
 import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials } from './authStore.js';
+import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
+import { registryToFlatIndex, buildScopeCodes } from './registryIngest.js';
+import { getCacheDirSafe } from './runRegistry.js';
+import { isConfigured as odConfigured, listAccounts, syncAll } from './onedriveSync.js';
+import { searchVectors, vectorsExist, getVectorMeta } from './vectorStore.js';
+import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -19,52 +25,66 @@ let searchIndex = new Map();
 let identityGraph = null;
 let indexReady = false;
 let startupTime = null;
+let dataSource = 'unknown';   // 'registry' | 'files'
+let lastRegistryStats = null;
 
-async function startup() {
-  console.log('[ingest] Starting Excel ingestion...');
-  const start = Date.now();
+// โหลดข้อมูลจาก Employee Registry (OneDrive-driven) — fallback เป็นไฟล์เดิมถ้า registry ว่าง
+function loadDataRegistryFirst() {
+  try {
+    const cacheDir = getCacheDirSafe();
+    const stats = buildRegistry(cacheDir); // incremental: ไฟล์ไม่เปลี่ยนข้ามเร็วมาก
+    const employees = getActiveEmployees();
+    if (employees.length > 0) {
+      const { flatIndex: fi, searchIndex: si } = registryToFlatIndex(employees);
+      lastRegistryStats = stats;
+      return { flatIndex: fi, searchIndex: si, source: 'registry', count: employees.length };
+    }
+  } catch (e) {
+    console.warn('[registry] build failed, falling back to file ingest:', e.message);
+  }
+  return null;
+}
 
-  // Data directory priority:
-  // 1. HR_DATA_DIR env var (used on Render/cloud deployments)
-  // 2. OneDrive path (local dev on this machine)
-  // 3. Repo-local demo copy (always present in repo)
+// legacy path: อ่าน Excel จากโฟลเดอร์โดยตรง (เดิม)
+function loadDataFromFiles() {
   let dataDir = process.env.HR_DATA_DIR;
   if (dataDir) {
-    console.log(`[ingest] Using HR_DATA_DIR env: ${dataDir}`);
     dataDir = path.resolve(dataDir);
-    if (!fs.existsSync(dataDir)) {
-      console.warn('[ingest] HR_DATA_DIR path not found, falling back to OneDrive/local copy');
-      dataDir = null;
-    }
+    if (!fs.existsSync(dataDir)) dataDir = null;
   }
-
   if (!dataDir) {
     const oneDrivePath = path.join(
       process.env.HOME || '/Users/arm',
       'Library/CloudStorage/OneDrive-UbonRatchathaniUniversity/BuildersEye HR Demo Dataset/Employees'
     );
-
-    dataDir = oneDrivePath;
-    if (!fs.existsSync(dataDir)) {
-      console.warn('[ingest] OneDrive path not found, using local copy');
-      dataDir = path.join(__dirname, '..', 'src', 'data', 'hr_onedrive_demo');
-    }
+    dataDir = fs.existsSync(oneDrivePath)
+      ? oneDrivePath
+      : path.join(__dirname, '..', 'src', 'data', 'hr_onedrive_demo');
   }
+  const result = ingestAll(dataDir);
+  return { flatIndex: result.flatIndex, searchIndex: result.searchIndex, source: 'files', count: result.totalFiles };
+}
 
-  try {
-    const result = ingestAll(dataDir);
-    flatIndex = result.flatIndex;
-    searchIndex = result.searchIndex;
-    console.log(`[ingest] Done: ${result.totalFiles} files, ${flatIndex.length} records, ${searchIndex.size} tokens in ${Date.now() - start}ms`);
-  } catch (e) {
-    console.error('[ingest] Failed:', e.message);
-    const fallback = path.join(__dirname, '..', 'src', 'data', 'hr_onedrive_demo');
-    console.log('[ingest] Trying fallback:', fallback);
-    const result = ingestAll(fallback);
-    flatIndex = result.flatIndex;
-    searchIndex = result.searchIndex;
-    console.log(`[ingest] Fallback: ${result.totalFiles} files, ${flatIndex.length} records`);
-  }
+// hot-reload: เรียกหลัง sync/rebuild → swap index + re-init DB (chat/search ใช้ข้อมูลใหม่ทันที)
+function reloadData(reason = 'manual') {
+  const start = Date.now();
+  const loaded = loadDataRegistryFirst() || loadDataFromFiles();
+  flatIndex = loaded.flatIndex;
+  searchIndex = loaded.searchIndex;
+  dataSource = loaded.source;
+  initDatabase(flatIndex);
+  console.log(`[reload:${reason}] source=${dataSource} records=${flatIndex.length} tokens=${searchIndex.size} in ${Date.now() - start}ms`);
+  return { source: dataSource, records: flatIndex.length, employees: loaded.count };
+}
+
+async function startup() {
+  console.log('[ingest] Starting data load (registry-first)...');
+  const start = Date.now();
+  const loaded = loadDataRegistryFirst() || loadDataFromFiles();
+  flatIndex = loaded.flatIndex;
+  searchIndex = loaded.searchIndex;
+  dataSource = loaded.source;
+  console.log(`[ingest] Done via ${dataSource}: ${loaded.count} employees, ${flatIndex.length} records, ${searchIndex.size} tokens in ${Date.now() - start}ms`);
 
   // Load identity graph
   const graphPath = path.join(__dirname, '..', 'src', 'data', 'identity-graph.json');
@@ -257,6 +277,149 @@ app.delete('/api/conversations/:id', requireAuth, (req, res) => {
   res.json({ success: ok });
 });
 
+// ===================== Employee Registry API (OneDrive-driven) =====================
+const LAST_SYNC_FILE = path.join(__dirname, '.data', 'onedrive', 'last-sync.json');
+function readLastSync() {
+  try { return JSON.parse(fs.readFileSync(LAST_SYNC_FILE, 'utf-8')); } catch { return null; }
+}
+function writeLastSync(obj) {
+  try { fs.mkdirSync(path.dirname(LAST_SYNC_FILE), { recursive: true }); fs.writeFileSync(LAST_SYNC_FILE, JSON.stringify(obj, null, 2)); } catch {}
+}
+
+function requirePrivileged(req, res) {
+  const viewer = resolveViewer(req);
+  if (viewer.role !== 'CEO' && viewer.role !== 'HR') {
+    res.status(403).json({ error: 'Forbidden: CEO/HR only' });
+    return null;
+  }
+  return viewer;
+}
+
+function empSummary(e) {
+  return {
+    code: e.code, pk: e.pk, name: e.name, department: e.department,
+    jobTitle: e.jobTitle, roleGroup: e.roleGroup, managerCode: e.managerCode,
+    status: e.status, employmentStatus: e.employmentStatus,
+    sheetCount: (e.sheetNames || []).length, lastSeen: e.lastSeen,
+  };
+}
+
+app.get('/api/registry/status', requireAuth, (req, res) => {
+  const employees = getActiveEmployees();
+  const schema = getSchema();
+  res.json({
+    dataSource,
+    indexReady,
+    startupTime,
+    activeEmployees: employees.length,
+    registryStats: lastRegistryStats,
+    schemaSheets: Object.keys(schema.sheets || {}).length,
+    schemaUpdatedAt: schema.updatedAt || null,
+    onedrive: {
+      configured: odConfigured(),
+      accounts: odConfigured() ? listAccounts() : [],
+      lastSync: readLastSync(),
+    },
+    vectors: { built: vectorsExist(), meta: getVectorMeta() },
+  });
+});
+
+app.get('/api/registry/employees', requireAuth, (req, res) => {
+  const viewer = resolveViewer(req);
+  const employees = getActiveEmployees();
+  const scope = buildScopeCodes(viewer, employees);
+  const visible = scope ? employees.filter(e => scope.has(e.code)) : employees;
+  res.json({ viewer: { role: viewer.role, employeeId: viewer.employeeId }, count: visible.length, employees: visible.map(empSummary) });
+});
+
+app.get('/api/registry/employees/:code', requireAuth, (req, res) => {
+  const viewer = resolveViewer(req);
+  const employees = getActiveEmployees();
+  const emp = getEmployee(req.params.code);
+  if (!emp || emp.status !== 'active') return res.status(404).json({ error: 'Employee not found' });
+  const scope = buildScopeCodes(viewer, employees);
+  if (scope && !scope.has(emp.code)) return res.status(403).json({ error: 'Forbidden: outside your scope' });
+
+  const privileged = viewer.role === 'CEO' || viewer.role === 'HR';
+  const schema = getSchema();
+  const sheets = {};
+  for (const [sn, sd] of Object.entries(emp.sheets || {})) {
+    const sensitive = schema.sheets?.[sn]?.sensitivity === 'sensitive';
+    sheets[sn] = (sensitive && !privileged)
+      ? { redacted: true, reason: 'sensitive sheet — CEO/HR only', rowCount: (sd.records || []).length }
+      : sd;
+  }
+  res.json({ ...empSummary(emp), email: emp.email, managerName: emp.managerName, profileHeaders: emp.profileHeaders, sheets });
+});
+
+app.get('/api/registry/schema', requireAuth, (req, res) => {
+  if (!requirePrivileged(req, res)) return;
+  res.json(getSchema());
+});
+
+// กด sync ด้วยมือ (CEO/HR): OneDrive delta sync → rebuild registry → hot-reload engines
+app.post('/api/sync/onedrive', requireAuth, async (req, res) => {
+  if (!requirePrivileged(req, res)) return;
+  const result = { synced: null, registry: null, reload: null };
+  try {
+    if (odConfigured()) {
+      result.synced = await syncAll(() => {});
+    } else {
+      result.synced = { skipped: 'OneDrive not configured — rebuild from local cache only' };
+    }
+    result.registry = buildRegistry(getCacheDirSafe());
+    result.reload = reloadData('sync-api');
+    writeLastSync({ at: new Date().toISOString(), by: req.authUser?.username || 'api', result: { active: result.registry.activeEmployees } });
+    res.json(result);
+  } catch (e) {
+    console.error('[sync-api] Error:', e.message);
+    res.status(500).json({ error: e.message, partial: result });
+  }
+});
+
+// ===================== Semantic Search (local embeddings — สมอง B) =====================
+app.post('/api/search/semantic', requireAuth, async (req, res) => {
+  try {
+    const { query, k = 5, sheet = null } = req.body || {};
+    if (!query) return res.status(400).json({ error: 'query is required' });
+    if (!vectorsExist()) return res.status(503).json({ error: 'Vector index not built yet — run: npm run build:vectors' });
+    const viewer = resolveViewer(req);
+    const employees = getActiveEmployees();
+    const scope = buildScopeCodes(viewer, employees);
+    const allowSensitive = viewer.role === 'CEO' || viewer.role === 'HR';
+    const qv = await embedOne(query, { isQuery: true });
+    const out = await searchVectors(qv, { k: Math.min(Number(k) || 5, 20), scopeCodes: scope, allowSensitive, sheet });
+    res.json({ query, viewer: { role: viewer.role }, ...out });
+  } catch (e) {
+    console.error('[semantic] Error:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ===================== Auto-sync รายวัน (ไม่ใช้ dep เพิ่ม) =====================
+const AUTO_SYNC_INTERVAL_MS = 30 * 60 * 1000;      // เช็คทุก 30 นาที
+const AUTO_SYNC_STALE_MS = 24 * 60 * 60 * 1000;    // เกิน 24 ชม.ถือว่าข้อมูลค้าง
+function startAutoSync() {
+  if (process.env.AUTO_SYNC_DISABLED === 'true') return console.log('[autosync] disabled by env');
+  if (!odConfigured()) return console.log('[autosync] OneDrive not configured — scheduler off (local data only)');
+  setInterval(async () => {
+    try {
+      const last = readLastSync();
+      const age = last?.at ? Date.now() - new Date(last.at).getTime() : Infinity;
+      if (age < AUTO_SYNC_STALE_MS) return;
+      console.log('[autosync] data stale (>24h) — running daily sync...');
+      await syncAll(() => {});
+      buildRegistry(getCacheDirSafe());
+      const r = reloadData('autosync');
+      writeLastSync({ at: new Date().toISOString(), by: 'autosync', result: r });
+      console.log('[autosync] done:', JSON.stringify(r));
+    } catch (e) {
+      console.warn('[autosync] failed (will retry next tick):', e.message);
+    }
+  }, AUTO_SYNC_INTERVAL_MS);
+  console.log('[autosync] scheduler on (check every 30m, sync when >24h stale)');
+}
+
 const reindex = process.argv.includes('--reindex');
 if (reindex) {
   await startup();
@@ -270,4 +433,5 @@ app.listen(PORT, () => {
   console.log(`[server] BuildersEye RAG backend on http://localhost:${PORT}`);
   console.log(`[server] Health: http://localhost:${PORT}/api/health`);
   console.log(`[server] Chat: POST http://localhost:${PORT}/api/chat`);
+  startAutoSync();
 });

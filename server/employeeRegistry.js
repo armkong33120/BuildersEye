@@ -165,7 +165,9 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
     }
 
     const isNew = !existing;
+    const isRehire = existing && existing.status === 'removed';
     if (isNew) stats.added++;
+    if (isRehire) stats.reactivated = (stats.reactivated || 0) + 1;
     stats.reparsed++;
 
     employees[codeFromFile] = {

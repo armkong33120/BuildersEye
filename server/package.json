@@ -7,7 +7,11 @@
     "start": "node index.js",
     "dev": "node --watch index.js",
     "index:hr": "node index.js --reindex",
-    "test": "node test_e2e.js"
+    "test": "node test_e2e.js",
+    "sync:onedrive": "node sync-onedrive.js",
+    "connect:onedrive": "node connect-onedrive.js",
+    "build:registry": "node build-registry.js",
+    "refresh:data": "node sync-onedrive.js && node build-registry.js"
   },
   "dependencies": {
     "@azure/msal-node": "^5.5.0",

@@ -1,6 +1,6 @@
 import 'dotenv/config';
 // --- Application Insights: ต้องเป็น import แรกสุด (patch http ก่อน express โหลด ไม่งั้นเก็บข้อมูลไม่ได้) ---
-import './appInsightsSetup.js';
+import { trackAudit, flushAudit } from './appInsightsSetup.js';
 import express from 'express';
 import cors from 'cors';
 import { ingestAll } from './ingestExcel.js';
@@ -159,52 +159,34 @@ const allowedOrigins = (process.env.CORS_ORIGINS || 'http://localhost:5174,http:
 app.use(cors({ origin: allowedOrigins }));
 app.use(express.json({ limit: '1mb' }));
 
-// --- Authentication (M1: JWT primary, legacy APP_API_KEY fallback for transition) ---
-const EXPECTED_API_KEY = process.env.APP_API_KEY || '';
+// --- Authentication (JWT only — legacy APP_API_KEY removed after transition) ---
+const VALID_ROLES = ['CEO', 'HR', 'Manager', 'Employee'];
 
 function requireAuth(req, res, next) {
   const authz = req.headers.authorization || '';
-  const provided =
-    (req.headers['x-api-key']) ||
-    (authz.startsWith('Bearer ') ? authz.slice(7) : '');
+  const provided = authz.startsWith('Bearer ') ? authz.slice(7) : '';
 
   if (!provided) {
     return res.status(401).json({ error: 'Unauthorized: missing credentials' });
   }
 
-  // 1) Try JWT access token (per-user role)
+  // JWT access token only (per-user role/employeeId are signed — never trust client body).
   const user = verifyAccessToken(provided);
-  if (user) {
-    req.authUser = user;
-    req.viewer = { role: user.role, employeeId: user.employeeId };
-    return next();
+  if (!user) {
+    return res.status(401).json({ error: 'Unauthorized: invalid credentials' });
   }
-
-  // 2) Legacy static API key (transition). Role falls back to server env / request body.
-  if (EXPECTED_API_KEY && provided === EXPECTED_API_KEY) {
-    req.authUser = null; // legacy shared key — no per-user identity
-    return next();
-  }
-
-  return res.status(401).json({ error: 'Unauthorized: invalid credentials' });
+  req.authUser = user;
+  req.viewer = { role: user.role, employeeId: user.employeeId };
+  return next();
 }
 
-// Server-defined viewer role (legacy fallback only). With JWT, role comes from the token.
-const VALID_ROLES = ['CEO', 'HR', 'Manager', 'Employee'];
-const DEFAULT_ROLE = VALID_ROLES.includes(process.env.APP_VIEWER_ROLE)
-  ? process.env.APP_VIEWER_ROLE
-  : 'CEO';
-
+// Viewer role comes solely from the signed JWT. Fallback below is server-side only
+// (safe for internal calls); it never reads req.body.
 function resolveViewer(req) {
-  // JWT-authenticated: role/employeeId are signed in the token — never trust client body.
   if (req.viewer && VALID_ROLES.includes(req.viewer.role)) {
     return { role: req.viewer.role, employeeId: req.viewer.employeeId };
   }
-  // Legacy API-key path: accept requested role or fall back to server default.
-  const requestedRole = req.body?.viewer?.role;
-  const role = VALID_ROLES.includes(requestedRole) ? requestedRole : DEFAULT_ROLE;
-  const empId = Number(req.body?.viewer?.employeeId);
-  return { role, employeeId: Number.isFinite(empId) && empId > 0 ? empId : 1 };
+  return { role: 'Employee', employeeId: 0 };
 }
 
 app.get('/api/health', (req, res) => {
@@ -243,10 +225,10 @@ app.post('/api/auth/login', requireReady, (req, res) => {
   try {
     if (!username || !password) return res.status(400).json({ error: 'username and password are required' });
     const result = authLogin(username, password, req.ip);
-    console.log(`[auth] login OK user=${username} ip=${req.ip} ${Date.now() - t0}ms`); // → App Insights traces
+    trackAudit('login_ok', { user: username, ip: req.ip, durationMs: Date.now() - t0, role: result.user?.role });
     res.json(result);
   } catch (e) {
-    console.warn(`[auth] login FAIL user=${username} ip=${req.ip} status=${e.status || 500} reason=${e.message} ${Date.now() - t0}ms`);
+    trackAudit('login_fail', { user: username, ip: req.ip, status: e.status || 500, reason: e.message });
     res.status(e.status || 500).json({ error: e.message || 'Login failed' });
   }
 });
@@ -533,6 +515,14 @@ app.listen(PORT, () => {
   console.log(`[server] Health: http://localhost:${PORT}/api/health`);
   console.log(`[server] Chat: POST http://localhost:${PORT}/api/chat`);
   startAutoSync();
+});
+
+// flush telemetry บน shutdown (กัน App Insights ตัด data กลางคัน)
+['SIGTERM', 'SIGINT'].forEach(sig => {
+  process.on(sig, () => {
+    try { flushAudit(); } catch (e) { /* noop */ }
+    process.exit(0);
+  });
 });
 
 // warm-up ใน background — routes ที่ต้องใช้ข้อมูลจะถูก guard ด้วย indexReady (ตอบ 503 warming ให้ client retry)

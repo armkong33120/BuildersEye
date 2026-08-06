@@ -27,10 +27,6 @@ services:
         value: http://localhost:5174,http://localhost:5173,https://builders-eye.vercel.app
       - key: VECTOR_INDEX_DISABLED
         value: "true"   # Render free tier = 512MB RAM; disable memory-heavy vector index
-      - key: APP_API_KEY
-        sync: false     # Legacy shared key (transition). Set manually — never commit.
-      - key: APP_VIEWER_ROLE
-        value: "Employee"  # Legacy fallback role when using APP_API_KEY (JWT path ignores this)
       - key: JWT_SECRET
         sync: false     # REQUIRED for JWT auth (M1). Set manually in Render dashboard — never commit.
       - key: ACCESS_TOKEN_TTL

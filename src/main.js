@@ -385,8 +385,8 @@ async function handleChatSubmit(event) {
   appendChatMessage('assistant', 'RAG',
     '⚠️ ไม่สามารถเชื่อมต่อกับระบบ RAG ได้ในขณะนี้\n\n' +
     'สาเหตุที่เป็นไปได้:\n' +
-    '• Backend (Render) อาจกำลัง restart หรือ spin down (free tier)\n' +
-    '• ยังไม่ได้ตั้งค่า VITE_APP_API_KEY บน Vercel\n' +
+    '• Backend (Azure Container Apps) อาจกำลัง cold start ตัวแรก\n' +
+    '• ยังไม่ได้ตั้งค่า RAG_BACKEND ให้ถูกต้อง\n' +
     '• Network connectivity issue\n\n' +
     'ลองถามใหม่อีกครั้งใน 30 วินาทีครับ',
     [], {});
@@ -727,8 +727,6 @@ async function refreshSession() {
 
 function authHeaders() {
   var token = getAccessToken();
-  if (!token && typeof import.meta !== 'undefined') token = import.meta.env?.VITE_APP_API_KEY;
-  if (!token) token = window.localStorage?.getItem('builderseye_app_key') || '';
   return token ? { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
 }
 

@@ -13,6 +13,7 @@ import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './emp
 import { registryToFlatIndex, buildScopeCodes } from './registryIngest.js';
 import { getCacheDirSafe } from './runRegistry.js';
 import { isConfigured as odConfigured, listAccounts, syncAll } from './onedriveSync.js';
+import { handleWebhook, seedTokensFromNeon, pushTokensToNeon, ensureSubscriptions, WEBHOOK_PATH } from './onedriveWebhook.js';
 import { searchVectors, vectorsExist, getVectorMeta } from './vectorStore.js';
 import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
@@ -90,6 +91,22 @@ async function startup() {
     }
   } catch (e) {
     console.warn('[neon] pull skipped:', e.message);
+  }
+  // cloud boot: seed OneDrive token จาก Neon (เพื่อ webhook ได้ sync เอง) + สมัคร webhook subscription
+  try {
+    if (process.env.DATABASE_URL) {
+      await seedTokensFromNeon();
+      const { isConfigured } = await import('./onedriveSync.js');
+      if (isConfigured() && process.env.PUBLIC_BACKEND_URL) {
+        await ensureSubscriptions();
+        // ต่ออายุ subscription ทุก 12 ชม. (OneDrive หมดอายุ ~3 วัน)
+        setInterval(async () => {
+          try { await ensureSubscriptions(() => {}); } catch (e) { console.warn('[webhook] renew failed:', e.message); }
+        }, 12 * 60 * 60 * 1000);
+      }
+    }
+  } catch (e) {
+    console.warn('[webhook] setup skipped:', e.message);
   }
   // cloud boot: ถ้าไม่มี vectors ในเครื่อง ลองดึงจาก Azure Blob (ephemeral filesystem)
   try {
@@ -307,6 +324,20 @@ app.delete('/api/conversations/:id', requireAuth, (req, res) => {
   res.json({ success: ok });
 });
 
+// ===================== OneDrive Realtime Webhook (Microsoft Graph Change Notification) =====================
+// POST {backend}/api/webhook/onedrive — Graph ตอกมาเมื่อไฟล์เปลี่ยน → sink delta ทันที
+app.post(WEBHOOK_PATH, (req, res) => {
+  handleWebhook(req, res, {
+    onNotify: async () => {
+      const syncRes = await syncAll(() => {});
+      const registry = buildRegistry(getCacheDirSafe());
+      const reload = reloadData('webhook');
+      await pushTokensToNeon();
+      return { synced: syncRes.downloaded ?? syncRes.syncedAt, registryActive: registry.activeEmployees, reload: reload.source };
+    },
+  });
+});
+
 // ===================== Employee Registry API (OneDrive-driven) =====================
 const LAST_SYNC_FILE = path.join(__dirname, '.data', 'onedrive', 'last-sync.json');
 function readLastSync() {
@@ -399,6 +430,7 @@ app.post('/api/sync/onedrive', requireAuth, async (req, res) => {
     }
     result.registry = buildRegistry(getCacheDirSafe());
     result.reload = reloadData('sync-api');
+    await pushTokensToNeon();
     writeLastSync({ at: new Date().toISOString(), by: req.authUser?.username || 'api', result: { active: result.registry.activeEmployees } });
     res.json(result);
   } catch (e) {

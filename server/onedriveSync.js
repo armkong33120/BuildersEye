@@ -80,7 +80,8 @@ export async function connectAccount(label, folders, onMessage) {
   return { username: result.account.username, folders };
 }
 
-async function getAccessToken(homeAccountId) {
+// ดึง access token แบบ silent จาก cache (re-export ให้ webhook/สมัคร subscription ใช้)
+export async function getAccessToken(homeAccountId) {
   const pca = createPCA();
   const accounts = await pca.getTokenCache().getAllAccounts();
   const account = accounts.find(a => a.homeAccountId === homeAccountId);

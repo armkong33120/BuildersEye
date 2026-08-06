@@ -24,3 +24,4 @@ out/
 .env.test.local
 .env.production.local
 server/.data/
+server/server/

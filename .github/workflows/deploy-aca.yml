@@ -38,7 +38,9 @@ jobs:
           context: .
           file: server/Dockerfile
           push: true
-          tags: ${{ env.IMAGE }}
+          tags: |
+            ${{ env.IMAGE }}
+            ghcr.io/armkong33120/builderseye-backend:sha-${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -52,4 +54,4 @@ jobs:
           az containerapp update \
             --name ${{ env.ACA_NAME }} \
             --resource-group ${{ env.ACA_RG }} \
-            --image ${{ env.IMAGE }}
+            --image ghcr.io/armkong33120/builderseye-backend:sha-${{ github.sha }}

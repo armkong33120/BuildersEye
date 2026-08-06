@@ -16,6 +16,8 @@ server/data/
 server/.cache/
 .agents/
 out/
+__pycache__/
+*.pyc
 *.csv
 *.jsonl
 .DS_Store

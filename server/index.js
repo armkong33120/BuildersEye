@@ -96,6 +96,13 @@ function reloadData(reason = 'manual') {
 async function startup() {
   console.log('[ingest] Starting data load (registry-first)...');
   const start = Date.now();
+  // cloud boot: ถ้าไม่มี vectors ในเครื่อง ลองดึงจาก Azure Blob (ephemeral filesystem)
+  try {
+    const { ensureVectorsFromBlob } = await import('./blobSync.js');
+    await ensureVectorsFromBlob();
+  } catch (e) {
+    console.warn('[blob] ensureVectors skipped:', e.message);
+  }
   const loaded = loadDataRegistryFirst() || loadDataFromFiles();
   flatIndex = loaded.flatIndex;
   searchIndex = loaded.searchIndex;
@@ -393,19 +400,54 @@ app.post('/api/sync/onedrive', requireAuth, async (req, res) => {
   }
 });
 
-// ===================== Semantic Search (local embeddings — สมอง B) =====================
+// ===================== Semantic + Hybrid Search (local embeddings — สมอง B) =====================
 app.post('/api/search/semantic', requireAuth, async (req, res) => {
   try {
-    const { query, k = 5, sheet = null } = req.body || {};
+    const { query, k = 5, sheet = null, mode = 'vector', hyde = false, rerank = false } = req.body || {};
     if (!query) return res.status(400).json({ error: 'query is required' });
-    if (!vectorsExist()) return res.status(503).json({ error: 'Vector index not built yet — run: npm run build:vectors' });
     const viewer = resolveViewer(req);
     const employees = getActiveEmployees();
     const scope = buildScopeCodes(viewer, employees);
     const allowSensitive = viewer.role === 'CEO' || viewer.role === 'HR';
-    const qv = await embedOne(query, { isQuery: true });
-    const out = await searchVectors(qv, { k: Math.min(Number(k) || 5, 20), scopeCodes: scope, allowSensitive, sheet });
-    res.json({ query, viewer: { role: viewer.role }, ...out });
+    const kk = Math.min(Number(k) || 5, 20);
+
+    // --- HyDE (optional): ขยายคำถามเป็นคำตอบจำลองก่อน embed ---
+    let embedText = query;
+    let hydeText = null;
+    if (hyde) {
+      const { hydeExpand } = await import('./llmRerank.js');
+      hydeText = await hydeExpand(query);
+      if (hydeText) embedText = `${query}\n${hydeText}`;
+    }
+
+    // --- vector results (ถ้ามี) ---
+    let vectorResults = [];
+    if (vectorsExist()) {
+      const qv = await embedOne(embedText, { isQuery: true });
+      const out = await searchVectors(qv, { k: mode === 'hybrid' ? 25 : kk, scopeCodes: scope, allowSensitive, sheet });
+      vectorResults = out.results || [];
+    } else if (mode === 'vector') {
+      return res.status(503).json({ error: 'Vector index not built yet — run: npm run build:vectors' });
+    }
+
+    // --- fuse หรือใช้ vector ล้วน ---
+    let payload;
+    if (mode === 'hybrid') {
+      const { hybridFuse } = await import('./hybridSearch.js');
+      payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk });
+    } else {
+      payload = { mode: hydeText ? 'vector+hyde' : 'vector', results: vectorResults };
+    }
+
+    // --- LLM rerank (optional) ---
+    if (rerank && payload.results.length) {
+      const { llmRerank } = await import('./llmRerank.js');
+      const rr = await llmRerank(query, payload.results, { topN: 10 });
+      payload.results = rr.results;
+      payload.reranked = rr.reranked;
+    }
+
+    res.json({ query, hyde: hydeText, viewer: { role: viewer.role }, ...payload });
   } catch (e) {
     console.error('[semantic] Error:', e.message);
     res.status(500).json({ error: e.message });

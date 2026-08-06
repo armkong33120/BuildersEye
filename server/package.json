@@ -13,10 +13,12 @@
     "build:registry": "node build-registry.js",
     "refresh:data": "node sync-onedrive.js && node build-registry.js",
     "build:vectors": "node build-vectors.js",
-    "refresh:all": "node sync-onedrive.js && node build-registry.js && node build-vectors.js"
+    "refresh:all": "node sync-onedrive.js && node build-registry.js && node build-vectors.js",
+    "build:graph": "node build-graph.js"
   },
   "dependencies": {
     "@azure/msal-node": "^5.5.0",
+    "@azure/storage-blob": "^12.33.0",
     "@google/generative-ai": "^0.24.1",
     "@microsoft/microsoft-graph-client": "^3.0.7",
     "alasql": "^4.17.3",

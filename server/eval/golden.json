@@ -1,0 +1,12 @@
+[
+  { "q": "CEO ของบริษัทคือใคร", "expectCodes": ["EMP001"], "note": "identity exact" },
+  { "q": "ใครเป็น IT Manager", "expectCodes": ["EMP143"] },
+  { "q": "ใครเคยทำโปรเจกต์แล้วเกิดข้อผิดพลาด ต้องแก้ไข", "expectSheets": ["Project_History"] },
+  { "q": "พนักงานคนไหนเคยถูกตักเตือนทางวินัย", "expectSheets": ["Warning_Disciplinary_History"] },
+  { "q": "ใครได้รับการฝึกอบรมด้าน leadership มาบ้าง", "expectSheets": ["Learning_Development", "Skill_Matrix", "360_Feedback"] },
+  { "q": "ประวัติเงินเดือนของ CEO", "expectCodes": ["EMP001"], "expectSheets": ["Salary_History"], "privileged": true },
+  { "q": "โปรเจกต์ทั้งหมดที่บริษัทกำลังทำอยู่ตอนนี้", "expectKind": "orgdoc" },
+  { "q": "ใครทำงานสายกฎหมาย", "expectSheets": ["Employee_Profile"] },
+  { "q": "ผลการประเมิน KPI ของพนักงาน", "expectSheets": ["KPI_OKR_History"] },
+  { "q": "ใครเคยทำงานร่วมกับฝ่ายก่อสร้าง", "expectSheets": ["Collaboration_Network"] }
+]

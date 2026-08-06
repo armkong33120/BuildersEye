@@ -70,7 +70,8 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
   for (const item of idx) {
     const m = item.meta || {};
     if (!allowSensitive && m.sensitivity === 'sensitive') continue;
-    if (scopeCodes && !scopeCodes.has(m.code)) continue;
+    // orgdoc (ข้อมูลระดับบริษัท ไม่ผูกกับบุคคล) → ทุก role เห็นได้ (ยกเว้น sensitive ที่กรองไปแล้ว)
+    if (m.kind !== 'orgdoc' && scopeCodes && !scopeCodes.has(m.code)) continue;
     if (sheet && m.sheet !== sheet) continue;
     scored.push({ item, score: cosine(queryVector, item.vector) });
   }

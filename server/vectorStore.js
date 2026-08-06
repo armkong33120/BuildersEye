@@ -24,7 +24,11 @@ export function cosine(a, b) {
   return dot / ((Math.sqrt(na) * Math.sqrt(nb)) || 1);
 }
 
-export function vectorsExist() { return fs.existsSync(CHUNKS_FILE); }
+export function vectorsExist() {
+  // Neon path: vectors อยู่ใน Postgres ไม่ต้องมีไฟล์ local
+  if (process.env.DATABASE_URL) return true;
+  return fs.existsSync(CHUNKS_FILE);
+}
 
 export function getVectorMeta() {
   try { return JSON.parse(fs.readFileSync(META_FILE, 'utf-8')); } catch { return null; }
@@ -64,6 +68,14 @@ async function loadIndex() {
 
 // scopeCodes: null = ทั้งหมด, Set = จำกัดรายคน; allowSensitive=false → ตัด chunk ลับทิ้ง
 export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null } = {}) {
+  // เส้นทาง Neon pgvector (ถ้ามี DATABASE_URL) — ไม่ต้องโหลด 129MB เข้า RAM
+  if (process.env.DATABASE_URL) {
+    try {
+      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet });
+    } catch (e) {
+      console.warn('[vector] neon search failed, fallback ไฟล์:', e.message);
+    }
+  }
   const idx = await loadIndex();
   if (!idx) return { available: false, results: [] };
   const scored = [];
@@ -84,6 +96,28 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
       text: item.text,
       meta: item.meta,
     })),
+  };
+}
+
+// pgvector: cosine distance query ใน Postgres โดยตรง (HNSW index)
+async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet }) {
+  const { getPool } = await import('./neonStore.js');
+  const pool = getPool();
+  const vecLiteral = `[${queryVector.join(',')}]`;
+  const scopeArr = scopeCodes ? [...scopeCodes] : null;
+  const { rows } = await pool.query(
+    `SELECT id, text, meta, 1 - (embedding <=> $1::vector) AS score
+     FROM chunks
+     WHERE ($2::boolean OR meta->>'sensitivity' <> 'sensitive')
+       AND ($3::text[] IS NULL OR meta->>'kind' = 'orgdoc' OR meta->>'code' = ANY($3))
+       AND ($4::text IS NULL OR meta->>'sheet' = $4)
+     ORDER BY embedding <=> $1::vector
+     LIMIT $5`,
+    [vecLiteral, allowSensitive, scopeArr, sheet, k]
+  );
+  return {
+    available: true,
+    results: rows.map(r => ({ id: r.id, score: Number(Number(r.score).toFixed(4)), text: r.text, meta: r.meta })),
   };
 }
 

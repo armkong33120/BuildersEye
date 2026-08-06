@@ -222,6 +222,13 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
   fs.writeFileSync(EMPLOYEES_FILE, JSON.stringify(employees, null, 1), 'utf-8');
   fs.writeFileSync(SCHEMA_FILE, JSON.stringify(schema, null, 1), 'utf-8');
 
+  // write-through ไป Neon (ถาวร) ถ้าตั้งค่าไว้ — ไม่ block การทำงานหลัก
+  if (process.env.DATABASE_URL) {
+    import('./neonSync.js')
+      .then(m => m.pushRegistryToNeon(employees, schema, () => {}))
+      .catch(() => {});
+  }
+
   const active = Object.values(employees).filter(e => e.status === 'active');
   return {
     ...stats,

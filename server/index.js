@@ -82,6 +82,15 @@ function reloadData(reason = 'manual') {
 async function startup() {
   console.log('[ingest] Starting data load (registry-first)...');
   const start = Date.now();
+  // cloud boot: ดึง registry จาก Neon (ถาวร) ถ้ายังไม่มี local cache
+  try {
+    if (process.env.DATABASE_URL && !fs.existsSync(path.join(__dirname, '.data', 'registry', 'employees.json'))) {
+      const { pullRegistryFromNeon } = await import('./neonSync.js');
+      await pullRegistryFromNeon();
+    }
+  } catch (e) {
+    console.warn('[neon] pull skipped:', e.message);
+  }
   // cloud boot: ถ้าไม่มี vectors ในเครื่อง ลองดึงจาก Azure Blob (ephemeral filesystem)
   try {
     const { ensureVectorsFromBlob } = await import('./blobSync.js');

@@ -61,9 +61,9 @@
 ## สิ่งที่ยังเหลือ/ต่อไป (อัปเดตล่าสุด)
 1. ✅ ปุ่ม Sync + Registry status บนเว็บ — เสร็จแล้ว: topbar ปุ่ม Sync (CEO/HR) + status ⏱, side panel "Registry & Sync" (active employees, data source, last sync, vectors, accounts) + result แถบสี, e2e-sync-ui.mjs ผ่านทุกข้อ
 2. ทดสอบ realtime webhook จริง: deploy ยังติด GitHub Actions คิวแน่น (รอ deploy main HEAD: Neon+retrieval+webhook)
-3. Azure OpenAI approval (ต้อง user กด portal) — ตัดไว้
-4. Flywheel (train-pair→QLoRA→promote gate) — ตัดไว้, eval harness พร้อม
-5. Enterprise (Files.Read.All 150 บัญชีจริง, Teams bot) — ตัดไว้
+3. Flywheel (train-pair→QLoRA→promote gate) — ตัดไว้, eval harness พร้อม
+4. Enterprise (Files.Read.All 150 บัญชีจริง, Teams bot) — ตัดไว้
+5. Azure OpenAI approval (ต้อง user กด portal) — เอาไว้สุดท้ายเลยค่อยทำ (หลังข้อ 2-4)
 
 ## Gotchas สำคัญ (อ่านก่อนแก้ อย่าพลาด)
 - GitHub Actions คิวแน่นช่วงนี้ → deploy อาจถูก cancel; ใช้ gh run list / rerun ตรวจ

@@ -10,6 +10,13 @@ var PREVIEW_PARAM = (typeof window !== 'undefined') && /[?&](preview|demo)=1/.te
 var previewActive = false;
 var previewRole = 'CEO'; // ค่าเริ่มต้นให้ "เห็นทุกอย่าง"
 
+// RAG backend integration — ประกาศก่อน bootAuth() (รันที่ top-level) เพื่อเลี่ยง TDZ
+const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+// Backend URL priority: ?backend= query param > VITE_RAG_BACKEND env > localhost default
+const RAG_BACKEND = (urlParams && urlParams.get('backend'))
+  || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
+  || 'http://localhost:5199';
+
 
 const canvas = document.querySelector('#scene');
 const labelRoot = document.querySelector('#labels');
@@ -34,6 +41,12 @@ const chatInput = document.querySelector('#chatInput');
 const sendChatButton = document.querySelector('#sendChat');
 const focusCeoButton = document.querySelector('#focusCeo');
 const resetCameraButton = document.querySelector('#resetCamera');
+const registryStatusEl = document.querySelector('#registryStatus');
+const syncOnedriveBtn = document.querySelector('#syncOnedriveBtn');
+const refreshRegistryBtn = document.querySelector('#refreshRegistryBtn');
+const syncResultEl = document.querySelector('#syncResult');
+const topSyncBtn = document.querySelector('#topSyncBtn');
+const topSyncStatus = document.querySelector('#topSyncStatus');
 
 const PERSON_RADIUS = 0.18;
 const LAYER_COUNT = 4;
@@ -121,6 +134,7 @@ animate();
 function setupIcons() {
   focusCeoButton.innerHTML = '<i data-lucide="scan-face"></i>';
   resetCameraButton.innerHTML = '<i data-lucide="rotate-ccw"></i>';
+  if (topSyncBtn) topSyncBtn.innerHTML = '<i data-lucide="refresh-cw"></i>';
   toggleTopbarButton.innerHTML = '<i data-lucide="chevron-up"></i>';
   togglePanelButton.innerHTML = '<i data-lucide="panel-right-close"></i>';
   toggleChatButton.innerHTML = '<i data-lucide="minimize-2"></i>';
@@ -571,13 +585,6 @@ function resumeAutoRotate() {
   controls.autoRotate = true;
 }
 
-
-// RAG backend integration
-const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-// Backend URL priority: ?backend= query param > VITE_RAG_BACKEND env > localhost default
-const RAG_BACKEND = (urlParams && urlParams.get('backend'))
-  || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
-  || 'http://localhost:5199';
 var currentConversationId = typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'conv-' + Date.now() + '-' + Math.random().toString(36).slice(2, 9);
 
 // สร้างคำตอบจำลองจากกราฟ local (ใช้ตอน Preview Mode — ไม่ต้องพึ่ง backend/Render)
@@ -799,6 +806,7 @@ function renderUserChip() {
     });
     var ex = document.getElementById('exitPreviewBtn');
     if (ex) ex.addEventListener('click', exitPreviewMode);
+    updateRegistryRoleVisibility(null);
     return;
   }
 
@@ -810,6 +818,7 @@ function renderUserChip() {
     '<span class="user-chip-role">' + escapeHtml(u.role || '') + '</span>' +
     '<button id="logoutBtn" class="user-chip-logout" title="ออกจากระบบ">ออก</button>';
   uc.classList.remove('is-hidden');
+  updateRegistryRoleVisibility(u.role);
   var lb = document.getElementById('logoutBtn');
   if (lb) lb.addEventListener('click', doLogout);
 }
@@ -824,6 +833,7 @@ async function doLogout() {
   } catch (e) { /* ignore */ }
   clearSession();
   renderUserChip();
+  renderRegistryStatus(null);
   showLoginOverlay('ออกจากระบบแล้ว');
 }
 
@@ -868,6 +878,7 @@ async function doLogin(username, password, attempt) {
     setSession(data.accessToken, data.refreshToken, data.user);
     hideLoginOverlay();
     renderUserChip();
+    loadRegistryStatus();
     startKeepAlive();
     refreshConvoList();
     maybeStartTour();
@@ -938,6 +949,192 @@ async function loadTestCreds() {
   } catch (e) { /* preview creds unavailable */ }
 }
 
+// --- Registry & Sync (OneDrive → registry → hot-reload engines) ---
+// ใช้ /api/registry/status (GET) + /api/sync/onedrive (POST, CEO/HR เท่านั้น)
+function fmtRelativeTime(iso) {
+  if (!iso) return '—';
+  var t = new Date(iso).getTime();
+  if (isNaN(t)) return String(iso);
+  var diff = Date.now() - t;
+  if (diff < 60 * 1000) return Math.max(0, Math.floor(diff / 1000)) + ' วิที่แล้ว';
+  var min = Math.floor(diff / 60000);
+  if (min < 60) return min + ' นาทีที่แล้ว';
+  var hr = Math.floor(min / 60);
+  if (hr < 24) return hr + ' ชม.ที่แล้ว';
+  return Math.floor(hr / 24) + ' วันที่แล้ว';
+}
+
+function renderRegistryStatus(data) {
+  if (!registryStatusEl) return;
+  if (!data) {
+    registryStatusEl.innerHTML = '<div class="registry-status-empty">—</div>';
+    return;
+  }
+  if (data.preview) {
+    registryStatusEl.innerHTML = '<div class="registry-status-empty">🧪 โหมดทดลอง — เข้าสู่ระบบเพื่อดู Registry status จริง</div>';
+    return;
+  }
+  if (data.offline) {
+    registryStatusEl.innerHTML = '<div class="registry-status-empty">ติดต่อ backend ไม่ได้ (อาจ cold start) — กด Refresh ใหม่</div>';
+    return;
+  }
+  if (data.warming) {
+    registryStatusEl.innerHTML = '<div class="registry-status-empty">⏳ Backend กำลัง warming… รอสักครู่แล้ว Refresh</div>';
+    return;
+  }
+
+  var od = data.onedrive || {};
+  var ls = od.lastSync || null;
+  var stats = data.registryStats || {};
+  var rows = [];
+  function row(label, value) {
+    return '<div class="registry-status-row"><span>' + escapeHtml(label) + '</span><strong>' +
+      (value == null || value === '' ? '—' : value) + '</strong></div>';
+  }
+  rows.push(row('Active Employees', data.activeEmployees));
+  rows.push(row('Data Source', data.dataSource));
+  rows.push(row('Index Ready', data.indexReady ? '✅ ready' : '⏳ warming'));
+  rows.push(row('Schema Sheets', data.schemaSheets != null ? data.schemaSheets : (stats.sheetsKnown || 0)));
+  rows.push(row('Registry Files', (stats.filesSeen != null ? stats.filesSeen : 0) + ' seen · ' + (stats.totalTracked != null ? stats.totalTracked : 0) + ' tracked'));
+  rows.push(row('OneDrive Accounts', od.configured ? ((od.accounts || []).map(function(a) { return a.label || a.username; }).join(', ') || 'none') : 'ไม่ตั้งค่า'));
+  rows.push(row('Vectors', data.vectors && data.vectors.built ? '✅ built' : '⏳ ยังไม่ build'));
+  if (ls) {
+    rows.push(row('Last Sync', fmtRelativeTime(ls.at) + (ls.by ? ' · ' + ls.by : '')));
+  }
+  if ((stats.added || 0) > 0 || (stats.removed || 0) > 0) {
+    rows.push(row('Last Build Δ', '+' + (stats.added || 0) + ' added / -' + (stats.removed || 0) + ' removed'));
+  }
+  registryStatusEl.innerHTML = rows.join('');
+
+  // Topbar compact status (ไม่ถูก chat ทับ)
+  if (topSyncStatus) {
+    if (ls) topSyncStatus.textContent = '⏱ ' + fmtRelativeTime(ls.at);
+    else topSyncStatus.textContent = '—';
+  }
+}
+
+function showSyncResult(msg, kind) {
+  if (!syncResultEl) return;
+  syncResultEl.className = 'sync-result' + (kind ? ' ' + kind : '');
+  syncResultEl.textContent = msg;
+}
+
+function syncSummary(data) {
+  var parts = [];
+  var synced = data.synced || {};
+  var syncedResults = Array.isArray(synced.results) ? synced.results : [];
+  if (synced.skipped) parts.push(String(synced.skipped));
+  if (syncedResults.length) {
+    var dl = 0, del = 0, failed = 0;
+    syncedResults.forEach(function(r) {
+      if (!r.ok) { failed++; return; }
+      dl += r.downloaded || 0;
+      del += r.deleted || 0;
+    });
+    parts.push('sync ' + (syncedResults.length - failed) + '/' + syncedResults.length + ' สำเร็จ');
+    if (dl || del) parts.push('+ดาวน์โหลด ' + dl + ' · ลบ ' + del);
+    if (failed) parts.push('ล้มเหลว ' + failed);
+  }
+  if (synced.cacheFileCount != null) parts.push('cache ' + synced.cacheFileCount + ' ไฟล์');
+  var reg = data.registry || {};
+  if (reg.activeEmployees != null) parts.push('registry ' + reg.activeEmployees + ' คน');
+  if ((reg.added || 0) > 0 || (reg.removed || 0) > 0) parts.push('Δ +' + (reg.added || 0) + ' / -' + (reg.removed || 0));
+  var rl = data.reload || {};
+  if (rl.source) parts.push('reload ' + rl.source + ' (' + (rl.records != null ? rl.records : (rl.count || 0)) + ' records)');
+  return parts.join(' · ') || 'Sync สำเร็จ';
+}
+
+async function loadRegistryStatus() {
+  if (previewActive) { renderRegistryStatus({ preview: true }); return; }
+  var u = getSessionUser();
+  if (!u || !getAccessToken()) { renderRegistryStatus(null); return; }
+  try {
+    var res = await apiFetch(RAG_BACKEND + '/api/registry/status', { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) {
+      if (res.status === 503) renderRegistryStatus({ warming: true });
+      return;
+    }
+    renderRegistryStatus(await res.json());
+  } catch (e) {
+    renderRegistryStatus({ offline: true });
+  }
+}
+
+function setSyncBusy(busy) {
+  [syncOnedriveBtn, topSyncBtn].forEach(function(b) {
+    if (!b) return;
+    b.disabled = busy;
+    b.classList.toggle('is-busy', busy);
+  });
+  if (syncOnedriveBtn) syncOnedriveBtn.textContent = busy ? '⟳ Syncing…' : '⟳ Sync OneDrive';
+  if (topSyncStatus) topSyncStatus.textContent = busy ? '⟳ Syncing…' : '⟳ Sync OneDrive';
+}
+
+async function triggerOnedriveSync() {
+  if (previewActive) {
+    showSyncResult('🧪 โหมดทดลอง — เข้าสู่ระบบด้วยบัญชี CEO/HR เพื่อ sync จริง', 'info');
+    return;
+  }
+  var u = getSessionUser();
+  if (!u) { showLoginOverlay('กรุณาเข้าสู่ระบบก่อน sync'); return; }
+  if (u.role !== 'CEO' && u.role !== 'HR') {
+    showSyncResult('สิทธิ์ไม่พอ — เฉพาะ CEO/HR เท่านั้นที่ sync ได้', 'error');
+    return;
+  }
+  setSyncBusy(true);
+  showSyncResult('กำลัง sync OneDrive → rebuild registry → reload engines…', 'info');
+  try {
+    var res = await apiFetch(RAG_BACKEND + '/api/sync/onedrive', {
+      method: 'POST',
+      body: '{}',
+      signal: AbortSignal.timeout(120000),
+    });
+    if (!res.ok) {
+      var data = await res.json().catch(function() { return {}; });
+      if (res.status === 403) showSyncResult('สิทธิ์ไม่พอ — เฉพาะ CEO/HR เท่านั้น', 'error');
+      else if (res.status === 503) showSyncResult('Backend กำลัง warming — ลองอีกครั้งใน ~30 วิ', 'error');
+      else showSyncResult(data.error || ('Sync ล้มเหลว (HTTP ' + res.status + ')'), 'error');
+      if (topSyncStatus) topSyncStatus.textContent = '⚠ Sync ล้มเหลว';
+      return;
+    }
+    var data = await res.json();
+    var msg = syncSummary(data);
+    showSyncResult(msg, 'ok');
+    if (topSyncStatus) topSyncStatus.textContent = '✅ ' + msg.split(' · ').slice(0, 2).join(' · ');
+    loadRegistryStatus();
+  } catch (e) {
+    showSyncResult('Sync ล้มเหลว — backend ไม่ตอบสนอง (อาจ cold start) ลองใหม่อีกครั้ง', 'error');
+    if (topSyncStatus) topSyncStatus.textContent = '⚠ Sync ล้มเหลว';
+  } finally {
+    setSyncBusy(false);
+    updateRegistryRoleVisibility(getSessionUser()?.role);
+  }
+}
+
+function updateRegistryRoleVisibility(role) {
+  var privileged = role === 'CEO' || role === 'HR';
+  if (syncOnedriveBtn) {
+    syncOnedriveBtn.classList.toggle('is-hidden', !privileged);
+    if (!privileged) syncOnedriveBtn.disabled = true;
+  }
+  if (topSyncBtn) {
+    topSyncBtn.classList.toggle('is-hidden', !privileged);
+    if (!privileged) topSyncBtn.disabled = true;
+  }
+  if (topSyncStatus) topSyncStatus.classList.toggle('is-hidden', !privileged);
+}
+
+function wireRegistryControls() {
+  if (syncOnedriveBtn) syncOnedriveBtn.addEventListener('click', triggerOnedriveSync);
+  if (topSyncBtn) topSyncBtn.addEventListener('click', triggerOnedriveSync);
+  if (refreshRegistryBtn) refreshRegistryBtn.addEventListener('click', loadRegistryStatus);
+  // Auto-refresh status (ทุก 60 วิ) เฉพาะตอน logged-in
+  setInterval(function() {
+    var u = getSessionUser();
+    if (u && getAccessToken() && !previewActive) loadRegistryStatus();
+  }, 60000);
+}
+
 // --- Tour guide (M5) ---
 var TOUR_STEPS = [
   { sel: '.topbar', title: 'ยินดีต้อนรับสู่ BuildersEye', text: 'แถบด้านบนใช้เลือก Focus Person, โฟกัส CEO และรีเซ็ตกล้อง' },
@@ -995,6 +1192,7 @@ function endTour() {
 function bootAuth() {
   wireLoginForm();
   loadTestCreds();
+  wireRegistryControls();
   // Preview / Demo mode via URL param (?preview=1 or ?demo=1) — skip login entirely
   if (PREVIEW_PARAM) {
     enterPreviewMode();
@@ -1006,6 +1204,7 @@ function bootAuth() {
     renderUserChip();
     startKeepAlive();
     refreshConvoList();
+    loadRegistryStatus();
     maybeStartTour();
   } else {
     showLoginOverlay('');
@@ -1094,6 +1293,7 @@ function enterPreviewMode() {
   setSession('preview-token-' + Date.now(), '', { username: 'preview', name: 'ผู้เยี่ยมชม', role: previewRole, employeeId: 1, preview: true });
   hideLoginOverlay();
   renderUserChip();
+  loadRegistryStatus();
   refreshConvoList();
   appendChatMessage('assistant', 'RAG',
     '👋 ยินดีต้อนรับสู่ **โหมดทดลอง (Preview Mode)**\n\n' +

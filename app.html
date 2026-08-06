@@ -21,6 +21,14 @@
           </div>
         </div>
         <div class="top-actions">
+          <button
+            id="topSyncBtn"
+            class="icon-button sync-top-btn is-hidden"
+            type="button"
+            title="Sync OneDrive → rebuild registry → hot-reload (CEO/HR)"
+            aria-label="Sync OneDrive"
+          ></button>
+          <span id="topSyncStatus" class="sync-top-status is-hidden"></span>
           <label class="select-field">
             <span>Focus Person</span>
             <select id="personSelect"></select>
@@ -55,6 +63,30 @@
             <button class="collapse-button" type="button" data-collapse="metrics" aria-expanded="true" aria-label="Collapse overview"></button>
           </div>
           <div class="metric-strip collapsible-body" id="metricStrip"></div>
+        </section>
+
+        <section class="registry-section collapsible-panel" data-panel="registry">
+          <div class="section-title collapse-header">
+            <span>Registry &amp; Sync</span>
+            <div class="section-actions">
+              <button id="refreshRegistryBtn" class="seg-button" type="button">Refresh</button>
+              <button class="collapse-button" type="button" data-collapse="registry" aria-expanded="true" aria-label="Collapse registry"></button>
+            </div>
+          </div>
+          <div class="collapsible-body">
+            <div id="registryStatus" class="registry-status">
+              <div class="registry-status-empty">—</div>
+            </div>
+            <div class="registry-actions">
+              <button
+                id="syncOnedriveBtn"
+                class="sync-btn"
+                type="button"
+                title="OneDrive delta sync → rebuild registry → hot-reload search engines (CEO/HR)"
+              >⟳ Sync OneDrive</button>
+            </div>
+            <div id="syncResult" class="sync-result is-hidden" role="status"></div>
+          </div>
         </section>
 
         <section class="control-section collapsible-panel" data-panel="scope">

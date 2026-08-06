@@ -40,6 +40,7 @@
 - npm run build:vectors     # embed ใหม่ (15.7k chunks, ~16 นาที)
 - node build-graph.js       # regenerate identity-graph.json จาก registry
 - node test_registry_e2e.js # E2E 17 ข้อ (ต้อง server รันอยู่)
+- node e2e-sync-ui.mjs      # E2E ปุ่ม Sync + Registry status (ต้อง vite dev:5174 + backend รันอยู่; BASE env เปลี่ยน target ได้)
 - node evalRag.js           # Recall@5 (เป้า 100%)
 - node --reindex index.js   # reindex เก่า
 - node migrate-to-neon.js   # migrate JSON→Neon
@@ -58,7 +59,7 @@
 - Render service srv-d9p0e6ugekts73evnivg ถูก suspend (standby, ยังมีอยู่)
 
 ## สิ่งที่ยังเหลือ/ต่อไป (อัปเดตล่าสุด)
-1. ปุ่ม Sync + Registry status บนหน้าเว็บ (API พร้อม: /api/registry/status, POST /api/sync/onedrive, ยังไม่มี UI)
+1. ✅ ปุ่ม Sync + Registry status บนเว็บ — เสร็จแล้ว: topbar ปุ่ม Sync (CEO/HR) + status ⏱, side panel "Registry & Sync" (active employees, data source, last sync, vectors, accounts) + result แถบสี, e2e-sync-ui.mjs ผ่านทุกข้อ
 2. ทดสอบ realtime webhook จริง: deploy ยังติด GitHub Actions คิวแน่น (รอ deploy main HEAD: Neon+retrieval+webhook)
 3. Azure OpenAI approval (ต้อง user กด portal) — ตัดไว้
 4. Flywheel (train-pair→QLoRA→promote gate) — ตัดไว้, eval harness พร้อม

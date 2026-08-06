@@ -36,8 +36,8 @@
             <span class="gradient-text">Org-Graph Intelligence</span>
           </h1>
           <p class="hero-subtitle">
-            วิเคราะห์ข้อมูลพนักงาน 150 คน จาก 160 ไฟล์ Excel ด้วย AI Chat ภาษาไทย บน 3D Visual Tree <br />
-            ปลอดภัย 100% ด้วย Role-Based Access Control (RBAC) Governance Policy
+            วิเคราะห์ข้อมูลพนักงาน 150 คน จากไฟล์ Excel บน OneDrive (sync รายวันอัตโนมัติ) ด้วย AI Chat ภาษาไทย บน 3D Visual Tree <br />
+            ปลอดภัยด้วย Role-Based Access Control (RBAC) + JWT Auth · รันบน Microsoft Azure
           </p>
 
           <div class="hero-buttons">
@@ -51,8 +51,8 @@
               <span class="stat-label">Staff Nodes (3D Tree)</span>
             </div>
             <div class="stat-card">
-              <span class="stat-num">160</span>
-              <span class="stat-label">HR Excel Datasets</span>
+              <span class="stat-num">15.7K+</span>
+              <span class="stat-label">Vector Chunks (Thai Semantic)</span>
             </div>
             <div class="stat-card">
               <span class="stat-num">4 Roles</span>
@@ -80,7 +80,7 @@
           <div class="glass-card">
             <div class="card-icon">🧠</div>
             <h3>1. RAG เหนือ Org-Graph</h3>
-            <p>ค้นหาข้อมูลโปรไฟล์, KPI, defect, OKR จาก Excel 160 ไฟล์ ผ่านภาษาธรรมชาติ (ไทย/อังกฤษ) ตอบแม่นยำ ไร้ hallucination ด้วย AlaSQL + Hybrid Index</p>
+            <p>ค้นหาข้อมูลโปรไฟล์, KPI, defect, OKR จาก 150 ไฟล์พนักงาน + 10 เอกสารองค์กรบน OneDrive ผ่านภาษาธรรมชาติ (ไทย/อังกฤษ) ด้วย Hybrid Retrieval (Keyword + Vector RRF Fusion), LLM Rerank และ HyDE — 15,738 vector chunks จาก local embedding ภาษาไทย</p>
           </div>
           <div class="glass-card">
             <div class="card-icon">🌐</div>
@@ -248,7 +248,7 @@
             <g class="svg-node" transform="translate(430, 100)">
               <rect width="150" height="70" rx="12" fill="#161b22" stroke="#a78bfa" stroke-width="2"/>
               <text x="75" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">Backend API</text>
-              <text x="75" y="52" text-anchor="middle" fill="#8b949e" font-size="12">Render / Express</text>
+              <text x="75" y="52" text-anchor="middle" fill="#8b949e" font-size="12">Azure Container Apps / Express</text>
             </g>
 
             <!-- Connector 3->4 -->
@@ -360,21 +360,23 @@
             <div class="tech-icon">📊</div>
             <h4>Data & RAG Engine</h4>
             <ul>
-              <li>AlaSQL (In-Memory SQL)</li>
-              <li>Excel Parser (xlsx node)</li>
-              <li>Vector Embedding Index</li>
-              <li>160 HR OneDrive Datasets</li>
+              <li>Employee Registry (Dynamic Schema — ไม่ hardcode คอลัมน์)</li>
+              <li>AlaSQL (In-Memory SQL) + Inverted Index</li>
+              <li>Vector Store: multilingual-e5-small (Local, ฟรี)</li>
+              <li>Hybrid Search (RRF) + LLM Rerank + HyDE</li>
+              <li>OneDrive Sync: Microsoft Graph Delta Query</li>
             </ul>
           </div>
 
           <div class="glass-card tech-card">
             <div class="tech-icon">🤖</div>
-            <h4>AI & Infrastructure</h4>
+            <h4>AI & Infrastructure (Azure)</h4>
             <ul>
-              <li>OpenAI-compatible client</li>
-              <li>DeepSeek V3 / Ollama</li>
-              <li>Vercel (Frontend Hosting)</li>
-              <li>Render (Backend Hosting)</li>
+              <li>DeepSeek V3 (OpenAI-compatible) / Ollama</li>
+              <li>Azure Container Apps (scale-to-zero) + Jobs</li>
+              <li>Azure Blob Storage (Vector/Model Store)</li>
+              <li>Application Insights (Observability)</li>
+              <li>GitHub Actions CI/CD → GHCR · Vercel (Frontend)</li>
             </ul>
           </div>
         </div>
@@ -404,24 +406,29 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>ปัจจุบัน (M1-M2)</strong></td>
-                  <td>RAG + 3D Org Graph + Governance RBAC</td>
+                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
+                  <td>RAG + 3D Org Graph + Governance RBAC + <strong>Login จริง 150 บัญชี (JWT)</strong></td>
                   <td><span class="highlight-badge">ค้นหาข้อมูลรวดเร็วขึ้น 10x</span></td>
                 </tr>
                 <tr>
-                  <td><strong>ระยะถัดไป (+ Auth)</strong></td>
-                  <td>ระบบ Login จริง 150 บัญชี + RBAC Strict</td>
-                  <td>ป้องกันข้อมูลรั่วไหล 100%</td>
+                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
+                  <td>OneDrive Daily Sync (Graph Delta Query) + Dynamic Employee Registry — คนเข้า/ออกอัปเดตอัตโนมัติ</td>
+                  <td>ข้อมูลอัปเดตเป็นปัจจุบันเสมอ ไม่ต้องแก้โค้ด</td>
+                </tr>
+                <tr>
+                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
+                  <td>Hybrid Search + Rerank + HyDE · Azure Container Apps + CI/CD + App Insights</td>
+                  <td>ค้นแม่นขึ้น (Recall@5 = 90%) · deploy อัตโนมัติ · observability ครบ</td>
+                </tr>
+                <tr>
+                  <td><strong>ระยะถัดไป</strong></td>
+                  <td>Realtime Webhook Sync (Graph Change Notification) + Neon Postgres (ถาวร)</td>
+                  <td>ไฟล์เปลี่ยนปุ๊บ ข้อมูลอัปเดตปั๊บ ไม่ต้องรอรอบ sync</td>
                 </tr>
                 <tr>
                   <td><strong>+ Fine-tune (QLoRA)</strong></td>
-                  <td>เทรน Model เฉพาะบริบท HR ภาษาไทย</td>
-                  <td>ลดค่าใช้จ่าย API สถิติติดต่อกัน</td>
-                </tr>
-                <tr>
-                  <td><strong>+ Realtime Sync</strong></td>
-                  <td>ซิงค์ไฟล์ OneDrive/Excel รายวันอัตโนมัติ</td>
-                  <td>ข้อมูลอัปเดตเป็นปัจจุบันเสมอ</td>
+                  <td>เทรน Model เฉพาะบริบท HR ภาษาไทย (Self-Improvement Flywheel)</td>
+                  <td>ลดค่าใช้จ่าย API อย่างต่อเนื่อง — มี Eval Gate (Recall@k) คุมคุณภาพแล้ว</td>
                 </tr>
                 <tr>
                   <td><strong>+ Analytics Dashboard</strong></td>
@@ -562,7 +569,7 @@
             </a>
           </div>
           <p class="cold-start-note">
-            ℹ️ หมายเหตุ: Backend อยู่บน Render Free Tier หากเป็นการเข้าใช้ครั้งแรกอาจใช้เวลา 30-60 วินาทีในการเริ่มทำงาน
+            ☁️ Backend รันบน <strong>Azure Container Apps</strong> — ช่วง 08:00–21:00 น. มี Keep-Warm Job ปลุกไว้อัตโนมัติ (ตอบทันที) · นอกเวลานั้นครั้งแรกอาจรอ 10-30 วิ ระบบจะปลุกและลองใหม่อัตโนมัติให้ ไม่ต้องกดซ้ำ
           </p>
         </div>
       </div>
@@ -586,7 +593,7 @@
         </div>
       </div>
       <div class="footer-bottom text-center">
-        <p>© 2026 BuildersEye. Built with Vite, Three.js, Node.js & DeepSeek API.</p>
+        <p>© 2026 BuildersEye. Built with Vite, Three.js, Node.js, DeepSeek API &amp; Microsoft Azure (Container Apps · Blob Storage · App Insights · Entra ID · Graph API)</p>
       </div>
     </footer>
 

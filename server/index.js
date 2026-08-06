@@ -436,7 +436,7 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
       const { hybridFuse } = await import('./hybridSearch.js');
       payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk });
     } else {
-      payload = { mode: hydeText ? 'vector+hyde' : 'vector', results: vectorResults };
+      payload = { mode: hydeText ? 'vector+hyde' : 'vector', available: true, results: vectorResults };
     }
 
     // --- LLM rerank (optional) ---

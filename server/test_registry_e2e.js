@@ -72,8 +72,27 @@ if (vec.status === 503) {
     body: JSON.stringify({ query: 'salary bonus compensation', k: 5 }),
   });
   const evd = await empVec.json();
-  const leaked = (evd.results || []).some(r => r.meta?.sensitivity === 'sensitive' || r.meta?.code !== 'EMP144');
+  // leak = chunk ของ "คนอื่น" (orgdoc เป็นองค์กร เปิดให้ทุก role ตามดีไซน์)
+  const leaked = (evd.results || []).some(r => r.meta?.sensitivity === 'sensitive' || (r.meta?.kind !== 'orgdoc' && r.meta?.code !== 'EMP144'));
   ok('Employee semantic: ไม่รั่วข้อมูลลับ/คนอื่น', !leaked);
+
+  // hybrid mode: exact code ต้องเจอผ่าน keyword leg
+  const hyb = await fetch(`${BASE}/api/search/semantic`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${ceo}` },
+    body: JSON.stringify({ query: 'EMP143', k: 3, mode: 'hybrid' }),
+  });
+  const hd = await hyb.json();
+  const hit143 = (hd.results || []).some(r => r.meta?.code === 'EMP143');
+  ok('hybrid mode: exact code EMP143 เจอ', hd.mode === 'hybrid' && hit143);
+
+  // orgdoc: ถามเรื่องระดับบริษัท ต้องเจอ org doc
+  const org = await fetch(`${BASE}/api/search/semantic`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${ceo}` },
+    body: JSON.stringify({ query: 'โปรเจกต์ทั้งหมดที่กำลังดำเนินการ', k: 5 }),
+  });
+  const od = await org.json();
+  const hitOrg = (od.results || []).some(r => r.meta?.kind === 'orgdoc');
+  ok('org-doc เข้าถึงได้ (project pipeline)', hitOrg);
 }
 
 // 6) chat ยังทำงานกับข้อมูล registry

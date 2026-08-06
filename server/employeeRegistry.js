@@ -29,6 +29,10 @@ const IDENTITY_CANDIDATES = {
   status: ['status', 'employmentStatus', 'employment_status', 'employeeStatus', 'active'],
 };
 
+// ไฟล์ที่จะถือเป็น "พนักงาน" — data contract ประกาศไว้จุดเดียว ปรับได้ผ่าน env
+// (ไฟล์ org-level เช่น master index / dashboard จะถูกข้ามและบันทึกไว้ใน stats.skippedFiles)
+const EMPLOYEE_FILE_PATTERN = process.env.REGISTRY_FILE_PATTERN || '^EMP\\d+';
+
 // field names ที่บ่งบอกความลับ (heuristic — เพิ่มคำได้โดยไม่แก้ logic)
 const SENSITIVE_HINTS = ['salary', 'wage', 'bonus', 'compensation', 'เงินเดือน', 'warning', 'disciplinary', 'grievance', 'case', 'confidential'];
 
@@ -111,9 +115,10 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
 
   const now = new Date().toISOString();
   const seenCodes = new Set();
-  const stats = { filesSeen: files.length, reparsed: 0, skippedUnchanged: 0, added: 0, removed: 0, newColumns: [], newSheets: [] };
+  const stats = { filesSeen: files.length, reparsed: 0, skippedUnchanged: 0, added: 0, removed: 0, newColumns: [], newSheets: [], skippedFiles: [] };
   const employees = { ...prevEmployees };
   const schema = prevSchema;
+  const filePattern = new RegExp(EMPLOYEE_FILE_PATTERN, 'i');
   // snapshot schema เดิมก่อน mutate (ไว้รายงาน column/sheet ที่ "เพิ่งโผล่มา" จริงๆ)
   const prevSheetNames = new Set(Object.keys(prevSchema.sheets || {}));
   const prevColumns = new Map(
@@ -123,8 +128,10 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
   // ---- 1) เพิ่ม/อัปเดต จากไฟล์ที่มีอยู่ ----
   for (const fileName of files) {
     const filePath = path.join(cacheDir, fileName);
+    const codeMatch = fileName.match(filePattern);
+    if (!codeMatch) { stats.skippedFiles.push(fileName); continue; } // ไฟล์ org-level ไม่ใช่พนักงาน
     const hash = fileHash(filePath);
-    const codeFromFile = (fileName.match(/EMP\d+/i) || [fileName.replace(/\.xlsx$/i, '')])[0].toUpperCase();
+    const codeFromFile = codeMatch[0].toUpperCase();
     seenCodes.add(codeFromFile);
 
     const existing = employees[codeFromFile];
@@ -162,6 +169,13 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
           profileHeaders = headers;
         }
       }
+    }
+
+    // guard: ไฟล์ผ่าน pattern แต่ content ไม่มี identity เลย → ข้าม (กันไฟล์เสีย/ผิดฟอร์แมต)
+    if (!identity.name && !identity.pk && !existing) {
+      stats.skippedFiles.push(fileName + ' (no identity)');
+      seenCodes.delete(codeFromFile);
+      continue;
     }
 
     const isNew = !existing;

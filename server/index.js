@@ -198,12 +198,21 @@ function resolveViewer(req) {
 app.get('/api/health', (req, res) => {
   const uniqueFiles = new Set(flatIndex.filter(r => r.sheetName === 'Employee_Profile').map(r => r.fileName));
   res.json({
-    status: 'ok', uptime: process.uptime(),
+    status: indexReady ? 'ok' : 'warming', uptime: process.uptime(),
     indexedFiles: uniqueFiles.size, indexReady,
     memoryUsageMB: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
     startupTime,
   });
 });
+
+// ระหว่าง warm-up: บอก client ให้ retry แทนที่จะ error ประหลาดๆ
+function requireReady(req, res, next) {
+  if (!indexReady) {
+    res.set('Retry-After', '5');
+    return res.status(503).json({ error: 'warming', message: 'เซิร์ฟเวอร์กำลังตื่น — ลองอีกครั้งในไม่กี่วินาที', retryAfterSec: 5 });
+  }
+  next();
+}
 
 app.get('/api/index/status', (req, res) => {
   const uniqueFiles = new Set(flatIndex.map(r => r.fileName));
@@ -216,7 +225,7 @@ app.get('/api/index/status', (req, res) => {
 });
 
 // --- Auth routes (M1) ---
-app.post('/api/auth/login', (req, res) => {
+app.post('/api/auth/login', requireReady, (req, res) => {
   try {
     const { username, password } = req.body || {};
     if (!username || !password) return res.status(400).json({ error: 'username and password are required' });
@@ -258,7 +267,7 @@ app.get('/api/preview/credentials', (req, res) => {
   res.json(creds);
 });
 
-app.post('/api/chat', requireAuth, async (req, res) => {
+app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   try {
     const { query, conversationId } = req.body;
     if (!query) return res.status(400).json({ error: 'query is required' });
@@ -486,10 +495,14 @@ if (reindex) {
   process.exit(0);
 }
 
-await startup();
+// ฟังพอร์ตก่อนทันที (ตอบ health ได้ใน 1-3 วิ) แล้วค่อย warm ข้อมูลใน background
+// → cold start ที่ผู้ใช้รับรู้สั้นลงมาก (ingress เจอ listener ทันที ไม่ connection refused)
 app.listen(PORT, () => {
   console.log(`[server] BuildersEye RAG backend on http://localhost:${PORT}`);
   console.log(`[server] Health: http://localhost:${PORT}/api/health`);
   console.log(`[server] Chat: POST http://localhost:${PORT}/api/chat`);
   startAutoSync();
 });
+
+// warm-up ใน background — routes ที่ต้องใช้ข้อมูลจะถูก guard ด้วย indexReady (ตอบ 503 warming ให้ client retry)
+startup().catch(e => console.error('[startup] failed:', e.message));

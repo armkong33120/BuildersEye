@@ -857,6 +857,13 @@ async function doLogin(username, password, attempt) {
     });
     var data = await res.json().catch(function(){ return {}; });
     if (!res.ok) {
+      // เซิร์ฟเวอร์กำลัง warm-up (503 warming) → รอแล้วลองใหม่อัตโนมัติ ไม่ต้องกดซ้ำ
+      if (res.status === 503 && data.error === 'warming' && attempt < 4) {
+        var waitSec = data.retryAfterSec || 5;
+        if (err) { err.style.color = '#8b98a9'; err.textContent = 'เซิร์ฟเวอร์กำลังตื่น… ลองใหม่อัตโนมัติใน ' + waitSec + ' วิ (รอบ ' + attempt + '/3)'; }
+        await new Promise(function(r){ setTimeout(r, waitSec * 1000); });
+        return doLogin(username, password, attempt + 1);
+      }
       if (err) { err.style.color = ''; err.textContent = data.error || ('เข้าสู่ระบบไม่สำเร็จ (HTTP ' + res.status + ')'); }
       return false;
     }

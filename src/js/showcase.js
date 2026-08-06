@@ -128,12 +128,22 @@ async function checkBackendHealth() {
     if (res.ok) {
       const secs = ((Date.now() - startedAt) / 1000).toFixed(1);
       if (badge) badge.innerHTML = `<span class="status-dot green"></span> Backend Status: Online 🟢 (${secs}s)`;
+      startKeepWarm(endpoint); // กันหลับระหว่างที่ visitor เปิดหน้าเว็บอยู่ (ฟรี)
       return;
     }
     throw new Error('not ok');
   } catch (err) {
     if (badge) badge.innerHTML = '<span class="status-dot red"></span> Backend Status: ไม่สามารถเชื่อมต่อได้ — ลองรีเฟรช 🔴';
   }
+}
+
+// ping เบาๆ ทุก 45 วิ ขณะหน้าเว็บเปิดอยู่ → ACA ไม่ scale-to-zero กลาง session ของ visitor
+let _keepWarmTimer = null;
+function startKeepWarm(endpoint) {
+  if (_keepWarmTimer) return;
+  _keepWarmTimer = setInterval(() => {
+    fetch(endpoint, { method: 'GET', cache: 'no-store' }).catch(() => {});
+  }, 45000);
 }
 
 /**

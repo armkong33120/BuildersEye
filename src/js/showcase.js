@@ -103,39 +103,37 @@ function fallbackCopyText(text, btn) {
 }
 
 /**
- * 3. Backend Health Status Check
+ * 3. Backend Health Status Check + Warmup (ปลุก backend ทันทีที่คนเปิดหน้าเว็บ)
+ * ตอน visitor อ่านหน้า landing 10-30 วิ → backend ตื่นแล้ว → ไม่เห็น cold start ตอน login
  */
 async function checkBackendHealth() {
   const badge = document.getElementById('backend-status-badge');
-  if (!badge) return;
+  const backend = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
+    || 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
+  const endpoint = backend.replace(/\/$/, '') + '/api/health';
 
-  const endpoints = [
-    '/api/health',
-    'https://builderseye-backend.onrender.com/api/health'
-  ];
+  try {
+    if (badge) badge.innerHTML = '<span class="status-dot yellow"></span> Backend Status: Waking up… 🟡';
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // รอ cold start ได้เต็มที่
 
-  for (const endpoint of endpoints) {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 4000);
+    const startedAt = Date.now();
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' },
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
 
-      const res = await fetch(endpoint, {
-        method: 'GET',
-        headers: { 'Accept': 'application/json' },
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      if (res.ok) {
-        badge.innerHTML = '<span class="status-dot green"></span> Backend Status: Online 🟢';
-        return;
-      }
-    } catch (err) {
-      // Continue to next endpoint attempt
+    if (res.ok) {
+      const secs = ((Date.now() - startedAt) / 1000).toFixed(1);
+      if (badge) badge.innerHTML = `<span class="status-dot green"></span> Backend Status: Online 🟢 (${secs}s)`;
+      return;
     }
+    throw new Error('not ok');
+  } catch (err) {
+    if (badge) badge.innerHTML = '<span class="status-dot red"></span> Backend Status: ไม่สามารถเชื่อมต่อได้ — ลองรีเฟรช 🔴';
   }
-
-  badge.innerHTML = '<span class="status-dot yellow"></span> Backend Status: Standby / Warming up 🟡';
 }
 
 /**

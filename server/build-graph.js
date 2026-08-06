@@ -70,6 +70,7 @@ export function buildGraphFromRegistry() {
       department: e.department,
       jobTitle: e.jobTitle,
       roleGroup: e.roleGroup,
+      email: e.email || '',
       managerPk: mgr ? mgr.pk : null,
       managerCode: mgr ? mgr.code : '',
       managerName: mgr ? mgr.name : '',

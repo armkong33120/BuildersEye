@@ -430,8 +430,9 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
     // --- vector results (ถ้ามี) ---
     let vectorResults = [];
     if (vectorsExist()) {
+      const whoBias = /ใคร|คนไหน|บุคคล|ใครคือ|บุคคลใด/.test(query);
       const qv = await embedOne(embedText, { isQuery: true });
-      const out = await searchVectors(qv, { k: mode === 'hybrid' ? 25 : kk, scopeCodes: scope, allowSensitive, sheet });
+      const out = await searchVectors(qv, { k: mode === 'hybrid' ? 25 : kk, scopeCodes: scope, allowSensitive, sheet, whoBias });
       vectorResults = out.results || [];
     } else if (mode === 'vector') {
       return res.status(503).json({ error: 'Vector index not built yet — run: npm run build:vectors' });

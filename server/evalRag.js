@@ -22,11 +22,13 @@ const rows = [];
 
 for (const g of golden) {
   const qv = await embedOne(g.q, { isQuery: true });
-  const { results } = await searchVectors(qv, { k: K, allowSensitive: true, scopeCodes: null });
+  const whoBias = /ใคร|คนไหน|บุคคล|บุคคลใด/.test(g.q);
+  const { results } = await searchVectors(qv, { k: K, allowSensitive: true, scopeCodes: null, whoBias });
   const hit = results.some(r => {
     const m = r.meta || {};
     if (g.expectCodes && g.expectCodes.includes(m.code)) return true;
     if (g.expectSheets && g.expectSheets.includes(m.sheet)) return true;
+    if (g.expectDepartments && g.expectDepartments.includes(m.department)) return true;
     if (g.expectKind && m.kind === g.expectKind) return true;
     return false;
   });

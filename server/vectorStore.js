@@ -67,11 +67,12 @@ async function loadIndex() {
 }
 
 // scopeCodes: null = ทั้งหมด, Set = จำกัดรายคน; allowSensitive=false → ตัด chunk ลับทิ้ง
-export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null } = {}) {
+// whoBias=true → คำถาม "ใคร/คนไหน" ให้ขยับผลคน (employee) ขึ้น, ลด orgdoc ลง
+export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false } = {}) {
   // เส้นทาง Neon pgvector (ถ้ามี DATABASE_URL) — ไม่ต้องโหลด 129MB เข้า RAM
   if (process.env.DATABASE_URL) {
     try {
-      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet });
+      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias });
     } catch (e) {
       console.warn('[vector] neon search failed, fallback ไฟล์:', e.message);
     }
@@ -82,10 +83,13 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
   for (const item of idx) {
     const m = item.meta || {};
     if (!allowSensitive && m.sensitivity === 'sensitive') continue;
+    if (isReferenceDoc(m)) continue; // index/directory ซ้ำ → ข้าม
     // orgdoc (ข้อมูลระดับบริษัท ไม่ผูกกับบุคคล) → ทุก role เห็นได้ (ยกเว้น sensitive ที่กรองไปแล้ว)
     if (m.kind !== 'orgdoc' && scopeCodes && !scopeCodes.has(m.code)) continue;
     if (sheet && m.sheet !== sheet) continue;
-    scored.push({ item, score: cosine(queryVector, item.vector) });
+    let score = cosine(queryVector, item.vector);
+    if (whoBias) score = applyWhoBias(score, m);
+    scored.push({ item, score });
   }
   scored.sort((a, b) => b.score - a.score);
   return {
@@ -99,25 +103,44 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
   };
 }
 
-// pgvector: cosine distance query ใน Postgres โดยตรง (HNSW index)
-async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet }) {
+// เอกสาร "index/directory/แผนที่อ้างอิง" เป็นข้อมูลซ้ำจากโปรไฟล์จริง → กันไว้ไม่ให้แย่งคำตอบ (เช่น "IT Manager")
+const REFERENCE_DOC_BLOCKLIST = ['cross_reference', 'employee_master', 'employee_directory', 'master_index', 'hr_master', '_index'];
+const isReferenceDoc = (m) => (m.kind === 'orgdoc') && REFERENCE_DOC_BLOCKLIST.some(k => (m.name || '').toLowerCase().includes(k.toLowerCase()));
+
+// person-bias: คำถาม "ใครคือ X" ควรเจอตัวคน → คนขึ้น, เอกสารอบกองลด
+function applyWhoBias(score, meta) {
+  const isPerson = meta.department && meta.kind !== 'orgdoc';
+  return isPerson ? score * 1.06 : score * 0.97;
+}
+
+// pgvector: cosine distance query ใน Postgres โดยตรง (HNSW index) — ถามแถวเยอะๆ แล้ว re-rank เอง
+async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias }) {
   const { getPool } = await import('./neonStore.js');
   const pool = getPool();
   const vecLiteral = `[${queryVector.join(',')}]`;
   const scopeArr = scopeCodes ? [...scopeCodes] : null;
+  const fetchN = whoBias ? Math.min(k * 4, 200) : k;
   const { rows } = await pool.query(
     `SELECT id, text, meta, 1 - (embedding <=> $1::vector) AS score
      FROM chunks
      WHERE ($2::boolean OR meta->>'sensitivity' <> 'sensitive')
+       AND NOT (meta->>'kind' = 'orgdoc' AND (
+            meta->>'name' ILIKE '%cross_reference%' OR meta->>'name' ILIKE '%employee_master%'
+            OR meta->>'name' ILIKE '%employee_directory%' OR meta->>'name' ILIKE '%master_index%'
+            OR meta->>'name' ILIKE '%hr_master%'))
        AND ($3::text[] IS NULL OR meta->>'kind' = 'orgdoc' OR meta->>'code' = ANY($3))
        AND ($4::text IS NULL OR meta->>'sheet' = $4)
      ORDER BY embedding <=> $1::vector
      LIMIT $5`,
-    [vecLiteral, allowSensitive, scopeArr, sheet, k]
+    [vecLiteral, allowSensitive, scopeArr, sheet, fetchN]
   );
+  let list = rows.map(r => ({ id: r.id, score: Number(r.score), text: r.text, meta: r.meta }));
+  if (whoBias) list = list.map(r => ({ ...r, score: applyWhoBias(r.score, r.meta) }));
+  list.sort((a, b) => b.score - a.score);
+  list = list.slice(0, k);
   return {
     available: true,
-    results: rows.map(r => ({ id: r.id, score: Number(Number(r.score).toFixed(4)), text: r.text, meta: r.meta })),
+    results: list.map(r => ({ id: r.id, score: Number(r.score.toFixed(4)), text: r.text, meta: r.meta })),
   };
 }
 

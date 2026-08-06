@@ -1,0 +1,12 @@
+# Docker build context exclusions
+**/node_modules
+**/.data
+**/.cache
+**/.env
+**/nohup.out
+.github
+docs
+agents
+.agents
+*.log
+dist

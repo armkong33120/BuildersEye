@@ -1,4 +1,20 @@
 import 'dotenv/config';
+// --- Application Insights (optional): เปิดอัตโนมัติเมื่อมี connection string (Azure) ---
+if (process.env.APPINSIGHTS_CONNECTION_STRING) {
+  try {
+    const ai = (await import('applicationinsights')).default;
+    ai.setup(process.env.APPINSIGHTS_CONNECTION_STRING)
+      .setAutoCollectRequests(true)
+      .setAutoCollectDependencies(true)
+      .setAutoCollectExceptions(true)
+      .setAutoCollectPerformance(true, true)
+      .setSendLiveMetrics(true)
+      .start();
+    console.log('[appinsights] connected');
+  } catch (e) {
+    console.warn('[appinsights] init failed (continuing without it):', e.message);
+  }
+}
 import express from 'express';
 import cors from 'cors';
 import { ingestAll } from './ingestExcel.js';

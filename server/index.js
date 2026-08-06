@@ -1,20 +1,6 @@
 import 'dotenv/config';
-// --- Application Insights (optional): เปิดอัตโนมัติเมื่อมี connection string (Azure) ---
-if (process.env.APPINSIGHTS_CONNECTION_STRING) {
-  try {
-    const ai = (await import('applicationinsights')).default;
-    ai.setup(process.env.APPINSIGHTS_CONNECTION_STRING)
-      .setAutoCollectRequests(true)
-      .setAutoCollectDependencies(true)
-      .setAutoCollectExceptions(true)
-      .setAutoCollectPerformance(true, true)
-      .setSendLiveMetrics(true)
-      .start();
-    console.log('[appinsights] connected');
-  } catch (e) {
-    console.warn('[appinsights] init failed (continuing without it):', e.message);
-  }
-}
+// --- Application Insights: ต้องเป็น import แรกสุด (patch http ก่อน express โหลด ไม่งั้นเก็บข้อมูลไม่ได้) ---
+import './appInsightsSetup.js';
 import express from 'express';
 import cors from 'cors';
 import { ingestAll } from './ingestExcel.js';
@@ -226,12 +212,15 @@ app.get('/api/index/status', (req, res) => {
 
 // --- Auth routes (M1) ---
 app.post('/api/auth/login', requireReady, (req, res) => {
+  const t0 = Date.now();
+  const { username, password } = req.body || {};
   try {
-    const { username, password } = req.body || {};
     if (!username || !password) return res.status(400).json({ error: 'username and password are required' });
     const result = authLogin(username, password, req.ip);
+    console.log(`[auth] login OK user=${username} ip=${req.ip} ${Date.now() - t0}ms`); // → App Insights traces
     res.json(result);
   } catch (e) {
+    console.warn(`[auth] login FAIL user=${username} ip=${req.ip} status=${e.status || 500} reason=${e.message} ${Date.now() - t0}ms`);
     res.status(e.status || 500).json({ error: e.message || 'Login failed' });
   }
 });

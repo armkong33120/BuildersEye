@@ -17,9 +17,9 @@ RUN cd server && npm ci --omit=dev
 COPY server/ ./server/
 COPY src/data/ ./src/data/
 
-# pre-bake embedding model เข้า image (กัน cold start ต้องโหลด 120MB ทุกครั้ง)
-ENV EMBED_CACHE_DIR=/models
-RUN cd server && node -e "import('./localEmbedder.js').then(m => m.getEmbedder()).then(() => console.log('[build] embedding model cached')).catch(e => { console.warn('[build] model pre-cache skipped:', e.message); })"
+# embedding model ไม่ฝังใน image แล้ว (ประหยัด ~130MB → cold pull เร็วขึ้น)
+# blobSync จะดึง model-cache.tar.gz จาก Azure Blob มาแตกที่นี่ตอน boot (~2-5s Azure-to-Azure)
+ENV EMBED_CACHE_DIR=/app/server/.data/models
 
 ENV NODE_ENV=production
 ENV PORT=8080

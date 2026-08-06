@@ -22,6 +22,7 @@ export async function getEmbedder() {
       throw new Error('@xenova/transformers not installed on this deployment (optional dep)');
     }
     env.allowLocalModels = true;
+    if (process.env.EMBED_CACHE_DIR) env.cacheDir = process.env.EMBED_CACHE_DIR; // pre-baked model ใน image
     _extractor = await pipeline('feature-extraction', MODEL_NAME, { quantized: true });
   }
   return _extractor;

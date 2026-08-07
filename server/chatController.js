@@ -69,7 +69,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     };
   }
 
-  const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent);
+  // RBAC: scope สำหรับ keyword/analytics path (searchIndex ใช้กรอง ANALYTICS_MIN/MAX/filter)
+  // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน
+  const analyticsScopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
+  const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes);
   const matchedPks = []; const matchedDepts = new Set(); const finalResults = [];
   let redactedCount = 0; let blockedCount = 0;
 
@@ -123,7 +126,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   if (shouldRouteSql) {
     let sqlRes;
-    try { sqlRes = await generateAndRunSQL(query); } 
+    // RBAC: ส่ง viewer scope เข้า SQL path (Layer 1+2) — generateAndRunSQL สร้าง scoped table
+    // scopeCodes: null=CEO/HR เห็นทั้งหมด | Set<code>=Employee/Manager (จาก identityGraph subtree)
+    const scopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
+    try { sqlRes = await generateAndRunSQL(query, { viewerRole, viewerPk, scopeCodes }); } 
     catch (e) { sqlRes = { error: e.message }; }
     
     // Extract employee PKs from SQL results for graph highlighting
@@ -133,10 +139,26 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         if (row.department) matchedDepts.add(row.department);
       }
     }
-    
+
+    // Layer 3 — Field/Row Redaction + post-query scope verify (defense-in-depth):
+    // ต่อให้ scoped table ทำงานผิด ตรงนี้ก็ดรอปแถว/field ที่นอกสิทธิ์ก่อนส่ง LLM
+    let safeData = sqlRes.data;
+    if (Array.isArray(safeData)) {
+      safeData = safeData.map((row) => {
+        // post-query scope verify: ถ้าแถวมี employeeCode แต่นอก scope → drop
+        if (scopeCodes && row.employeeCode && !scopeCodes.has(row.employeeCode)) return null;
+        // field redaction (เหมือน keyword path) — Manager/Employee
+        if (row.sheetName && row.fieldName) {
+          const red = applyFieldRedaction({ ...row }, viewerRole, viewerPk, row.employeeId);
+          if (red.redacted) { redactedCount++; row.content = red.content; }
+        }
+        return row;
+      }).filter(Boolean);
+    }
+
     const contextData = sqlRes.error 
       ? `Failed to compute SQL: ${sqlRes.error}` 
-      : `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(sqlRes.data)}`;
+      : `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(safeData)}`;
       
     const finalLLMAnswer = await generateAnswer(query, "Here is the raw data you must format into a natural Thai answer:\n" + contextData);
     if (finalLLMAnswer) {
@@ -233,4 +255,30 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   return result;
+}
+
+// ── RBAC scope helper (SQL path) ──
+// คืน Set ของ employee codes ที่ viewer มองเห็น (หรือ null = เห็นทั้งหมด CEO/HR)
+// ใช้ identityGraph subtreePks/directReportPks (เดียวกับ resolveScope ใน keyword path)
+// เพื่อให้ SQL path มีขอบเขตเท่ากัน keyword path เป๊ะ
+export function buildScopeCodesForRole(viewerRole, viewerPk, identityGraph) {
+  if (viewerRole === 'CEO' || viewerRole === 'HR') return null;
+  if (!identityGraph?.identities) return new Set();
+  const me = identityGraph.identities.find(e => e.pk === Number(viewerPk));
+  if (!me?.code) return new Set();
+  if (viewerRole === 'Employee') return new Set([me.code]);
+  if (viewerRole === 'Manager') {
+    const visible = new Set([me.code]);
+    // subtreePks = ลูกน้องทุกชั้น (รวมตัวผู้จัดการเองในบางกรณี) — รวมทุก pk ที่ scope เห็น
+    for (const pk of me.subtreePks || []) {
+      const sub = identityGraph.identities.find(e => e.pk === Number(pk));
+      if (sub?.code) visible.add(sub.code);
+    }
+    for (const pk of me.directReportPks || []) {
+      const sub = identityGraph.identities.find(e => e.pk === Number(pk));
+      if (sub?.code) visible.add(sub.code);
+    }
+    return visible;
+  }
+  return new Set();
 }

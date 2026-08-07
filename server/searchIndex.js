@@ -200,8 +200,15 @@ function buildSources(results, flatIndex) {
   return sources.slice(0, 10);
 }
 
-export function search(query, { flatIndex, searchIndex }, parsedIntent = null) {
+export function search(query, { flatIndex, searchIndex }, parsedIntent = null, scopeCodes = null) {
   const parsed = parsedIntent || parseIntent(query);
+
+  // RBAC scope filter (analytics/filter path): ถ้า scopeCodes เป็น Set → จำกัด flatIndex
+  // ให้เห็นเฉพาะคนใน scope ก่อนคำนวณ min/max/filter (เหมือน scoped table ใน SQL path)
+  // เพื่อให้ ANALYTICS_MIN/MAX และ filterEmployees ทำงานในขอบเขตเดียวกับ keyword path
+  const scopedFlatIndex = (scopeCodes instanceof Set && scopeCodes.size > 0)
+    ? flatIndex.filter(r => scopeCodes.has(r.employeeCode))
+    : flatIndex;
 
   // LOOP 13D: Handle EXACT_EMPLOYEE + ANALYTICS intents correctly
   // Step 1: If there's an EXACT_EMPLOYEE intent, narrow scope to that employee
@@ -211,7 +218,7 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null) {
 
   if (exactEmpIntent && exactEmpIntent.pk) {
     // Add a scope filter: only look at this specific employee's records
-    const empRecords = flatIndex.filter(r => r.employeeId === exactEmpIntent.pk);
+    const empRecords = scopedFlatIndex.filter(r => r.employeeId === exactEmpIntent.pk);
     if (empRecords.length > 0) {
       // If there's also an analytics intent, run analytics on this specific employee
       if (analyticsIntent) {
@@ -239,12 +246,12 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null) {
         if (latestKpi) answer += '  ' + fieldLabel + ' Score: ' + latestKpi.content + '\n';
         if (bandRec) answer += '  Performance Band: ' + bandRec.content + '\n';
         answer += '  Total Warnings: ' + warnCount;
-        return { results, answer, sources: buildSources(results, flatIndex), matchersUsed: ['exact-employee-analytics'] };
+        return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['exact-employee-analytics'] };
       }
       // Just EXACT_EMPLOYEE with no analytics — return their full profile
       const results = [{ employeeId: exactEmpIntent.pk, score: 100, matchedFields: ['code'], matchedRecords: empRecords }];
       const answer = buildAnswer(query, results);
-      return { results, answer, sources: buildSources(results, flatIndex), matchersUsed: ['exact-employee'] };
+      return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['exact-employee'] };
     }
   }
 
@@ -252,9 +259,9 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null) {
   if (analyticsIntent) {
     let analyticsResult;
     if (analyticsIntent.type === 'ANALYTICS_MIN') {
-      analyticsResult = analyticsMin(flatIndex, analyticsIntent.field, activeFilters);
+      analyticsResult = analyticsMin(scopedFlatIndex, analyticsIntent.field, activeFilters);
     } else if (analyticsIntent.type === 'ANALYTICS_MAX') {
-      analyticsResult = analyticsMax(flatIndex, analyticsIntent.field, activeFilters);
+      analyticsResult = analyticsMax(scopedFlatIndex, analyticsIntent.field, activeFilters);
     }
     if (analyticsResult) {
       const results = [{ employeeId: analyticsResult.employeeId, score: 100, matchedFields: [analyticsIntent.field], matchedRecords: analyticsResult.records }];
@@ -265,17 +272,17 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null) {
       if (bandRec) answer += '  Performance Band: ' + bandRec.content + '\n';
       const warnCount = analyticsResult.records.filter(r => r.sheetName === 'Warning_Disciplinary_History').length;
       answer += '  Total Warnings: ' + warnCount;
-      return { results, answer, sources: buildSources(results, flatIndex), matchersUsed: ['analytics-' + analyticsIntent.type] };
+      return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['analytics-' + analyticsIntent.type] };
     }
   }
 
   // Step 3: Filters without analytics
   if (activeFilters.length > 0) {
-    const filtered = filterEmployees(flatIndex, activeFilters);
+    const filtered = filterEmployees(scopedFlatIndex, activeFilters);
     if (filtered.length > 0) {
       const results = filtered.map(f => ({ ...f, matchedFields: Array.from(f.matchedFields) }));
       const answer = buildAnswer(query, results);
-      return { results, answer, sources: buildSources(results, flatIndex), matchersUsed: ['filter'] };
+      return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['filter'] };
     }
   }
 

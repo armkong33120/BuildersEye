@@ -1,5 +1,15 @@
-export function analyticsMin(flatIndex, field, filters) {
-  const recordsByEmpId = buildRecordsByEmpId(flatIndex);
+// ── RBAC scope filter (Layer 2 isolation) ──
+// ถ้า scopeCodes เป็น Set → จำกัด flatIndex เฉพาะคนใน scope ก่อนคำนวณ min/max/filter
+// (defense-in-depth: กรองทั้งที่ searchIndex ส่ง scopedFlatIndex และในตัว engine เอง)
+function filterIndexByScope(flatIndex, scopeCodes) {
+  if (scopeCodes instanceof Set && scopeCodes.size > 0) {
+    return flatIndex.filter(r => scopeCodes.has(r.employeeCode));
+  }
+  return flatIndex;
+}
+
+export function analyticsMin(flatIndex, field, filters, scopeCodes = null) {
+  const recordsByEmpId = buildRecordsByEmpId(filterIndexByScope(flatIndex, scopeCodes));
   let minVal = Infinity, minPk = null;
   for (const [empId, empRecords] of recordsByEmpId) {
     if (!employeePassesFilters(empRecords, filters)) continue;
@@ -25,8 +35,8 @@ export function analyticsMin(flatIndex, field, filters) {
   };
 }
 
-export function analyticsMax(flatIndex, field, filters) {
-  const recordsByEmpId = buildRecordsByEmpId(flatIndex);
+export function analyticsMax(flatIndex, field, filters, scopeCodes = null) {
+  const recordsByEmpId = buildRecordsByEmpId(filterIndexByScope(flatIndex, scopeCodes));
   let maxVal = -Infinity, maxPk = null;
   for (const [empId, empRecords] of recordsByEmpId) {
     if (!employeePassesFilters(empRecords, filters)) continue;
@@ -52,8 +62,8 @@ export function analyticsMax(flatIndex, field, filters) {
   };
 }
 
-export function filterEmployees(flatIndex, filters) {
-  const recordsByEmpId = buildRecordsByEmpId(flatIndex);
+export function filterEmployees(flatIndex, filters, scopeCodes = null) {
+  const recordsByEmpId = buildRecordsByEmpId(filterIndexByScope(flatIndex, scopeCodes));
   const matched = [];
 
   for (const [empId, empRecords] of recordsByEmpId) {

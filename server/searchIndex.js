@@ -1,5 +1,6 @@
 import { parseIntent, hasAnalyticsIntent } from './intentParser.js';
 import { analyticsMin, analyticsMax, filterEmployees } from './analyticsEngine.js';
+import { VIEWER_ROLES } from './policy.js';
 
 // 7 matchers + merge/rank + answer builder
 function tokenize(text) {
@@ -19,14 +20,17 @@ function getFieldWeight(fieldName, sheetName) {
   return 1;
 }
 
-function keywordSearch(query, searchIndex, flatIndex) {
+function keywordSearch(query, searchIndex, flatIndex, scopeCodes = null) {
   const tokens = tokenize(query);
   const scored = new Map();
   for (const token of tokens) {
     const refs = searchIndex.get(token) || [];
     for (const idx of refs) {
       const rec = flatIndex[idx];
+      if (!rec) continue; // index อาจชี้ตำแหน่งที่ไม่อยู่ใน scoped array
       const pk = rec.employeeId;
+      // RBAC: ถ้ามี scope → ข้ามคนนอก scope (กรองหลังดึง rec จริง)
+      if (scopeCodes && rec.employeeCode && !scopeCodes.has(rec.employeeCode)) continue;
       if (!scored.has(pk)) scored.set(pk, { score: 0, matchedFields: new Set(), matchedRecords: [] });
       const entry = scored.get(pk);
       entry.score += getFieldWeight(rec.fieldName, rec.sheetName);
@@ -200,7 +204,7 @@ function buildSources(results, flatIndex) {
   return sources.slice(0, 10);
 }
 
-export function search(query, { flatIndex, searchIndex }, parsedIntent = null, scopeCodes = null) {
+export function search(query, { flatIndex, searchIndex }, parsedIntent = null, scopeCodes = null, viewerRole = null) {
   const parsed = parsedIntent || parseIntent(query);
 
   // RBAC scope filter (analytics/filter path): ถ้า scopeCodes เป็น Set → จำกัด flatIndex
@@ -209,6 +213,9 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
   const scopedFlatIndex = (scopeCodes instanceof Set && scopeCodes.size > 0)
     ? flatIndex.filter(r => scopeCodes.has(r.employeeCode))
     : flatIndex;
+
+  // Layer 3 — template redaction: ตรวจว่า role มีสิทธิ์เห็น warnings/sensitive fields ไหม
+  const canSeeWarnings = viewerRole ? (VIEWER_ROLES[viewerRole]?.canSeeWarnings !== false) : true;
 
   // LOOP 13D: Handle EXACT_EMPLOYEE + ANALYTICS intents correctly
   // Step 1: If there's an EXACT_EMPLOYEE intent, narrow scope to that employee
@@ -240,12 +247,15 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
         const kpiRecs = empRecords.filter(r => r.fieldName === analyticsIntent.field);
         const latestKpi = kpiRecs.sort((a, b) => (b.rowNumber || 0) - (a.rowNumber || 0))[0];
         const bandRec = empRecords.find(r => r.fieldName === 'performanceBand');
-        const warnCount = empRecords.filter(r => r.sheetName === 'Warning_Disciplinary_History').length;
 
+        // Layer 3: redact warnings ถ้า role ไม่มีสิทธิ์ (Employee) — ไม่โชว์จำนวน warnings
         let answer = name + (jobTitle ? ' (' + jobTitle + ')' : '') + ' [' + dept + ']\n';
         if (latestKpi) answer += '  ' + fieldLabel + ' Score: ' + latestKpi.content + '\n';
         if (bandRec) answer += '  Performance Band: ' + bandRec.content + '\n';
-        answer += '  Total Warnings: ' + warnCount;
+        if (canSeeWarnings) {
+          const warnCount = empRecords.filter(r => r.sheetName === 'Warning_Disciplinary_History').length;
+          answer += '  Total Warnings: ' + warnCount;
+        }
         return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['exact-employee-analytics'] };
       }
       // Just EXACT_EMPLOYEE with no analytics — return their full profile
@@ -259,9 +269,9 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
   if (analyticsIntent) {
     let analyticsResult;
     if (analyticsIntent.type === 'ANALYTICS_MIN') {
-      analyticsResult = analyticsMin(scopedFlatIndex, analyticsIntent.field, activeFilters);
+      analyticsResult = analyticsMin(scopedFlatIndex, analyticsIntent.field, activeFilters, scopeCodes);
     } else if (analyticsIntent.type === 'ANALYTICS_MAX') {
-      analyticsResult = analyticsMax(scopedFlatIndex, analyticsIntent.field, activeFilters);
+      analyticsResult = analyticsMax(scopedFlatIndex, analyticsIntent.field, activeFilters, scopeCodes);
     }
     if (analyticsResult) {
       const results = [{ employeeId: analyticsResult.employeeId, score: 100, matchedFields: [analyticsIntent.field], matchedRecords: analyticsResult.records }];
@@ -270,15 +280,18 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
       let answer = fieldLabel + ' ' + metricLabel + ':\n- ' + analyticsResult.name + ' (' + analyticsResult.jobTitle + ') [' + analyticsResult.department + ']\n  Value: ' + analyticsResult.value + '\n';
       const bandRec = analyticsResult.records.find(r => r.fieldName === 'performanceBand');
       if (bandRec) answer += '  Performance Band: ' + bandRec.content + '\n';
-      const warnCount = analyticsResult.records.filter(r => r.sheetName === 'Warning_Disciplinary_History').length;
-      answer += '  Total Warnings: ' + warnCount;
+      // Layer 3: redact warnings ถ้า role ไม่มีสิทธิ์ (Employee)
+      if (canSeeWarnings) {
+        const warnCount = analyticsResult.records.filter(r => r.sheetName === 'Warning_Disciplinary_History').length;
+        answer += '  Total Warnings: ' + warnCount;
+      }
       return { results, answer, sources: buildSources(results, scopedFlatIndex), matchersUsed: ['analytics-' + analyticsIntent.type] };
     }
   }
 
   // Step 3: Filters without analytics
   if (activeFilters.length > 0) {
-    const filtered = filterEmployees(scopedFlatIndex, activeFilters);
+    const filtered = filterEmployees(scopedFlatIndex, activeFilters, scopeCodes);
     if (filtered.length > 0) {
       const results = filtered.map(f => ({ ...f, matchedFields: Array.from(f.matchedFields) }));
       const answer = buildAnswer(query, results);
@@ -286,19 +299,20 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
     }
   }
 
-  // Step 4: Fallback to existing 7 matchers
+  // Step 4: Fallback to existing 7 matchers — keywordSearch ใช้ flatIndex เต็ม (searchIndex
+  // ชี้ idx ของ flatIndex เต็ม) แล้วกรอง scopeCodes ภายใน; matchers ที่วนบน data ใช้ scopedFlatIndex
   const matcherResults = {
-    keyword: keywordSearch(query, searchIndex, flatIndex),
-    department: departmentSearch(query, flatIndex),
-    employeeId: employeeIdSearch(query, flatIndex),
-    employeeName: employeeNameSearch(query, flatIndex),
-    sheetCategory: sheetCategorySearch(query, flatIndex),
-    severityBand: severityBandSearch(query, flatIndex),
-    projectId: projectIdSearch(query, flatIndex),
+    keyword: keywordSearch(query, searchIndex, flatIndex, scopeCodes),
+    department: departmentSearch(query, scopedFlatIndex),
+    employeeId: employeeIdSearch(query, scopedFlatIndex),
+    employeeName: employeeNameSearch(query, scopedFlatIndex),
+    sheetCategory: sheetCategorySearch(query, scopedFlatIndex),
+    severityBand: severityBandSearch(query, scopedFlatIndex),
+    projectId: projectIdSearch(query, scopedFlatIndex),
   };
   const matchersUsed = Object.entries(matcherResults).filter(([_, r]) => r.size > 0).map(([n]) => n);
   const results = mergeAndRank(matcherResults);
   const answer = buildAnswer(query, results);
-  const sources = buildSources(results, flatIndex);
+  const sources = buildSources(results, scopedFlatIndex);
   return { results, answer, sources, matchersUsed };
 }

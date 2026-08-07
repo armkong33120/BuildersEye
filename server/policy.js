@@ -1,11 +1,12 @@
-const VIEWER_ROLES = {
+// export สำหรับ template redaction (searchIndex.js ใช้ตรวจ canSeeWarnings/canSeeCompensation)
+export const VIEWER_ROLES = {
   CEO: { canSeeAll: true, canSeeSensitive: true, canSeeCompensation: true, canSeeWarnings: true, scope: 'ALL' },
   HR: { canSeeAll: false, canSeeSensitive: true, canSeeCompensation: true, canSeeWarnings: true, scope: 'HR_RECORDS' },
   Manager: { canSeeAll: false, canSeeSensitive: false, canSeeCompensation: false, canSeeWarnings: true, scope: 'SUBTREE' },
   Employee: { canSeeAll: false, canSeeSensitive: false, canSeeCompensation: false, canSeeWarnings: false, scope: 'SELF' },
 };
 
-const SENSITIVE_FIELDS = {
+export const SENSITIVE_FIELDS = {
   'Employee_Profile': ['mainWeakness', 'retentionRisk', 'successionPotential'],
 };
 

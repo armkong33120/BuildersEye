@@ -70,9 +70,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   // RBAC: scope สำหรับ keyword/analytics path (searchIndex ใช้กรอง ANALYTICS_MIN/MAX/filter)
-  // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน
+  // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน; viewerRole สำหรับ template redaction
   const analyticsScopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
-  const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes);
+  const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes, viewerRole);
   const matchedPks = []; const matchedDepts = new Set(); const finalResults = [];
   let redactedCount = 0; let blockedCount = 0;
 
@@ -135,6 +135,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     // Extract employee PKs from SQL results for graph highlighting
     if (sqlRes.data && Array.isArray(sqlRes.data)) {
       for (const row of sqlRes.data) {
+        if (!row || typeof row !== 'object') continue; // alasql อาจคืน undefined elements
         if (row.employeeId && !matchedPks.includes(row.employeeId)) matchedPks.push(row.employeeId);
         if (row.department) matchedDepts.add(row.department);
       }
@@ -145,6 +146,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     let safeData = sqlRes.data;
     if (Array.isArray(safeData)) {
       safeData = safeData.map((row) => {
+        if (!row || typeof row !== 'object') return row; // กัน undefined elements
         // post-query scope verify: ถ้าแถวมี employeeCode แต่นอก scope → drop
         if (scopeCodes && row.employeeCode && !scopeCodes.has(row.employeeCode)) return null;
         // field redaction (เหมือน keyword path) — Manager/Employee

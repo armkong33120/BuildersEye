@@ -1,0 +1,7 @@
+# tools/upgrade_360/.gitignore — เฉพาะโฟลเดอร์นี้
+.venv/
+out/
+__pycache__/
+*.pyc
+*.json.tmp
+.DS_Store

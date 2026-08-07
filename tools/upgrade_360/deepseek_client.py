@@ -1,0 +1,270 @@
+# -*- coding: utf-8 -*-
+"""deepseek_client.py — DeepSeek OpenAI-compatible client สำหรับ Phase 2
+
+- base_url : https://api.deepseek.com
+- model    : deepseek-v4-flash (DeepSeek OpenAI-compatible)
+- ฟังก์ชันหลัก: :func:`DeepSeekDramaClient.generate_drama_event(prompt_spec)`
+  เรียก ``chat.completions`` แล้ว validate JSON ด้วย ``DramaEventInjection``
+- fallback : :func:`template_offline` — ใช้เมื่อ ``--no-api`` หรือไม่มี key
+  template เขียนภาษาไทยสมจริง หลากหลาย (random สำนวน ตาม category/riskLevel)
+  ให้ผลคล้าย API พอใช้ทดสอบ/offline ได้
+
+⚠️ ห้าม print / commit API key เด็ดขาด — key อ่านจาก env ``DEEPSEEK_API_KEY``
+เจ้าของไฟล์: Data Generation (Phase 2)
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+import random
+from typing import Any, Dict, List, Optional
+
+from pydantic import ValidationError
+
+try:  # รันแบบ package (python -m tools.upgrade_360...)
+    from .pydantic_models import DramaEventInjection
+except ImportError:  # รันแบบ script ตรง (python tools/upgrade_360/deepseek_client.py)
+    from pydantic_models import DramaEventInjection
+
+DEEPSEEK_BASE_URL = "https://api.deepseek.com"
+DEEPSEEK_MODEL = "deepseek-v4-flash"
+
+SYSTEM_PROMPT = (
+    "คุณคือผู้ช่วยเขียนบันทึกเหตุการณ์บุคลากร (HR event log) ของบริษัทอสังหาริมทรัพย์ไทย "
+    "BuildersEye คุณตอบเป็นภาษาไทยเท่านั้น สไตล์การเขียนเหมือนเจ้าหน้าที่ HR/ผู้ตรวจสอบภายใน "
+    "ที่บันทึกรายละเอียดรอบด้าน เป็นกลาง ไม่กล่าวหา แต่ชี้ข้อเท็จจริงพร้อมหลักฐาน "
+    "ตอบเป็น JSON object เท่านั้น โดยไม่มี markdown และไม่มีข้อความอื่นนอก JSON"
+)
+
+# ---------------------------------------------------------------------------
+# Sentence pools สำหรับ template_offline (random เลือกสำนวน)
+# ---------------------------------------------------------------------------
+_FLAVOR_BY_CATEGORY: Dict[str, List[str]] = {
+    "crisis": [
+        "เหตุการณ์นี้ถูกบันทึกเป็นประวัติศาสตร์องค์กรที่ยังถูกหยิบยกอ้างถึงในการประชุมใหญ่จนถึงปัจจุบัน",
+        "ผลกระทบสั่นสะเทือนยาวมาถึงนโยบายการเงิน การบริหารความเสี่ยง และสายสัมพันธ์ระหว่างรุ่นพี่รุ่นน้อง",
+        "เป็นบทเรียนที่ทำให้บริษัทต้องทบทวนกระบวนการบริหารวิกฤตทั้งระบบ",
+    ],
+    "politics": [
+        "ในการประชุมมีการตั้งคำถามถึงความโปร่งใสและวาระแอบแฝงของแต่ละฝ่ายอย่างตรงไปตรงมา",
+        "ทั้งสองขั้วต่างยืนยันจุดยืนของตนเองและไม่ยอมถอย ส่งผลให้บรรยากาศการประชุมตึงเครียด",
+        "เรื่องนี้ถูกมองว่าเป็นสัญญาณการแย่งชิงอำนาจที่เริ่มปะทุขึ้นภายในองค์กร",
+    ],
+    "grey_area_collusion": [
+        "หลักฐานเบื้องต้นชี้ว่ามีการประสานข้อมูลกันก่อนการประกาศผล ยังอยู่ระหว่างการตรวจสอบเชิงลึก",
+        "เรื่องถูกส่งต่อไปยังคณะกรรมการตรวจสอบภายในโดยไม่มีการเปิดเผยต่อสาธารณะ เพื่อรอผลสอบข้อเท็จจริง",
+        "มีบันทึกการเข้าถึงเอกสารก่อนเวลาอันควรและอีเมลส่วนตัวที่เชื่อมโยงกับเหตุการณ์นี้",
+    ],
+    "cross_dept_conflict": [
+        "มีการแลกเปลี่ยนวาจาที่รุนแรงและส่งอีเมลตำหนิถึงผู้บริหารระดับสูง สร้างความแตกแยกระหว่างทีม",
+        "ทั้งสองฝ่ายต่างกล่าวหากันเรื่องความรับผิดชอบ ส่งผลให้งานในส่วนที่เกี่ยวข้องล่าช้าตามไปด้วย",
+        "ฝ่ายบริหารต้องเรียกประชุมไกล่เกลี่ยเพื่อหาข้อสรุปร่วมกันระหว่างแผนก",
+    ],
+    "dept_negative": [
+        "ผู้เกี่ยวข้องถูกเรียกสอบข้อเท็จจริงและถูกติดตามพฤติกรรมอย่างใกล้ชิดโดยหัวหน้าสายงาน",
+        "เหตุการณ์นี้ส่งผลกระทบต่อความเชื่อมั่นภายในทีม และถูกบันทึกไว้ในแฟ้มประวัติพนักงาน",
+        "มีการตั้งคณะทำงานเฉพาะกิจเพื่อตรวจสอบสาเหตุและวางมาตรการป้องกันไม่ให้เกิดซ้ำ",
+    ],
+    "positive": [
+        "ทีมได้รับคำชื่นชมจากผู้บริหาร และผลงานนี้ถูกยกเป็นแบบอย่างให้แผนกอื่นนำไปปรับใช้",
+        "ความสำเร็จครั้งนี้ช่วยสร้างขวัญกำลังใจให้กับทีมและสะท้อนวัฒนธรรมการทำงานร่วมกันที่ดี",
+        "ผู้บริหารประกาศยกย่องต่อสาธารณะ และนำเรื่องนี้เข้าร่วมพิจารณาโบนัสประจำปี",
+    ],
+    "routine": [
+        "กิจกรรมดำเนินไปตามปกติโดยไม่มีเหตุการณ์ผิดปกติ ตรงตามแผนที่วางไว้",
+        "ผู้เข้าร่วมทุกฝ่ายให้ความร่วมมือเป็นอย่างดีและสรุปประเด็นได้ครบถ้วน",
+        "บันทึกนี้เป็นหลักฐานการทำงานตามกระบวนการมาตรฐานขององค์กร",
+    ],
+    "family": [
+        "ความสัมพันธ์ทางครอบครัวถูกอ้างถึงในการพิจารณาครั้งนี้ ทำให้ต้องใช้ความระมัดระวังเรื่องผลประโยชน์ทับซ้อน",
+        "ฝ่าย HR บันทึกเรื่องเครือญาติไว้เป็นพิเศษเพื่อเฝ้าระวังการเอื้อประโยชน์ภายในองค์กร",
+    ],
+}
+
+_RISK_CLOSING: Dict[str, List[str]] = {
+    "critical": [
+        "เรื่องนี้ถูกยกระดับเป็นวาระเร่งด่วนของคณะกรรมการบริหาร และสั่งการให้รายงานความคืบหน้าทุกสัปดาห์",
+        "มีความเสี่ยงระดับวิกฤตต่อชื่อเสียงและสถานะทางการเงิน บอร์ดสั่งตั้งกรรมการสอบสวนอิสระ",
+    ],
+    "high": [
+        "ผู้บริหารระดับสูงรับทราบและสั่งการให้ติดตามอย่างใกล้ชิด พร้อมกำหนดกรอบเวลาในการแก้ไข",
+        "เรื่องถูกแจ้งเวียนให้หัวหน้าสายงานที่เกี่ยวข้องรับทราบ เพื่อป้องกันไม่ให้บานปลาย",
+    ],
+    "medium": [
+        "หัวหน้าสายงานรับทราบและมอบหมายให้ผู้เกี่ยวข้องติดตามแก้ไขภายใน 30 วัน",
+        "เหตุการณ์ถูกบันทึกเฝ้าระวังไว้ในระดับแผนก และนัดติดตามผลในรอบถัดไป",
+    ],
+    "low": [
+        "เป็นเหตุการณ์ระดับเบา ยุติได้ด้วยการพูดคุยทำความเข้าใจร่วมกัน ไม่มีการดำเนินการทางวินัย",
+        "บันทึกไว้เพื่อเป็นข้อมูลอ้างอิงเท่านั้น ไม่กระทบการประเมินผลงาน",
+    ],
+}
+
+
+def _stable_seed(*parts: str) -> int:
+    """seed ที่เสถียรข้าม process/run (ไม่ใช้ hash() ของ Python ที่ random ต่อ run)."""
+    key = "|".join(parts)
+    return int(hashlib.md5(key.encode("utf-8")).hexdigest()[:8], 16)
+
+
+def build_user_prompt(spec: Dict[str, Any]) -> str:
+    """สร้าง prompt สำหรับ API ให้ตอบ JSON ตาม schema ของ DramaEventInjection."""
+    emp_name = spec.get("employeeName", "")
+    cp_names = spec.get("counterpartyNames", "")
+    lines = [
+        "กรุณาเขียนบันทึกเหตุการณ์บุคลากร 1 เหตุการณ์ โดยตอบเป็น JSON object ที่มีฟิลด์:",
+        '{"eventId": "...", "logDateTime": "...", "sheet": "...", "subject": "...",',
+        ' "descriptionTH": "...", "counterpartyEmployeeCode": "...", "location": "...", "riskLevel": "..."}',
+        "",
+        "ข้อมูลเหตุการณ์:",
+        f"- eventId: {spec.get('eventId','')}",
+        f"- ชื่อเรื่อง: {spec.get('titleTH','')}",
+        f"- รายละเอียด: {spec.get('descriptionTH','')}",
+        f"- ประเภท: {spec.get('category','')} / ระดับความเสี่ยง: {spec.get('riskLevel','')}",
+        f"- บันทึกลง sheet: {spec.get('sheet','')}",
+        f"- พนักงานเจ้าของบันทึก: {spec.get('employeeCode','')} ({emp_name})",
+    ]
+    if cp_names:
+        lines.append(f"- ฝ่ายที่เกี่ยวข้อง: {cp_names}")
+    if spec.get("location"):
+        lines.append(f"- สถานที่: {spec.get('location','')}")
+    lines.append(
+        "- ข้อกำหนด: subject สั้นไม่เกิน 15 คำ; descriptionTH ยาว 3-5 ประโยคภาษาไทย "
+        "สไตล์ HR/ผู้ตรวจสอบภายใน เป็นกลาง มีรายละเอียดพอให้ RAG ใช้ค้นได้; "
+        f"logDateTime ใช้ค่านี้ตรง ๆ: {spec.get('logDateTime','')}; "
+        "counterpartyEmployeeCode ใช้รหัส EMP ที่ให้มา (คั่น ';' ถ้ามีหลายคน); riskLevel ใช้ค่าที่ให้มา"
+    )
+    return "\\n".join(lines)
+
+
+def template_offline(spec: Dict[str, Any], rng: Optional[random.Random] = None) -> Dict[str, Any]:
+    """Fallback template — เขียนภาษาไทยสมจริง หลากหลายตาม category/riskLevel.
+
+    Deterministic ต่อ (eventId, sheet) เพื่อให้ทั้ง 2 ฝั่งได้ข้อความเดียวกัน
+    (ใช้ได้ทั้งโหมด offline และเมื่อ API ล้มเหลว)
+    """
+    r = rng or random.Random()
+    # seed ให้ deterministic ต่อ (eventId, sheet) — ทั้งสองฝั่งได้คำอธิบายเดียวกัน
+    r.seed(_stable_seed(str(spec.get("eventId", "")), str(spec.get("sheet", ""))))
+
+    category = spec.get("category", "")
+    risk_level = spec.get("riskLevel", "medium")
+    title = spec.get("titleTH", "")
+    desc = spec.get("descriptionTH", "") or title
+    emp_name = spec.get("employeeName", "")
+    cp_names = spec.get("counterpartyNames", "") or spec.get("counterpartyEmployeeCode", "")
+
+    flavor_pool = _FLAVOR_BY_CATEGORY.get(category, _FLAVOR_BY_CATEGORY["routine"])
+    flavor = r.choice(flavor_pool)
+    closing_pool = _RISK_CLOSING.get(risk_level, _RISK_CLOSING["medium"])
+    closing = r.choice(closing_pool)
+
+    subject = (title[:60] + ("…" if len(title) > 60 else "")) if title else spec.get("subject", "")
+
+    parts = [desc.strip()]
+    if emp_name and cp_names:
+        parts.append(f"ฝ่ายที่เกี่ยวข้อง: {emp_name} และ {cp_names}")
+    elif emp_name:
+        parts.append(f"ผู้ที่เกี่ยวข้องหลัก: {emp_name}")
+    parts.append(flavor)
+    parts.append(closing)
+    descriptionTH = " ".join(parts)
+
+    data: Dict[str, Any] = {
+        "eventId": spec.get("eventId", ""),
+        "logDateTime": spec.get("logDateTime", ""),
+        "sheet": spec.get("sheet", ""),
+        "subject": subject,
+        "descriptionTH": descriptionTH,
+        "counterpartyEmployeeCode": spec.get("counterpartyEmployeeCode", ""),
+        "location": spec.get("location", ""),
+        "riskLevel": risk_level,
+    }
+    # ฟิลด์เสริมจาก spec (ถ้ามี) — เติมให้ครบ schema
+    for k in ("employeeCode", "category", "logType", "source", "notes",
+              "relationship", "faction", "financialImpactTHB", "resolutionStatus", "expansion"):
+        if spec.get(k) not in (None, ""):
+            data[k] = spec[k]
+    return data
+
+
+class DeepSeekDramaClient:
+    """Client สำหรับ generate บันทึกดราม่า — API จริง หรือ fallback template."""
+
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        no_api: bool = False,
+        timeout: int = 60,
+        rng: Optional[random.Random] = None,
+    ):
+        api_key = api_key or os.environ.get("DEEPSEEK_API_KEY", "")
+        self.no_api = bool(no_api) or not api_key
+        self.api_key = ""  # ไม่เก็บ key ไว้ใน attribute ที่อาจถูก print
+        self.rng = rng or random.Random()
+        if not self.no_api:
+            from openai import OpenAI  # import ข้างใน เพื่อให้ offline mode ไม่ต้องมี openai
+
+            self._client = OpenAI(api_key=api_key, base_url=DEEPSEEK_BASE_URL, timeout=timeout)
+            self.model = DEEPSEEK_MODEL
+        else:
+            self._client = None
+            self.model = DEEPSEEK_MODEL
+
+    @property
+    def using_api(self) -> bool:
+        return self._client is not None
+
+    def generate_drama_event(self, prompt_spec: Dict[str, Any]) -> Dict[str, Any]:
+        """เรียก API (หรือ fallback) → validate → dict ของ DramaEventInjection.
+
+        - ไม่ยิง API ซ้ำ: phase2_generator เก็บ cache ต่อ (eventId, sheet) ไว้ที่ ctx
+        - ถ้า API ล้มเหลว/ไม่มี key → template_offline ทันที (ไม่ raise)
+        """
+        if self._client is None:
+            return self._validate(template_offline(prompt_spec, self.rng))
+        try:
+            return self._call_api(prompt_spec)
+        except Exception:
+            # fallback เงียบ — offline resilience
+            return self._validate(template_offline(prompt_spec, self.rng))
+
+    def _call_api(self, spec: Dict[str, Any]) -> Dict[str, Any]:
+        kwargs: Dict[str, Any] = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": build_user_prompt(spec)},
+            ],
+            "temperature": 0.9,
+            "max_tokens": 800,
+        }
+        try:
+            kwargs["response_format"] = {"type": "json_object"}
+            resp = self._client.chat.completions.create(**kwargs)
+        except Exception:
+            # provider บางรายไม่รองรับ response_format → ลองใหม่แบบธรรมดา
+            kwargs.pop("response_format", None)
+            resp = self._client.chat.completions.create(**kwargs)
+
+        text = (resp.choices[0].message.content or "").strip()
+        data = json.loads(text)
+        # ค่าที่ phase2 กำหนด (eventId/logDateTime/...) ชนะค่าจาก API เสมอ
+        for k in ("eventId", "logDateTime", "sheet", "employeeCode",
+                  "counterpartyEmployeeCode", "location", "riskLevel", "category",
+                  "logType", "source", "relationship", "faction"):
+            if spec.get(k) not in (None, ""):
+                data[k] = spec[k]
+        return self._validate(data)
+
+    @staticmethod
+    def _validate(data: Dict[str, Any]) -> Dict[str, Any]:
+        try:
+            return DramaEventInjection(**data).model_dump()
+        except ValidationError:
+            # ตัดฟิลด์ที่ไม่รู้จักออกแล้วลองใหม่
+            known = set(DramaEventInjection.model_fields)
+            clean = {k: v for k, v in data.items() if k in known}
+            return DramaEventInjection(**clean).model_dump()

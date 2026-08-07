@@ -1,0 +1,3500 @@
+{
+ "generatedAt": "2026-08-06T22:27:28Z",
+ "schemaVersion": "1.0",
+ "source": "tools/upgrade_360/design (storyline design) — ต่อยอดจาก warning-history.json, grievance-log.json, collaboration-graph.json",
+ "meta": {
+  "categories": {
+   "crisis": "วิกฤตระดับบริษัท (1997/2011/2020) — ส่งผลต่อวัฒนธรรมและสายสัมพันธ์รุ่นเก่า",
+   "politics": "การเมืองภายใน ขั้วอำนาจเก่า vs คนรุ่นใหม่",
+   "grey_area_collusion": "Grey Area: ฮั้วประมูล/ขโมยข้อมูลลูกค้า/เบิกเงินผิดปกติ/วางบิลปลอม",
+   "cross_dept_conflict": "ความขัดแย้งข้ามแผนก (โดยเฉพาะ Sales vs Construction)",
+   "dept_negative": "เหตุการณ์เชิงลบภายในแผนก",
+   "positive": "เหตุการณ์เชิงบวก / ความสำเร็จ / รางวัล",
+   "routine": "เหตุการณ์ทำงานประจำ (ใช้เป็น log filler เชื่อมโยงหลายคู่)",
+   "family": "เหตุการณ์ความสัมพันธ์ครอบครัว/ญาติในองค์กร"
+  },
+  "periods": {
+   "1997": "วิกฤตต้มยำกุ้ง (องค์กรอายุ 40 ปี — เหตุการณ์มรดก/ความทรงจำองค์กร senior staff รุ่นปัจจุบันสืบทอดวัฒนธรรม)",
+   "2011": "มหาอุทกภัย (องค์กรต้องผ่านวิกฤต ฝังในนโยบายและความสัมพันธ์)",
+   "2020": "โควิด-19 (จุดเปลี่ยนสู่ WFH และจุดเริ่มการเมืองรุ่นใหม่)",
+   "ongoing": "เหตุการณ์ต่อเนื่อง/ปัจจุบัน (2015-2026 เป็นช่วงที่พนักงานปัจจุบันทำงานจริง)"
+  },
+  "riskLevels": {
+   "low": "ไม่มีผลกระทบวินัย",
+   "medium": "ตักเตือน/สอบสวนภายใน",
+   "high": "กรรมการสอบสวน/ส่งผลข้ามแผนก",
+   "critical": "อาจถึงเลิกจ้าง/แจ้งความ/เสียหายต่อบริษัท"
+  },
+  "logRowExpansionNote": "แต่ละเหตุการณ์ (eventId 1 อัน) เมื่อ Phase 2 สร้าง log rows จะแตกเป็นหลายแถวต่อคนต่อ sheet โดยทุกแถวของทุกคนใช้ eventId + timestamp เดียวกัน (logRowExpansion = จำนวนแถวโดยประมาณต่อคนต่อ sheet)"
+ },
+ "catalog": [
+  {
+   "eventId": "CRISIS-1997-01",
+   "category": "crisis",
+   "period": "1997",
+   "riskLevel": "critical",
+   "titleTH": "วิกฤตต้มยำกุ้ง 2540 — งานก่อสร้างหยุดชะงักทั้งระบบ",
+   "descriptionTH": "ค่าเงินบาทลอยตัว หนี้สินต่างประเทศพุ่ง งานโครงการบ้านจัดสรรหยุดชะงักกลางคัน ลูกค้าทิ้งเงินดาวน์หนี ฝ่ายก่อสร้างต้องหยุดงาน 6 โครงการ ฝ่ายการเงินต้องเจรจาขยายวงเงินกับธนาคาร บริษัทเกือบปิดตัว ส่งผลเป็นแผลเป็นในวัฒนธรรมองค์กร — นโยบาย \"ประหยัดทุกบาท\" และสายสัมพันธ์ผู้บริหารรุ่นพี่ที่ยังฝังรากถึงปัจจุบัน",
+   "affectedSheets": [
+    "Employee_Profile",
+    "Compliance_Mandates",
+    "Project_History",
+    "Salary_History",
+    "Succession_Planning"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Engineering & Construction",
+    "Finance & Accounting",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP001",
+    "EMP002",
+    "EMP003",
+    "EMP005",
+    "EMP101"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP001",
+     "EMP002"
+    ],
+    [
+     "EMP002",
+     "EMP003"
+    ]
+   ],
+   "financialImpactTHB": 120000000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "CRISIS-1997-02",
+   "category": "crisis",
+   "period": "1997",
+   "riskLevel": "critical",
+   "titleTH": "เงินดาวน์ลูกค้าหายช่วงต้มยำกุ้ง — แผนกขายถูกตั้งคำถาม",
+   "descriptionTH": "เงินดาวน์จากลูกค้า 34 รายไม่สามารถส่งต่อเข้าโครงการได้ ฝ่ายขายกับฝ่ายการเงินโทษกันไปมา เอกสารสัญญาหายจากห้องจัดเก็บ สุดท้ายพบว่าเป็นความผิดพลาดของระบบจัดเก็บ แต่ฝ่ายขายยุคเก่าถูกมองว่า \"มือไม่สะอาด\" มานับแต่นั้น — กลายเป็นจุดเริ่มต้นของความไม่ไว้ใจระหว่าง Sales กับ Finance",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP004",
+    "EMP003",
+    "EMP007",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP003",
+     "EMP004"
+    ]
+   ],
+   "financialImpactTHB": 18500000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-1997-03",
+   "category": "crisis",
+   "period": "1997",
+   "riskLevel": "high",
+   "titleTH": "ลดเงินเดือนพนักงาน 20% — คลื่นคนลาออกครั้งใหญ่",
+   "descriptionTH": "ช่วงวิกฤต บริษัทประกาศลดเงินเดือนพนักงานระดับปฏิบัติการ 20% นาน 14 เดือน และระงับโบนัส 2 ปี พนักงานสายก่อสร้างลาออกหมู่ หัวหน้าช่างที่อยู่รอดกลายเป็น \"คนรุ่นเสือ\" ที่องค์กรต้องพึ่งพา เกิดสายสัมพันธ์แบบอุปถัมภ์ระหว่างผู้บริหารกับช่างรุ่นเก่าที่ยังเห็นได้ในปัจจุบัน",
+   "affectedSheets": [
+    "Salary_History",
+    "Career_Timeline",
+    "Employee_Engagement",
+    "Succession_Planning"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP005",
+    "EMP063",
+    "EMP064",
+    "EMP065"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP005",
+     "EMP063"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-1997-04",
+   "category": "crisis",
+   "period": "1997",
+   "riskLevel": "medium",
+   "titleTH": "ขายทรัพย์สินและยุบแผนกการตลาดชั่วคราว",
+   "descriptionTH": "บริษัทต้องขายรถยนต์บริษัท 11 คันและคืนอุปกรณ์สำนักงานเพื่อรักษาสภาพคล่อง แผนกการตลาดถูกยุบรวมกับฝ่ายขาย 2 ปี นโยบาย \"ตัดทุกอย่างที่ไม่เกี่ยวกับการก่อสร้าง\" ถูกยึดถือต่อมาอีกหลายปี จน Marketing กลับมามีบทบาทอีกครั้งในปี 2555",
+   "affectedSheets": [
+    "IT_Asset_Register",
+    "Software_Licenses",
+    "Career_Timeline",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Marketing",
+    "IT"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP035",
+    "EMP143"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 9500000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "CRISIS-1997-05",
+   "category": "crisis",
+   "period": "1997",
+   "riskLevel": "high",
+   "titleTH": "ฮั้วประมูลสินเชื่อช่วยชาติ — จุดเริ่มวัฒนธรรม \"เส้นสาย\"",
+   "descriptionTH": "เพื่อความอยู่รอด ผู้บริหารรุ่นเก่าใช้เครือข่ายส่วนตัวเจรจาสินเชื่อนอกระบบและรับงานราชการผ่านเส้นสาย วัฒนธรรม \"กินเงินใต้โต๊ะ\" เริ่มฝังในฝ่ายจัดซื้อและก่อสร้าง กลายเป็นรากของ grey area การฮั้วประมูลที่สืบเนื่องมาถึงปัจจุบัน (เชื่อมโยงกับ GREY-RIG-*)",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP005",
+    "EMP101"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP002",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2011-01",
+   "category": "crisis",
+   "period": "2011",
+   "riskLevel": "critical",
+   "titleTH": "น้ำท่วมใหญ่ 2554 — ไซต์งานและวัสดุก่อสร้างเสียหาย",
+   "descriptionTH": "น้ำท่วมพื้นที่โครงการ 5 แห่งในนนทบุรีและปทุมธานี วัสดุก่อสร้างเสียหาย 80% งานล่าช้าเฉลี่ย 7 เดือน ฝ่ายจัดซื้อต้องเร่งสั่งของทดแทนในราคาแพง ฝ่ายก่อสร้างกับฝ่ายขายทะเลาะกันเรื่องการเลื่อนส่งมอบบ้านให้ลูกค้า — ลูกค้า 60 รายยื่นฟ้องเรียกค่าเสียหาย",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Grievance_Log",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Procurement & Warehouse",
+    "Sales",
+    "Legal"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP005",
+    "EMP063",
+    "EMP101",
+    "EMP147"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP005",
+     "EMP063"
+    ],
+    [
+     "EMP005",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 45000000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "CRISIS-2011-02",
+   "category": "crisis",
+   "period": "2011",
+   "riskLevel": "high",
+   "titleTH": "ประกันภัยท่วม — เรียกร้องสินไหมไม่ครบ เบิกเงินทดรองจ่ายเกิน",
+   "descriptionTH": "บริษัทประกันจ่ายสินไหมเพียง 60% ของความเสียหาย ฝ่ายการเงินต้องใช้เงินทดรองจ่ายเกินวงเงินเพื่อจ่ายค่าซ่อมด่วน เกิดข้อพิพาทภายในว่าการเบิกเงินทดรอง 45 รายการผิดระเบียบหรือไม่ — จุดเริ่มของรูปแบบการ \"เบิกเงินผิดปกติ\" ที่ฝ่ายการเงินใช้ช่องโหว่นี้ในเวลาต่อมา (เชื่อมโยง GREY-EXP-*)",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Benefit_Claims"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting",
+    "Engineering & Construction",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP003",
+    "EMP125",
+    "EMP132"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP003",
+     "EMP125"
+    ]
+   ],
+   "financialImpactTHB": 7800000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2011-03",
+   "category": "crisis",
+   "period": "2011",
+   "riskLevel": "high",
+   "titleTH": "เซิร์ฟเวอร์และเอกสารสูญหาย — IT ต้องกู้ข้อมูลจากเทปสำรอง",
+   "descriptionTH": "ห้องเซิร์ฟเวอร์ชั้นใต้ดินถูกน้ำท่วม เอกสาร HR และข้อมูลลูกค้าส่วนหนึ่งเสียหาย IT ต้องกู้ข้อมูลจากเทปสำรองที่เก็บที่ต่างจังหวัด ใช้เวลากู้ 3 สัปดาห์ ฝ่าย HR กับ IT กล่าวหากันเรื่องการไม่ทำสำรองข้อมูล — ฝ่าย IT ถูกสั่งปรับปรุงระบบและเพิ่มนโยบาย disaster recovery",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "Compliance_Mandates",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT",
+    "HR & Admin",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP143",
+    "EMP144",
+    "EMP135"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP143",
+     "EMP135"
+    ]
+   ],
+   "financialImpactTHB": 3200000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2011-04",
+   "category": "crisis",
+   "period": "2011",
+   "riskLevel": "medium",
+   "titleTH": "พนักงานติดอยู่ในพื้นที่น้ำท่วม — ต้องใช้เรือรับส่งเข้าออฟฟิศ",
+   "descriptionTH": "พนักงาน 27 คนมีบ้านอยู่ในพื้นที่น้ำท่วม ฝ่าย HR จัดที่พักชั่วคราวและเบิกเงินช่วยเหลือพิเศษ ระเบียบการเบิกสวัสดิการฉุกเฉินถูกเขียนขึ้นใหม่ แต่ก็กลายเป็นช่องทางที่บางคนใช้เบิกเกินจริงในปีถัดมา (เชื่อมโยง GREY-EXP-03)",
+   "affectedSheets": [
+    "Attendance_Record",
+    "Benefit_Claims",
+    "Employee_Engagement",
+    "HR & Admin"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Office Support",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP139",
+    "EMP149",
+    "EMP150"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 1200000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "CRISIS-2011-05",
+   "category": "crisis",
+   "period": "2011",
+   "riskLevel": "high",
+   "titleTH": "ลูกค้าทิ้งโครงการกลางคัน — ฝ่ายขายเก็บเงินดาวน์แล้วไม่ส่งมอบ",
+   "descriptionTH": "ลูกค้า 23 รายผิดนัดชำระค่าบ้านหลังน้ำท่วม ฝ่ายขายถูกกดดันให้ \"ทำยอด\" ด้วยการรับเงินดาวน์จากลูกค้าใหม่แล้วเลื่อนการโอนออกไป เกิดปมความขัดแย้งระหว่าง Sales กับ Construction เรื่องการรับงานเกินกำลัง (เชื่อมโยง SVC-*)",
+   "affectedSheets": [
+    "Project_History",
+    "Sales",
+    "Expense_Reports",
+    "Warning_Disciplinary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP004",
+    "EMP007",
+    "EMP008",
+    "EMP005"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP004",
+     "EMP005"
+    ]
+   ],
+   "financialImpactTHB": 21000000,
+   "resolutionStatus": "Closed (historical)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2020-01",
+   "category": "crisis",
+   "period": "2020",
+   "riskLevel": "critical",
+   "titleTH": "โควิด-19 — งานก่อสร้างหยุด 3 เดือน ฝ่ายขายยอดว่างเปล่า",
+   "descriptionTH": "คำสั่ง lockdown ทำให้ไซต์งานทั้งหมดหยุด ฝ่ายขายไม่มีลูกค้าเข้าโครงการ 3 เดือน บริษัทต้องใช้เงินสำรองและกู้สินเชื่อ soft loan จากภาครัฐ ฝ่ายการเงินกับฝ่ายขายโต้เถียงกันเรื่องการลดงบการตลาด — การตัดสินใจครั้งนี้ทำให้ Marketing กับ Sales หันมาข้องแวะกันเองเพื่อแย่งงบ",
+   "affectedSheets": [
+    "Project_History",
+    "KPI_OKR_History",
+    "Employee_Engagement",
+    "Expense_Reports",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "Marketing",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP003",
+    "EMP004",
+    "EMP035"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP003",
+     "EMP004"
+    ]
+   ],
+   "financialImpactTHB": 65000000,
+   "resolutionStatus": "Closed (recovered)",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "CRISIS-2020-02",
+   "category": "crisis",
+   "period": "2020",
+   "riskLevel": "high",
+   "titleTH": "Work-from-home 100% — ระบบ VPN ล่มและช่องโหว่ความปลอดภัย",
+   "descriptionTH": "พนักงาน 150 คนต้องทำงานจากบ้าน IT ต้องตั้ง VPN และ remote desktop อย่างเร่งด่วน เกิดเหตุข้อมูลลูกค้าบางส่วนถูกเข้าถึงจากเครื่องส่วนตัวของพนักงานขาย 2 ราย ฝ่าย IT ถูกฝ่ายขายกล่าวหาว่าละเลย — ปมที่นำไปสู่เหตุการณ์ขโมยข้อมูลลูกค้าในปี 2566 (เชื่อมโยง GREY-DATA-*)",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT",
+    "Sales",
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP143",
+    "EMP144",
+    "EMP145",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP143",
+     "EMP007"
+    ]
+   ],
+   "financialImpactTHB": 4500000,
+   "resolutionStatus": "Closed (recovered)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2020-03",
+   "category": "crisis",
+   "period": "2020",
+   "riskLevel": "high",
+   "titleTH": "พนักงานติดโควิด 19 ราย — แผนกขายขาดคนขายครึ่งทีม",
+   "descriptionTH": "คลัสเตอร์ระบาดในทีมขายสาขา ฝ่าย HR ต้องสั่งกักตัวและปิดสาขา 2 สาขา 15 วัน ฝ่ายขายกดดัน HR ให้ \"ปิดบัง\" จำนวนผู้ติดเชื้อเพื่อไม่ให้เสียลูกค้า เกิดข้อพิพาทด้านจริยธรรมที่ยังถูกหยิบยกใน Grievance_Log จนถึงปี 2565",
+   "affectedSheets": [
+    "Attendance_Record",
+    "Grievance_Log",
+    "Employee_Engagement",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "HR & Admin",
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP007",
+    "EMP113",
+    "EMP009"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP135",
+     "EMP007"
+    ]
+   ],
+   "financialImpactTHB": 2500000,
+   "resolutionStatus": "Closed (recovered)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2020-04",
+   "category": "crisis",
+   "period": "2020",
+   "riskLevel": "medium",
+   "titleTH": "ชะลอการขึ้นเงินเดือน 2 ปี — พนักงานรุ่นใหม่ตั้งคำถาม",
+   "descriptionTH": "บริษัทประกาศ freeze เงินเดือนและโบนัสปี 2563-2564 พนักงานรุ่นใหม่ (เจน Z) เริ่มตั้งคำถามถึงความโปร่งใสของฝ่ายบริหารเก่า จุดเริ่มของขั้ว \"คนรุ่นใหม่ vs ขั้วอำนาจเก่า\" ภายในบริษัท (เชื่อมโยง POL-*)",
+   "affectedSheets": [
+    "Salary_History",
+    "KPI_OKR_History",
+    "Employee_Engagement",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "HR & Admin",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP003",
+    "EMP135",
+    "EMP136",
+    "EMP144"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Closed (recovered)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "CRISIS-2020-05",
+   "category": "crisis",
+   "period": "2020",
+   "riskLevel": "medium",
+   "titleTH": "ยอดขายฟื้นตัว Q4 — ทีมขายขอยอดเทียมเพื่อรับโบนัส",
+   "descriptionTH": "กดดันจากเป้ายอดขายปี 2563 ฝ่ายขายบางสาขาใช้วิธี \"จองยอดปลอม\" (dummy booking) เพื่อให้ตัวเลขผ่านเป้า ฝ่ายการเงินตรวจพบความผิดปกติของยอด cancel rate ในไตรมาสถัดมา ส่งผลให้ Sales Manager 2 คนถูกตั้งกรรมการสอบสวน (เชื่อมโยง SVC-08, GREY-RIG-*)",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "KPI_OKR_History",
+    "Sales",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP007",
+    "EMP008",
+    "EMP125",
+    "EMP009"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP007",
+     "EMP008"
+    ]
+   ],
+   "financialImpactTHB": 12000000,
+   "resolutionStatus": "Under audit",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-01",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ศึกชิงตำแหน่งรองกรรมการผู้จัดการฝ่ายปฏิบัติการ",
+   "descriptionTH": "CEO ธนกฤตประกาศแผนสืบทอดตำแหน่ง เกิดการแย่งชิงระหว่างสายเก่า (COO ณัฐพล + วรพล หัวหน้าฝ่ายก่อสร้าง) กับสายใหม่ (CFO กิตติพงศ์ + ภาคิน หัวหน้าฝ่ายขาย) ฝ่ายเก่าอ้างประสบการณ์ผ่านวิกฤต ฝ่ายใหม่ชูเรื่องดิจิทัลทรานส์ฟอร์เมชัน เกิดการตั้งทีมกันเองในที่ประชุมผู้บริหาร",
+   "affectedSheets": [
+    "360_Feedback",
+    "Succession_Planning",
+    "Career_Timeline",
+    "Collaboration_Network",
+    "Employee_Profile"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Engineering & Construction",
+    "Sales",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP001",
+    "EMP002",
+    "EMP003",
+    "EMP004",
+    "EMP005"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP002",
+     "EMP003"
+    ],
+    [
+     "EMP002",
+     "EMP004"
+    ],
+    [
+     "EMP003",
+     "EMP005"
+    ],
+    [
+     "EMP004",
+     "EMP005"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "POL-02",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "COO ณัฐพล กับ CFO กิตติพงศ์ แย่งกันคุมงบประมาณ",
+   "descriptionTH": "COO (สายเก่า) ต้องการควบคุมงบโครงการก่อสร้างทั้งหมด ขณะที่ CFO (สายใหม่) ยืนยันว่าต้องผ่านการกลั่นกรองของฝ่ายการเงิน เกิดการประชุมยืดเยื้อ 3 ครั้งโดยไม่ข้อยุติ ฝ่ายจัดซื้อเข้าข้าง COO ฝ่ายไอทีเข้าข้าง CFO — วัฒนธรรม \"ตั้งแถวเข้าข้าง\" เริ่มชัดเจน",
+   "affectedSheets": [
+    "Collaboration_Network",
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Finance & Accounting",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP003",
+    "EMP101",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP002",
+     "EMP003"
+    ],
+    [
+     "EMP101",
+     "EMP125"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-03",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "หัวหน้าฝ่ายก่อสร้างวรพล ถูกคณะกรรมการตรวจสอบเรื่องการเซ็นอนุมัติ",
+   "descriptionTH": "คณะกรรมการตรวจสอบภายใน (สาย CFO) ตั้งข้อสังเกตการอนุมัติใบสั่งซื้อวัสดุของวรพลที่เกินวงเงิน 3 รายการ ฝ่ายเก่ามองว่าเป็นการ \"กลั่นแกล้งทางการเมือง\" ฝ่ายใหม่ชี้ว่าเป็นความโปร่งใส วรพลถูกเรียกเข้าชี้แจง 2 ครั้ง — ความสัมพันธ์ระหว่าง Engineering กับ Finance ตึงเครียดขึ้น",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Expense_Reports",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Finance & Accounting",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP005",
+    "EMP003",
+    "EMP063",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP003",
+     "EMP005"
+    ],
+    [
+     "EMP005",
+     "EMP125"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-04",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "HR วรรณภา ถูกมองว่า \"เอาใจฝ่ายบริหารเก่า\"",
+   "descriptionTH": "นโยบายของฝ่าย HR (ขึ้นเงินเดือนตามอายุงาน ไม่ใช่ตาม performance) ถูกพนักงานรุ่นใหม่วิจารณ์ว่าเชิดชูคนเก่า ผู้นำรุ่นใหม่ (พนักงาน IT และขาย) เริ่มรวมตัวกันเรียกร้อง KPI-based pay — ฝ่าย HR ตกที่นั่งลำบากระหว่าง CEO กับพนักงาน",
+   "affectedSheets": [
+    "360_Feedback",
+    "Grievance_Log",
+    "Employee_Engagement",
+    "Salary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "IT",
+    "Sales",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP143",
+    "EMP007",
+    "EMP001"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP135",
+     "EMP143"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-05",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "เลขานุการบริหารศุภชัย — สายลับสองฝ่าย",
+   "descriptionTH": "ศุภชัย (เลขาฯ CEO) ถูกทั้งสองฝ่ายใช้เป็นช่องทางส่งข้อความถึง CEO ฝ่ายเก่าให้ \"ช่วยพูด\" ฝ่ายใหม่ให้ \"ช่วยกลั่นกรอง\" เกิดเหตุเอกสารประชุมรั่วไหลไปถึงฝ่ายหนึ่งก่อนอีกฝ่าย 2 ครั้ง ยังไม่มีการระบุตัวผู้รั่ว",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Collaboration_Network",
+    "360_Feedback",
+    "IT_Ticket_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Engineering & Construction",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP006",
+    "EMP002",
+    "EMP003"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP006",
+     "EMP002"
+    ],
+    [
+     "EMP006",
+     "EMP003"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-06",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "พนักงานรุ่นเก่า vs รุ่นใหม่ในแผนกก่อสร้าง",
+   "descriptionTH": "ช่างรุ่นเก่า (ทำงาน 10 ปี+) ต่อต้านการนำระบบ BIM และการบันทึกเวลาด้วยแอปของฝ่าย IT หัวหน้าช่างรุ่นใหม่สนับสนุนการเปลี่ยนแปลง เกิดการแบ่งพรรคแบ่งพวกภายในแผนก Construction — การเมืองภายในแผนกที่เชื่อมกับความขัดแย้งระดับองค์กร",
+   "affectedSheets": [
+    "Timesheet_Log",
+    "360_Feedback",
+    "Learning_Development",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "IT"
+   ],
+   "suggestedParticipants": [
+    "EMP063",
+    "EMP064",
+    "EMP065",
+    "EMP144"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP063",
+     "EMP064"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-07",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ฝ่ายการตลาดถูกดึงเข้าสู่สมรภูมิการเมือง",
+   "descriptionTH": "Marketing Manager นภัสสรถูกทั้งสองฝ่ายชักชวนให้เลือกข้าง ฝ่ายเก่าเสนอ \"งบโฆษณาสายสัมพันธ์ลูกค้าเก่า\" ฝ่ายใหม่เสนอ \"งบดิจิทัลและ CRM\" นภัสสรเลือกสายใหม่ ทำให้ฝ่ายเก่าไม่พอใจและกดดันผ่านงบประมาณของฝ่ายจัดซื้อที่ดูแลอีเวนต์",
+   "affectedSheets": [
+    "Collaboration_Network",
+    "360_Feedback",
+    "Expense_Reports",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Marketing",
+    "Executive",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP035",
+    "EMP002",
+    "EMP101",
+    "EMP044"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP035",
+     "EMP002"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POL-08",
+   "category": "politics",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "กลุ่มลับ \"โต๊ะกาแฟ\" ของฝ่ายเก่า",
+   "descriptionTH": "ผู้บริหารสายเก่ารวมตัวสังสรรค์กาแฟทุกเช้าวันจันทร์ที่ร้านกาแฟหน้าโครงการ กลุ่มนี้ถูกฝ่ายใหม่ตั้งชื่อเล่นว่า \"โต๊ะกาแฟ\" มองว่าเป็นที่ประชุมนอกระบบที่ชักใยการตัดสินใจ — ฝ่ายใหม่เริ่มประชุมกลุ่มตัวเองในไลน์กลุ่ม \"เปลี่ยนผ่าน\"",
+   "affectedSheets": [
+    "Collaboration_Network",
+    "Physical_Security",
+    "Attendance_Record",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Engineering & Construction",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP002",
+    "EMP005",
+    "EMP063",
+    "EMP101",
+    "EMP008"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP002",
+     "EMP005"
+    ],
+    [
+     "EMP005",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "GREY-RIG-01",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "critical",
+   "titleTH": "ฮั้วประมูลวัสดุก่อสร้างกับผู้รับเหมารายเดียว",
+   "descriptionTH": "พบสัญญาณการฮั้วประมูล: ผู้รับเหมา 3 รายที่ยื่นซองราคาแตกต่างกันน้อยกว่า 1% ติดต่อกัน 4 โครงการ ฝ่ายจัดซื้อ (EMP101) กับฝ่ายก่อสร้าง (EMP063) ถูกสงสัยว่าล็อกสเปกวัสดุให้ผู้รับเหมารายที่ \"รู้จัก\" เอกสารซองประมูลถูกเข้าถึงก่อนวันเปิดซองผ่านอีเมลส่วนตัวของเจ้าหน้าที่จัดซื้อ 1 ราย",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "IT_Ticket_Log",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Engineering & Construction",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP101",
+    "EMP063",
+    "EMP102",
+    "EMP005"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP101",
+     "EMP063"
+    ],
+    [
+     "EMP101",
+     "EMP102"
+    ]
+   ],
+   "financialImpactTHB": 8500000,
+   "resolutionStatus": "Under audit",
+   "recurring": true,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-RIG-02",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ใบเสนอราคา \"แฝด\" จากผู้รับเหมา 2 รายที่อยู่เบื้องหลังคนเดียวกัน",
+   "descriptionTH": "ฝ่ายการเงินตรวจพบว่าใบเสนอราคาของผู้รับเหมา 2 ราย มีเลขที่บัญชีธนาคารเดียวกัน ตรวจสอบลึกพบว่าทั้งสองบริษัทจดทะเบียนโดยญาติของหัวหน้าฝ่ายจัดซื้อ ฝ่ายกฎหมายได้รับเรื่องแต่คดียังไม่คืบ เพราะหลักฐาน \"ยังไม่แข็งพอ\"",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Finance & Accounting",
+    "Legal"
+   ],
+   "suggestedParticipants": [
+    "EMP101",
+    "EMP125",
+    "EMP147",
+    "EMP105"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP101",
+     "EMP125"
+    ]
+   ],
+   "financialImpactTHB": 5600000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "GREY-RIG-03",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "สเปกวัสดุถูกเขียนให้ตรงกับยี่ห้อเดียว — Sales รับรู้แต่เงียบ",
+   "descriptionTH": "เอกสาร BOQ ของโครงการบ้านจัดสรรถูกแก้ไขให้ระบุยี่ห้อวัสดุเฉพาะเจาะจง ทีมขายรับรู้ถึง \"สเปกล็อก\" แต่ไม่กล้าทักเพราะเกรงใจผู้บริหารสายก่อสร้าง วิศวกรออกแบบ (EMP046) ตั้งข้อสังเกตในบันทึกภายในแต่ถูกเพิกเฉย",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture",
+    "Procurement & Warehouse",
+    "Engineering & Construction",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP046",
+    "EMP061",
+    "EMP101",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP046",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 3200000,
+   "resolutionStatus": "Under audit",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "GREY-RIG-04",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "critical",
+   "titleTH": "เงินใต้โต๊ะ \"ค่าน้ำร้อนน้ำชา\" ให้ผู้รับเหมา",
+   "descriptionTH": "พบหลักฐานการเบิกค่าใช้จ่าย \"ค่าน้ำร้อนน้ำชา\" จำนวน 78 รายการในงบโครงการ ที่จริงเป็นการอำพรางการจ่ายเงินให้ผู้รับเหมาเพื่อเร่งงาน ฝ่ายจัดซื้อและหัวหน้าโครงการก่อสร้างร่วมกันลงนามอนุมัติ ฝ่ายตรวจสอบภายในตั้งข้อสังเกตแล้ว 2 ครั้ง",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP101",
+    "EMP063",
+    "EMP064",
+    "EMP107"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP101",
+     "EMP064"
+    ],
+    [
+     "EMP063",
+     "EMP064"
+    ]
+   ],
+   "financialImpactTHB": 4800000,
+   "resolutionStatus": "Under audit",
+   "recurring": true,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-DATA-01",
+   "category": "grey_area_collusion",
+   "period": "2023",
+   "riskLevel": "critical",
+   "titleTH": "ข้อมูลลูกค้า 12,000 รายรั่วไหลจากระบบ CRM",
+   "descriptionTH": "พบการส่งออกข้อมูลลูกค้าจาก CRM ไปยังอีเมลส่วนตัว ผ่านเครื่องของพนักงานขาย (EMP025) และมีหลักฐานว่า IT Support (EMP145) ปลดล็อกสิทธิ์การเข้าถึงให้โดยไม่ผ่านอนุมัติ ข้อมูลถูกเสนอขายในกลุ่มลับออนไลน์ ฝ่ายกฎหมายและ IT เร่งตรวจสอบ ยังไม่ระบุผู้อยู่เบื้องหลังระดับสูง",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "IT",
+    "Legal"
+   ],
+   "suggestedParticipants": [
+    "EMP025",
+    "EMP145",
+    "EMP143",
+    "EMP147",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP025",
+     "EMP145"
+    ],
+    [
+     "EMP143",
+     "EMP145"
+    ]
+   ],
+   "financialImpactTHB": 20000000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-DATA-02",
+   "category": "grey_area_collusion",
+   "period": "2023",
+   "riskLevel": "critical",
+   "titleTH": "ฝ่ายขายขายฐานข้อมูลลูกค้าเก่าให้บริษัทนายหน้า",
+   "descriptionTH": "Sales Manager (EMP008) สายเก่า ถูกสงสัยว่าส่งต่อฐานข้อมูลลูกค้าเก่าที่ \"หมดสัญญา\" ให้บริษัทนายหน้าอสังหาริมทรัพย์เพื่อแลกกับค่าคอมมิชชันนอกระบบ หลักฐานอยู่ในบันทึกการโทรและอีเมลที่ IT ยึดได้ — ความสัมพันธ์ระหว่างฝ่ายขายกับ IT ถึงจุดแตกหัก",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "IT_Ticket_Log",
+    "Compliance_Mandates",
+    "Grievance_Log",
+    "Expense_Reports"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "IT",
+    "Legal",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP008",
+    "EMP143",
+    "EMP147",
+    "EMP004"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP008",
+     "EMP143"
+    ],
+    [
+     "EMP004",
+     "EMP008"
+    ]
+   ],
+   "financialImpactTHB": 15000000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-DATA-03",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "การเข้าถึงแฟ้มข้อมูลพนักงานโดยไม่ได้รับอนุญาต",
+   "descriptionTH": "พบ log การเข้าถึงข้อมูลเงินเดือนพนักงานจากเครื่องของเจ้าหน้าที่ HR (EMP138) ในวันหยุดสุดสัปดาห์ จำนวน 4 ครั้ง ฝ่าย IT แจ้งเตือน แต่ HR Manager กลบเกลื่อนว่าเป็น \"งานด่วน\" — ความโปร่งใสของข้อมูลระดับ Tier 1 ถูกตั้งคำถาม (เชื่อมโยง POL-04)",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "Physical_Security"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "IT",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP138",
+    "EMP143",
+    "EMP135",
+    "EMP001"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP138",
+     "EMP143"
+    ],
+    [
+     "EMP135",
+     "EMP138"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Under audit",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "GREY-EXP-01",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "เบิกค่าเดินทางซ้ำซ้อนและค่าโรงแรมเกินจริง",
+   "descriptionTH": "พนักงานขายและฝ่ายก่อสร้างเบิกค่าเดินทาง-ค่าที่พักในงบโครงการหลายครั้ง โดยใช้ใบเสร็จจากโรงแรมเดียวกันแต่เลขที่ห้องต่างกัน เจ้าหน้าที่การเงิน (EMP132) พบรูปแบบการเบิกซ้ำของ 9 คน ฝ่ายการเงินส่งเรื่องให้ HR แต่เรื่องเงียบหายไป 2 เดือน",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Attendance_Record"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP012",
+    "EMP132",
+    "EMP125",
+    "EMP066"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP132",
+     "EMP012"
+    ]
+   ],
+   "financialImpactTHB": 1900000,
+   "resolutionStatus": "Under audit",
+   "recurring": true,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-EXP-02",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "critical",
+   "titleTH": "เบิกค่าน้ำมันเกินจริงด้วยใบเสร็จปลอมจากปั๊ม",
+   "descriptionTH": "พบใบเสร็จค่าน้ำมันของพนักงาน 14 คน ที่เลขที่ใบเสร็จเรียงต่อกันจากปั๊มเดียวกันทั้งที่อยู่คนละจังหวัด ฝ่ายจัดซื้อ (EMP111) รับทราบแต่ \"ช่วยทำให้เรียบร้อย\" ฝ่ายตรวจสอบภายในพบว่ามีการเบิกเกินจริงเฉลี่ย 40% ต่อเดือน",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "Timesheet_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Sales",
+    "Engineering & Construction",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP111",
+    "EMP026",
+    "EMP132",
+    "EMP101"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP111",
+     "EMP026"
+    ],
+    [
+     "EMP111",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 2800000,
+   "resolutionStatus": "Under audit",
+   "recurring": true,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-EXP-03",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "เบิกเงินทดรองจ่ายเกินจริงแล้วส่งเอกสารล่าช้า",
+   "descriptionTH": "เจ้าหน้าที่บางรายเบิกเงินทดรองจ่าย (advance) สูงกว่าค่าใช้จ่ายจริง 20-35% แล้วส่งเอกสารสรุปยอดล่าช้าเกิน 90 วัน ฝ่ายการเงิน (EMP127) ปล่อยผ่านเพราะ \"ทำตามคำสั่งหัวหน้า\" เงินส่วนต่างบางส่วนถูกโอนกลับเข้าบัญชีส่วนตัว",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Benefit_Claims"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting",
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP127",
+    "EMP126",
+    "EMP125",
+    "EMP107"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP127",
+     "EMP107"
+    ]
+   ],
+   "financialImpactTHB": 3600000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "GREY-FIN-01",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "critical",
+   "titleTH": "วางบิลซ้ำกับผู้รับเหมาปลอม (ghost vendor)",
+   "descriptionTH": "ฝ่ายการเงินตรวจพบผู้รับเหมาปลอม 2 รายที่รับเงินค่าวัสดุแต่ไม่มีการส่งของจริง จำนวน 11 ใบแจ้งหนี้ มูลค่ารวม 6.2 ล้านบาท ใบสั่งซื้อลงนามโดยเจ้าหน้าที่จัดซื้อ (EMP104) และอนุมัติโดยหัวหน้าฝ่ายจัดซื้อ (EMP101) — คดีอยู่ระหว่างการสอบสวนของฝ่ายกฎหมาย",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "IT_Ticket_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Finance & Accounting",
+    "Legal"
+   ],
+   "suggestedParticipants": [
+    "EMP104",
+    "EMP101",
+    "EMP125",
+    "EMP147"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP104",
+     "EMP101"
+    ],
+    [
+     "EMP101",
+     "EMP147"
+    ]
+   ],
+   "financialImpactTHB": 6200000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "GREY-FIN-02",
+   "category": "grey_area_collusion",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "การโอนเงินค่ามัดจำโครงการผิดบัญชี",
+   "descriptionTH": "พบการโอนเงินค่ามัดจำบ้านของลูกค้า 5 รายเข้าบัญชีที่ \"คล้าย\" บัญชีบริษัทแต่เลขบัญชีต่างกัน 1 หลัก ฝ่ายการเงิน (EMP128) รับทราบและแก้ไขช้าถึง 45 วัน ฝ่ายกฎหมายชี้ว่าอาจเข้าข่ายทุจริตภายใน — ฝ่ายการเงินกับฝ่ายกฎหมายขัดแย้งเรื่องการรายงานต่อ CEO",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting",
+    "Legal",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP128",
+    "EMP129",
+    "EMP147",
+    "EMP003"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP128",
+     "EMP129"
+    ]
+   ],
+   "financialImpactTHB": 4100000,
+   "resolutionStatus": "Under audit",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-01",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "สัญญาขายเกินสเปก — ขายบ้าน 4 ห้องนอนแต่แบบมี 3 ห้อง",
+   "descriptionTH": "ทีมขายเซ็นสัญญาขายบ้านพร้อมสระว่ายน้ำและห้องนอนพิเศษเกินแบบมาตรฐาน ฝ่ายก่อสร้างปฏิเสธไม่รับผิดชอบค่าใช้จ่ายเพิ่ม หัวหน้าโครงการ (EMP066) กับพนักงานขาย (EMP016) ประชุมกัน 5 ครั้งโดยไม่ข้อยุติ ลูกค้า 3 รายขู่ฟ้อง",
+   "affectedSheets": [
+    "Project_History",
+    "Grievance_Log",
+    "Collaboration_Network",
+    "Warning_Disciplinary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP016",
+    "EMP066",
+    "EMP063",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP016",
+     "EMP066"
+    ]
+   ],
+   "financialImpactTHB": 8900000,
+   "resolutionStatus": "Escalated to CEO",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "SVC-02",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ส่งมอบบ้านล่าช้า 6 เดือน — ฝ่ายขายโดนลูกค้าด่าแทน",
+   "descriptionTH": "งานโครงสร้างล่าช้าจากการขาดแคลนแรงงาน ฝ่ายขายต้องเจอลูกค้าที่โวยวายทุกวัน ขณะที่ฝ่ายก่อสร้างกล่าวหาฝ่ายขายว่า \"รับปากวันโอนเร็วเกินไป\" ทั้งสองฝ่ายส่งอีเมลตำหนิกันถึง CEO — วัฒนธรรมการ \"โยนความผิดข้ามแผนก\" กลายเป็นปกติ",
+   "affectedSheets": [
+    "Project_History",
+    "Grievance_Log",
+    "360_Feedback",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction",
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP009",
+    "EMP067",
+    "EMP113",
+    "EMP004"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP009",
+     "EMP067"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-03",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "งบประมาณเกิน 12% — ฝ่ายขายถูกสั่งห้าม \"แถมของ\"",
+   "descriptionTH": "ฝ่ายขายนิยมแถมเฟอร์นิเจอร์และเครื่องใช้ไฟฟ้าเพื่อปิดการขาย แต่ฝ่ายการเงิน-ก่อสร้างพบว่างบต่อหลังพุ่งเกิน 12% CEO ออกคำสั่งห้ามแถมของโดยไม่ผ่านอนุมัติ ฝ่ายขายอ้างว่ายอดขายตก — ความขัดแย้งระหว่างเป้ายอดขายกับวินัยงบประมาณ",
+   "affectedSheets": [
+    "Expense_Reports",
+    "KPI_OKR_History",
+    "Project_History",
+    "Warning_Disciplinary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP007",
+    "EMP063",
+    "EMP125",
+    "EMP004"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP007",
+     "EMP063"
+    ]
+   ],
+   "financialImpactTHB": 15000000,
+   "resolutionStatus": "Policy changed",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-04",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ช่างกับเซลส์โต้เถียงหน้างาน — มีคนดูถูกกันต่อหน้าลูกค้า",
+   "descriptionTH": "เกิดเหตุช่างหัวหน้าโครงการกับพนักงานขายทะเลาะกันเสียงดังกลางโมเดลบ้านตัวอย่าง ต่อหน้าลูกค้า เรื่องความรับผิดชอบงานแก้จุดรั่วซึม ฝ่าย HR ต้องเข้าไกล่เกลี่ย ลูกค้ารายนั้นยกเลิกการจอง — เหตุการณ์นี้ถูกบันทึกใน Grievance_Log ทั้ง 2 ฝ่าย",
+   "affectedSheets": [
+    "Grievance_Log",
+    "360_Feedback",
+    "Collaboration_Network",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP068",
+    "EMP017",
+    "EMP135",
+    "EMP113"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP068",
+     "EMP017"
+    ]
+   ],
+   "financialImpactTHB": 4200000,
+   "resolutionStatus": "Mediated by HR",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-05",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "แย่งงบ \"บ้านตัวอย่าง\" ระหว่างฝ่ายขายกับฝ่ายออกแบบ",
+   "descriptionTH": "งบการตกแต่งบ้านตัวอย่าง (showhouse) ปีละ 8 ล้านบาท ฝ่ายขายอยากได้สไตล์ \"ขายง่าย\" ฝ่ายออกแบบยืนยัน \"ตามเอกลักษณ์แบรนด์\" การประชุมตัดสินใจยืดเยื้อจนงานเปิดตัวล่าช้า 2 เดือน ฝ่ายการตลาดต้องหอบงานไปทำเองทั้งหมด",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Project_History",
+    "Collaboration_Network",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Design & Architecture",
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP044",
+    "EMP052",
+    "EMP035",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP044",
+     "EMP052"
+    ]
+   ],
+   "financialImpactTHB": 2600000,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-06",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ฝ่ายขายสั่งแก้แบบหน้างานโดยไม่ผ่านวิศวกร",
+   "descriptionTH": "พนักงานขายสัญญากับลูกค้าว่าจะย้ายตำแหน่งห้องน้ำโดยไม่แจ้งฝ่ายออกแบบ งานโครงสร้างทำไปแล้วครึ่งหนึ่ง ต้องรื้อทิ้งและทำใหม่ วิศวกรออกแบบ (EMP047) โกรธมาก ยื่นเรื่องถึงหัวหน้าฝ่าย ฝ่ายขายอ้างว่า \"ลูกค้าคิง\" — เหตุการณ์นี้ทำให้เกิดระเบียบ \"ห้ามแก้แบบโดยพลการ\" ฉบับใหม่",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Collaboration_Network",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Design & Architecture",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP047",
+    "EMP018",
+    "EMP045",
+    "EMP066"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP047",
+     "EMP018"
+    ]
+   ],
+   "financialImpactTHB": 3400000,
+   "resolutionStatus": "Policy changed",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-07",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "การเคลมประกันวัสดุ — ฝ่ายขายกับฝ่ายบริการลูกค้าโต้กัน",
+   "descriptionTH": "ลูกค้าเคลมกระเบื้องแตกหลังรับบ้าน ฝ่ายบริการลูกค้า (EMP118) ส่งเรื่องให้ฝ่ายก่อสร้างซ่อม ฝ่ายก่อสร้างปัดว่าเป็น \"ความเสียหายจากผู้ใช้\" ฝ่ายขายที่ขายบ้านให้ลูกค้ารายนั้นถูกดึงเข้ามาเป็นแพะ เกิดสามเส้า Sales-Construction-Customer Service",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Project_History",
+    "Collaboration_Network",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction",
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP118",
+    "EMP069",
+    "EMP113",
+    "EMP016"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP118",
+     "EMP069"
+    ]
+   ],
+   "financialImpactTHB": 1200000,
+   "resolutionStatus": "Resolved with warranty",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "SVC-08",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "critical",
+   "titleTH": "สัญญารับงานเกินกำลังของฝ่ายผลิต — ยอด backlog ล้น",
+   "descriptionTH": "ฝ่ายขายเซ็นสัญญาโครงการใหม่ 6 โครงการในปีเดียว ขณะที่ฝ่ายก่อสร้างรับกำลังผลิตได้เพียง 3 โครงการ เกิด backlog ล้นและคุณภาพงานตกลง ฝ่ายก่อสร้างกล่าวหาฝ่ายขายว่า \"ขายเพื่อโบนัส\" ฝ่ายขายกล่าวหาฝ่ายก่อสร้างว่า \"ทำงานช้า\" CEO ต้องตั้งคณะกรรมการจัดลำดับโครงการ",
+   "affectedSheets": [
+    "Project_History",
+    "KPI_OKR_History",
+    "Warning_Disciplinary_History",
+    "Succession_Planning"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP004",
+    "EMP005",
+    "EMP063",
+    "EMP007",
+    "EMP002"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP004",
+     "EMP005"
+    ],
+    [
+     "EMP002",
+     "EMP004"
+    ]
+   ],
+   "financialImpactTHB": 38000000,
+   "resolutionStatus": "CEO taskforce",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "SVC-09",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "การแย่งเครดิตโครงการสำเร็จ",
+   "descriptionTH": "โครงการที่แล้วเสร็จตรงเวลารายแรกในรอบ 2 ปี ฝ่ายขายแถลงว่า \"ขายดีจนก่อสร้างเสร็จไว\" ฝ่ายก่อสร้างยืนยันว่า \"วางแผนงานดี\" ทั้งสองฝ่ายแย่งเครดิตในที่ประชุมจน CEO ต้องตัดบท — ฝ่ายที่ \"พ่าย\" เริ่มสะสมความอึดอัด",
+   "affectedSheets": [
+    "360_Feedback",
+    "Collaboration_Network",
+    "Employee_Engagement",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP007",
+    "EMP064",
+    "EMP004",
+    "EMP005"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP007",
+     "EMP064"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Resolved informally",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "SVC-10",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "พนักงานขายถูกห้ามเข้าพื้นที่หน้างานก่อสร้าง",
+   "descriptionTH": "หัวหน้าคนงานสั่งห้ามพนักงานขายเข้าพื้นที่ไซต์งานหลังเกิดเหตุเกือบถูกรถโฟล์คลิฟต์ชน ฝ่ายขายมองว่าเป็นการกีดกันไม่ให้ \"เห็นงานจริง\" ฝ่ายก่อสร้างยืนยันเรื่องความปลอดภัย เกิดข้อตกลงให้เข้าพื้นที่ได้เฉพาะวันที่มีผู้ควบคุม — ความสัมพันธ์ยังระแวงกัน",
+   "affectedSheets": [
+    "Physical_Security",
+    "Grievance_Log",
+    "Collaboration_Network",
+    "Attendance_Record"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP019",
+    "EMP070",
+    "EMP063",
+    "EMP008"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP019",
+     "EMP070"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Resolved with rule",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "XDEPT-01",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "IT กับฝ่ายขาย: ระบบ CRM ล่มช่วงปิดการขาย",
+   "descriptionTH": "ระบบ CRM ล่ม 2 วันในช่วงโปรโมชันเปิดตัวโครงการใหม่ ฝ่ายขายสูญเสียโอกาสปิดการขาย 14 ราย ฝ่าย IT อ้างว่าเป็นการอัปเกรดที่ฝ่ายขายร้องขอเอง ฝ่ายขายกล่าวหาว่า IT วางแผนไม่ดี เกิดการประชุม \"ฟาดฟัน\" ต่อหน้าผู้บริหาร ฝ่าย IT โดนตัดงบอัปเกรดครึ่งปี",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "KPI_OKR_History",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP145",
+    "EMP012",
+    "EMP143",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP145",
+     "EMP012"
+    ]
+   ],
+   "financialImpactTHB": 5800000,
+   "resolutionStatus": "Resolved with SLA",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-02",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ฝ่ายการเงินกับฝ่ายจัดซื้อ: งดจ่ายหนี้ผู้รับเหมา 90 วัน",
+   "descriptionTH": "ฝ่ายการเงินออกนโยบายชะลอการจ่ายหนี้ผู้รับเหมา 90 วัน เพื่อบริหารสภาพคล่อง ฝ่ายจัดซื้อเจอผู้รับเหมาโวยวายและขู่จะหยุดงาน เกิดความขัดแย้งระหว่างนโยบายการเงินกับความสัมพันธ์ซัพพลายเออร์ — ผู้รับเหมารายหลัก 2 รายขึ้นราคา 8% ในปีถัดมา",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates",
+    "Collaboration_Network",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting",
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP125",
+    "EMP101",
+    "EMP102",
+    "EMP003"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP125",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 9500000,
+   "resolutionStatus": "Policy adjusted",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-03",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "HR กับฝ่ายก่อสร้าง: การ์ดเข้างานช่างไม่ตรงเวลา",
+   "descriptionTH": "ฝ่าย HR ตรวจพบว่าช่างหน้างานสแกนการ์ดเข้าออฟฟิศล่าช้าเป็นประจำ ฝ่ายก่อสร้างโต้แย้งว่าช่างต้องอยู่หน้างานตั้งแต่เช้า ไม่ได้เข้าออฟฟิศ ระบบการจับเวลาที่ออกแบบเพื่อออฟฟิศไม่เหมาะกับงานหน้างาน — ฝ่าย HR ถูกมองว่า \"ไม่เข้าใจงานก่อสร้าง\"",
+   "affectedSheets": [
+    "Attendance_Record",
+    "Timesheet_Log",
+    "Grievance_Log",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP141",
+    "EMP070",
+    "EMP063"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP135",
+     "EMP070"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-04",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ฝ่ายออกแบบกับฝ่ายจัดซื้อ: วัสดุสเปกต่ำกว่าแบบ",
+   "descriptionTH": "ฝ่ายออกแบบพบว่าวัสดุที่จัดซื้อส่งมาโครงการเป็นเกรดต่ำกว่าแบบ 2 ระดับ ฝ่ายจัดซื้ออ้างว่า \"งบไม่พอ เปลี่ยนให้เหมาะสม\" ฝ่ายออกแบบยืนยันว่าคุณภาพบ้านจะเสียชื่อเสียง เกิดการเรียกประชุมด่วน ฝ่ายจัดซื้อถูกสั่งเปลี่ยนวัสดุคืน แต่งบประมาณส่วนต่างถูกหักจากฝ่ายออกแบบ",
+   "affectedSheets": [
+    "Project_History",
+    "Compliance_Mandates",
+    "Warning_Disciplinary_History",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture",
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP048",
+    "EMP103",
+    "EMP101",
+    "EMP045"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP048",
+     "EMP103"
+    ]
+   ],
+   "financialImpactTHB": 2100000,
+   "resolutionStatus": "Resolved with swap",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-05",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ฝ่ายการตลาดกับฝ่ายขาย: งบโฆษณาไม่ตรงกลุ่มเป้าหมาย",
+   "descriptionTH": "ฝ่ายการตลาดทุ่มงบโฆษณาดิจิทัลไปที่กลุ่มคนรุ่นใหม่ ฝ่ายขายบอกว่าลูกค้าจริงเป็นครอบครัววัย 40+ เกิดการแย่งงบและการโทษกันเรื่องยอดขายที่ไม่เข้าเป้า ฝ่ายการตลาดเก็บสถิติโต้แย้ง ฝ่ายขายไม่ยอมรับ ต้องให้ CEO ตัดสินใจ",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "Expense_Reports",
+    "Collaboration_Network",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Marketing",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP036",
+    "EMP013",
+    "EMP035",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP036",
+     "EMP013"
+    ]
+   ],
+   "financialImpactTHB": 3800000,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-06",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "ฝ่ายกฎหมายกับฝ่ายขาย: สัญญาที่ \"รีบเซ็น\"",
+   "descriptionTH": "ฝ่ายขายเซ็น MOU กับนักลงทุนรายใหญ่โดยไม่ผ่านฝ่ายกฎหมายตรวจทาน ฝ่ายกฎหมายพบข้อผูกมัดที่บริษัทรับความเสี่ยงสูงเกินไป ฝ่ายขายอ้างว่าต้องรีบปิดดีล เกิดการทะเลาะกันเรื่องกระบวนการ ฝ่ายกฎหมายสั่งระงับ MOU ชั่วคราว — ดีลเกือบหลุด",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Legal",
+    "Sales",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP148",
+    "EMP014",
+    "EMP147",
+    "EMP004"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP148",
+     "EMP014"
+    ]
+   ],
+   "financialImpactTHB": 25000000,
+   "resolutionStatus": "Resolved with renegotiation",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "XDEPT-07",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายบริการลูกค้ากับฝ่ายการเงิน: ค่าปรับล่าช้าที่ \"ไม่ได้มาตรฐาน\"",
+   "descriptionTH": "ฝ่ายบริการลูกค้าเจรจาลดค่าปรับล่าช้าให้ลูกค้าบางรายโดยพลการ ฝ่ายการเงินไม่ยอมรับการลดหนี้โดยไม่ผ่านกระบวนการ เกิดความเห็นต่างเรื่อง \"สิทธิ์การให้ส่วนลด\" — ระเบียบใหม่ถูกเขียนขึ้นโดยระบุผู้มีอำนาจลดหนี้ชัดเจน",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Compliance_Mandates",
+    "360_Feedback",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Customer Service & Warranty",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP114",
+    "EMP130",
+    "EMP113",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP114",
+     "EMP130"
+    ]
+   ],
+   "financialImpactTHB": 1500000,
+   "resolutionStatus": "Policy clarified",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "XDEPT-08",
+   "category": "cross_dept_conflict",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ฝ่ายสนับสนุนออฟฟิศกับทุกแผนก: เรื่องห้องประชุมและรถบริษัท",
+   "descriptionTH": "การจองรถบริษัทและห้องประชุมไม่เป็นระบบ ฝ่ายสนับสนุน (EMP150, EMP149) ถูกทุกแผนกรุมตำหนิ ฝ่ายสนับสนุนฟ้องกลับว่า \"ไม่มีระบบจากฝ่าย IT\" เกิดการสะสมความเครียดของพนักงานสนับสนุน 2 คน จน HR ต้องจัดอบรมการจัดการความขัดแย้ง",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Employee_Engagement",
+    "IT_Ticket_Log",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Office Support",
+    "IT",
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP149",
+    "EMP150",
+    "EMP146",
+    "EMP135"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP149",
+     "EMP146"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-EN-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "อุบัติเหตุหน้างาน: ช่างพลัดตกนั่งร้านได้รับบาดเจ็บ",
+   "descriptionTH": "พนักงานช่าง (EMP071) พลัดตกจากนั่งร้านสูง 3 เมตรที่โครงการบ้านจัดสรร กระดูกข้อมือหัก ฝ่ายความปลอดภัยพบว่าการคาดเข็มขัดนิรภัยไม่ครบถ้วน ฝ่ายก่อสร้างถูกตักเตือนและต้องจัดอบรมความปลอดภัยซ้ำ งานหยุด 1 สัปดาห์เพื่อตรวจสอบ",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Attendance_Record",
+    "Compliance_Mandates",
+    "Learning_Development"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP071",
+    "EMP063",
+    "EMP066"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP071",
+     "EMP066"
+    ]
+   ],
+   "financialImpactTHB": 1800000,
+   "resolutionStatus": "Resolved with retraining",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-EN-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "งานเทคอนกรีตผิดพลาด ต้องรื้อและเทใหม่ทั้งชั้น",
+   "descriptionTH": "ทีมช่างเทคอนกรีตผิดระดับชั้น 2 หลัง ตรวจพบหลังงานเซ็ตตัวแล้ว ต้องรื้อทิ้งและเทใหม่ ค่าใช้จ่ายเกินงบ 2.1 ล้านบาท หัวหน้าโครงการ (EMP072) รับผิดชอบโดยหักโบนัส — เกิดความไม่พอใจในทีมช่างที่มองว่าเป็นการ \"ลงโทษคนเดียวทั้งทีม\"",
+   "affectedSheets": [
+    "Project_History",
+    "Expense_Reports",
+    "Warning_Disciplinary_History",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP072",
+    "EMP073",
+    "EMP063"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP072",
+     "EMP073"
+    ]
+   ],
+   "financialImpactTHB": 2100000,
+   "resolutionStatus": "Resolved",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-SA-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "พนักงานขายยักยอกเงินดาวน์ลูกค้า 3 ราย",
+   "descriptionTH": "พนักงานขาย (EMP020) รับเงินดาวน์ลูกค้าด้วยตัวเองโดยไม่ออกใบเสร็จระบบ 3 ราย มูลค่า 890,000 บาท แล้วไม่นำส่งบริษัท ฝ่ายการเงินตรวจพบจากยอดลูกหนี้ค้าง ถูกเลิกจ้างและแจ้งความ — ฝ่ายขายถูกตั้งคำถามเรื่องการควบคุมเงินสด",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Grievance_Log",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP020",
+    "EMP009",
+    "EMP004"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP020",
+     "EMP009"
+    ]
+   ],
+   "financialImpactTHB": 890000,
+   "resolutionStatus": "Terminated + legal",
+   "recurring": false,
+   "logRowExpansion": 4
+  },
+  {
+   "eventId": "DEPT-SA-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "เซลส์แย่งลูกค้ากันเองในสาขาเดียวกัน",
+   "descriptionTH": "พนักงานขาย 2 คน (EMP015, EMP021) แย่งเครดิตลูกค้ารายเดียวกันจนเกิดการทะเลาะกันต่อหน้าลูกค้า ฝ่ายบริหารสาขาต้องตัดสินให้แบ่งคอมมิชชันครึ่งต่อครึ่ง เกิดวัฒนธรรมการแย่งลูกค้าในทีมที่ HR ต้องเข้าไปจัดอบรมจริยธรรมการขาย",
+   "affectedSheets": [
+    "Grievance_Log",
+    "360_Feedback",
+    "Collaboration_Network",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP015",
+    "EMP021",
+    "EMP009"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP015",
+     "EMP021"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Mediated",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-PW-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "วัสดุของหายจากคลัง — นับสต็อกไม่ตรง",
+   "descriptionTH": "การตรวจนับสต็อกพบวัสดุเหล็กเส้นและลวดหายไปคิดเป็นมูลค่า 1.4 ล้านบาท เจ้าหน้าที่คลัง (EMP108) ถูกสอบสวน ยังไม่พบตัวผู้กระทำ ฝ่ายจัดซื้อปรับปรุงระบบการเบิก-จ่าย แต่ช่องโหว่การเบิกเกินยังมีในบางรายการ",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "IT_Asset_Register",
+    "Expense_Reports",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP108",
+    "EMP107",
+    "EMP101"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP108",
+     "EMP107"
+    ]
+   ],
+   "financialImpactTHB": 1400000,
+   "resolutionStatus": "Under investigation",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-PW-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "สั่งวัสดุผิดแบบ — จัดซื้อด่วนแต่ได้ของใช้ไม่ได้",
+   "descriptionTH": "เจ้าหน้าที่จัดซื้อ (EMP105) สั่งท่อ PVC ผิดขนาด เนื่องจากสับสนรหัสสินค้า ส่งผลให้งานประปาโครงการล่าช้า 3 สัปดาห์ ฝ่ายก่อสร้างไม่พอใจอย่างมาก ฝ่ายจัดซื้อถูกเรียกประชุมและต้องเขียน SOP การตรวจสอบรหัสวัสดุใหม่",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Expense_Reports",
+    "Learning_Development"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP105",
+    "EMP101",
+    "EMP063"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP105",
+     "EMP101"
+    ]
+   ],
+   "financialImpactTHB": 960000,
+   "resolutionStatus": "Resolved with SOP",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-DA-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "แบบบ้านผิดพลาด — วิศวกรออกแบบพลาดคำนวณน้ำหนัก",
+   "descriptionTH": "ทีมออกแบบ (EMP049) คำนวณน้ำหนักคานผิดพลาดในแบบบ้าน 2 ชั้น ตรวจพบระหว่างการก่อสร้าง ต้องเสริมเหล็กและค้ำยันเพิ่ม งานล่าช้า 1 เดือน ฝ่ายออกแบบถูกตั้งกรรมการสอบ เกิดการตำหนิภายในทีมว่าใคร \"พลาด\" กันแน่",
+   "affectedSheets": [
+    "Project_History",
+    "Warning_Disciplinary_History",
+    "Collaboration_Network",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture"
+   ],
+   "suggestedParticipants": [
+    "EMP049",
+    "EMP050",
+    "EMP045"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP049",
+     "EMP050"
+    ]
+   ],
+   "financialImpactTHB": 1500000,
+   "resolutionStatus": "Resolved with redesign",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-DA-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ทีมออกแบบส่งแบบล่าช้าประจำ — ฝ่ายก่อสร้างรอแบบ",
+   "descriptionTH": "ทีมออกแบบมีประวัติส่งแบบล่าช้าเฉลี่ย 12 วัน/แบบ ฝ่ายก่อสร้างต้องหยุดรอแบบและเบิกค่าแรงงานเปล่า ฝ่ายออกแบบอ้างว่างานล้นและคนไม่พอ เกิดการโต้เถียงในที่ประชุมโครงการ ฝ่ายบริหารต้องจ้างสถาปนิกฟรีแลนซ์เสริม",
+   "affectedSheets": [
+    "Project_History",
+    "Timesheet_Log",
+    "KPI_OKR_History",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture"
+   ],
+   "suggestedParticipants": [
+    "EMP051",
+    "EMP046",
+    "EMP045"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP051",
+     "EMP046"
+    ]
+   ],
+   "financialImpactTHB": 780000,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-FA-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "high",
+   "titleTH": "เจ้าหน้าที่การเงินทำยอด GL ไม่ลงตัว — งบปิดช้า",
+   "descriptionTH": "ยอดบัญชีแยกประเภท (GL) ไม่ลงตัวในงบรายเดือน 3 เดือนติดต่อกัน ฝ่ายการเงิน (EMP130) ถูกกดดันจาก CFO เจ้าหน้าที่อ้างว่าระบบ ERP เก่าและข้อมูลจากฝ่ายขายไม่ตรง เกิดการตำหนิกันข้ามแผนก ต้องจ้างผู้สอบบัญชีภายนอกมาตรวจ",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "KPI_OKR_History",
+    "Compliance_Mandates",
+    "IT_Ticket_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP130",
+    "EMP131",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP130",
+     "EMP131"
+    ]
+   ],
+   "financialImpactTHB": 1200000,
+   "resolutionStatus": "Resolved with audit",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-FA-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การเบิกค่าสวัสดิการพนักงานเกินสิทธิ์",
+   "descriptionTH": "พบพนักงาน 6 คนเบิกค่าทำฟันและค่ารักษาพยาบาลเกินวงเงินสิทธิ์ประจำปี โดยใช้ใบเสร็จจากคลินิกเดียวกัน ฝ่ายการเงินตรวจพบและเรียกเก็บเงินคืน — ฝ่าย HR ถูกตำหนิว่าไม่ตรวจสอบสิทธิ์ก่อนจ่าย",
+   "affectedSheets": [
+    "Benefit_Claims",
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Expense_Reports"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP133",
+    "EMP134",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP133",
+     "EMP134"
+    ]
+   ],
+   "financialImpactTHB": 420000,
+   "resolutionStatus": "Resolved with clawback",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-HR-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ข้อมูลเงินเดือนรั่วภายในฝ่าย HR",
+   "descriptionTH": "ข้อมูลเงินเดือนของพนักงาน 30 คนถูกส่งผิดกลุ่มไลน์ภายในฝ่าย HR โดยเจ้าหน้าที่ (EMP139) ฝ่าย HR ถูกตั้งกรรมการสอบ ต้องปรับกระบวนการส่งเอกสาร เกิดความไม่ไว้วางใจเรื่องการรักษาความลับ — ข้อมูล Tier 1 ถูกลดระดับการเชื่อถือ",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "IT_Ticket_Log",
+    "Compliance_Mandates",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP139",
+    "EMP140",
+    "EMP135"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP139",
+     "EMP140"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Resolved with process",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-HR-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "กระบวนการสรรหาล่าช้า — แผนกอื่นรอคน",
+   "descriptionTH": "การสรรหาพนักงานใหม่ใช้เวลาเฉลี่ย 4.5 เดือน สูงกว่าเกณฑ์ 2 เดือน ฝ่ายก่อสร้างและฝ่ายขายขาดคนมานาน ฝ่าย HR ถูกตำหนิในที่ประชุมผู้บริหารว่า \"คัดคนช้า\" เกิดความตึงเครียดระหว่าง HR กับแผนกปฏิบัติการ",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "Onboarding_Journey",
+    "360_Feedback",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP136",
+    "EMP137",
+    "EMP135"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP136",
+     "EMP137"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-IT-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "เซิร์ฟเวอร์แฟ้มข้อมูลล่ม 8 ชั่วโมง",
+   "descriptionTH": "เซิร์ฟเวอร์ไฟล์หลักล่มช่วงบ่าย ไฟล์งานของฝ่ายออกแบบและฝ่ายการเงินเข้าไม่ถึง 8 ชั่วโมง งานส่งแบบและการปิดงบเลื่อน ฝ่าย IT (EMP144) ใช้เวลากู้ระบบนานกว่าคาด เกิดการประชุม \"ล้างบาง\" เรื่องการสำรองข้อมูล",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "Project_History",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT"
+   ],
+   "suggestedParticipants": [
+    "EMP144",
+    "EMP146",
+    "EMP143"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP144",
+     "EMP146"
+    ]
+   ],
+   "financialImpactTHB": 950000,
+   "resolutionStatus": "Resolved with failover",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-IT-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ลิขสิทธิ์ซอฟต์แวร์เกินจำนวนที่ซื้อ",
+   "descriptionTH": "การตรวจสอบลิขสิทธิ์พบว่ามีการติดตั้งซอฟต์แวร์ดีไซน์เกินจำนวน license ที่ซื้อไว้ 5 รายการ ฝ่าย IT ต้องเร่งซื้อ license เพิ่มก่อนการตรวจจากเจ้าของลิขสิทธิ์ ฝ่ายการเงินไม่พอใจที่ต้องจ่ายงบไม่ทันวางแผน",
+   "affectedSheets": [
+    "Software_Licenses",
+    "IT_Asset_Register",
+    "Expense_Reports",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT"
+   ],
+   "suggestedParticipants": [
+    "EMP145",
+    "EMP143",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP145",
+     "EMP143"
+    ]
+   ],
+   "financialImpactTHB": 680000,
+   "resolutionStatus": "Resolved (license purchased)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-MK-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "แคมเปญโฆษณา \"หลุด\" เนื้อหาเกินจริง ถูกหน่วยงานกำกับดูแลเตือน",
+   "descriptionTH": "แคมเปญโฆษณาบ้าน \"เริ่มต้น 0 บาท\" ถูกหน่วยงานกำกับดูแลและสมาคมผู้บริโภคตั้งข้อสังเกตเรื่องเงื่อนไขไม่ครบถ้วน ฝ่ายการตลาด (EMP038) ถูกสั่งแก้โฆษณา ฝ่ายกฎหมายถูกดึงเข้ามาตรวจเนื้อหาก่อนเผยแพร่ตั้งแต่นั้น — เสียชื่อเสียงและงบโฆษณา",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "Compliance_Mandates",
+    "Expense_Reports",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP038",
+    "EMP037",
+    "EMP035"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP038",
+     "EMP037"
+    ]
+   ],
+   "financialImpactTHB": 1100000,
+   "resolutionStatus": "Resolved (revised ad)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "DEPT-MK-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "CRM Event ผิดพลาด — ลงทะเบียนลูกค้าซ้ำซ้อน",
+   "descriptionTH": "งานเปิดตัวโครงการใช้ระบบลงทะเบียน CRM ที่ข้อมูลลูกค้าซ้ำซ้อนและสูญหาย ฝ่ายขายเก็บข้อมูลลูกค้าไม่ได้ 80 ราย ฝ่ายการตลาด (EMP043) กับฝ่าย IT ต้องรีบแก้ระบบกลางงาน — ความร่วมมือข้ามแผนกแบบกะทันหันที่ตึงเครียด",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "KPI_OKR_History",
+    "Collaboration_Network",
+    "Sales"
+   ],
+   "suggestedCounterpartDepts": [
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP043",
+    "EMP044",
+    "EMP035"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP043",
+     "EMP044"
+    ]
+   ],
+   "financialImpactTHB": 560000,
+   "resolutionStatus": "Resolved",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-CS-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ลูกค้าโวยศูนย์บริการ — พนักงานบริการโดนด่าหนัก",
+   "descriptionTH": "ลูกค้าร้องเรียนเรื่องงานซ่อมล่าช้า พนักงานคอลเซ็นเตอร์ (EMP123) โดนลูกค้าตำหนิรุนแรงต่อเนื่อง เกิดอาการหมดไฟ ฝ่ายบริการลูกค้าแจ้ง HR ขอเพิ่มพนักงานแต่ไม่ได้รับการจัดสรร — ความเครียดสะสมในทีม",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Employee_Engagement",
+    "Attendance_Record",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP123",
+    "EMP124",
+    "EMP113"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP123",
+     "EMP124"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-CS-02",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "เคลมประกันหลังขายเกินจริงจากฝ่ายบริการ",
+   "descriptionTH": "ฝ่ายบริการลูกค้าอนุมัติการเคลมประกันหลังการขายเกินวงเงินโดยไม่ผ่านฝ่ายการเงิน หลายรายการ ฝ่ายการเงินตรวจพบและตั้งคำถาม เกิดการโต้เถียงเรื่อง \"สิทธิ์อนุมัติ\" ระหว่างสองฝ่าย",
+   "affectedSheets": [
+    "Benefit_Claims",
+    "Compliance_Mandates",
+    "Grievance_Log",
+    "Expense_Reports"
+   ],
+   "suggestedCounterpartDepts": [
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP119",
+    "EMP120",
+    "EMP113"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP119",
+     "EMP120"
+    ]
+   ],
+   "financialImpactTHB": 730000,
+   "resolutionStatus": "Policy clarified",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-LG-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ทนายความพลาดกำหนดยื่นเอกสารศาล 1 คดี",
+   "descriptionTH": "เจ้าหน้าที่กฎหมาย (EMP148) พลาดกำหนดยื่นคำให้การในคดีลูกค้าฟ้อง ต้องยื่นคำร้องขยายเวลา ฝ่ายกฎหมายถูกฝ่ายขายตำหนิว่า \"ไม่จริงจัง\" — สร้างความไม่มั่นใจในทีมกฎหมายที่เล็กที่สุดในองค์กร",
+   "affectedSheets": [
+    "Warning_Disciplinary_History",
+    "Grievance_Log",
+    "Compliance_Mandates",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Legal"
+   ],
+   "suggestedParticipants": [
+    "EMP148",
+    "EMP147"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP148",
+     "EMP147"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Resolved (extension filed)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-OS-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "แม่บ้านโดนกล่าวหาลักของในห้องประชุม",
+   "descriptionTH": "พนักงานทำความสะอาด (EMP149) ถูกกล่าวหาว่านำของในห้องประชุมหาย เจ้าหน้าที่พบของในลิ้นชักโต๊ะอื่น ฝ่าย HR ต้องไกล่เกลี่ยและขอโทษพนักงาน เกิดความอึดอัดระหว่างฝ่ายสนับสนุนกับฝ่ายอื่น",
+   "affectedSheets": [
+    "Grievance_Log",
+    "Physical_Security",
+    "360_Feedback",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Office Support"
+   ],
+   "suggestedParticipants": [
+    "EMP149",
+    "EMP141",
+    "EMP135"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP149",
+     "EMP141"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Resolved (apology)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "DEPT-EX-01",
+   "category": "dept_negative",
+   "period": "ongoing",
+   "riskLevel": "medium",
+   "titleTH": "ผู้บริหารประชุมนอกเวลาบ่อย — เลขาฯ ลางานสะสม",
+   "descriptionTH": "ผู้บริหารระดับ C-Level นัดประชุมฉุกเฉินนอกเวลางานบ่อยครั้ง เลขานุการบริหาร (EMP006) และทีมผู้ช่วยเริ่มสะสมความเหนื่อยล้า ลางานเพิ่มขึ้น HR เตือนเรื่อง work-life balance แต่ผู้บริหารยังคงพฤติกรรมเดิม",
+   "affectedSheets": [
+    "Attendance_Record",
+    "Employee_Engagement",
+    "Timesheet_Log",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP006",
+    "EMP001"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP006",
+     "EMP001"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-01",
+   "category": "positive",
+   "period": "2024",
+   "riskLevel": "low",
+   "titleTH": "โครงการบ้านจัดสรร \"พฤกษาวิลล์\" ส่งมอบตรงเวลารายแรกในรอบ 2 ปี",
+   "descriptionTH": "ทีมขาย-ก่อสร้าง-ออกแบบร่วมมือกันอย่างลงตัวในโครงการพฤกษาวิลล์ ส่งมอบบ้านครบ 120 หลังตรงกำหนดเวลา ทีมงานได้รับรางวัลทีมยอดเยี่ยมประจำปี CEO กล่าวชื่นชมในงานปีใหม่บริษัท — จุดสว่างในความสัมพันธ์ข้ามแผนก",
+   "affectedSheets": [
+    "Project_History",
+    "KPI_OKR_History",
+    "360_Feedback",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "Design & Architecture"
+   ],
+   "suggestedParticipants": [
+    "EMP063",
+    "EMP007",
+    "EMP045",
+    "EMP064"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP063",
+     "EMP007"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (awarded)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-02",
+   "category": "positive",
+   "period": "2023",
+   "riskLevel": "low",
+   "titleTH": "ทีมขายทำยอดทะลุเป้า 118% รับทริปภูเก็ต",
+   "descriptionTH": "ฝ่ายขายทำยอดขายรวม 1,480 ล้านบาท คิดเป็น 118% ของเป้า ได้รับโบนัสพิเศษและทริปพักผ่อนที่ภูเก็ต ฝ่ายการตลาดที่สนับสนุนแคมเปญได้ร่วมทริปด้วย — สร้างขวัญกำลังใจและกระชับความสัมพันธ์ Sales-Marketing",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "Salary_History",
+    "Benefit_Claims",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP004",
+    "EMP035",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP004",
+     "EMP035"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (awarded)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-03",
+   "category": "positive",
+   "period": "2022",
+   "riskLevel": "low",
+   "titleTH": "IT ผลักดันระบบ ERP ใหม่สำเร็จ — ลดเวลาปิดงบจาก 15 วันเหลือ 5 วัน",
+   "descriptionTH": "ทีม IT นำโดย Pattharawadee ผลักดันการติดตั้ง ERP ใหม่ร่วมกับฝ่ายการเงิน ใช้เวลา 14 เดือน ลดเวลาการปิดงบบัญชีจาก 15 วันเหลือ 5 วัน ฝ่ายการเงินยกย่องทีม IT ในที่ประชุมผู้บริหาร — ความร่วมมือ IT-Finance ที่เป็นแบบอย่าง",
+   "affectedSheets": [
+    "IT_Ticket_Log",
+    "IT_Asset_Register",
+    "KPI_OKR_History",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "IT",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP143",
+    "EMP144",
+    "EMP125"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP143",
+     "EMP125"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-04",
+   "category": "positive",
+   "period": "2022",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายออกแบบชนะรางวัลสถาปัตยกรรมที่อยู่อาศัยระดับประเทศ",
+   "descriptionTH": "แบบบ้าน \"เรือนสวนกลางกรุง\" ของทีมออกแบบชนะรางวัลสถาปัตยกรรมที่อยู่อาศัยระดับประเทศ สร้างชื่อเสียงให้บริษัท ยอดสอบถามเพิ่มขึ้น 40% ทีมออกแบบได้รับโบนัสพิเศษและวันหยุดเพิ่ม",
+   "affectedSheets": [
+    "Career_Timeline",
+    "KPI_OKR_History",
+    "360_Feedback",
+    "Employee_Engagement"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture"
+   ],
+   "suggestedParticipants": [
+    "EMP045",
+    "EMP046",
+    "EMP052"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP045",
+     "EMP046"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (awarded)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-05",
+   "category": "positive",
+   "period": "2021",
+   "riskLevel": "low",
+   "titleTH": "HR จัดโครงการ \"พนักงานสุขภาพดี\" — อัตราการลาป่วยลดลง 30%",
+   "descriptionTH": "ฝ่าย HR จัดโปรแกรมตรวจสุขภาพประจำปีและกิจกรรมออกกำลังกาย อัตราการลาป่วยของพนักงานลดลง 30% eNPS เพิ่มจาก -12 เป็น +8 ฝ่ายบริหารอนุมัติงบต่อเนื่อง — โครงการนี้เป็นผลงานชิ้นเอกของฝ่าย HR",
+   "affectedSheets": [
+    "Benefit_Claims",
+    "Attendance_Record",
+    "Employee_Engagement",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP136",
+    "EMP142"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP135",
+     "EMP136"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": true,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-06",
+   "category": "positive",
+   "period": "2021",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายบริการลูกค้าได้คะแนนความพึงพอใจ 4.8/5 จากลูกค้า",
+   "descriptionTH": "ฝ่ายบริการลูกค้าและวอร์แรนตีปรับปรุงกระบวนการตอบกลับ ทำให้คะแนนความพึงพอใจลูกค้าพุ่งเป็น 4.8/5 สูงสุดในรอบ 5 ปี ทีมงานได้รับคำชมจาก CEO และจัดเลี้ยงขอบคุณ",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "360_Feedback",
+    "Employee_Engagement",
+    "Grievance_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP113",
+    "EMP115",
+    "EMP116"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP113",
+     "EMP115"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-07",
+   "category": "positive",
+   "period": "2023",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายจัดซื้อเจรจาลดต้นทุนวัสดุ 7% โดยไม่ลดคุณภาพ",
+   "descriptionTH": "ฝ่ายจัดซื้อเจรจาซัพพลายเออร์รายใหญ่ให้ส่วนลด 7% จากการสั่งซื้อรวมรายปี ประหยัดต้นทุนได้ 9 ล้านบาท โดยคงคุณภาพวัสดุตามสเปก ฝ่ายก่อสร้างยอมรับการทำงานของฝ่ายจัดซื้อมากขึ้น",
+   "affectedSheets": [
+    "Expense_Reports",
+    "KPI_OKR_History",
+    "Project_History",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Procurement & Warehouse",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP101",
+    "EMP102",
+    "EMP103"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP101",
+     "EMP102"
+    ]
+   ],
+   "financialImpactTHB": 9000000,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-08",
+   "category": "positive",
+   "period": "2024",
+   "riskLevel": "low",
+   "titleTH": "พนักงานฝึกงาน 12 คนผ่านโปรแกรม Onboarding — อัตรารักษาคน 95%",
+   "descriptionTH": "โปรแกรม Onboarding ใหม่ของฝ่าย HR ทำให้อัตราการคงอยู่ของพนักงานใหม่ (12 เดือน) สูงถึง 95% พนักงานรุ่นใหม่ 3 คนได้รับรางวัลดาวรุ่ง — ฝ่าย HR ถูกมองในแง่บวกมากขึ้นจากแผนกอื่น",
+   "affectedSheets": [
+    "Onboarding_Journey",
+    "Career_Timeline",
+    "Employee_Engagement",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "IT",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP136",
+    "EMP137",
+    "EMP009"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP136",
+     "EMP137"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-09",
+   "category": "positive",
+   "period": "2020",
+   "riskLevel": "medium",
+   "titleTH": "ทีมฉุกเฉินโควิด: HR+IT ส่งอุปกรณ์ทำงานจากบ้านให้ครบ 150 คนใน 2 สัปดาห์",
+   "descriptionTH": "ช่วงเริ่มโควิด ทีม HR และ IT ทำงานร่วมกันอย่างเร่งด่วน ส่งโน้ตบุ๊ก อุปกรณ์ และตั้งระบบประชุมออนไลน์ให้ครบ 150 คนภายใน 2 สัปดาห์ ได้รับคำชื่นชมจาก CEO — หนึ่งในไม่กี่ความร่วมมือข้ามสายที่ราบรื่น",
+   "affectedSheets": [
+    "IT_Asset_Register",
+    "Onboarding_Journey",
+    "Employee_Engagement",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "IT"
+   ],
+   "suggestedParticipants": [
+    "EMP135",
+    "EMP143",
+    "EMP145"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP135",
+     "EMP143"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 3
+  },
+  {
+   "eventId": "POS-10",
+   "category": "positive",
+   "period": "2023",
+   "riskLevel": "low",
+   "titleTH": "โครงการ CSR \"บ้านน้อง\" — พนักงานอาสาสร้างบ้านให้ผู้ยากไร้",
+   "descriptionTH": "พนักงาน 40 คนจากทุกแผนกร่วมโครงการ CSR สร้างบ้านให้ครอบครัวผู้ยากไร้ในจังหวัดสระแก้ว ใช้เวลา 3 วัน เสร็จตามกำหนด ทีมขายและก่อสร้างได้ทำงานร่วมกันในบรรยากาศที่เป็นมิตร — ช่วยลดความตึงเครียดข้ามแผนกชั่วคราว",
+   "affectedSheets": [
+    "Employee_Engagement",
+    "360_Feedback",
+    "Attendance_Record",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "HR & Admin",
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP064",
+    "EMP009",
+    "EMP142",
+    "EMP040"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP064",
+     "EMP009"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-11",
+   "category": "positive",
+   "period": "2024",
+   "riskLevel": "low",
+   "titleTH": "พนักงานขายดาวรุ่งได้เลื่อนเป็นหัวหน้าทีมสาขา",
+   "descriptionTH": "พนักงานขาย (EMP013) ที่ทำยอดสูงสุด 2 ปีติดต่อกันได้รับการเลื่อนตำแหน่งเป็นหัวหน้าทีมสาขา ฝ่าย HR จัดทำแผนพัฒนารายบุคคลร่วมกับฝ่ายขาย — ตัวอย่างการสืบทอดตำแหน่งที่โปร่งใส ท่ามกลางการเมืองภายใน",
+   "affectedSheets": [
+    "Career_Timeline",
+    "Succession_Planning",
+    "KPI_OKR_History",
+    "Salary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Sales",
+    "HR & Admin"
+   ],
+   "suggestedParticipants": [
+    "EMP013",
+    "EMP009",
+    "EMP136"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP013",
+     "EMP009"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (promoted)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-12",
+   "category": "positive",
+   "period": "2022",
+   "riskLevel": "low",
+   "titleTH": "ช่างรุ่นเก่าถ่ายทอดภูมิปัญญาก่อสร้างให้ช่างรุ่นใหม่",
+   "descriptionTH": "ช่างหัวหน้าโครงการรุ่นเก่า (EMP066) จัด \"ค่ายช่าง\" ถ่ายทอดเทคนิคการก่ออิฐ-ฉาบปูนให้ช่างรุ่นใหม่เดือนละครั้ง ลดปัญหางานซ่อมหลังส่งมอบลง 25% — การทำงานประสานระหว่างคนรุ่นเก่าและรุ่นใหม่ที่ลงตัว",
+   "affectedSheets": [
+    "Learning_Development",
+    "Skill_Matrix",
+    "360_Feedback",
+    "Project_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP066",
+    "EMP067",
+    "EMP068"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP066",
+     "EMP067"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing (success)",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-13",
+   "category": "positive",
+   "period": "2021",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายกฎหมายช่วยประหยัดค่าปรับ 11 ล้านบาทจากการเจรจาไกล่เกลี่ย",
+   "descriptionTH": "ทนายความ (EMP147) เจรจาไกล่เกลี่ยคดีลูกค้าฟ้อง 12 คดีสำเร็จ ช่วยประหยัดค่าปรับและค่าใช้จ่ายทางกฎหมายรวม 11 ล้านบาท ฝ่ายขายและฝ่ายบริการลูกค้าชื่นชมการทำงานของฝ่ายกฎหมาย",
+   "affectedSheets": [
+    "Compliance_Mandates",
+    "Expense_Reports",
+    "360_Feedback",
+    "KPI_OKR_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Legal",
+    "Sales",
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP147",
+    "EMP148",
+    "EMP007"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP147",
+     "EMP148"
+    ]
+   ],
+   "financialImpactTHB": 11000000,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-14",
+   "category": "positive",
+   "period": "2024",
+   "riskLevel": "low",
+   "titleTH": "พนักงานบริการลูกค้าดาวเด่นได้รับรางวัล \"หัวใจบริการ\"",
+   "descriptionTH": "พนักงานคอลเซ็นเตอร์ (EMP124) ได้รับรางวัล \"หัวใจบริการ\" จากจำนวนคำชมลูกค้าสูงสุด 87 คำชมในปีเดียว ฝ่าย HR จัดพิธีมอบรางวัลต่อหน้าพนักงานทั้งหมด — สร้างแรงบันดาลใจให้ทีมบริการ",
+   "affectedSheets": [
+    "360_Feedback",
+    "Employee_Engagement",
+    "KPI_OKR_History",
+    "Career_Timeline"
+   ],
+   "suggestedCounterpartDepts": [
+    "Customer Service & Warranty"
+   ],
+   "suggestedParticipants": [
+    "EMP124",
+    "EMP113"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP124",
+     "EMP113"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (awarded)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "POS-15",
+   "category": "positive",
+   "period": "2023",
+   "riskLevel": "low",
+   "titleTH": "ฝ่ายการเงินส่งงบปิดปีตรงเวลา 3 ปีซ้อน",
+   "descriptionTH": "ทีมการเงินสามารถส่งงบการเงินประจำปีตรงเวลาตามกำหนดของผู้สอบบัญชี 3 ปีซ้อน ได้รับคำชมจาก CFO และ CEO — ชื่อเสียงฝ่ายการเงินแข็งแกร่งขึ้น แม้จะมีความขัดแย้งกับฝ่ายอื่น",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "Compliance_Mandates",
+    "360_Feedback",
+    "Salary_History"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP125",
+    "EMP130",
+    "EMP131"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP125",
+     "EMP130"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Completed (success)",
+   "recurring": false,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-01",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ประชุม Kick-off โครงการบ้านจัดสรรใหม่",
+   "descriptionTH": "การประชุมเริ่มต้นโครงการระหว่างทีมขาย ก่อสร้าง ออกแบบ และการเงิน เพื่อกำหนด scope งบประมาณ และแผนงาน การประชุมเหล่านี้เป็นจุดที่ความเห็นต่างเริ่มก่อตัวแต่ยังอยู่ในกรอบปกติ",
+   "affectedSheets": [
+    "Project_History",
+    "Collaboration_Network",
+    "Attendance_Record"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "Design & Architecture",
+    "Finance & Accounting"
+   ],
+   "suggestedParticipants": [
+    "EMP063",
+    "EMP007",
+    "EMP045",
+    "EMP125"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-02",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ประชุมติดตามความคืบหน้ารายสัปดาห์",
+   "descriptionTH": "การประชุมติดตามงานประจำสัปดาห์ของแต่ละโครงการ เป็นเวทีที่ทุกฝ่ายรายงานความคืบหน้าและอุปสรรค บางครั้งมีการกระทบกระทั่งกันเรื่องความรับผิดชอบ แต่ส่วนใหญ่จบด้วยข้อสรุปของงาน",
+   "affectedSheets": [
+    "Project_History",
+    "Collaboration_Network",
+    "Timesheet_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales",
+    "Design & Architecture",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP066",
+    "EMP067",
+    "EMP046"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-03",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การตรวจรับงานหน้างานร่วมกันระหว่างฝ่ายก่อสร้างและฝ่ายขาย",
+   "descriptionTH": "การตรวจรับงานระหว่างก่อสร้างที่ฝ่ายขายส่งตัวแทนเข้าร่วมตรวจเพื่อให้มั่นใจว่างานตรงตามสัญญาขาย เป็นกิจกรรมที่ต้องอาศัยความร่วมมือ แม้บางครั้งจะมีความเห็นต่างเรื่องมาตรฐานการตรวจ",
+   "affectedSheets": [
+    "Project_History",
+    "Physical_Security",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP064",
+    "EMP065",
+    "EMP016"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-04",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การฝึกอบรมทักษะประจำปีของแต่ละแผนก",
+   "descriptionTH": "โปรแกรมอบรมประจำปีทั้งด้านเทคนิค (ก่อสร้าง/ออกแบบ) และด้านซอฟต์ (การขาย/บริการ) พนักงานเข้าร่วมตามแผนพัฒนารายบุคคล ฝ่าย HR เป็นผู้ประสานงาน",
+   "affectedSheets": [
+    "Learning_Development",
+    "Skill_Matrix",
+    "Attendance_Record"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Engineering & Construction",
+    "Sales",
+    "Design & Architecture"
+   ],
+   "suggestedParticipants": [
+    "EMP136",
+    "EMP137",
+    "EMP063"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-05",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การลางานและวันหยุดตามปกติของพนักงาน",
+   "descriptionTH": "การลา ลาป่วย ลากิจ และวันหยุดพักผ่อนตามปกติของพนักงานแต่ละคน บันทึกในระบบ HR บางช่วงมีการลาเรียงกันหนาแน่นทำให้งานหน้างานชะงักเล็กน้อย",
+   "affectedSheets": [
+    "Attendance_Record",
+    "Timesheet_Log"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Engineering & Construction",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP140",
+    "EMP141"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-06",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การเบิกค่าใช้จ่ายประจำเดือนตามปกติ",
+   "descriptionTH": "การยื่นเบิกค่าเดินทาง ค่าน้ำมัน และค่าอาหารประจำเดือนของพนักงาน ผ่านระบบ Expense ฝ่ายการเงินตรวจสอบและอนุมัติตามระเบียบ ส่วนใหญ่เป็นรายการปกติ",
+   "affectedSheets": [
+    "Expense_Reports",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Finance & Accounting",
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP126",
+    "EMP127"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-07",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การส่งงานออกแบบและอนุมัติแบบรายเดือน",
+   "descriptionTH": "รอบการส่งแบบและอนุมัติแบบระหว่างฝ่ายออกแบบกับฝ่ายก่อสร้างและฝ่ายขาย ตามปฏิทินโครงการ เป็นงานประจำที่สร้างแรงกดดันเรื่องเวลาแต่จบลงด้วยการอนุมัติ",
+   "affectedSheets": [
+    "Project_History",
+    "KPI_OKR_History",
+    "Collaboration_Network"
+   ],
+   "suggestedCounterpartDepts": [
+    "Design & Architecture",
+    "Engineering & Construction",
+    "Sales"
+   ],
+   "suggestedParticipants": [
+    "EMP046",
+    "EMP047",
+    "EMP048"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "WORK-08",
+   "category": "routine",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "การประชุมผู้บริหารรายเดือน",
+   "descriptionTH": "การประชุมผู้บริหารระดับหัวหน้าแผนกทุกเดือนเพื่อทบทวนผลประกอบการ KPI และแผนงาน ผู้บริหารทั้งสองขั้วใช้เวทีนี้แสดงจุดยืนอย่างเป็นทางการ",
+   "affectedSheets": [
+    "KPI_OKR_History",
+    "Collaboration_Network",
+    "360_Feedback"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Finance & Accounting",
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP001",
+    "EMP002",
+    "EMP003",
+    "EMP004",
+    "EMP005"
+   ],
+   "keyPairCodes": [],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Routine",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "FAM-01",
+   "category": "family",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ครอบครัวเดียวกันในองค์กร: ญาติทำงานด้วยกัน",
+   "descriptionTH": "พนักงานที่มีนามสกุลเดียวกันซึ่งเป็นญาติกันทำงานในบริษัท บางคู่เป็นพี่น้อง/ญาติที่ช่วยเหลือกันในงาน บางคู่ถูกมองว่า \"เส้นสาย\" ฝ่าย HR ต้องดูแลเรื่องการไม่ให้ญาติรายงานตรงต่อกันโดยไม่จำเป็น",
+   "affectedSheets": [
+    "Employee_Profile",
+    "Collaboration_Network",
+    "Onboarding_Journey"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Executive"
+   ],
+   "suggestedParticipants": [
+    "EMP005",
+    "EMP045",
+    "EMP085",
+    "EMP130"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP005",
+     "EMP045"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "FAM-02",
+   "category": "family",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "พี่น้องที่ทำงานคนละแผนก — ช่วยกันประสานงาน",
+   "descriptionTH": "พี่น้อง/ญาติที่ทำงานคนละแผนก (เช่น ฝ่ายก่อสร้างกับฝ่ายการเงิน) มักถูกใช้เป็นสะพานประสานงานข้ามแผนก แต่ก็ถูกเพ่งเล็งเรื่องความขัดแย้งทางผลประโยชน์ในบางครั้ง",
+   "affectedSheets": [
+    "Collaboration_Network",
+    "360_Feedback",
+    "Compliance_Mandates"
+   ],
+   "suggestedCounterpartDepts": [
+    "Engineering & Construction",
+    "Finance & Accounting",
+    "Procurement & Warehouse"
+   ],
+   "suggestedParticipants": [
+    "EMP063",
+    "EMP103",
+    "EMP148"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP063",
+     "EMP103"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "FAM-03",
+   "category": "family",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ครอบครัวสายบริหาร: ลูกหลานผู้ร่วมก่อตั้งในองค์กร",
+   "descriptionTH": "พนักงานบางคนเป็นญาติกับผู้บริหารรุ่นก่อตั้ง ถูกจับตามองเรื่องความก้าวหน้าที่ \"ได้เปรียบ\" บางคนพยายามพิสูจน์ตัวเองด้วยผลงาน ขณะที่บางคนถูกกล่าวหาว่าใช้เส้นสาย",
+   "affectedSheets": [
+    "Career_Timeline",
+    "Succession_Planning",
+    "360_Feedback",
+    "Employee_Profile"
+   ],
+   "suggestedCounterpartDepts": [
+    "Executive",
+    "Sales",
+    "Marketing"
+   ],
+   "suggestedParticipants": [
+    "EMP041",
+    "EMP081",
+    "EMP126"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP041",
+     "EMP081"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  },
+  {
+   "eventId": "FAM-04",
+   "category": "family",
+   "period": "ongoing",
+   "riskLevel": "low",
+   "titleTH": "ญาติถูกจ้างงานผ่านการแนะนำ — ฝ่าย HR ต้องตรวจสอบ",
+   "descriptionTH": "การจ้างงานญาติพนักงานผ่านโครงการแนะนำเพื่อน (referral) เกิดขึ้นหลายราย ฝ่าย HR ต้องตรวจสอบความสัมพันธ์และความขัดแย้งทางผลประโยชน์ในกรณีที่ญาติทำงานแผนกเดียวกัน",
+   "affectedSheets": [
+    "Onboarding_Journey",
+    "Compliance_Mandates",
+    "Employee_Profile"
+   ],
+   "suggestedCounterpartDepts": [
+    "HR & Admin",
+    "Sales",
+    "Engineering & Construction"
+   ],
+   "suggestedParticipants": [
+    "EMP136",
+    "EMP012",
+    "EMP053"
+   ],
+   "keyPairCodes": [
+    [
+     "EMP136",
+     "EMP012"
+    ]
+   ],
+   "financialImpactTHB": 0,
+   "resolutionStatus": "Ongoing",
+   "recurring": true,
+   "logRowExpansion": 2
+  }
+ ],
+ "stats": {
+  "totalEvents": 101,
+  "byCategory": {
+   "crisis": 15,
+   "politics": 8,
+   "grey_area_collusion": 12,
+   "cross_dept_conflict": 18,
+   "dept_negative": 21,
+   "positive": 15,
+   "routine": 8,
+   "family": 4
+  },
+  "byPeriod": {
+   "1997": 5,
+   "2011": 5,
+   "2020": 6,
+   "ongoing": 69,
+   "2023": 6,
+   "2024": 4,
+   "2022": 3,
+   "2021": 3
+  },
+  "byRiskLevel": {
+   "critical": 11,
+   "high": 27,
+   "medium": 27,
+   "low": 36
+  },
+  "pairReferences": 3094,
+  "eventsWithZeroPairRefs": []
+ }
+}

@@ -12,6 +12,47 @@ const MODEL = process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-cha
 
 let client = null;
 
+// ── API Cost tracking (เก็บ tokens จริงจาก response.usage) ──
+// ราคา USD / 1M tokens — ปรับได้ผ่าน env (LLM_PRICE_INPUT/OUTPUT/CACHE)
+const PRICE_INPUT = Number(process.env.LLM_PRICE_INPUT || 0.27);
+const PRICE_CACHE_INPUT = Number(process.env.LLM_PRICE_CACHE_INPUT || 0.07);
+const PRICE_OUTPUT = Number(process.env.LLM_PRICE_OUTPUT || 1.10);
+const usageStats = {
+  calls: 0,
+  promptTokens: 0,
+  completionTokens: 0,
+  cacheReadTokens: 0,
+  costUsd: 0,
+  byModel: {},
+  _lock: Promise.resolve(),
+};
+function trackUsage(usage, model) {
+  if (!usage) return;
+  const pt = Number(usage.prompt_tokens || 0);
+  const ct = Number(usage.completion_tokens || 0);
+  const crt = Number(usage.prompt_tokens_details?.cached_tokens || 0);
+  const cost = (pt * PRICE_INPUT + crt * PRICE_CACHE_INPUT + ct * PRICE_OUTPUT) / 1_000_000;
+  usageStats.calls += 1;
+  usageStats.promptTokens += pt;
+  usageStats.completionTokens += ct;
+  usageStats.cacheReadTokens += crt;
+  usageStats.costUsd += cost;
+  usageStats.byModel[model] = usageStats.byModel[model] || { calls: 0, prompt: 0, completion: 0 };
+  const m = usageStats.byModel[model];
+  m.calls += 1; m.prompt += pt; m.completion += ct;
+  console.log(`[llm-cost] model=${model} in=${pt} out=${ct} cache=${crt} call≈$${cost.toFixed(5)} (รวม≈$${usageStats.costUsd.toFixed(4)})`);
+}
+export function getUsageStats() {
+  return {
+    calls: usageStats.calls,
+    promptTokens: usageStats.promptTokens,
+    completionTokens: usageStats.completionTokens,
+    cacheReadTokens: usageStats.cacheReadTokens,
+    estimatedCostUsd: Number(usageStats.costUsd.toFixed(6)),
+    byModel: usageStats.byModel,
+  };
+}
+
 export function getClient() {
   if (!client && API_KEY && API_KEY !== 'your_api_key_here') {
     client = new OpenAI({ apiKey: API_KEY, baseURL: BASE_URL });
@@ -64,6 +105,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
       temperature: options.rawSql ? 0.0 : 0.3,
     });
 
+    trackUsage(response?.usage, model);
     return response.choices?.[0]?.message?.content || null;
   } catch (e) {
     // SECURITY FIX R4-2: log only a safe, truncated error (no full message that

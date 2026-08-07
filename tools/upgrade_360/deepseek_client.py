@@ -24,8 +24,10 @@ from typing import Any, Dict, List, Optional
 from pydantic import ValidationError
 
 try:  # รันแบบ package (python -m tools.upgrade_360...)
+    from .cost_tracker import CostTracker
     from .pydantic_models import DramaEventInjection
 except ImportError:  # รันแบบ script ตรง (python tools/upgrade_360/deepseek_client.py)
+    from cost_tracker import CostTracker
     from pydantic_models import DramaEventInjection
 
 DEEPSEEK_BASE_URL = "https://api.deepseek.com"
@@ -199,11 +201,14 @@ class DeepSeekDramaClient:
         no_api: bool = False,
         timeout: int = 60,
         rng: Optional[random.Random] = None,
+        cost_output_dir: Optional[str] = None,
     ):
         api_key = api_key or os.environ.get("DEEPSEEK_API_KEY", "")
         self.no_api = bool(no_api) or not api_key
         self.api_key = ""  # ไม่เก็บ key ไว้ใน attribute ที่อาจถูก print
         self.rng = rng or random.Random()
+        # ติดตามค่าใช้จ่าย API (ใช้งานได้ทั้งโหมด online/offline)
+        self.cost_tracker = CostTracker(output_dir=cost_output_dir)
         if not self.no_api:
             from openai import OpenAI  # import ข้างใน เพื่อให้ offline mode ไม่ต้องมี openai
 
@@ -251,6 +256,20 @@ class DeepSeekDramaClient:
 
         text = (resp.choices[0].message.content or "").strip()
         data = json.loads(text)
+        # บันทึก token usage → cost tracker (resp.usage จาก OpenAI-compatible API)
+        try:
+            usage = getattr(resp, "usage", None)
+            if usage is not None:
+                self.cost_tracker.record(
+                    prompt_tokens=getattr(usage, "prompt_tokens", 0),
+                    completion_tokens=getattr(usage, "completion_tokens", 0),
+                    cache_read_tokens=getattr(usage, "prompt_tokens_details", None)
+                    and getattr(usage.prompt_tokens_details, "cached_tokens", 0) or 0,
+                    model=getattr(self, "model", ""),
+                    extra={"eventId": spec.get("eventId", "")},
+                )
+        except Exception:
+            pass  # tracking ล้มเหลวต้องไม่พังการ generate
         # ค่าที่ phase2 กำหนด (eventId/logDateTime/...) ชนะค่าจาก API เสมอ
         for k in ("eventId", "logDateTime", "sheet", "employeeCode",
                   "counterpartyEmployeeCode", "location", "riskLevel", "category",

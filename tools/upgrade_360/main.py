@@ -352,6 +352,7 @@ def phase2(ctx: RunContext) -> int:
     mod = load_phase_module("2")
     generator = getattr(mod, "generate_employee", None) if mod is not None else None
     gen_ctx = _build_gen_context(ctx)
+    ctx.gen_ctx = gen_ctx  # เก็บไว้ให้ phase2 สรุปค่าใช้จ่าย API ใช้ตอนจบ
     if generator is None:
         console.print(
             "[yellow]⚠ ยังไม่มี phase2_generator.generate_employee() — ใช้ fallback template "
@@ -424,6 +425,24 @@ def phase2(ctx: RunContext) -> int:
     ctx.console.print(f"[bold green]Phase 2 เสร็จ: สำเร็จ {done} / {total} | fail {len(failed)}[/bold green]")
     if failed:
         ctx.console.print(f"[yellow]  fail: {failed}[/yellow]")
+    # ── สรุปค่าใช้จ่าย API (ถ้าใช้ key จริง) ──
+    try:
+        gen_ctx = getattr(ctx, "gen_ctx", None)
+        if gen_ctx is not None and hasattr(gen_ctx, "cost_summary"):
+            cs = gen_ctx.cost_summary()
+            if cs.get("calls", 0) > 0:
+                ctx.console.print(
+                    Panel(
+                        f"[bold]💰 API Cost (Phase 2)[/bold]\n"
+                        f"calls={cs.get('calls')} · input={cs.get('prompt_tokens', 0)} tok · "
+                        f"output={cs.get('completion_tokens', 0)} tok · cache_read={cs.get('cache_read_tokens', 0)}\n"
+                        f"[bold yellow]≈ ${cs.get('estimated_cost_usd', 0):.4f}[/bold yellow] "
+                        f"(log: {Path(ctx.output_dir) / 'api_cost_usage.jsonl'})",
+                        border_style="yellow",
+                    )
+                )
+    except Exception:
+        pass
     return done
 
 

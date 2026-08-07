@@ -178,6 +178,7 @@ class DataGenContext:
             api_key=cfg.get("api_key") or None,
             no_api=bool(cfg.get("no_api", True)),
             rng=self.rng,
+            cost_output_dir=cfg.get("output_dir") or None,
         )
 
         # ---- registries (idempotent ข้าม run ผ่าน checkpoint) ----
@@ -210,6 +211,13 @@ class DataGenContext:
             r = random.Random(int(self.config["seed"]) + (threading.get_ident() % 100000))
             self.rng_local.r = r
         return r
+
+    def cost_summary(self) -> Dict[str, Any]:
+        """สรุปค่าใช้จ่าย API (tokens จริงจาก CostTracker ของ client)"""
+        try:
+            return self.client.cost_tracker.summary()
+        except Exception:
+            return {"calls": 0, "estimated_cost_usd": 0.0}
 
     @staticmethod
     def _load_json(path: Path):

@@ -31,6 +31,10 @@ CRITICAL RULES:
 1. Always cast content to FLOAT when doing math: AVG(CAST(content AS FLOAT))
 2. Output ONLY the raw SQL query, no markdown, no explanation, no \`\`\`sql block.
 3. If asking for averages, use AVG. If asking for counts, use COUNT.
+3a. **CRITICAL: When counting PEOPLE/employees (กี่คน, จำนวนคน, มีใครบ้าง, สรุป), ALWAYS use COUNT(DISTINCT employeeId) — NEVER COUNT(*)**. Each employee has many rows across sheets, so COUNT(*) over-counts. Examples:
+    - "มีกี่คนที่ KPI ต่ำ" → SELECT COUNT(DISTINCT employeeId) FROM ... WHERE sheetName='KPI_OKR_History' AND fieldName='kpiScore' AND CAST(content AS FLOAT) < 3
+    - "กี่คนที่ burnout สูง" → SELECT COUNT(DISTINCT employeeId) FROM ... WHERE sheetName='Employee_Engagement' AND fieldName='Burnout_Risk' AND content='High'
+    - "กี่คนที่ได้ warning" → SELECT COUNT(DISTINCT employeeId) FROM ... WHERE sheetName='Warning_Disciplinary_History' AND fieldName IN ('formalWarning','verbalWarning') AND content='Yes'
 4-8. (Standard KPI/OKR/Salary/Attendance/IT rules preserved)
 9. When filtering by engagement: WHERE fieldName='eNPS' AND sheetName='Employee_Engagement'
 10. When filtering by compliance: WHERE fieldName='Mandate' AND sheetName='Compliance_Mandates'

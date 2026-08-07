@@ -8,7 +8,8 @@ import { addMessage, getHistory } from './chatMemory.js';
 import { resolvePronouns } from './pronounResolver.js';
 import { generateAnswer, isLLMAvailable } from './llmClient.js';
 import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
-import { semanticSearch } from './vectorEngine.js';
+// หมายเหตุ: ไม่ใช้ semanticSearch จาก vectorEngine.js แล้ว (มัน embed ด้วย text-embedding-3-small
+// ผ่าน DeepSeek → 404 + มิติผิด 1536 vs 384) — ใช้ production path embedOne + searchVectors แทน
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
@@ -25,7 +26,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   // LOOP 15: SQL analytics detection (LOOP 20: expanded for HR/IT)
-  const needsSqlAnalytics = /average|avg|เฉลี่ย|mean|group by|compare|เทียบ|เปรียบเทียบ|standard deviation|เงินเดือน|โบนัส|ขึ้นเงินเดือน|ลาป่วย|ลากิจ|มาสาย|notebook|cost_thb|base_salary|sick_leave|attendance|asset|license|salary|bonus|สรุป|อุปกรณ์|เป็นเงิน|รวม|เท่าไหร่|มูลค่า|กี่ชิ้น/i.test(query);
+  const needsSqlAnalytics = /average|avg|เฉลี่ย|mean|group by|compare|เทียบ|เปรียบเทียบ|standard deviation|เงินเดือน|โบนัส|ขึ้นเงินเดือน|ลาป่วย|ลากิจ|มาสาย|notebook|cost_thb|base_salary|sick_leave|attendance|asset|license|salary|bonus|สรุป|อุปกรณ์|เป็นเงิน|รวม|เท่าไหร่|มูลค่า|กี่ชิ้น|ปัญหา|วิกฤต|ความเสี่ยง|เสี่ยง|จุดอ่อน|ลาออก|ลาออกจากงาน|เทิร์นโอเวอร์|turnover|อัตราการ/i.test(query);
 
   // Pronoun resolution (LOOP 13C — deterministic)
   const pronounResult = resolvePronouns(query, conversationId);
@@ -145,21 +146,34 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     } else { answer = contextData; }
   } 
   else if (parsedIntent?.intents?.some(i => i.type === 'VECTOR_SEARCH') || (finalResults.length === 0 && !parsedIntent?.isClarification)) {
-    const vectorHits = await semanticSearch(query);
-    if (vectorHits.length > 0) {
-      // Extract employee PKs from vector hits for graph highlighting
-      for (const hit of vectorHits) {
-        if (hit.employeeId && !matchedPks.includes(hit.employeeId)) matchedPks.push(hit.employeeId);
-        if (hit.metadata?.department) matchedDepts.add(hit.metadata.department);
+    // Vector search ผ่าน production path: localEmbedder (e5-small) + vectorStore
+    // — ไม่ใช้ vectorEngine.semanticSearch เก่า (OpenAI model ผ่าน DeepSeek → 404 + มิติผิด)
+    try {
+      const { embedOne } = await import('./localEmbedder.js');
+      const { searchVectors } = await import('./vectorStore.js');
+      const allowSensitive = viewerRole === 'CEO' || viewerRole === 'HR';
+      const qv = await embedOne(resolvedQuery, { isQuery: true });
+      const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query) });
+      const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));
+      if (vectorHits.length > 0) {
+        // Extract employee PKs from vector hits for graph highlighting
+        for (const hit of vectorHits) {
+          const pk = hit.meta?.pk || hit.meta?.employeeId;
+          if (pk && !matchedPks.includes(pk)) matchedPks.push(pk);
+          if (hit.meta?.department) matchedDepts.add(hit.meta.department);
+        }
+        const contextData = vectorHits.map(h => h.text).join('\n');
+        const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + contextData;
+        const finalLLMAnswer = await generateAnswer(query, vectorPrompt);
+        if (finalLLMAnswer) {
+          answer = finalLLMAnswer;
+          llmUsed = true;
+          sr.matchersUsed = ['vector-search'];
+        }
       }
-      const contextData = vectorHits.map(h => h.text).join('\n');
-      const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + contextData;
-      const finalLLMAnswer = await generateAnswer(query, vectorPrompt);
-      if (finalLLMAnswer) {
-        answer = finalLLMAnswer;
-        llmUsed = true;
-        sr.matchersUsed = ['vector-search'];
-      }
+    } catch (e) {
+      // vector failure ต้องไม่ทำ chat 500 — fallback เป็น keyword answer เดิม
+      console.warn('[vector] search failed, keep keyword answer:', e.message);
     }
   }
   else if (isLLMAvailable() && finalResults.length > 0) {

@@ -107,10 +107,13 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
-      max_tokens: options.rawSql ? 600 : 500,
+      // rawSql ต้องมีที่ว่างพอ (SQL ซับซ้อน + v4-flash เผา token กับ reasoning) — 1200 ไม่ใช่ 600
+      max_tokens: options.rawSql ? 1200 : 500,
       temperature: options.rawSql ? 0.0 : 0.3,
     };
-    if (thinkingDisabled) completionArgs.extra_body = { thinking: { type: 'disabled' } };
+    // IMPORTANT: DeepSeek รับ `thinking` เป็น TOP-LEVEL param (ไม่ใช่ extra_body) —
+    // extra_body ถูก ignore → reasoning ยังกิน token จน content ว่าง (finish=length)
+    if (thinkingDisabled) completionArgs.thinking = { type: 'disabled' };
     else if (reasoningEffort) completionArgs.reasoning_effort = reasoningEffort;
 
     const response = await openai.chat.completions.create(completionArgs);

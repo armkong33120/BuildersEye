@@ -246,6 +246,11 @@ class DeepSeekDramaClient:
             "temperature": 0.9,
             "max_tokens": 800,
         }
+        # ประหยัด tokens: งานนี้ generate JSON ตรงๆ ไม่ต้องใช้ chain-of-thought
+        # (DeepSeek v4-flash เปิด thinking เป็นค่าเริ่มต้น = เบิร์น output tokens กับ reasoning)
+        # ปิดได้ผ่าน env DEEPSEEK_THINKING=disabled (default) / enabled (เมื่ออยากได้ reasoning)
+        if os.environ.get("DEEPSEEK_THINKING", "disabled") == "disabled":
+            kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
         try:
             kwargs["response_format"] = {"type": "json_object"}
             resp = self._client.chat.completions.create(**kwargs)

@@ -22,9 +22,9 @@ import time
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-PRICE_INPUT = float(os.environ.get("DS_PRICE_INPUT", "0.27"))          # USD / 1M tokens
-PRICE_CACHE_INPUT = float(os.environ.get("DS_PRICE_CACHE_INPUT", "0.07"))
-PRICE_OUTPUT = float(os.environ.get("DS_PRICE_OUTPUT", "1.10"))
+PRICE_INPUT = float(os.environ.get("DS_PRICE_INPUT", "0.14"))          # USD / 1M tokens (cache miss) — deepseek-v4-flash
+PRICE_CACHE_INPUT = float(os.environ.get("DS_PRICE_CACHE_INPUT", "0.0028"))  # cache hit ถูกกว่า miss ~50x
+PRICE_OUTPUT = float(os.environ.get("DS_PRICE_OUTPUT", "0.28"))
 
 
 class CostTracker:

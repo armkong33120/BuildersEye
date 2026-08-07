@@ -13,10 +13,10 @@ const MODEL = process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-cha
 let client = null;
 
 // ── API Cost tracking (เก็บ tokens จริงจาก response.usage) ──
-// ราคา USD / 1M tokens — ปรับได้ผ่าน env (LLM_PRICE_INPUT/OUTPUT/CACHE)
-const PRICE_INPUT = Number(process.env.LLM_PRICE_INPUT || 0.27);
-const PRICE_CACHE_INPUT = Number(process.env.LLM_PRICE_CACHE_INPUT || 0.07);
-const PRICE_OUTPUT = Number(process.env.LLM_PRICE_OUTPUT || 1.10);
+// ราคา USD / 1M tokens (deepseek-v4-flash) — ปรับได้ผ่าน env (LLM_PRICE_INPUT/OUTPUT/CACHE)
+const PRICE_INPUT = Number(process.env.LLM_PRICE_INPUT || 0.14);
+const PRICE_CACHE_INPUT = Number(process.env.LLM_PRICE_CACHE_INPUT || 0.0028);
+const PRICE_OUTPUT = Number(process.env.LLM_PRICE_OUTPUT || 0.28);
 const usageStats = {
   calls: 0,
   promptTokens: 0,
@@ -91,11 +91,17 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
 
   const userPrompt = "Context:\n" + anonymizedContext + "\n\nQuestion: " + query;
 
+  // ประหยัด token: คอนฟิกผ่าน env (default เปลี่ยนจากค่าปกติ DeepSeek = thinking high)
+  //   LLM_THINKING=disabled  → ปิด chain-of-thought (งานสรุป/retrieval ไม่ต้องใช้)
+  //   LLM_REASONING_EFFORT=low → ลด reasoning tokens (0-99%)
+  const thinkingDisabled = process.env.LLM_THINKING === 'disabled';
+  const reasoningEffort = process.env.LLM_REASONING_EFFORT; // undefined = ค่า default ของ model
+
   try {
     const openai = getClient();
     if (!openai) return null;
 
-    const response = await openai.chat.completions.create({
+    const completionArgs = {
       model: model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -103,7 +109,11 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
       ],
       max_tokens: options.rawSql ? 800 : 500,
       temperature: options.rawSql ? 0.0 : 0.3,
-    });
+    };
+    if (thinkingDisabled) completionArgs.extra_body = { thinking: { type: 'disabled' } };
+    else if (reasoningEffort) completionArgs.reasoning_effort = reasoningEffort;
+
+    const response = await openai.chat.completions.create(completionArgs);
 
     trackUsage(response?.usage, model);
     return response.choices?.[0]?.message?.content || null;

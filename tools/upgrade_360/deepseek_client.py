@@ -141,6 +141,44 @@ def build_user_prompt(spec: Dict[str, Any]) -> str:
     return "\\n".join(lines)
 
 
+def build_batch_user_prompt(specs: List[Dict[str, Any]]) -> str:
+    """สร้าง prompt แบบ batch — หลายเหตุการณ์ใน 1 call → ตอบ JSON array ตาม eventId.
+
+    ประหยัด token: system prompt + คำสั่งซ้ำๆ ส่งครั้งเดียวต่อกลุ่ม (ตัด overhead
+    ต่อ event เดิม ~30-40% ของ prompt tokens)
+    """
+    parts = [
+        "จงเขียนบันทึกเหตุการณ์บุคลากรจำนวน %d เหตุการณ์ โดยตอบเป็น JSON object: "
+        '{"events": [ <object 1>, <object 2>, ... ]} ตามลำดับที่ให้' % len(specs),
+        "แต่ละ object มีฟิลด์:",
+        '{"eventId": "...", "subject": "...", "descriptionTH": "...", "counterpartyEmployeeCode": "...", "location": "...", "riskLevel": "..."}',
+        "",
+        "ข้อมูลเหตุการณ์ (เรียงตามลำดับ):",
+    ]
+    for i, spec in enumerate(specs, 1):
+        emp_name = spec.get("employeeName", "")
+        cp_names = spec.get("counterpartyNames", "")
+        parts.append(f"[{i}] eventId={spec.get('eventId','')} | ชื่อเรื่อง: {spec.get('titleTH','')}")
+        parts.append(f"    รายละเอียด: {spec.get('descriptionTH','')}")
+        parts.append(f"    ประเภท: {spec.get('category','')} / ระดับความเสี่ยง: {spec.get('riskLevel','')}")
+        parts.append(f"    บันทึกลง sheet: {spec.get('sheet','')}")
+        parts.append(f"    พนักงานเจ้าของบันทึก: {spec.get('employeeCode','')} ({emp_name})")
+        if cp_names:
+            parts.append(f"    ฝ่ายที่เกี่ยวข้อง: {cp_names}")
+        if spec.get("location"):
+            parts.append(f"    สถานที่: {spec.get('location','')}")
+        parts.append(f"    logDateTime (ใช้ตรง ๆ): {spec.get('logDateTime','')}")
+        parts.append(
+            "    ข้อกำหนด: subject สั้นไม่เกิน 15 คำ; descriptionTH ยาว 3-5 ประโยคภาษาไทย "
+            "สไตล์ HR/ผู้ตรวจสอบภายใน เป็นกลาง มีรายละเอียดพอให้ RAG ใช้ค้นได้; "
+            "counterpartyEmployeeCode ใช้รหัส EMP ที่ให้มา (คั่น ';'); riskLevel ใช้ค่าที่ให้มา"
+        )
+    parts.append(
+        'ตอบเฉพาะ JSON {"events": [...]} เท่านั้น ไม่มี markdown ไม่มีข้อความอื่นนอก JSON'
+    )
+    return "\\n".join(parts)
+
+
 def template_offline(spec: Dict[str, Any], rng: Optional[random.Random] = None) -> Dict[str, Any]:
     """Fallback template — เขียนภาษาไทยสมจริง หลากหลายตาม category/riskLevel.
 
@@ -236,6 +274,92 @@ class DeepSeekDramaClient:
             # fallback เงียบ — offline resilience
             return self._validate(template_offline(prompt_spec, self.rng))
 
+    # ------------------------------------------------------------------
+    # Batch mode — group หลาย events ต่อ 1 API call (ตัด token overhead)
+    # ------------------------------------------------------------------
+    def generate_drama_events(self, specs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """Generate หลายเหตุการณ์ใน 1 call — ส่งเป็น JSON array ตามลำดับ spec.
+
+        - offline / ไม่มี key → template_offline ต่อ spec (deterministic เดิม)
+        - API ล้มเหลวทั้ง batch → fallback template ต่อ spec (ไม่ raise)
+        - ใช้ eventId map ผลลัพธ์กลับ → ลำดับจาก API ไม่ต้องตรงก็ได้
+        """
+        if not specs:
+            return []
+        if self._client is None:
+            return [self._validate(template_offline(s, self.rng)) for s in specs]
+        try:
+            return self._call_api_batch(specs)
+        except Exception:
+            return [self._validate(template_offline(s, self.rng)) for s in specs]
+
+    def _call_api_batch(self, specs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        batch_size = len(specs)
+        kwargs: Dict[str, Any] = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": build_batch_user_prompt(specs)},
+            ],
+            "temperature": 0.9,
+            # ต่อ event ~500-600 tokens ก็พอ (subject + descriptionTH 3-5 ประโยค)
+            "max_tokens": min(6000, 600 * batch_size),
+        }
+        if os.environ.get("DEEPSEEK_THINKING", "disabled") == "disabled":
+            kwargs["extra_body"] = {"thinking": {"type": "disabled"}}
+        try:
+            kwargs["response_format"] = {"type": "json_object"}
+            resp = self._client.chat.completions.create(**kwargs)
+        except Exception:
+            kwargs.pop("response_format", None)
+            resp = self._client.chat.completions.create(**kwargs)
+
+        text = (resp.choices[0].message.content or "").strip()
+        data = json.loads(text)
+        # รองรับทั้ง {"events": [...]} และ [...] ตรง ๆ
+        if isinstance(data, dict):
+            data = data.get("events") or data.get("data") or []
+        if not isinstance(data, list):
+            raise ValueError(f"batch response is not a list: {type(data).__name__}")
+
+        # บันทึก token usage → cost tracker (1 record ต่อ batch call)
+        try:
+            usage = getattr(resp, "usage", None)
+            if usage is not None:
+                self.cost_tracker.record(
+                    prompt_tokens=getattr(usage, "prompt_tokens", 0),
+                    completion_tokens=getattr(usage, "completion_tokens", 0),
+                    cache_read_tokens=getattr(usage, "prompt_tokens_details", None)
+                    and getattr(usage.prompt_tokens_details, "cached_tokens", 0) or 0,
+                    model=getattr(self, "model", ""),
+                    extra={"batch": batch_size,
+                           "eventIds": ",".join(s.get("eventId", "") for s in specs)},
+                )
+        except Exception:
+            pass  # tracking ล้มเหลวต้องไม่พังการ generate
+
+        # map ผลลัพธ์ด้วย eventId (กันลำดับจาก API สลับ)
+        by_eid: Dict[str, Dict[str, Any]] = {}
+        for item in data:
+            if isinstance(item, dict) and item.get("eventId"):
+                by_eid[str(item["eventId"])] = item
+
+        results: List[Dict[str, Any]] = []
+        for spec in specs:
+            item = by_eid.get(str(spec.get("eventId", "")))
+            if item is None:
+                results.append(self._validate(template_offline(spec, self.rng)))
+                continue
+            merged = dict(item)
+            # ค่าที่ phase2 กำหนด (eventId/logDateTime/...) ชนะค่าจาก API เสมอ
+            for k in ("eventId", "logDateTime", "sheet", "employeeCode",
+                      "counterpartyEmployeeCode", "location", "riskLevel", "category",
+                      "logType", "source", "relationship", "faction"):
+                if spec.get(k) not in (None, ""):
+                    merged[k] = spec[k]
+            results.append(self._validate(merged))
+        return results
+
     def _call_api(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         kwargs: Dict[str, Any] = {
             "model": self.model,
@@ -244,7 +368,7 @@ class DeepSeekDramaClient:
                 {"role": "user", "content": build_user_prompt(spec)},
             ],
             "temperature": 0.9,
-            "max_tokens": 800,
+            "max_tokens": 600,
         }
         # ประหยัด tokens: งานนี้ generate JSON ตรงๆ ไม่ต้องใช้ chain-of-thought
         # (DeepSeek v4-flash เปิด thinking เป็นค่าเริ่มต้น = เบิร์น output tokens กับ reasoning)

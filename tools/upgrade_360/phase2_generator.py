@@ -107,6 +107,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     "max_rows": 500,
     "drama_ratio": 0.20,
     "routine_pair_ratio": 0.20,
+    "desc_batch_size": 8,   # จำนวน events ต่อ 1 API call (batch ลด token overhead)
     "src_dir": str(HR_DIR),
     "output_dir": str(OUTPUT_DIR),
     "force": False,
@@ -196,6 +197,8 @@ class DataGenContext:
         self.drama_pending: Dict[str, Dict[str, Any]] = {}
         self.drama_side_emitted: Set[str] = set()
         self.drama_participant_cache: Dict[str, List[str]] = {}
+        # _desc_requested: (eventId|sheet) ที่ขอ description แล้ว (กัน duplicate batch ระหว่าง thread)
+        self._desc_requested: Set[str] = set()
         # file_locks: serialize การเขียนไฟล์คนเดียวกันเมื่อ workers > 1 (generate + backfill)
         self.file_locks: Dict[str, threading.Lock] = {}
         self._generating: Set[str] = set()   # คนที่กำลัง generate — backfill จะข้าม (คนนั้นจัดการเอง)
@@ -323,29 +326,119 @@ class DataGenContext:
     # ------------------------------------------------------------------
     # คำอธิบายดราม่า — generate ครั้งเดียวต่อ (eventId, sheet) ใช้ร่วมทั้ง 2 ฝั่ง
     # ------------------------------------------------------------------
+    def _build_desc_spec(self, ev: Dict[str, Any], sheet: str,
+                         spec_extra: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """สร้าง spec คำขอ description (ใช้ร่วมกันระหว่าง prewarm/batch และ fallback)."""
+        spec: Dict[str, Any] = {
+            "eventId": ev["eventId"],
+            "titleTH": ev.get("titleTH", ""),
+            "descriptionTH": ev.get("descriptionTH", ""),
+            "category": ev.get("category", ""),
+            "riskLevel": ev.get("riskLevel", "medium"),
+            "sheet": sheet,
+            "logType": LOG_TYPE_BY_CATEGORY.get(ev.get("category", ""), "incident"),
+            "source": SHEET_SOURCE.get(sheet, "HRIS"),
+            "location": self._event_location(ev),
+            "logDateTime": self.ensure_event_times(ev)[0],
+            "resolutionStatus": ev.get("resolutionStatus", ""),
+            "financialImpactTHB": ev.get("financialImpactTHB"),
+            "expansion": int(ev.get("logRowExpansion", 1)),
+        }
+        if spec_extra:
+            spec.update({k: v for k, v in spec_extra.items() if v})
+        return spec
+
+    def prewarm_descriptions(self, emp: Dict[str, Any]) -> int:
+        """Batch-fetch คำอธิบาย (eventId, sheet) ที่คนนี้ต้องใช้ → 1 API call ต่อ N events.
+
+        - วางแผนล่วงหน้า (ก่อน _plan_drama_rows/_plan_collab_pairs/_plan_catalog_routine_rows)
+          เพื่อให้ planning เจอ cache หมด → ไม่มี per-event call เหลือ
+        - offline/no-api: generate_drama_events fallback template ต่อ spec (ผลเหมือนเดิม)
+        - cache ต่อ (eventId, sheet) → ข้ามของที่มีแล้ว (ข้าม run ด้วย checkpoint)
+        - _desc_requested ป้องกัน duplicate ระหว่าง thread (workers > 1)
+        """
+        code = emp["code"]
+        specs: List[Dict[str, Any]] = []
+        seen: Set[str] = set()
+
+        def add(ev: Dict[str, Any], sheet: str, extra: Dict[str, Any]) -> None:
+            eid = ev["eventId"]
+            key = f"{eid}|{sheet}"
+            with self.lock:
+                if key in seen or key in self._desc_requested:
+                    return
+                if eid in self.drama_descriptions and sheet in self.drama_descriptions[eid]:
+                    return
+                seen.add(key)
+                self._desc_requested.add(key)
+            specs.append(self._build_desc_spec(ev, sheet, extra))
+
+        # 1) drama rows — non-routine events → affectedSheets (ยกเว้น Collaboration_Network)
+        for ev in self.events_for(code):
+            if ev.get("category") == "routine":
+                continue
+            sheets = [SHEET_ALIAS.get(s, s) for s in ev.get("affectedSheets", [])]
+            # counterparty ชุดเดียวกับที่ _plan_drama_rows ส่งให้ prompt (ให้ description มีชื่อคน)
+            participants = self.drama_participant_set(ev, self.ensure_event_times(ev)[0])
+            counterparties = [p for p in participants if p != code]
+            extra = {
+                "employeeCode": code, "employeeName": emp.get("name", ""),
+                "counterpartyEmployeeCode": ";".join(counterparties[:6]),
+                "counterpartyNames": ";".join(
+                    self.identity_by_code.get(c, {}).get("name", c) for c in counterparties[:6]),
+            }
+            for sheet in sheets:
+                if sheet in VALID_SHEETS and sheet != "Collaboration_Network":
+                    add(ev, sheet, extra)
+
+        # 2) collab pairs — first event ของ pair → Collaboration_Network (mirror 2 ฝั่ง)
+        for pair in self.pairs_by_code.get(code, []):
+            other = pair["b"] if pair["a"] == code else pair["a"]
+            if other not in self.identity_by_code:
+                continue
+            eids = [e for e in pair.get("eventIds", []) if e in self.event_index]
+            if not eids:
+                continue
+            add(self.event_index[eids[0]], "Collaboration_Network", {
+                "employeeCode": code, "employeeName": emp.get("name", ""),
+                "counterpartyEmployeeCode": other,
+                "counterpartyNames": self.identity_by_code.get(other, {}).get("name", other),
+            })
+
+        # 3) catalog routine rows — routine events ที่ code เป็น suggested participant
+        for ev in self.events_for(code):
+            if ev.get("category") != "routine" or code not in ev.get("suggestedParticipants", []):
+                continue
+            sheets = [SHEET_ALIAS.get(s, s) for s in ev.get("affectedSheets", [])]
+            for sheet in sheets:
+                if sheet in VALID_SHEETS and sheet != "Collaboration_Network":
+                    add(ev, sheet, {"employeeCode": code, "employeeName": emp.get("name", "")})
+
+        if not specs:
+            return 0
+        batch = max(1, int(self.config.get("desc_batch_size", 8)))
+        fetched = 0
+        for i in range(0, len(specs), batch):
+            chunk = specs[i:i + batch]
+            outs = self.client.generate_drama_events(chunk)
+            for spec, out in zip(chunk, outs):
+                eid, sheet = spec["eventId"], spec["sheet"]
+                with self.lock:
+                    self.drama_descriptions.setdefault(eid, {})[sheet] = {
+                        "subject": out.get("subject", ""),
+                        "descriptionTH": out.get("descriptionTH", ""),
+                    }
+                fetched += 1
+        return fetched
+
     def ensure_drama_description(self, ev: Dict[str, Any], sheet: str,
                                  spec_extra: Optional[Dict[str, Any]] = None) -> Dict[str, str]:
         eid = ev["eventId"]
         with self.lock:
             if eid in self.drama_descriptions and sheet in self.drama_descriptions[eid]:
                 return self.drama_descriptions[eid][sheet]
-            spec: Dict[str, Any] = {
-                "eventId": eid,
-                "titleTH": ev.get("titleTH", ""),
-                "descriptionTH": ev.get("descriptionTH", ""),
-                "category": ev.get("category", ""),
-                "riskLevel": ev.get("riskLevel", "medium"),
-                "sheet": sheet,
-                "logType": LOG_TYPE_BY_CATEGORY.get(ev.get("category", ""), "incident"),
-                "source": SHEET_SOURCE.get(sheet, "HRIS"),
-                "location": self._event_location(ev),
-                "logDateTime": self.ensure_event_times(ev)[0],
-                "resolutionStatus": ev.get("resolutionStatus", ""),
-                "financialImpactTHB": ev.get("financialImpactTHB"),
-                "expansion": int(ev.get("logRowExpansion", 1)),
-            }
-            if spec_extra:
-                spec.update({k: v for k, v in spec_extra.items() if v})
+            spec = self._build_desc_spec(ev, sheet, spec_extra)
+            # safety net: ถ้า prewarm ไม่ทัน (เหตุการณ์ใหม่/edge case) → fallback single call
             out = self.client.generate_drama_event(spec)
             self.drama_descriptions.setdefault(eid, {})[sheet] = {
                 "subject": out.get("subject", ""),
@@ -1163,6 +1256,10 @@ def generate_employee(emp: Dict[str, Any], ctx: DataGenContext) -> Dict[str, Any
     book = ctx.read_employee(code)
     existing_total = sum(len(s["rows"]) for s in book.values())
 
+    # Batch-fetch คำอธิบาย (eventId, sheet) ที่คนนี้ต้องใช้ → 1 API call ต่อ N events
+    # (offline: fallback template ต่อ spec — ผลเหมือนเดิม; ทำก่อน planning ให้ cache เต็ม)
+    ctx.prewarm_descriptions(emp)
+
     plans: List[Dict[str, Any]] = []
     absorbed = ctx.absorb_pending_pairs(emp, plans)          # routine mirror จากคู่ที่ generate ก่อน
     absorbed += ctx.absorb_drama_pending(emp, plans)         # drama mirror (mandatory — ไม่โดน cap ตัด)
@@ -1267,6 +1364,8 @@ def main(argv: Optional[List[str]] = None) -> List[Dict[str, Any]]:
     ap.add_argument("--target-rows", type=int, default=420)
     ap.add_argument("--min-rows", type=int, default=300)
     ap.add_argument("--max-rows", type=int, default=500)
+    ap.add_argument("--desc-batch-size", type=int, default=8,
+                    help="จำนวน events ต่อ 1 API call (batch ลด token overhead; offline ไม่กระทบ)")
     ap.add_argument("--seed", type=int, default=20260807)
     ap.add_argument("--force", action="store_true", help="ทับไฟล์ output เดิม (ถ้ามี)")
     ap.add_argument("--out-dir", default="", help="output dir (ค่าเริ่มต้น tools/upgrade_360/output/hr_onedrive_upgraded)")
@@ -1277,7 +1376,7 @@ def main(argv: Optional[List[str]] = None) -> List[Dict[str, Any]]:
     config: Dict[str, Any] = {
         "no_api": no_api, "api_key": args.api_key or env_key, "workers": args.workers,
         "target_rows": args.target_rows, "min_rows": args.min_rows, "max_rows": args.max_rows,
-        "seed": args.seed, "force": args.force,
+        "seed": args.seed, "force": args.force, "desc_batch_size": args.desc_batch_size,
     }
     if args.out_dir:
         config["output_dir"] = args.out_dir
@@ -1293,6 +1392,7 @@ def main(argv: Optional[List[str]] = None) -> List[Dict[str, Any]]:
         ctx.drama_pending.clear()
         ctx.drama_side_emitted.clear()
         ctx.drama_participant_cache.clear()
+        ctx._desc_requested.clear()
         d = Path(ctx.config["output_dir"]).parent
         d.mkdir(parents=True, exist_ok=True)
         (d / "injected_events.jsonl").write_text("", encoding="utf-8")

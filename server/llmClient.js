@@ -107,7 +107,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
-      max_tokens: options.rawSql ? 800 : 500,
+      max_tokens: options.rawSql ? 600 : 500,
       temperature: options.rawSql ? 0.0 : 0.3,
     };
     if (thinkingDisabled) completionArgs.extra_body = { thinking: { type: 'disabled' } };

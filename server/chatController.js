@@ -9,6 +9,7 @@ import { resolvePronouns } from './pronounResolver.js';
 import { generateAnswer, isLLMAvailable } from './llmClient.js';
 import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 import { semanticSearch } from './vectorEngine.js';
+import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
   const startTime = Date.now();
@@ -29,6 +30,20 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   // Pronoun resolution (LOOP 13C — deterministic)
   const pronounResult = resolvePronouns(query, conversationId);
   const resolvedQuery = pronounResult.resolved ? pronounResult.query : query;
+
+  // Response cache for repeated questions (cost reduction). Only active when the
+  // LLM is on; keyed by resolved query + viewer role/employeeId (scope-dependent).
+  // Placed BEFORE semantic parsing/search so repeated questions skip all LLM work.
+  const useCache = isLLMAvailable();
+  if (useCache) {
+    const ck = cacheKeyFor(resolvedQuery, viewer);
+    const cached = cacheGet(ck);
+    if (cached) {
+      addMessage(conversationId, 'user', query);
+      addMessage(conversationId, 'assistant', cached.answer);
+      return { ...cached, cached: true, responseTimeMs: Date.now() - startTime };
+    }
+  }
 
   // Semantic parsing (LOOP 12)
   let parsedIntent = null;
@@ -180,7 +195,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   addMessage(conversationId, 'user', query);
   addMessage(conversationId, 'assistant', finalAnswer);
 
-  return {
+  const result = {
     query, answer: finalAnswer,
     suggestedOptions,
     matchedEmployeePks: matchedPks,
@@ -197,4 +212,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     sqlUsed: sqlUsed,
     answerSource: sqlUsed ? 'sql-analytics' : (llmUsed ? 'gemini' : 'template'),
   };
+
+  // Cache LLM-produced answers only (repeated-question savings; skipped when LLM off).
+  if (useCache && llmUsed) {
+    cacheSet(cacheKeyFor(resolvedQuery, viewer), result);
+  }
+
+  return result;
 }

@@ -11,6 +11,7 @@ import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 // หมายเหตุ: ไม่ใช้ semanticSearch จาก vectorEngine.js แล้ว (มัน embed ด้วย text-embedding-3-small
 // ผ่าน DeepSeek → 404 + มิติผิด 1536 vs 384) — ใช้ production path embedOne + searchVectors แทน
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
+import { detectSheetMentions } from './sheetAliases.js';
 
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
   const startTime = Date.now();
@@ -73,6 +74,12 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน; viewerRole สำหรับ template redaction
   const analyticsScopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
   const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes, viewerRole);
+
+  // Layer 2/3 (cross-doc): detect sheet mentions → sheetBias + coverage (vectorStore) +
+  // diversity (hybridSearch) + context tagging ให้ LLM
+  const sheetMentions = detectSheetMentions(resolvedQuery);
+  const sheetBoost = Number(process.env.RAG_SHEET_BOOST || 1.10);
+  const sheetCoverage = Number(process.env.RAG_SHEET_COVERAGE || 2);
   const matchedPks = []; const matchedDepts = new Set(); const finalResults = [];
   let redactedCount = 0; let blockedCount = 0;
 
@@ -177,7 +184,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       const { searchVectors } = await import('./vectorStore.js');
       const allowSensitive = viewerRole === 'CEO' || viewerRole === 'HR';
       const qv = await embedOne(resolvedQuery, { isQuery: true });
-      const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query) });
+      const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
       const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));
       if (vectorHits.length > 0) {
         // Extract employee PKs from vector hits for graph highlighting
@@ -186,8 +193,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
           if (pk && !matchedPks.includes(pk)) matchedPks.push(pk);
           if (hit.meta?.department) matchedDepts.add(hit.meta.department);
         }
-        const contextData = vectorHits.map(h => h.text).join('\n');
-        const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + contextData;
+        // Layer 3 — context tagging: tag sheet กำกับแต่ละ chunk เพื่อให้ LLM เห็นว่า
+        // ข้อมูลมาจากหลายแหล่ง (cross-doc reasoning) — เช่น [Expense_Reports | IT]
+        const taggedContext = vectorHits.map(h => `[${h.meta?.sheet || '?'}${h.meta?.department ? ' | ' + h.meta.department : ''}] ${h.text}`).join('\n');
+        const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + taggedContext;
         const finalLLMAnswer = await generateAnswer(query, vectorPrompt);
         if (finalLLMAnswer) {
           answer = finalLLMAnswer;

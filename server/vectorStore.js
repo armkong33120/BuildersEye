@@ -68,11 +68,13 @@ async function loadIndex() {
 
 // scopeCodes: null = ทั้งหมด, Set = จำกัดรายคน; allowSensitive=false → ตัด chunk ลับทิ้ง
 // whoBias=true → คำถาม "ใคร/คนไหน" ให้ขยับผลคน (employee) ขึ้น, ลด orgdoc ลง
-export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false } = {}) {
+// sheetMentions: Set<sheetName> จาก detectSheetMentions() — sheetBias boost + coverage guarantee
+// sheetBoost: multiplier สำหรับ chunk ที่ sheet ถูก mention (default 1.10, env RAG_SHEET_BOOST)
+export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false, sheetMentions = null, sheetBoost = 1.10, coverage = 2 } = {}) {
   // เส้นทาง Neon pgvector (ถ้ามี DATABASE_URL) — ไม่ต้องโหลด 129MB เข้า RAM
   if (process.env.DATABASE_URL) {
     try {
-      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias });
+      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions, sheetBoost, coverage });
     } catch (e) {
       console.warn('[vector] neon search failed, fallback ไฟล์:', e.message);
     }
@@ -89,17 +91,47 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
     if (sheet && m.sheet !== sheet) continue;
     let score = cosine(queryVector, item.vector);
     if (whoBias) score = applyWhoBias(score, m);
+    // Layer 2 — sheetBias: chunk ที่ sheet ถูก mention → boost (แก้ dataset drowning)
+    if (sheetMentions && sheetMentions.has(m.sheet)) score *= sheetBoost;
     scored.push({ item, score });
   }
   scored.sort((a, b) => b.score - a.score);
+
+  // Layer 2 — coverage guarantee: ถ้า query mention N sheets → บังคับให้แต่ละ sheet
+  // ผ่าน top-coverage จำนวนอย่างน้อย `coverage` ตัว (สลับสลับกับ global ranking)
+  const results = scored.slice(0, k).map(({ item, score }) => ({
+    id: item.id,
+    score: Number(score.toFixed(4)),
+    text: item.text,
+    meta: item.meta,
+  }));
+  if (sheetMentions && sheetMentions.size > 0 && results.length > 0) {
+    const final = [];
+    const picked = new Set();
+    // รอบ 1: per-sheet top-coverage
+    for (const sheetName of sheetMentions) {
+      let n = 0;
+      for (const r of scored) {
+        if (r.item.meta?.sheet !== sheetName) continue;
+        if (picked.has(r.item.id)) continue;
+        final.push({ id: r.item.id, score: Number(r.score.toFixed(4)), text: r.item.text, meta: r.item.meta });
+        picked.add(r.item.id);
+        if (++n >= coverage) break;
+      }
+    }
+    // รอบ 2: เติม global top จนครบ k
+    for (const r of scored) {
+      if (final.length >= k) break;
+      if (picked.has(r.item.id)) continue;
+      final.push({ id: r.item.id, score: Number(r.score.toFixed(4)), text: r.item.text, meta: r.item.meta });
+      picked.add(r.item.id);
+    }
+    return { available: true, results: final.slice(0, k) };
+  }
+
   return {
     available: true,
-    results: scored.slice(0, k).map(({ item, score }) => ({
-      id: item.id,
-      score: Number(score.toFixed(4)),
-      text: item.text,
-      meta: item.meta,
-    })),
+    results,
   };
 }
 
@@ -114,7 +146,7 @@ function applyWhoBias(score, meta) {
 }
 
 // pgvector: cosine distance query ใน Postgres โดยตรง (HNSW index) — ถามแถวเยอะๆ แล้ว re-rank เอง
-async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias }) {
+async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions = null, sheetBoost = 1.10, coverage = 2 }) {
   const { getPool } = await import('./neonStore.js');
   const pool = getPool();
   const vecLiteral = `[${queryVector.join(',')}]`;
@@ -136,8 +168,32 @@ async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, s
   );
   let list = rows.map(r => ({ id: r.id, score: Number(r.score), text: r.text, meta: r.meta }));
   if (whoBias) list = list.map(r => ({ ...r, score: applyWhoBias(r.score, r.meta) }));
+  // Layer 2 — sheetBias (แก้ dataset drowning) เหมือน file path
+  if (sheetMentions && sheetMentions.size > 0) {
+    list = list.map(r => (sheetMentions.has(r.meta?.sheet) ? { ...r, score: r.score * sheetBoost } : r));
+  }
   list.sort((a, b) => b.score - a.score);
-  list = list.slice(0, k);
+
+  // coverage guarantee: ถ้า mention sheets → บังคับแต่ละ sheet ผ่าน coverage ตัว
+  if (sheetMentions && sheetMentions.size > 0 && list.length > 0) {
+    const final = [];
+    const picked = new Set();
+    for (const sheetName of sheetMentions) {
+      let n = 0;
+      for (const r of list) {
+        if (r.meta?.sheet !== sheetName || picked.has(r.id)) continue;
+        final.push(r); picked.add(r.id);
+        if (++n >= coverage) break;
+      }
+    }
+    for (const r of list) {
+      if (final.length >= k || picked.has(r.id)) continue;
+      final.push(r); picked.add(r.id);
+    }
+    list = final.slice(0, k);
+  } else {
+    list = list.slice(0, k);
+  }
   return {
     available: true,
     results: list.map(r => ({ id: r.id, score: Number(r.score.toFixed(4)), text: r.text, meta: r.meta })),

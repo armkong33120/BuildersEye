@@ -36,7 +36,9 @@ function rrfFuse(resultLists, k = 60) {
 
 // main: query → hybrid results
 // vectorResults: [{id, score, text, meta}] จาก vectorStore (อาจว่างถ้าไม่มี vectors)
-export function hybridFuse(query, flatIndex, searchIndex, vectorResults = [], { k = 10 } = {}) {
+// sheetMentions: Set<sheetName> — sheet-aware re-rank + diversity (กัน sheet ใหญ่ครอบ)
+// maxSharePerSheet: cap จำนวน chunk ต่อ sheet ในผลลัพธ์ (default 4, env RAG_SHEET_MAX_SHARE)
+export function hybridFuse(query, flatIndex, searchIndex, vectorResults = [], { k = 10, sheetMentions = null, maxSharePerSheet = 4 } = {}) {
   const kw = keywordSearch(query, flatIndex, searchIndex, 25).map(r => ({
     id: `kw:${r.key}`,
     payload: {
@@ -61,8 +63,26 @@ export function hybridFuse(query, flatIndex, searchIndex, vectorResults = [], { 
   }
 
   const fused = rrfFuse([kw, vec]);
+
+  // Layer 3 — diversity control: ถ้า mention sheets → sheet นั้นถูก guarantee ให้ติดผล
+  // (coverage จาก vectorStore ทำไปแล้ว); ที่เหลือ cap ต่อ sheet = maxSharePerSheet
+  // กัน dataset ใหญ่ (Collaboration 4,423) ครอบทุกผล
+  let ordered = fused.slice(0, k);
+  if (maxSharePerSheet > 0) {
+    const share = new Map();
+    ordered = ordered.filter(f => {
+      const s = f.payload?.meta?.sheet || '?';
+      const n = (share.get(s) || 0) + 1;
+      // sheet ที่ถูก mention ปล่อยผ่านทุกตัว (coverage ต้องการ); sheet อื่น cap
+      if (sheetMentions?.has(s)) { share.set(s, n); return true; }
+      if (n > maxSharePerSheet) return false;
+      share.set(s, n);
+      return true;
+    });
+  }
+
   return {
     mode: 'hybrid',
-    results: fused.slice(0, k).map(f => ({ ...f.payload, fusedScore: Number(f.score.toFixed(5)), inBoth: f.sources > 1 })),
+    results: ordered.map(f => ({ ...f.payload, fusedScore: Number(f.score.toFixed(5)), inBoth: f.sources > 1 })),
   };
 }

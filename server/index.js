@@ -445,9 +445,15 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
     let vectorResults = [];
     if (vectorsExist()) {
       const whoBias = /ใคร|คนไหน|บุคคล|ใครคือ|บุคคลใด/.test(query);
+      // Layer 2 — sheet-mention detection → sheetBias + coverage guarantee
+      const { detectSheetMentions } = await import('./sheetAliases.js');
+      const sheetMentions = detectSheetMentions(query);
+      const sheetBoost = Number(process.env.RAG_SHEET_BOOST || 1.10);
+      const sheetCoverage = Number(process.env.RAG_SHEET_COVERAGE || 2);
       const qv = await embedOne(embedText, { isQuery: true });
-      const out = await searchVectors(qv, { k: mode === 'hybrid' ? 25 : kk, scopeCodes: scope, allowSensitive, sheet, whoBias });
+      const out = await searchVectors(qv, { k: mode === 'hybrid' ? 25 : kk, scopeCodes: scope, allowSensitive, sheet, whoBias, sheetMentions, sheetBoost, coverage: sheetCoverage });
       vectorResults = out.results || [];
+      req._sheetMentions = sheetMentions;
     } else if (mode === 'vector') {
       return res.status(503).json({ error: 'Vector index not built yet — run: npm run build:vectors' });
     }
@@ -456,7 +462,9 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
     let payload;
     if (mode === 'hybrid') {
       const { hybridFuse } = await import('./hybridSearch.js');
-      payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk });
+      const sheetMentions = req._sheetMentions || null;
+      const maxShare = Number(process.env.RAG_SHEET_MAX_SHARE || 4);
+      payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk, sheetMentions, maxSharePerSheet: maxShare });
     } else {
       payload = { mode: hydeText ? 'vector+hyde' : 'vector', available: true, results: vectorResults };
     }

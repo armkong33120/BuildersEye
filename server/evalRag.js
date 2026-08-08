@@ -23,7 +23,9 @@ const rows = [];
 for (const g of golden) {
   const qv = await embedOne(g.q, { isQuery: true });
   const whoBias = /ใคร|คนไหน|บุคคล|บุคคลใด/.test(g.q);
-  const { results } = await searchVectors(qv, { k: K, allowSensitive: true, scopeCodes: null, whoBias });
+  const { detectSheetMentions } = await import('./sheetAliases.js');
+  const sheetMentions = detectSheetMentions(g.q);
+  const { results } = await searchVectors(qv, { k: K, allowSensitive: true, scopeCodes: null, whoBias, sheetMentions });
   const hit = results.some(r => {
     const m = r.meta || {};
     if (g.expectCodes && g.expectCodes.includes(m.code)) return true;

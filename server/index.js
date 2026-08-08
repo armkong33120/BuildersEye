@@ -518,8 +518,8 @@ if (reindex) {
 
 // ฟังพอร์ตก่อนทันที (ตอบ health ได้ใน 1-3 วิ) แล้วค่อย warm ข้อมูลใน background
 // → cold start ที่ผู้ใช้รับรู้สั้นลงมาก (ingress เจอ listener ทันที ไม่ connection refused)
-app.listen(PORT, () => {
-  console.log(`[server] BuildersEye RAG backend on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`[server] BuildersEye RAG backend listening on http://0.0.0.0:${PORT}`);
   console.log(`[server] Health: http://localhost:${PORT}/api/health`);
   console.log(`[server] Chat: POST http://localhost:${PORT}/api/chat`);
   startAutoSync();

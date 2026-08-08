@@ -7,7 +7,7 @@ import readline from 'readline';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const VECTOR_DIR = path.join(__dirname, '.data', 'vectors');
+const VECTOR_DIR = path.join(__dirname, '..', '.data', 'vectors');
 const CHUNKS_FILE = path.join(VECTOR_DIR, 'chunks.jsonl');
 const META_FILE = path.join(VECTOR_DIR, 'meta.json');
 
@@ -70,9 +70,9 @@ async function loadIndex() {
 // whoBias=true → คำถาม "ใคร/คนไหน" ให้ขยับผลคน (employee) ขึ้น, ลด orgdoc ลง
 // sheetMentions: Set<sheetName> จาก detectSheetMentions() — sheetBias boost + coverage guarantee
 // sheetBoost: multiplier สำหรับ chunk ที่ sheet ถูก mention (default 1.10, env RAG_SHEET_BOOST)
-export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false, sheetMentions = null, sheetBoost = 1.10, coverage = 2, minScore = Number(process.env.RAG_MIN_SCORE || 0.85) } = {}) {
+export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false, sheetMentions = null, sheetBoost = 1.10, coverage = 2, minScore = Number(process.env.RAG_MIN_SCORE || 0.80) } = {}) {
   // เส้นทาง Neon pgvector (ถ้ามี DATABASE_URL) — ไม่ต้องโหลด 129MB เข้า RAM
-  if (process.env.DATABASE_URL) {
+  if (process.env.USE_NEON_VECTORS === 'true' && process.env.DATABASE_URL) {
     try {
       return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions, sheetBoost, coverage, minScore });
     } catch (e) {

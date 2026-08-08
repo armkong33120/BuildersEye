@@ -1,7 +1,7 @@
 import { getHistory } from './chatMemory.js';
 
 const PRONOUN_PATTERNS = /เขา|เธอ|คนนี้|เค้า|คนนั้น|ไอ้นี่|him|her|this person|that person|they/i;
-const FOLLOW_UP_PATTERNS = /^แล้ว|^so |^and |^then |แล้ว.+ล่ะ|แล้ว.+เท่าไหร่|แล้ว.+บ้าง/i;
+const FOLLOW_UP_PATTERNS = /^แล้ว|^so |^and |^then |แล้ว.+ล่ะ|แล้ว.+เท่าไหร่|แล้ว.+บ้าง|^อายุ|^ทำงานมากี่ปี|^ลาป่วยกี่วัน|^ประวัติ|^เงินเดือนเท่าไหร่/i;
 
 function extractEmployeeRef(text) {
   if (!text) return null;

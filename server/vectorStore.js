@@ -70,11 +70,11 @@ async function loadIndex() {
 // whoBias=true → คำถาม "ใคร/คนไหน" ให้ขยับผลคน (employee) ขึ้น, ลด orgdoc ลง
 // sheetMentions: Set<sheetName> จาก detectSheetMentions() — sheetBias boost + coverage guarantee
 // sheetBoost: multiplier สำหรับ chunk ที่ sheet ถูก mention (default 1.10, env RAG_SHEET_BOOST)
-export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false, sheetMentions = null, sheetBoost = 1.10, coverage = 2 } = {}) {
+export async function searchVectors(queryVector, { k = 5, scopeCodes = null, allowSensitive = false, sheet = null, whoBias = false, sheetMentions = null, sheetBoost = 1.10, coverage = 2, minScore = Number(process.env.RAG_MIN_SCORE || 0.85) } = {}) {
   // เส้นทาง Neon pgvector (ถ้ามี DATABASE_URL) — ไม่ต้องโหลด 129MB เข้า RAM
   if (process.env.DATABASE_URL) {
     try {
-      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions, sheetBoost, coverage });
+      return await searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions, sheetBoost, coverage, minScore });
     } catch (e) {
       console.warn('[vector] neon search failed, fallback ไฟล์:', e.message);
     }
@@ -93,6 +93,7 @@ export async function searchVectors(queryVector, { k = 5, scopeCodes = null, all
     if (whoBias) score = applyWhoBias(score, m);
     // Layer 2 — sheetBias: chunk ที่ sheet ถูก mention → boost (แก้ dataset drowning)
     if (sheetMentions && sheetMentions.has(m.sheet)) score *= sheetBoost;
+    if (minScore > 0 && score < minScore) continue;
     scored.push({ item, score });
   }
   scored.sort((a, b) => b.score - a.score);
@@ -146,25 +147,21 @@ function applyWhoBias(score, meta) {
 }
 
 // pgvector: cosine distance query ใน Postgres โดยตรง (HNSW index) — ถามแถวเยอะๆ แล้ว re-rank เอง
-async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions = null, sheetBoost = 1.10, coverage = 2 }) {
+async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, sheet, whoBias, sheetMentions = null, sheetBoost = 1.10, coverage = 2, minScore = 0.85 }) {
   const { getPool } = await import('./neonStore.js');
   const pool = getPool();
   const vecLiteral = `[${queryVector.join(',')}]`;
-  const scopeArr = scopeCodes ? [...scopeCodes] : null;
-  const fetchN = whoBias ? Math.min(k * 4, 200) : k;
+  const conditions = [];
+  if (!allowSensitive) conditions.push("meta->>'sensitivity' != 'sensitive'");
+  if (scopeCodes && scopeCodes.size > 0) {
+    const codesLiteral = Array.from(scopeCodes).map(c => `'${c.replace(/'/g, "''")}'`).join(',');
+    conditions.push(`(meta->>'kind' = 'orgdoc' OR meta->>'code' IN (${codesLiteral}))`);
+  }
+  if (sheet) conditions.push(`meta->>'sheet' = '${sheet.replace(/'/g, "''")}'`);
+  const whereSql = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
   const { rows } = await pool.query(
-    `SELECT id, text, meta, 1 - (embedding <=> $1::vector) AS score
-     FROM chunks
-     WHERE ($2::boolean OR meta->>'sensitivity' <> 'sensitive')
-       AND NOT (meta->>'kind' = 'orgdoc' AND (
-            meta->>'name' ILIKE '%cross_reference%' OR meta->>'name' ILIKE '%employee_master%'
-            OR meta->>'name' ILIKE '%employee_directory%' OR meta->>'name' ILIKE '%master_index%'
-            OR meta->>'name' ILIKE '%hr_master%'))
-       AND ($3::text[] IS NULL OR meta->>'kind' = 'orgdoc' OR meta->>'code' = ANY($3))
-       AND ($4::text IS NULL OR meta->>'sheet' = $4)
-     ORDER BY embedding <=> $1::vector
-     LIMIT $5`,
-    [vecLiteral, allowSensitive, scopeArr, sheet, fetchN]
+    `SELECT id, text, meta, (1 - (embedding <=> '${vecLiteral}'::vector)) AS score FROM chunks ${whereSql} ORDER BY embedding <=> '${vecLiteral}'::vector LIMIT 100`
   );
   let list = rows.map(r => ({ id: r.id, score: Number(r.score), text: r.text, meta: r.meta }));
   if (whoBias) list = list.map(r => ({ ...r, score: applyWhoBias(r.score, r.meta) }));
@@ -172,6 +169,7 @@ async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, s
   if (sheetMentions && sheetMentions.size > 0) {
     list = list.map(r => (sheetMentions.has(r.meta?.sheet) ? { ...r, score: r.score * sheetBoost } : r));
   }
+  if (minScore > 0) list = list.filter(r => r.score >= minScore);
   list.sort((a, b) => b.score - a.score);
 
   // coverage guarantee: ถ้า mention sheets → บังคับแต่ละ sheet ผ่าน coverage ตัว

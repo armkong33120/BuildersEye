@@ -1373,7 +1373,6 @@ h1 {
     border-radius: 4px;
   }
 
-  /* Toggle buttons — จัดตำแหน่งไม่ให้ทับกัน/ทับ chat */
   /* panel-toggle (เปิดเมนู drawer): ลอยเหนือ chat ด้านขวา (เข้าถึงนิ้วโป้งง่าย) */
   .panel-toggle {
     top: auto;
@@ -1383,6 +1382,13 @@ h1 {
     height: 44px;
     z-index: 50;
     border-radius: 12px;
+    transition: bottom 250ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms ease;
+  }
+
+  /* เมื่อ RAG Chat พับเก็บลงล่าง: ให้ panel-toggle ย้ายลงมาอยู่นิ้วโป้งขวาล่าง */
+  .rag-chat.is-collapsed ~ .panel-toggle,
+  body:has(.rag-chat.is-collapsed) .panel-toggle {
+    bottom: 70px;
   }
 
   /* topbar-toggle: อยู่มุมซ้ายบน ใกล้ topbar ที่มันควบคุม */
@@ -1396,11 +1402,24 @@ h1 {
     border-radius: 12px;
   }
 
-  /* user-chip เหนือ chat ด้านซ้าย (ไม่ชน panel-toggle) */
+  /* user-chip บนหน้าจอมือถือ: ติดมุมบนซ้ายถัดจาก topbar-toggle ไม่ลอยบังตรงกลางกราฟ 3D */
   .user-chip {
-    bottom: calc(min(52vh, 440px) + 16px);
-    left: 12px;
-    z-index: 35;
+    top: 12px;
+    bottom: auto;
+    left: 58px;
+    right: auto;
+    z-index: 55;
+    padding: 4px 10px 4px 8px;
+    font-size: 11px;
+    max-width: calc(100vw - 125px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  .user-chip-name {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .department-legend {

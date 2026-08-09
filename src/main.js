@@ -60,6 +60,11 @@ const AUTO_ROTATE_RESUME_MS = 5200;
 const SCAN_COLOR = '#7cf7ff';
 const PATH_COLOR = '#ffd166';
 
+// --- Random Blinking Labels State (GPU / DOM Optimization) ---
+let activeRandomLabelPks = new Set();
+let lastLabelBlinkTime = 0;
+const BLINK_INTERVAL_MS = 2200; // สุ่มเปลี่ยนตำแหน่งป้ายชื่อพนักงานทุกๆ 2.2 วินาที
+
 const state = {
   selectedPk: graph.ceoPk,
   department: 'ALL',
@@ -763,6 +768,7 @@ function showLoginOverlay(msg) {
   var ov = document.getElementById('loginOverlay');
   if (!ov) return;
   ov.classList.remove('is-hidden');
+  ov.style.display = 'flex';
   ov.setAttribute('aria-hidden', 'false');
   var err = document.getElementById('loginError');
   if (err) err.textContent = msg || '';
@@ -777,6 +783,7 @@ function hideLoginOverlay() {
   var ov = document.getElementById('loginOverlay');
   if (!ov) return;
   ov.classList.add('is-hidden');
+  ov.style.display = 'none';
   ov.setAttribute('aria-hidden', 'true');
 }
 
@@ -784,11 +791,19 @@ function renderUserChip() {
   var uc = document.getElementById('userChip');
   if (!uc) return;
   var u = getSessionUser();
-  if (!u) { uc.classList.add('is-hidden'); return; }
+  if (!u && !previewActive) {
+    uc.classList.add('is-hidden');
+    uc.style.display = 'none';
+    return;
+  }
+
+  uc.classList.remove('is-hidden');
+  uc.style.display = 'flex';
 
   // Preview Mode chip: badge + role switcher + exit
   if (previewActive) {
     uc.classList.add('is-preview');
+    uc.classList.remove('is-hidden');
     uc.innerHTML =
       '<span class="user-chip-dot" style="background:#2dd4bf"></span>' +
       '<span class="user-chip-name">🧪 โหมดทดลอง</span>' +
@@ -2097,11 +2112,7 @@ function updateMetricStrip() {
   ].join('');
 }
 
-// --- Random Blinking Labels State (GPU / DOM Optimization) ---
-let activeRandomLabelPks = new Set();
-let lastLabelBlinkTime = 0;
-const BLINK_INTERVAL_MS = 2200; // สุ่มเปลี่ยนตำแหน่งป้ายชื่อพนักงานทุกๆ 2.2 วินาที
-
+// --- Random Blinking Labels Logic (GPU / DOM Optimization) ---
 function updateRandomBlinkingLabels(nowMs) {
   if (nowMs - lastLabelBlinkTime < BLINK_INTERVAL_MS) return false;
   lastLabelBlinkTime = nowMs;

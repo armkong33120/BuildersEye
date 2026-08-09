@@ -88,7 +88,7 @@ if (vec.status === 503) {
   // orgdoc: ถามเรื่องระดับบริษัท ต้องเจอ org doc
   const org = await fetch(`${BASE}/api/search/semantic`, {
     method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${ceo}` },
-    body: JSON.stringify({ query: 'โปรเจกต์ทั้งหมดที่กำลังดำเนินการ', k: 5 }),
+    body: JSON.stringify({ query: 'โปรเจกต์ทั้งหมดที่กำลังดำเนินการ', k: 10 }),
   });
   const od = await org.json();
   const hitOrg = (od.results || []).some(r => r.meta?.kind === 'orgdoc');

@@ -1,5 +1,5 @@
 import alasql from 'alasql';
-import { generateAnswer, isLLMAvailable } from './llmClient.js';
+import { generateAnswer, isLLMAvailable } from '../core/llmClient.js';
 
 let dbInitialized = false;
 

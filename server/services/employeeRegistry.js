@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import xlsx from 'xlsx';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const REGISTRY_DIR = path.join(__dirname, '.data', 'registry');
+const REGISTRY_DIR = path.join(__dirname, '..', '.data', 'registry');
 const EMPLOYEES_FILE = path.join(REGISTRY_DIR, 'employees.json');
 const SCHEMA_FILE = path.join(REGISTRY_DIR, 'schema.json');
 

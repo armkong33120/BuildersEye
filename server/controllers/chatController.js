@@ -1,16 +1,16 @@
 import 'dotenv/config';
 import { search } from './searchIndex.js';
-import { checkQueryPolicy, resolveScope, applyFieldRedaction } from './policy.js';
-import { anonymize, deAnonymize, buildContext } from './anonymizer.js';
+import { checkQueryPolicy, resolveScope, applyFieldRedaction } from '../security/policy.js';
+import { anonymize, deAnonymize, buildContext } from '../security/anonymizer.js';
 import { parseIntentSemantically } from './semanticParser.js';
-import { parseIntent } from './intentParser.js';
-import { addMessage, getHistory } from './chatMemory.js';
-import { resolvePronouns } from './pronounResolver.js';
-import { generateAnswer, isLLMAvailable } from './llmClient.js';
+import { parseIntent } from '../security/intentParser.js';
+import { addMessage, getHistory } from '../chatMemory.js';
+import { resolvePronouns } from '../security/pronounResolver.js';
+import { generateAnswer, isLLMAvailable } from '../core/llmClient.js';
 import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 // หมายเหตุ: ไม่ใช้ semanticSearch จาก vectorEngine.js แล้ว (มัน embed ด้วย text-embedding-3-small
 // ผ่าน DeepSeek → 404 + มิติผิด 1536 vs 384) — ใช้ production path embedOne + searchVectors แทน
-import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
+import { cacheKeyFor, cacheGet, cacheSet } from '../responseCache.js';
 import { detectSheetMentions } from './sheetAliases.js';
 
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {

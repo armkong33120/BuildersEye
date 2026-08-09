@@ -2097,12 +2097,44 @@ function updateMetricStrip() {
   ].join('');
 }
 
+// --- Random Blinking Labels State (GPU / DOM Optimization) ---
+let activeRandomLabelPks = new Set();
+let lastLabelBlinkTime = 0;
+const BLINK_INTERVAL_MS = 2200; // สุ่มเปลี่ยนตำแหน่งป้ายชื่อพนักงานทุกๆ 2.2 วินาที
+
+function updateRandomBlinkingLabels(nowMs) {
+  if (nowMs - lastLabelBlinkTime < BLINK_INTERVAL_MS) return false;
+  lastLabelBlinkTime = nowMs;
+
+  const candidatePks = [];
+  for (const [pk, mesh] of nodeObjects.entries()) {
+    if (mesh.visible && pk !== graph.ceoPk && pk !== state.selectedPk) {
+      candidatePks.push(pk);
+    }
+  }
+
+  // สุ่มเลือกพนักงาน 3 ถึง 5 คน
+  const count = Math.min(candidatePks.length, 3 + Math.floor(Math.random() * 3));
+  for (let i = candidatePks.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [candidatePks[i], candidatePks[j]] = [candidatePks[j], candidatePks[i]];
+  }
+  activeRandomLabelPks = new Set(candidatePks.slice(0, count));
+  return true;
+}
+
 function shouldShowLabel(identity, highlighted) {
-  const depth = visualDepth(identity);
-  if (depth > 0 && !state.visibleLabelDepths.has(depth)) return false;
-  if (highlighted) return true;
-  if (state.labelMode === 'all') return true;
-  return isKeyIdentity(identity);
+  // 1. CEO แสดงผลตลอดเวลา 100%
+  if (identity.pk === graph.ceoPk) return true;
+
+  // 2. คนที่ถูกเลือก (Selected) หรืออยู่ในสายไฮไลท์ (Manager Chain / Subtree)
+  if (identity.pk === state.selectedPk || highlighted) return true;
+
+  // 3. ผลลัพธ์จากการค้นหา RAG Search
+  if (state.scan?.nodePks?.has(identity.pk)) return true;
+
+  // 4. สุ่มแสดงผลกระพริบเปลี่ยนตำแหน่ง 3 - 5 คน
+  return activeRandomLabelPks.has(identity.pk);
 }
 
 function isKeyIdentity(identity) {
@@ -2190,9 +2222,19 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   const elapsed = performance.now() * 0.001;
+  const nowMs = performance.now();
+  const labelUpdated = updateRandomBlinkingLabels(nowMs);
   updateReportingFlowDots(elapsed);
   for (const [pk, mesh] of nodeObjects.entries()) {
     if (!mesh.visible) continue;
+    if (mesh.userData.label && labelUpdated) {
+      const identity = mesh.userData.identity;
+      const selected = employeesByPk.get(state.selectedPk);
+      const chainSet = new Set([state.selectedPk, ...(selected?.managerChainPks || [])]);
+      const subtreeSet = new Set(selected?.subtreePks || [state.selectedPk]);
+      const highlighted = chainSet.has(pk) || subtreeSet.has(pk);
+      mesh.userData.label.visible = shouldShowLabel(identity, highlighted);
+    }
     const selectedPulse = pk === state.selectedPk ? 1 + Math.sin(elapsed * 2.4) * 0.035 : 1;
     // Stronger blink for RAG-matched nodes: scale bounce + emissive flicker
     const isRagMatch = state.scan?.nodePks?.has(pk) && state.scan?.mode === 'rag-search';

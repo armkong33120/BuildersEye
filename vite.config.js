@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         index: resolve(__dirname, 'index.html'),
         app: resolve(__dirname, 'app.html'),
+        debug_neural_network_diagram: resolve(__dirname, 'debug_neural_network_diagram.html'),
       },
     },
   },

@@ -11,7 +11,12 @@ const DATA_DIR = path.join(__dirname, '.data', 'auth');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const SESSIONS_FILE = path.join(DATA_DIR, 'sessions.json');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'builderseye-dev-secret-change-in-prod';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  // SECURITY: never fall back to a hardcoded secret. Require JWT_SECRET in production.
+  console.error('[SECURITY] JWT_SECRET environment variable is REQUIRED. Refusing to start.');
+  process.exit(1);
+}
 const ACCESS_TTL = process.env.ACCESS_TOKEN_TTL || '30m';
 const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
@@ -41,12 +46,10 @@ function usernameFor(identity) {
   return code; // emp001 ...
 }
 
-// default password per role (demo/test). In prod these are forced-change on first login.
-function defaultPassword(role) {
-  if (role === 'CEO') return 'CEO@Landyi2026';
-  if (role === 'HR') return 'HR@2026test';
-  if (role === 'Manager') return 'Exec@2026test';
-  return 'Emp@2026test';
+// SECURITY: generate a strong random initial password per user instead of a
+// hardcoded default. Users MUST change it on first login (mustChangePassword=true).
+function randomInitialPassword() {
+  return crypto.randomBytes(18).toString('base64url');
 }
 
 function readJson(file, fallback) {
@@ -70,13 +73,13 @@ export function seedUsers(identityGraph) {
       id: idn.pk,
       employeeId: idn.pk,
       username,
-      passwordHash: bcrypt.hashSync(defaultPassword(role), 10),
+      passwordHash: bcrypt.hashSync(randomInitialPassword(), 10),
       role,
       dept: idn.department || '',
       name: idn.name || username,
       jobTitle: idn.jobTitle || '',
       isActive: true,
-      mustChangePassword: false, // demo: allow default passwords; set true to force change
+      mustChangePassword: true, // SECURITY: force change on first login
       createdAt: new Date().toISOString(),
     };
   });
@@ -188,13 +191,33 @@ export function verifyAccessToken(token) {
 }
 
 // --- Preview credentials (M4, only when enabled) ---
+// SECURITY: never reveal real passwords. Returns role/identity info only.
 export function previewCredentials() {
   if (process.env.ENABLE_TEST_CREDS !== 'true') return null;
   return listUsers().map((u) => ({
     username: u.username,
-    password: defaultPassword(u.role),
     role: u.role,
     name: u.name,
     jobTitle: u.jobTitle,
   }));
+}
+
+// --- Online users (currently logged in / active sessions) ---
+export function listOnlineUsers() {
+  const now = Date.now();
+  const sessions = loadSessions();
+  const users = listUsers();
+  const active = new Map(); // userId -> { username, name, role, lastActive }
+  for (const s of sessions) {
+    if (s.revoked) continue;
+    if (new Date(s.expiresAt).getTime() < now) continue;
+    const u = users.find((x) => x.id === s.userId);
+    if (!u) continue;
+    const prev = active.get(u.id);
+    const last = new Date(s.expiresAt).getTime();
+    if (!prev || last > prev.lastActive) {
+      active.set(u.id, { username: u.username, name: u.name, role: u.role, dept: u.dept, lastActive: s.expiresAt });
+    }
+  }
+  return [...active.values()].sort((a, b) => a.username.localeCompare(b.username));
 }

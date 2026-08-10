@@ -8,7 +8,7 @@ import { initDatabase } from './sqlEngine.js';
 import { buildVectorIndex } from './vectorEngine.js';
 import { chatHandler } from './chatController.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
-import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials } from './authStore.js';
+import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials, listOnlineUsers } from './authStore.js';
 import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
 import { registryToFlatIndex, buildScopeCodes } from './registryIngest.js';
 import { getCacheDirSafe } from './runRegistry.js';
@@ -264,6 +264,9 @@ app.get('/api/preview/credentials', (req, res) => {
   res.json(creds);
 });
 
+// Latest chat pipeline result — consumed by the debug neural-network page.
+let latestPipeline = null;
+
 app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   try {
     const { query, conversationId } = req.body;
@@ -275,6 +278,21 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     addMessage(convId, 'user', query);
 
     const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, convId);
+
+    // Store for debug page (pipeline inspector)
+    latestPipeline = {
+      query: result.query,
+      answer: result.answer,
+      chunks: (result.results || []).slice(0, 5).map((r) => ({
+        s: r.score != null ? r.score : (r.matchedRecords && r.matchedRecords[0] ? 0.5 : 0),
+        t: (r.matchedRecords && r.matchedRecords[0] && r.matchedRecords[0].content) || (r.employeeId ? 'EMP' + String(r.employeeId).padStart(3, '0') : ''),
+      })),
+      sources: (result.sources || []).slice(0, 5),
+      matchedEmployeePks: result.matchedEmployeePks || [],
+      matchedDepartments: result.matchedDepartments || [],
+      responseTimeMs: result.responseTimeMs || 0,
+      at: Date.now(),
+    };
 
     // Save assistant response
     if (result.answer) {
@@ -288,6 +306,18 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     console.error('[chat] Error:', e.message);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Debug pipeline inspector — returns the latest chat retrieval data (no auth,
+// read-only, so the standalone debug page can poll it).
+app.get('/api/debug/pipeline', (req, res) => {
+  if (!latestPipeline) return res.status(404).json({ error: 'No pipeline data yet' });
+  res.json(latestPipeline);
+});
+
+// Debug online users — who is currently logged in (active sessions).
+app.get('/api/debug/online', (req, res) => {
+  res.json({ count: listOnlineUsers().length, users: listOnlineUsers() });
 });
 
 // --- Conversation history ---

@@ -238,6 +238,27 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   const finalAnswer = answer;
 
+  // FIX: ensure ALL employees referenced in the final answer are highlighted on
+  // the 3D graph, not just the retrieval hits. Some answers mention
+  // managers/colleagues (by name) that were not in the primary search results.
+  if (finalAnswer) {
+    // 1) Match explicit employee codes (EMP001, EMP 030, ...)
+    const answerRegex = /EMP\s*(\d{3})/gi;
+    let m;
+    while ((m = answerRegex.exec(finalAnswer)) !== null) {
+      const pk = parseInt(m[1], 10);
+      if (Number.isInteger(pk) && !matchedPks.includes(pk)) matchedPks.push(pk);
+    }
+    // 2) Match employee full names that appear in the answer (e.g. "แพรวพรรณ ภักดีวงศ์")
+    const identities = identityGraph?.identities || [];
+    for (const idn of identities) {
+      const name = idn?.name;
+      if (name && finalAnswer.includes(name) && !matchedPks.includes(idn.pk)) {
+        matchedPks.push(idn.pk);
+      }
+    }
+  }
+
   // Save to conversation memory
   addMessage(conversationId, 'user', query);
   addMessage(conversationId, 'assistant', finalAnswer);

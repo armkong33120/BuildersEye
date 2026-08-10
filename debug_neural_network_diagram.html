@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NEURAL RAG — pipeline inspector</title>
+<style>
+  :root{
+    --bg:#070a12; --panel:#0b101b; --line:#1c2740; --txt:#d8e1f0; --dim:#71809c; --faint:#46536e;
+    --c0:#22d3ee; --c1:#4f8bff; --c2:#a78bfa; --c3:#e879f9; --co:#f472b6;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:13px;overflow:hidden}
+  .top{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:#090d16}
+  .brand{font-weight:700;letter-spacing:.08em;color:var(--c0);font-size:13px}
+  .brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c0);margin-right:7px;box-shadow:0 0 8px var(--c0)}
+  .top input{flex:1;max-width:420px;background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:6px 10px;font-family:var(--mono);font-size:12px;outline:none}
+  .top input:focus{border-color:var(--c0)}
+  .top select{background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--dim);padding:6px 8px;font-family:var(--mono);font-size:11px}
+  .top button{background:#0d1422;border:1px solid var(--c0);color:var(--c0);border-radius:7px;padding:6px 14px;font-family:var(--mono);font-size:12px;cursor:pointer}
+  .top button:hover{background:rgba(34,211,238,.12)}
+  #chip{font-size:10px;color:var(--faint);border:1px solid var(--line);padding:3px 8px;border-radius:99px}
+  main{display:flex;height:calc(100vh - 43px)}
+  #stage{flex:1;position:relative;min-width:0}
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  /* node tooltip */
+  #tip{position:absolute;z-index:10;background:#0a0f1c;border:1px solid var(--c0);border-radius:8px;padding:8px 10px;
+       font-size:11px;max-width:300px;pointer-events:none;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+  #tip b{color:var(--txt);font-size:12px}
+  #tip .m{color:var(--c0)}
+  #tip .f{color:var(--amber);font-size:10px;margin-top:3px;word-break:break-all}
+  #tip .d{color:var(--dim);margin-top:3px;line-height:1.5}
+  #tip.hide{display:none}
+  /* online users overlay */
+  #online{position:absolute;top:10px;left:10px;z-index:9;background:rgba(9,13,22,.85);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:11px;max-width:230px}
+  #online .ol-h{color:var(--co);font-weight:700;letter-spacing:.05em;margin-bottom:5px}
+  #online .ol-list{display:flex;flex-wrap:wrap;gap:4px}
+  #online .ol{background:#0d1422;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--c0);font-size:10px;cursor:default}
+  #online .ol-none{color:var(--faint);font-size:10px}
+  /* inspector (แค่ข้อมูลจำเป็น) */
+  #inspector{width:300px;border-left:1px solid var(--line);background:#090d16;display:flex;flex-direction:column;overflow:hidden}
+  .sec{padding:10px 12px;border-bottom:1px solid var(--line)}
+  .sec h3{font-size:10px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-bottom:8px}
+  #chunks{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;max-height:190px;overflow:auto}
+  #chunks li{font-size:11px;line-height:1.45;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:#0d1422}
+  #chunks .s{font-weight:700;margin-right:6px}
+  #chunks .t{color:var(--dim)}
+  details{border:1px solid var(--line);border-radius:7px;background:#0d1422}
+  summary{cursor:pointer;padding:6px 9px;font-size:11px;color:var(--dim);list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:before{content:"▸ ";color:var(--c0)}
+  details[open] summary:before{content:"▾ "}
+  pre{font-family:var(--mono);font-size:10.5px;line-height:1.55;color:#b7c6e2;padding:8px 9px;max-height:150px;overflow:auto;white-space:pre-wrap;word-break:break-word;border-top:1px solid var(--line)}
+  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .metrics div{background:#0d1422;border:1px solid var(--line);border-radius:7px;padding:6px 8px}
+  .metrics .k{font-size:9px;color:var(--faint);text-transform:uppercase}
+  .metrics .v{font-size:15px;color:var(--c0)}
+  #prog{font-size:10px;color:var(--faint);margin-top:8px}
+  #prog i{display:block;height:2px;background:var(--c0);border-radius:2px;width:0%;transition:width .25s linear;margin-top:4px}
+  ::-webkit-scrollbar{width:7px}::-webkit-scrollbar-thumb{background:#233047;border-radius:6px}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="brand"><i></i>NEURAL RAG</span>
+    <input id="q" value="วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง?" />
+    <select id="preset">
+      <option value="0">OT เทปูน · vector</option>
+      <option value="1">IT Security · hybrid</option>
+      <option value="2">Headcount · sql</option>
+    </select>
+    <button id="run">RUN</button>
+    <span id="chip">ollama</span>
+  </div>
+  <main>
+    <div id="stage">
+      <canvas id="cv"></canvas>
+      <div id="tip" class="hide"></div>
+      <div id="online"></div>
+    </div>
+  </main>
+<script>
+
+// ── เครือข่าย: 6 ชั้น · โหนด = ขั้น pipeline (ทุกโหนดผูกไฟล์จริงใน repo) ─────
+const LAYERS = [
+  { key:'input', color:'#22d3ee', nodes:[
+    {id:'q',    label:'User Query', file:'app.html · src/main.js', detail:'raw question text'},
+    {id:'int',  label:'Intent',     file:'server/security/intentParser.js', detail:'employee-lookup · 0.92'},
+    {id:'role', label:'Role',       file:'server/security/policy.js', detail:'RBAC scope · viewer'},
+    {id:'mem',  label:'Memory',     file:'server/chatMemory.js', detail:'session turns'},
+  ]},
+  { key:'h1', color:'#4f8bff', ms:120, nodes:[
+    {id:'hyde', label:'Query Rewrite', file:'server/core/llmRerank.js', detail:'hydeExpand() · HyDE + Thai normalize'},
+    {id:'alias',label:'Alias Map',     file:'server/sheetAliases.js', detail:'detectSheetMentions() · OT→Timesheet_Log'},
+  ]},
+  { key:'h2', color:'#a78bfa', ms:87, nodes:[
+    {id:'emb',  label:'Embed',    file:'server/core/localEmbedder.js', detail:'e5-small · 384d'},
+    {id:'scan', label:'Top-K Scan',file:'server/core/vectorStore.js', detail:'searchVectors() · 5 hits ≥ 0.65'},
+    {id:'flt',  label:'Score Filter',file:'vectorStore.js + policy.js', detail:'cosine + RBAC cut'},
+  ]},
+  { key:'h3', color:'#c084fc', ms:32, nodes:[
+    {id:'rr',   label:'Rerank',   file:'server/core/llmRerank.js', detail:'llmRerank() · listwise scoring'},
+    {id:'ctx',  label:'Context',  file:'server/anonymizer.js', detail:'buildContext() · assemble chunks'},
+  ]},
+  { key:'h4', color:'#e879f9', ms:1200, nodes:[
+    {id:'pb',   label:'Prompt',   file:'server/chatController.js', detail:'system+ctx+user'},
+    {id:'gen',  label:'Generate', file:'server/core/llmClient.js', detail:'llama3.1:8b · 178 tok/s'},
+  ]},
+  { key:'out', color:'#f472b6', nodes:[
+    {id:'ans',  label:'Answer',   file:'server/chatController.js', detail:'markdown + citations'},
+    {id:'cite', label:'Evidence', file:'server/searchIndex.js', detail:'top-5 source rows'},
+  ]},
+];
+// ลำดับรัน = เรียงตามชั้น (h1..out)
+const STAGES = LAYERS.filter(l=>l.ms).map(l=>l.key);
+
+
+// ── ข้อมูลตัวอย่าง (3 presets) ───────────────────────────────────────────────
+const SYS = 'Answer only from context. Reply in Thai. Cite as [1][2]. Never invent employee IDs.';
+const DATA = [
+  { q:'วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง และเจอปัญหาอะไรหน้างาน?',
+    in:2845, out:214, spd:178, lat:1539,
+    chunks:[
+      {s:0.92, t:'เทปูนคานชั้นดาดฟ้า อยู่ OT ข้ามคืนเพราะมิกเซอร์ CPAC มาช้า — Timesheet_Log EMP070'},
+      {s:0.87, t:'ผรห. ทิ้งงานกลางคันหลังเบิกเงินล่วงหน้า ต้องเปลี่ยนใหม่ — Project_History EMP063'},
+      {s:0.81, t:'ปูน CPAC เข้าช้า 4 ชม. เทคอนกรีตไม่ทัน ต้องขอ OT — Project_History EMP068'},
+      {s:0.74, t:'แรงงานต่างด้าวกลับบ้านช่วงเทศกาล งานดีเลย์ — KPI_OKR_History EMP063'},
+      {s:0.65, t:'QC งานฉาบผนังพบรอยร้าวแนวเสา เรียก ผรห. กลับมาแก้ — Timesheet_Log EMP070'},
+    ],
+    ctx:['[1] (0.92) Timesheet_Log EMP070: เทปูนคานชั้นดาดฟ้า OT ข้ามคืน CPAC มาช้า',
+         '[2] (0.87) Project_History EMP063: ผรห. ทิ้งงาน เปลี่ยนใหม่ ดีเลย์ 2 สัปดาห์',
+         '[3] (0.81) Project_History EMP068: ปูน CPAC เข้าช้า 4 ชม. ขอ OT',
+         '[4] (0.74) KPI_OKR_History EMP063: แรงงานต่างด้าวกลับบ้าน เทศกาล',
+         '[5] (0.65) Timesheet_Log EMP070: QC ฉาบผนัง รอยร้าวแนวเสา'].join('\n'),
+    ans:'EMP070 ทำ OT เทปูนข้ามคืน (CPAC มาช้า). ปัญหา: ผรห. ทิ้งงาน, CPAC ช้า 4 ชม., แรงงานต่างด้าวกลับบ้าน'},
+  { q:'สรุปความเสี่ยง IT Security และรายชื่อคนที่เกี่ยวข้อง',
+    in:3210, out:268, spd:164, lat:1874,
+    chunks:[
+      {s:0.95, t:'Ransomware .locked บนเครื่องฝ่ายขาย คัดแยก + กู้ backup — IT_Ticket_Log EMP145'},
+      {s:0.89, t:'BSOD ซ้ำบน Dell Latitude RAM เสื่อม เปลี่ยนแรม — IT_Ticket_Log EMP144'},
+      {s:0.83, t:'รั่วไหลข้อมูลลูกค้า 1,200 ราย ขึ้น Drive ส่วนตัว เสี่ยง PDPA — IT_Ticket_Log EMP146'},
+      {s:0.72, t:'แชร์ password กับผู้อื่น formal warning — Warning EMP135'},
+      {s:0.58, t:'อบรม Cybersecurity ผ่านเกณฑ์ — Learning_Development EMP143'},
+    ],
+    ctx:['[1] (0.95) IT_Ticket_Log EMP145: Ransomware .locked',
+         '[2] (0.89) IT_Ticket_Log EMP144: BSOD RAM เสื่อม',
+         '[3] (0.83) IT_Ticket_Log EMP146: รั่วไหลลูกค้า 1,200 ราย',
+         '[4] (0.72) Warning EMP135: แชร์ password',
+         '[5] (0.58) Learning EMP143: อบรมไซเบอร์'].join('\n'),
+    ans:'เสี่ยงสูง 4 ราย: EMP145 (Ransomware), EMP144 (BSOD), EMP146 (รั่วไหล PDPA), EMP135 (แชร์ password)'},
+  { q:'จำนวนพนักงานแยกแผนก และกี่คนได้เกรด C ขึ้นไป',
+    in:1980, out:152, spd:191, lat:1042,
+    chunks:[
+      {s:0.99, t:'SELECT department, COUNT(DISTINCT employeeId) FROM employee_data GROUP BY department — 12 แผนก'},
+      {s:0.98, t:'Engineering 38 · Sales 28 · Design 18 · CS 12 · Procurement 12 · Marketing 10 · Finance 10 · HR 8 · Exec 6 · IT 4 · Legal 2 · Office 2 = 150'},
+      {s:0.84, t:'Band ล่าสุด: B=108 · C=24 · D=8 (KPI_OKR_History)'},
+      {s:0.66, t:'พนักงานได้เกรด C ขึ้นไป = 132 คน (88%)'},
+    ],
+    ctx:['[1] (0.99) analytics.sql: GROUP BY department',
+         '[2] (0.98) sql_result: 12 แผนก = 150 คน',
+         '[3] (0.84) KPI_OKR_History: B=108 C=24 D=8',
+         '[4] (0.66) analytics: C ขึ้นไป 132 คน'].join('\n'),
+    ans:'150 คน / 12 แผนก (ใหญ่สุด Engineering 38). เกรด C ขึ้นไป = 132 คน (88%)'},
+];
+
+// ── engine ───────────────────────────────────────────────────────────────────
+const cv=document.getElementById('cv'), st=document.getElementById('stage'),
+      tip=document.getElementById('tip'), onlineEl=document.getElementById('online');
+const $=id=>document.getElementById(id);
+const nodes=new Map(), edges=[], parts=[];
+let W=0,H=0,DPR=1, hover=null, busy=false;
+
+function layout(){
+  const r=st.getBoundingClientRect(); W=Math.max(r.width,300); H=Math.max(r.height,200);
+  DPR=Math.min(devicePixelRatio||1,2); cv.width=W*DPR; cv.height=H*DPR;
+  const pad=46, nC=LAYERS.length, colW=(W-pad*2)/nC;
+  nodes.clear();
+  LAYERS.forEach((ly,ci)=>{
+    const x=pad+colW*ci+colW/2, n=ly.nodes.length;
+    const gap=Math.min(52,(H-120)/Math.max(n,1)), y0=(H-(n-1)*gap)/2;
+    ly.nodes.forEach((nd,ni)=>nodes.set(nd.id,{x,y:y0+ni*gap,r:15,nd,ly,st:0}));
+  });
+  edges.length=0;
+  for(let i=0;i<LAYERS.length-1;i++){
+    for(const a of LAYERS[i].nodes) for(const b of LAYERS[i+1].nodes){
+      const h=[...(a.id+b.id)].reduce((s,c)=>s+c.charCodeAt(0),0);
+      if(h%100/100<0.9) edges.push([a.id,b.id]);
+    }
+  }
+}
+function draw(){
+  const c=cv.getContext('2d'); c.setTransform(DPR,0,0,DPR,0,0); c.clearRect(0,0,W,H);
+  // edges
+  for(const [a,b] of edges){
+    const A=nodes.get(a),B=nodes.get(b); const act=A.st>0||B.st>0;
+    c.strokeStyle=act?'rgba(90,140,255,.30)':'rgba(60,80,130,.12)';
+    c.lineWidth=act?1.2:.6; c.beginPath(); c.moveTo(A.x,A.y);
+    const mx=(A.x+B.x)/2; c.bezierCurveTo(mx,A.y,mx,B.y,B.x,B.y); c.stroke();
+  }
+  // particles
+  for(const p of parts){
+    p.t+=0.016/p.dur; const e=p.t<.5?2*p.t*p.t:1-Math.pow(-2*p.t+2,2)/2;
+    p.x=p.sx+(p.tx-p.sx)*e; p.y=p.sy+(p.ty-p.sy)*e;
+    c.shadowColor=p.c; c.shadowBlur=8; c.fillStyle=p.c; c.beginPath();
+    c.arc(p.x,p.y,2.2,0,7); c.fill(); c.shadowBlur=0;
+  }
+  for(let i=parts.length-1;i>=0;i--) if(parts[i].t>=1) parts.splice(i,1);
+  // nodes
+  for(const [id,n] of nodes){
+    const col=n.ly.color, glow=n.st===2?col:n.st===1?'#fff':col;
+    c.shadowColor=glow; c.shadowBlur=n.st===1?24:n.st===2?14:hover===id?16:9;
+    c.fillStyle=n.st===1?'#fff':n.st===2?col:col; c.globalAlpha=n.st===0?.55:1;
+    c.beginPath(); c.arc(n.x,n.y,n.r,0,7); c.fill(); c.globalAlpha=1; c.shadowBlur=0;
+    if(hover===id){c.strokeStyle=col;c.lineWidth=1.4;c.beginPath();c.arc(n.x,n.y,n.r+3,0,7);c.stroke();}
+    c.fillStyle='rgba(220,230,255,.9)'; c.font='600 10px ui-monospace,monospace'; c.textAlign='center';
+    c.fillText(n.nd.label.length>13?n.nd.label.slice(0,12)+'…':n.nd.label, n.x, n.y+n.r+13);
+  }
+  requestAnimationFrame(draw);
+}
+function burst(from,to){
+  const A=nodes.get(from),T=nodes.get(to); if(!A||!T)return;
+  parts.push({sx:A.x,sy:A.y,tx:T.x,ty:T.y,x:A.x,y:A.y,t:0,dur:.5+Math.random()*.4,c:nodes.get(to).ly.color});
+}
+
+
+
+// ── render (เพียงอัปเดต query) ─────────────────────────────────────────────
+function render(d){ $('q').value=d.q; }
+function run(d){
+  if(busy)return; busy=true; $('run').textContent='RUN…';
+  for(const n of nodes.values())n.st=0;
+  parts.length=0;
+  $('q').value=d.q; render(d);
+  (async()=>{
+    for(const nd of LAYERS[0].nodes){nodes.get(nd.id).st=1;await wait(90);nodes.get(nd.id).st=2;}
+    for(const key of STAGES){
+      const ly=LAYERS.find(l=>l.key===key);
+      for(const nd of ly.nodes){
+        nodes.get(nd.id).st=1;
+        const prev=LAYERS[LAYERS.indexOf(ly)-1];
+        for(const p of prev.nodes) burst(p.id,nd.id);
+        await wait(ly.ms/ly.nodes.length/4);
+        nodes.get(nd.id).st=2;
+      }
+    }
+    for(const nd of LAYERS[LAYERS.length-1].nodes){nodes.get(nd.id).st=1;await wait(90);nodes.get(nd.id).st=2;}
+    busy=false; $('run').textContent='RUN';
+  })();
+}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+// ── hover tooltip ───────────────────────────────────────────────────────────
+cv.addEventListener('mousemove',e=>{
+  const r=cv.getBoundingClientRect(), x=e.clientX-r.left, y=e.clientY-r.top;
+  let best=null,bd=20;
+  for(const [id,n] of nodes){const d=Math.hypot(n.x-x,n.y-y); if(d<bd){bd=d;best=id;}}
+  hover=best;
+  if(best){const n=nodes.get(best);
+    tip.innerHTML=`<b>${n.nd.label}</b> <span class="m">${n.ly.ms?n.ly.ms+'ms':''}</span>`+
+      (n.nd.file?`<div class="f">${n.nd.file}</div>`:'')+
+      `<div class="d">${n.nd.detail}</div>`;
+    tip.style.left=Math.min(n.x+22,W-330)+'px'; tip.style.top=Math.max(4,n.y-30)+'px';
+    tip.classList.remove('hide');
+  }else tip.classList.add('hide');
+});
+cv.addEventListener('mouseleave',()=>{hover=null;tip.classList.add('hide');});
+
+// ── controls ────────────────────────────────────────────────────────────────
+$('preset').onchange=e=>{const d=DATA[+e.target.value];$('q').value=d.q;render(d);};
+$('run').onclick=()=>run(DATA[+$('preset').value]);
+window.addEventListener('resize',layout);
+
+// ── live mode: poll RAG backend for real pipeline data (auto-animate) ───────
+// Backend URL: ?backend=<url> query param > localhost dev default > production backend
+const PROD_BACKEND = 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
+const BACKEND = new URLSearchParams(location.search).get('backend')
+  || ((location.hostname==='localhost'||location.hostname==='127.0.0.1') ? 'http://localhost:5199' : PROD_BACKEND);
+let lastQuery = null;
+const chip=$('chip');
+async function pollPipeline(){
+  try{
+    const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store'});
+    if(!r.ok)return;
+    const d=await r.json();
+    if(d.query && d.query!==lastQuery){
+      lastQuery=d.query;
+      chip.textContent='live · '+new Date(d.at).toLocaleTimeString();
+      // map backend data → run() format
+      run({
+        q:d.query, ans:d.answer||'',
+        in:0, out:0, spd:0, lat:d.responseTimeMs||0,
+        chunks:(d.chunks||[]).map(c=>({s:c.s||0.5,t:c.t||''})),
+        ctx:'—',
+      });
+    }
+  }catch(e){/* backend not up yet */}
+}
+setInterval(pollPipeline, 2000);
+pollPipeline();
+
+// ── online users (who is logged in now) ─────────────────────────────────────
+const onlineElId='online';
+async function pollOnline(){
+  try{
+    const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store'});
+    if(!r.ok)return;
+    const d=await r.json();
+    const list=(d.users||[]).map(u=>
+      `<span class="ol" title="${u.name} · ${u.role} · ${u.dept||''}">${u.username}</span>`).join('');
+    onlineEl.innerHTML=`<div class="ol-h">● ออนไลน์ ${d.count||0}</div><div class="ol-list">${list||'<span class="ol-none">—</span>'}</div>`;
+  }catch(e){ onlineEl.innerHTML='<div class="ol-h">● ออนไลน์</div>'; }
+}
+setInterval(pollOnline, 3000);
+pollOnline();
+
+layout(); render(DATA[0]);
+draw();
+</script>
+</body>
+</html>

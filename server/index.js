@@ -219,12 +219,12 @@ app.get('/api/index/status', (req, res) => {
 });
 
 // --- Auth routes (M1) ---
-app.post('/api/auth/login', requireReady, (req, res) => {
+app.post('/api/auth/login', requireReady, async (req, res) => {
   const t0 = Date.now();
   const { username, password } = req.body || {};
   try {
     if (!username || !password) return res.status(400).json({ error: 'username and password are required' });
-    const result = authLogin(username, password, req.ip);
+    const result = await authLogin(username, password, req.ip);
     trackAudit('login_ok', { user: username, ip: req.ip, durationMs: Date.now() - t0, role: result.user?.role });
     res.json(result);
   } catch (e) {
@@ -233,20 +233,20 @@ app.post('/api/auth/login', requireReady, (req, res) => {
   }
 });
 
-app.post('/api/auth/refresh', (req, res) => {
+app.post('/api/auth/refresh', async (req, res) => {
   try {
     const { refreshToken } = req.body || {};
-    const result = authRefresh(refreshToken);
+    const result = await authRefresh(refreshToken);
     res.json(result);
   } catch (e) {
     res.status(e.status || 500).json({ error: e.message || 'Refresh failed' });
   }
 });
 
-app.post('/api/auth/logout', (req, res) => {
+app.post('/api/auth/logout', async (req, res) => {
   try {
     const { refreshToken } = req.body || {};
-    res.json(authLogout(refreshToken));
+    res.json(await authLogout(refreshToken));
   } catch (e) {
     res.json({ success: true });
   }
@@ -316,8 +316,9 @@ app.get('/api/debug/pipeline', (req, res) => {
 });
 
 // Debug online users — who is currently logged in (active sessions).
-app.get('/api/debug/online', (req, res) => {
-  res.json({ count: listOnlineUsers().length, users: listOnlineUsers() });
+app.get('/api/debug/online', async (req, res) => {
+  const users = await listOnlineUsers();
+  res.json({ count: users.length, users });
 });
 
 // --- Conversation history ---

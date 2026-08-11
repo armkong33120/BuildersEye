@@ -1,10 +1,11 @@
-// authStore.js — JWT auth + user store (M1). File-based (Render free tier), seeds from identity-graph.
+// authStore.js — JWT auth + user store (M1). File-based (local dev) + Neon Postgres (prod: durable sessions), seeds from identity-graph.
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { isNeonEnabled, getPool } from './neonStore.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, '.data', 'auth');
@@ -106,21 +107,65 @@ function findUser(username) {
 }
 
 // --- Sessions (refresh tokens) ---
+// Local: file-based (sessions.json). Production (DATABASE_URL set): Neon Postgres — sessions survive
+// container cold-starts / scale-to-zero so users don't get logged out ("เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่").
+let _authSessionsReady = false;
+async function ensureAuthSessionsTable() {
+  if (_authSessionsReady) return;
+  await getPool().query(`
+    CREATE TABLE IF NOT EXISTS auth_sessions (
+      id TEXT PRIMARY KEY,
+      user_id INTEGER NOT NULL,
+      token_hash TEXT NOT NULL,
+      created_at TIMESTAMPTZ,
+      expires_at TIMESTAMPTZ,
+      revoked BOOLEAN NOT NULL DEFAULT false
+    )`);
+  await getPool().query('CREATE INDEX IF NOT EXISTS idx_auth_sessions_token_hash ON auth_sessions (token_hash)');
+  _authSessionsReady = true;
+}
+function sessionRowToObj(r) {
+  return { id: r.id, userId: r.user_id, tokenHash: r.token_hash, createdAt: r.created_at, expiresAt: r.expires_at, revoked: r.revoked };
+}
+async function neonLoadSessions() {
+  await ensureAuthSessionsTable();
+  const { rows } = await getPool().query('SELECT id, user_id, token_hash, created_at, expires_at, revoked FROM auth_sessions');
+  return rows.map(sessionRowToObj);
+}
+async function neonSaveSessions(sessions) {
+  await ensureAuthSessionsTable();
+  const pool = getPool();
+  await pool.query('DELETE FROM auth_sessions');
+  for (const s of sessions) {
+    await pool.query(
+      'INSERT INTO auth_sessions (id, user_id, token_hash, created_at, expires_at, revoked) VALUES ($1,$2,$3,$4,$5,$6)',
+      [s.id, s.userId, s.tokenHash, s.createdAt, s.expiresAt, !!s.revoked]
+    );
+  }
+}
 function loadSessions() { return readJson(SESSIONS_FILE, { sessions: [] }).sessions; }
 function saveSessions(sessions) { writeJson(SESSIONS_FILE, { sessions }); }
+async function loadSessionsDurable() {
+  if (isNeonEnabled()) return neonLoadSessions();
+  return loadSessions();
+}
+async function saveSessionsDurable(sessions) {
+  if (isNeonEnabled()) return neonSaveSessions(sessions);
+  saveSessions(sessions);
+}
 
 function publicUser(u) {
   return { id: u.id, employeeId: u.employeeId, username: u.username, role: u.role, dept: u.dept, name: u.name, jobTitle: u.jobTitle, mustChangePassword: !!u.mustChangePassword };
 }
 
-function issueTokens(user) {
+async function issueTokens(user) {
   const accessToken = jwt.sign(
     { sub: user.id, username: user.username, role: user.role, employeeId: user.employeeId, name: user.name },
     JWT_SECRET,
     { expiresIn: ACCESS_TTL }
   );
   const refreshToken = crypto.randomBytes(40).toString('hex');
-  const sessions = loadSessions();
+  const sessions = await loadSessionsDurable();
   sessions.push({
     id: crypto.randomBytes(12).toString('hex'),
     userId: user.id,
@@ -129,7 +174,7 @@ function issueTokens(user) {
     expiresAt: new Date(Date.now() + REFRESH_TTL_MS).toISOString(),
     revoked: false,
   });
-  saveSessions(sessions);
+  await saveSessionsDurable(sessions);
   return { accessToken, refreshToken };
 }
 
@@ -145,7 +190,7 @@ function checkRateLimit(key) {
   return true;
 }
 
-export function login(username, password, ip) {
+export async function login(username, password, ip) {
   const key = String(username || '').toLowerCase() + '|' + (ip || '');
   if (!checkRateLimit(key)) {
     const e = new Error('Too many login attempts. Try again in a minute.');
@@ -158,14 +203,14 @@ export function login(username, password, ip) {
   if (!bcrypt.compareSync(String(password || ''), user.passwordHash)) {
     const e = new Error('Invalid username or password'); e.status = 401; throw e;
   }
-  const tokens = issueTokens(user);
+  const tokens = await issueTokens(user);
   return { ...tokens, user: publicUser(user) };
 }
 
-export function refresh(refreshToken) {
+export async function refresh(refreshToken) {
   if (!refreshToken) { const e = new Error('Missing refresh token'); e.status = 400; throw e; }
   const hash = crypto.createHash('sha256').update(refreshToken).digest('hex');
-  const sessions = loadSessions();
+  const sessions = await loadSessionsDurable();
   const idx = sessions.findIndex((s) => s.tokenHash === hash && !s.revoked);
   if (idx === -1) { const e = new Error('Invalid refresh token'); e.status = 401; throw e; }
   const sess = sessions[idx];
@@ -176,17 +221,17 @@ export function refresh(refreshToken) {
   sessions[idx].revoked = true;
   const user = listUsers().find((u) => u.id === sess.userId);
   if (!user) { const e = new Error('User not found'); e.status = 401; throw e; }
-  const tokens = issueTokens(user);
-  saveSessions(sessions);
+  const tokens = await issueTokens(user);
+  await saveSessionsDurable(sessions);
   return { ...tokens, user: publicUser(user) };
 }
 
-export function logout(refreshToken) {
+export async function logout(refreshToken) {
   if (!refreshToken) return { success: true };
   const hash = crypto.createHash('sha256').update(refreshToken).digest('hex');
-  const sessions = loadSessions();
+  const sessions = await loadSessionsDurable();
   const idx = sessions.findIndex((s) => s.tokenHash === hash);
-  if (idx !== -1) { sessions[idx].revoked = true; saveSessions(sessions); }
+  if (idx !== -1) { sessions[idx].revoked = true; await saveSessionsDurable(sessions); }
   return { success: true };
 }
 
@@ -212,9 +257,9 @@ export function previewCredentials() {
 }
 
 // --- Online users (currently logged in / active sessions) ---
-export function listOnlineUsers() {
+export async function listOnlineUsers() {
   const now = Date.now();
-  const sessions = loadSessions();
+  const sessions = await loadSessionsDurable();
   const users = listUsers();
   const active = new Map(); // userId -> { username, name, role, lastActive }
   for (const s of sessions) {

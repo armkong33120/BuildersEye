@@ -62,6 +62,16 @@ export async function initNeonSchema() {
       value JSONB,
       updated_at TIMESTAMPTZ DEFAULT now()
     )`);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS auth_sessions (
+      id TEXT PRIMARY KEY,
+      user_id INTEGER NOT NULL,
+      token_hash TEXT NOT NULL,
+      created_at TIMESTAMPTZ,
+      expires_at TIMESTAMPTZ,
+      revoked BOOLEAN NOT NULL DEFAULT false
+    )`);
+  await pool.query('CREATE INDEX IF NOT EXISTS idx_auth_sessions_token_hash ON auth_sessions (token_hash)');
   // indexes (สร้างครั้งแรกช้าหน่อย ครั้งต่อไปข้าม)
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_chunks_code ON chunks ((meta->>'code'))`);
   await pool.query(`CREATE INDEX IF NOT EXISTS idx_chunks_kind ON chunks ((meta->>'kind'))`);

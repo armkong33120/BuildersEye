@@ -72,6 +72,13 @@ Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — lo
 - ⚠️ finding: query "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" ที่ role Manager ถูก LLM intent misclassify เป็น TEXT_TO_SQL → SQL route รันไม่ผ่าน → "Query execution failed" (server/sqlEngine.js:102) — ยังเป็น bug ของ app ต้องแก้ (ไม่ได้อยู่ในขอบเขตงานนี้)
 - screenshots: /tmp/e2e-shots/role-{ceo,hr,manager,employee}-{01,02,03}.png
 
+## ✅ แก้ login production ไม่ได้ (2026-08-11) — ceo login ได้แล้ว!
+ปัญหา: production seed users ด้วย random password ทุกครั้ง (รวม ceo) + ENABLE_TEST_CREDS=false → "Invalid username or password" เสมอ
+แก้: `server/authStore.js` seedUsers() รองรับ test mode — ถ้า `ENABLE_TEST_CREDS=true` + `TEST_ACCOUNT_PASSWORD` ตั้งไว้ (≥8 ตัว) → ทุก user ได้รหัสที่รู้ค่า + mustChangePassword=false (default ยัง random password เหมือนเดิม)
+- Azure env ที่ตั้ง: `ENABLE_TEST_CREDS=true`, `TEST_ACCOUNT_PASSWORD=CEO@Landyi2026` (az containerapp update)
+- Deploy: commit `ad631f5` → CI success → **login ceo/CEO@Landyi2026 บน https://builders-eye.vercel.app/app.html ได้แล้ว** (verify: login 200, chat OK, #online แสดง ceo)
+- 🔴 คำเตือน: production ตอนนี้ใครก็ login เป็น ceo (หรือ user ใดก็ได้) ด้วยรหัสเดียวกันได้ + `/api/preview/credentials` เปิดแสดงรายชื่อ user → **ควรทำให้ repo เป็น private** หรือเปลี่ยน `TEST_ACCOUNT_PASSWORD` เป็นค่าที่ไม่เปิดเผย แล้วปิด ENABLE_TEST_CREDS หลังทดสอบเสร็จ
+
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้
 - debug page ใช้ backend: hostname localhost → http://localhost:5199 (ในโค้ด debug_neural_network_diagram.html)

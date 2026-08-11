@@ -64,6 +64,14 @@ Script: `scripts/test_ui_playwright_production.mjs` (รัน headful: `node sc
 - ✅ **deploy ขึ้น Vercel เรียบร้อยแล้ว** (commit `b09a9d7`, push main → auto-deploy) — ดูได้ที่ https://builders-eye.vercel.app/debug_neural_network_diagram.html (verify 19 nodes, chip=deepseek-v4-flash, ไม่มี JS error)
 - ไฟล์ที่ยังไม่ได้ commit (ตั้งใจข้าม, repo public): `pdf_extracted.txt` (ข้อมูล HR demo), `server/setup_local_auth.mjs` (มีรหัส ceo), log/screenshot, ไฟล์ source ที่แก้ค้างจาก session ก่อน (app.html, src/main.js, server/anonymizer.js, server/sqlEngine.js — push ตัว server/* จะ trigger backend Azure redeploy)
 
+## ✅ ทดสอบ live chat → 19-node animation แบบหลายสิทธิ์ (2026-08-11) — 4/4 PASS
+Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — login → chat จริง → เปิด debug page → ตรวจ pipeline pick up query + animation
+- **CEO** (ceo) ✅ chat 417 chars · **HR** (emp135) ✅ chat 1425 chars (SQL route) · **Manager** (emp007) ✅ chat 393 chars · **Employee** (emp012) ✅ chat 438 chars
+- ทุกสิทธิ์: `qPicked=true`, `chip="live · HH:MM:SS"`, **`sawBusy=true sawActive=true`**, **`done=19/19 allVisited=true`** — animation วิ่งครบ 19 nodes ระหว่าง live chat จริง
+- ⚠️ ตั้งรหัส test บน local users.json: emp135/emp007/emp012 = `Pass@1234` (local only, users.json โดน gitignore)
+- ⚠️ finding: query "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" ที่ role Manager ถูก LLM intent misclassify เป็น TEXT_TO_SQL → SQL route รันไม่ผ่าน → "Query execution failed" (server/sqlEngine.js:102) — ยังเป็น bug ของ app ต้องแก้ (ไม่ได้อยู่ในขอบเขตงานนี้)
+- screenshots: /tmp/e2e-shots/role-{ceo,hr,manager,employee}-{01,02,03}.png
+
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้
 - debug page ใช้ backend: hostname localhost → http://localhost:5199 (ในโค้ด debug_neural_network_diagram.html)

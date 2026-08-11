@@ -18,20 +18,29 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const viewerRole = viewer?.role || 'CEO';
   const viewerPk = viewer?.employeeId || 1;
 
+  // ── Connection log: ordered node trace for the debug page ──
+  const trace = [];
+  const traceT0 = Date.now();
+  const mark = (node, note) => { trace.push({ node, ms: Math.round(Date.now() - (trace._last || traceT0)), note: note || '' }); trace._last = Date.now(); };
+  mark('q', 'query received');
+
   const qp = checkQueryPolicy(query, viewerRole);
+  mark('pol', qp.status === 'Blocked' ? 'Blocked' : 'Allowed');
   if (qp.status === 'Blocked') {
     return { query, answer: 'Query blocked by governance policy.', suggestedOptions: [],
       matchedEmployeePks: [], matchedDepartments: [], results: [], sources: [],
       policy: qp, scan: { employeePks: [], highlightEdges: false, sourcePk: 1, durationMs: 0 },
-      scannedFileCount: 0, responseTimeMs: Date.now() - startTime, matchersUsed: [] };
+      scannedFileCount: 0, responseTimeMs: Date.now() - startTime, matchersUsed: [], trace };
   }
 
   // LOOP 15: SQL analytics detection (LOOP 20: expanded for HR/IT)
   const needsSqlAnalytics = /average|avg|เฉลี่ย|mean|group by|compare|เทียบ|เปรียบเทียบ|standard deviation|เงินเดือน|โบนัส|ขึ้นเงินเดือน|ลาป่วย|ลากิจ|มาสาย|notebook|cost_thb|base_salary|sick_leave|attendance|asset|license|salary|bonus|สรุป|อุปกรณ์|เป็นเงิน|รวม|เท่าไหร่|มูลค่า|กี่ชิ้น|ปัญหา|วิกฤต|ความเสี่ยง|เสี่ยง|จุดอ่อน|ลาออก|ลาออกจากงาน|เทิร์นโอเวอร์|turnover|อัตราการ/i.test(query);
+  mark('sql', needsSqlAnalytics ? 'analytics' : 'none');
 
   // Pronoun resolution (LOOP 13C — deterministic)
   const pronounResult = resolvePronouns(query, conversationId);
   const resolvedQuery = pronounResult.resolved ? pronounResult.query : query;
+  mark('pron', pronounResult.resolved ? 'resolved' : 'none');
 
   // Response cache for repeated questions (cost reduction). Only active when the
   // LLM is on; keyed by resolved query + viewer role/employeeId (scope-dependent).
@@ -40,11 +49,15 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   if (useCache) {
     const ck = cacheKeyFor(resolvedQuery, viewer);
     const cached = cacheGet(ck);
+    mark('cache', cached ? 'hit' : 'miss');
     if (cached) {
       addMessage(conversationId, 'user', query);
       addMessage(conversationId, 'assistant', cached.answer);
-      return { ...cached, cached: true, responseTimeMs: Date.now() - startTime };
+      mark('mem', 'cached answer saved to memory');
+      return { ...cached, cached: true, responseTimeMs: Date.now() - startTime, trace };
     }
+  } else {
+    mark('cache', 'off (LLM unavailable)');
   }
 
   // Semantic parsing (LOOP 12)
@@ -52,6 +65,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   try {
     parsedIntent = await parseIntentSemantically(resolvedQuery, { role: viewerRole, employeeId: viewerPk }, flatIndex, conversationId);
   } catch (e) {}
+  mark('sem', parsedIntent?.isClarification ? 'clarification' : (parsedIntent ? 'ok' : 'failed'));
   const suggestedOptions = parsedIntent?.suggestedOptions || [];
 
   // Check for clarification request
@@ -67,17 +81,21 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       scannedFileCount: 0, responseTimeMs: Date.now() - startTime,
       matchersUsed: [], _parsedIntent: parsedIntent,
       llmUsed: false, answerSource: 'clarification',
+      trace,
     };
   }
 
   // RBAC: scope สำหรับ keyword/analytics path (searchIndex ใช้กรอง ANALYTICS_MIN/MAX/filter)
   // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน; viewerRole สำหรับ template redaction
   const analyticsScopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
+  mark('scope', analyticsScopeCodes ? `scoped(${analyticsScopeCodes.size} codes)` : 'unrestricted');
   const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes, viewerRole);
+  mark('kw', `${sr.results.length} hits`);
 
   // Layer 2/3 (cross-doc): detect sheet mentions → sheetBias + coverage (vectorStore) +
   // diversity (hybridSearch) + context tagging ให้ LLM
   const sheetMentions = detectSheetMentions(resolvedQuery);
+  mark('sheet', sheetMentions.length ? sheetMentions.join(',') : 'none');
   const sheetBoost = Number(process.env.RAG_SHEET_BOOST || 1.10);
   const sheetCoverage = Number(process.env.RAG_SHEET_COVERAGE || 2);
   const matchedPks = []; const matchedDepts = new Set(); const finalResults = [];
@@ -98,6 +116,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   const policy = { status: redactedCount > 0 ? 'Redacted' : 'Allowed', redactedCount, blockedCount };
+  mark('rbac', `${redactedCount} redacted, ${blockedCount} blocked`);
   const sources = sr.sources || [];
 
   // Fallback: extract employee PKs from flatIndex when primary loop yields empty
@@ -138,6 +157,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     const scopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
     try { sqlRes = await generateAndRunSQL(query, { viewerRole, viewerPk, scopeCodes }); } 
     catch (e) { sqlRes = { error: e.message }; }
+    mark('sqle', sqlRes.error ? 'error: ' + sqlRes.error : `rows=${(sqlRes.data || []).length}`);
     
     // Extract employee PKs from SQL results for graph highlighting
     if (sqlRes.data && Array.isArray(sqlRes.data)) {
@@ -168,7 +188,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     const contextData = sqlRes.error 
       ? `Failed to compute SQL: ${sqlRes.error}` 
       : `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(safeData)}`;
+    mark('ctx', sqlRes.error ? 'sql error context' : 'sql context ready');
       
+    mark('llm', 'sql answer generation');
     const finalLLMAnswer = await generateAnswer(query, "Here is the raw data you must format into a natural Thai answer:\n" + contextData);
     if (finalLLMAnswer) {
       answer = finalLLMAnswer;
@@ -184,7 +206,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       const { searchVectors } = await import('./vectorStore.js');
       const allowSensitive = viewerRole === 'CEO' || viewerRole === 'HR';
       const qv = await embedOne(resolvedQuery, { isQuery: true });
+      mark('emb', 'query embedded');
       const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
+      mark('vec', `${(out.results || []).length} hits`);
       const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));
       if (vectorHits.length > 0) {
         // Extract employee PKs from vector hits for graph highlighting
@@ -196,7 +220,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         // Layer 3 — context tagging: tag sheet กำกับแต่ละ chunk เพื่อให้ LLM เห็นว่า
         // ข้อมูลมาจากหลายแหล่ง (cross-doc reasoning) — เช่น [Expense_Reports | IT]
         const taggedContext = vectorHits.map(h => `[${h.meta?.sheet || '?'}${h.meta?.department ? ' | ' + h.meta.department : ''}] ${h.text}`).join('\n');
+        mark('ctx', `vector tagged context (${vectorHits.length} chunks)`);
         const vectorPrompt = "Use the following context to answer the user's question politely in Thai.\nContext:\n" + taggedContext;
+        mark('llm', 'vector answer generation');
         const finalLLMAnswer = await generateAnswer(query, vectorPrompt);
         if (finalLLMAnswer) {
           answer = finalLLMAnswer;
@@ -212,10 +238,13 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   else if (isLLMAvailable() && finalResults.length > 0) {
     try {
       const { anonymizedContext, mapping, tier } = anonymize(finalResults, flatIndex);
+      mark('anom', 'tier: ' + tier);
+      mark('ctx', 'anonymized context ready');
 
       if (tier !== 'Tier 1 — Strict') {
         let contextForLLM = anonymizedContext;
         if (isCount) contextForLLM = 'Total count: ' + finalResults.length + ' employees found.\n\n' + contextForLLM;
+        mark('llm', 'anonymized answer generation');
         const llmAnswer = await generateAnswer(query, contextForLLM);
         if (llmAnswer) {
           answer = deAnonymize(llmAnswer, mapping);
@@ -226,6 +255,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         if (isCount) safeContext = 'Total count: ' + finalResults.length + ' employees found.\n\n' + safeContext;
         
         const rewritePrompt = "Please rewrite the following system search result into a professional, natural, and polite conversational Thai response for an Executive. Do not change the facts. Answer as a helpful AI assistant. DO NOT use words like 'Found 1 matching employee'.\n\nRaw Data:\n" + safeContext;
+        mark('llm', 'rewrite answer generation');
         const llmAnswer = await generateAnswer(query, rewritePrompt);
         
         if (llmAnswer) {
@@ -237,6 +267,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   const finalAnswer = answer;
+
+  // Template fallback trace: LLM/SQL ไม่ได้สร้างคำตอบ → ตอบด้วย sr.answer (template)
+  if (!llmUsed && !sqlUsed) mark('tpl', 'template answer used');
 
   // FIX: ensure ALL employees referenced in the final answer are highlighted on
   // the 3D graph, not just the retrieval hits. Some answers mention
@@ -279,6 +312,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     llmUsed: llmUsed,
     sqlUsed: sqlUsed,
     answerSource: sqlUsed ? 'sql-analytics' : (llmUsed ? 'gemini' : 'template'),
+    cached: false,
+    trace,
   };
 
   // Cache LLM-produced answers only (repeated-question savings; skipped when LLM off).
@@ -286,6 +321,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     cacheSet(cacheKeyFor(resolvedQuery, viewer), result);
   }
 
+  mark('out', `final answer ready in ${Date.now() - startTime}ms`);
   return result;
 }
 

@@ -292,6 +292,13 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       matchedDepartments: result.matchedDepartments || [],
       responseTimeMs: result.responseTimeMs || 0,
       at: Date.now(),
+      trace: result.trace || [],
+      llmUsed: !!result.llmUsed,
+      sqlUsed: !!result.sqlUsed,
+      answerSource: result.answerSource || 'template',
+      matchersUsed: result.matchersUsed || [],
+      cached: !!result.cached,
+      viewer: req.viewer || null,
     };
 
     // Save assistant response

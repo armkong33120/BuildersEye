@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>NEURAL RAG — pipeline inspector</title>
+<title>NEURAL RAG — RAG assistant · org graph · live chat inspector</title>
 <style>
   :root{
     --bg:#070a12; --panel:#0b101b; --line:#1c2740; --txt:#d8e1f0; --dim:#71809c; --faint:#46536e;
@@ -14,14 +14,11 @@
   html,body{height:100%}
   body{background:var(--bg);color:var(--txt);font-family:var(--mono);font-size:13px;overflow:hidden}
   .top{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:#090d16}
-  .brand{font-weight:700;letter-spacing:.08em;color:var(--c0);font-size:13px}
+  .brand{font-weight:700;letter-spacing:.08em;color:var(--c0);font-size:13px;white-space:nowrap}
   .brand i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c0);margin-right:7px;box-shadow:0 0 8px var(--c0)}
   .top input{flex:1;max-width:420px;background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:6px 10px;font-family:var(--mono);font-size:12px;outline:none}
   .top input:focus{border-color:var(--c0)}
-  .top select{background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--dim);padding:6px 8px;font-family:var(--mono);font-size:11px}
-  .top button{background:#0d1422;border:1px solid var(--c0);color:var(--c0);border-radius:7px;padding:6px 14px;font-family:var(--mono);font-size:12px;cursor:pointer}
-  .top button:hover{background:rgba(34,211,238,.12)}
-  #chip{font-size:10px;color:var(--faint);border:1px solid var(--line);padding:3px 8px;border-radius:99px}
+  #chip{font-size:10px;color:var(--faint);border:1px solid var(--line);padding:3px 8px;border-radius:99px;max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   main{display:flex;height:calc(100vh - 43px)}
   #stage{flex:1;position:relative;min-width:0}
   canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -39,33 +36,60 @@
   #online .ol-list{display:flex;flex-wrap:wrap;gap:4px}
   #online .ol{background:#0d1422;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--c0);font-size:10px;cursor:default}
   #online .ol-none{color:var(--faint);font-size:10px}
-  /* inspector (แค่ข้อมูลจำเป็น) */
-  #inspector{width:300px;border-left:1px solid var(--line);background:#090d16;display:flex;flex-direction:column;overflow:hidden}
-  .sec{padding:10px 12px;border-bottom:1px solid var(--line)}
-  .sec h3{font-size:10px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-bottom:8px}
-  #chunks{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;max-height:190px;overflow:auto}
-  #chunks li{font-size:11px;line-height:1.45;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:#0d1422}
-  #chunks .s{font-weight:700;margin-right:6px}
-  #chunks .t{color:var(--dim)}
-  details{border:1px solid var(--line);border-radius:7px;background:#0d1422}
-  summary{cursor:pointer;padding:6px 9px;font-size:11px;color:var(--dim);list-style:none}
-  summary::-webkit-details-marker{display:none}
-  summary:before{content:"▸ ";color:var(--c0)}
-  details[open] summary:before{content:"▾ "}
-  pre{font-family:var(--mono);font-size:10.5px;line-height:1.55;color:#b7c6e2;padding:8px 9px;max-height:150px;overflow:auto;white-space:pre-wrap;word-break:break-word;border-top:1px solid var(--line)}
-  .metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .metrics div{background:#0d1422;border:1px solid var(--line);border-radius:7px;padding:6px 8px}
-  .metrics .k{font-size:9px;color:var(--faint);text-transform:uppercase}
-  .metrics .v{font-size:15px;color:var(--c0)}
-  #prog{font-size:10px;color:var(--faint);margin-top:8px}
-  #prog i{display:block;height:2px;background:var(--c0);border-radius:2px;width:0%;transition:width .25s linear;margin-top:4px}
+  /* side panels */
+  #side{width:376px;border-left:1px solid var(--line);background:#090d16;display:flex;flex-direction:column;overflow-y:auto}
+  .pane{padding:12px;border-bottom:1px solid var(--line)}
+  .pane-h{font-size:10px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;margin-bottom:8px;flex:1}
+  .pane-h b{color:var(--co)}
+  .pane-row{display:flex;align-items:center;gap:8px}
+  .cnt{color:var(--c0)}
+  .mini{background:#0d1422;border:1px solid var(--line);color:var(--faint);border-radius:6px;padding:2px 8px;font-family:var(--mono);font-size:9.5px;cursor:pointer}
+  .mini:hover{color:var(--c0);border-color:var(--c0)}
+  #credsStatus{font-size:10px;color:var(--amber);display:block;margin-bottom:6px;line-height:1.4;min-height:12px}
+  #userSelect{width:100%;background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:6px 8px;font-family:var(--mono);font-size:11px;margin-bottom:8px;outline:none}
+  #userSelect:focus{border-color:var(--c0)}
+  .chatrow{display:flex;gap:6px;margin-bottom:8px}
+  #assistInput{flex:1;background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:6px 9px;font-family:var(--mono);font-size:12px;outline:none;min-width:0}
+  #assistInput:focus{border-color:var(--c0)}
+  #assistSend{background:#0d1422;border:1px solid var(--c0);color:var(--c0);border-radius:7px;padding:6px 14px;font-family:var(--mono);font-size:12px;cursor:pointer;white-space:nowrap}
+  #assistSend:hover{background:rgba(34,211,238,.12)}
+  #assistSend:disabled{opacity:.45;cursor:wait}
+  #assistOutput{background:#0d1422;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:11.5px;line-height:1.6;max-height:180px;overflow:auto;white-space:pre-wrap;word-break:break-word;color:#c9d6ee;min-height:36px}
+  #assistMeta{font-size:10px;color:var(--dim);margin-top:7px;line-height:1.5;word-break:break-all}
+  #assistMeta b{color:var(--c0)}
+  #traceList{list-style:none;padding:0;margin:0 0 2px;display:flex;flex-direction:column;gap:3px;max-height:240px;overflow:auto}
+  #traceList li{font-size:11px;color:var(--dim);padding:3px 8px;border:1px solid var(--line);border-radius:6px;background:#0d1422;display:flex;gap:8px;align-items:baseline}
+  #traceList .ix{color:var(--faint);min-width:30px}
+  #traceList .nd{color:var(--c0);font-weight:700;min-width:56px}
+  #traceList .ms{color:var(--amber);min-width:58px}
+  #traceList .nt{color:var(--txt);flex:1;text-align:right;word-break:break-word}
+  #historyList{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:4px;max-height:360px;overflow:auto}
+  #historyList li{font-size:10.5px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#0d1422;cursor:pointer}
+  #historyList li:hover{border-color:var(--c0)}
+  #historyList .hq{color:var(--txt);line-height:1.4}
+  #historyList .hm{color:var(--faint);margin-top:2px;font-size:9.5px}
+  #historyList .hn{color:var(--co);margin-top:2px;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .empty{color:var(--faint);font-size:10.5px;padding:4px 2px;list-style:none}
   ::-webkit-scrollbar{width:7px}::-webkit-scrollbar-thumb{background:#233047;border-radius:6px}
+  /* admin gate overlay — content stays loaded underneath, never removed */
+  #gate{position:fixed;inset:0;z-index:50;background:rgba(4,7,14,.93);display:flex;align-items:center;justify-content:center}
+  #gate.hide{display:none}
+  #gateBox{width:330px;background:#0b101b;border:1px solid var(--c0);border-radius:12px;padding:22px;box-shadow:0 0 44px rgba(34,211,238,.14)}
+  #gateBox h1{font-size:13px;letter-spacing:.14em;color:var(--c0);margin-bottom:5px}
+  #gateBox p{font-size:10.5px;color:var(--faint);margin-bottom:14px}
+  #gateBox label{display:block;font-size:10px;color:var(--dim);margin:10px 0 4px;letter-spacing:.08em;text-transform:uppercase}
+  #gateBox input{width:100%;background:#0d1422;border:1px solid var(--line);border-radius:7px;color:var(--txt);padding:8px 10px;font-family:var(--mono);font-size:12px;outline:none}
+  #gateBox input:focus{border-color:var(--c0)}
+  #gateErr{color:#f87171;font-size:11px;margin-top:9px;min-height:15px}
+  #gateBtn{width:100%;margin-top:10px;background:transparent;border:1px solid var(--c0);color:var(--c0);border-radius:7px;padding:9px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;cursor:pointer}
+  #gateBtn:hover{background:rgba(34,211,238,.12)}
 </style>
 </head>
 <body>
   <div class="top">
-    <span class="brand"><i></i>NEURAL RAG</span>
+    <span class="brand"><i></i>NEURAL RAG · INSPECTOR</span>
     <input id="q" value="วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง?" />
+    <span id="chip"></span>
   </div>
   <main>
     <div id="stage">
@@ -73,8 +97,59 @@
       <div id="tip" class="hide"></div>
       <div id="online"></div>
     </div>
+    <aside id="side">
+      <section class="pane">
+        <h3 class="pane-h">RAG ASSISTANT <b>· live chat</b></h3>
+        <span id="credsStatus"></span>
+        <select id="userSelect"></select>
+        <div class="chatrow">
+          <input id="assistInput" placeholder="Ask as the selected user…" />
+          <button id="assistSend">Send</button>
+        </div>
+        <div id="assistOutput">— no query yet —</div>
+        <div id="assistMeta"></div>
+      </section>
+      <section class="pane">
+        <h3 class="pane-h">TRACE · CONNECTION LOG</h3>
+        <ol id="traceList"></ol>
+      </section>
+      <section class="pane">
+        <div class="pane-row">
+          <h3 class="pane-h">HISTORY <span class="cnt" id="histCnt"></span></h3>
+          <button id="histClear" class="mini">clear</button>
+        </div>
+        <ul id="historyList"></ul>
+      </section>
+    </aside>
   </main>
+  <div id="gate">
+    <div id="gateBox">
+      <h1>🔒 NEURAL RAG · ADMIN GATE</h1>
+      <p>debug inspector — root access only</p>
+      <label>username</label><input id="gateUser" autocomplete="off" />
+      <label>password</label><input id="gatePass" type="password" autocomplete="off" />
+      <div id="gateErr"></div>
+      <button id="gateBtn">UNLOCK</button>
+    </div>
+  </div>
 <script>
+// ════════════════════════════════════════════════════════════════════════════
+// NEURAL RAG · RAG Assistant / Org graph retrieval / online live chat inspector
+// Shows the TRUTH of which of the 19 pipeline nodes actually ran per query,
+// plus a per-query connection log (trace) and history.
+// Backend contract verified 2026-08-18 via curl:
+//   GET  /api/preview/credentials → 150 users [{username, role, name, jobTitle}]
+//   POST /api/auth/login          → {accessToken, refreshToken, user}
+//   POST /api/chat                → {query, answer, trace[], llmUsed, sqlUsed,
+//                                    answerSource, matchersUsed, cached, ...}
+//   GET  /api/debug/pipeline      → {query, answer, trace[], responseTimeMs, ...}
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── TEST ACCOUNT PASSWORD ────────────────────────────────────────────────────
+// Demo/test feature: ALL seeded accounts (150) share this one known password.
+// It matches TEST_ACCOUNT_PASSWORD on prod AND the local dev seed, so this
+// inspector can auto-login as ANY selected user and run live RAG queries.
+const TEST_PASSWORD = 'CEO@Landyi2026';
 
 // ── เครือข่าย: 6 ชั้น · 19 โหนด = ขั้น pipeline จริง (audit 2026-08-11) ────────
 const LAYERS = [
@@ -112,13 +187,12 @@ const LAYERS = [
 ];
 // ลำดับรัน = เรียงตามชั้น (h1..out)
 const STAGES = LAYERS.filter(l=>l.ms).map(l=>l.key);
-
 // ── engine ───────────────────────────────────────────────────────────────────
 const cv=document.getElementById('cv'), st=document.getElementById('stage'),
       tip=document.getElementById('tip'), onlineEl=document.getElementById('online');
 const $=id=>document.getElementById(id);
 const nodes=new Map(), edges=[], parts=[];
-let W=0,H=0,DPR=1, hover=null, busy=false;
+let W=0,H=0,DPR=1, hover=null;
 
 function layout(){
   const r=st.getBoundingClientRect(); W=Math.max(r.width,300); H=Math.max(r.height,200);
@@ -172,29 +246,52 @@ function burst(from,to){
   parts.push({sx:A.x,sy:A.y,tx:T.x,ty:T.y,x:A.x,y:A.y,t:0,dur:.5+Math.random()*.4,c:nodes.get(to).ly.color});
 }
 
-
-
-// ── render (เพียงอัปเดต query) ─────────────────────────────────────────────
+// ── render (อัปเดต query) ───────────────────────────────────────────────────
 function render(d){ $('q').value=d.q; }
+// ── run(d): node TRUTH ───────────────────────────────────────────────────────
+// When d.trace (ordered [{node, ms, note}]) is present, ONLY the nodes in the
+// trace light up, in trace order, dwelling on each entry's ms (clamped to
+// 50..1100ms so a slow sem/llm doesn't freeze the demo). Nodes NOT in the trace
+// stay dimmed (st=0). Without a trace (first load) fall back to the layer sweep.
+// A runToken cancels any previous in-flight animation so a newer pipeline event
+// always wins (each event re-renders the TRUTH).
+let runToken=0;
 function run(d){
-  if(busy)return; busy=true;
+  const tok=++runToken;
   for(const n of nodes.values())n.st=0;
   parts.length=0;
-  $('q').value=d.q; render(d);
+  if(d&&d.q){ $('q').value=d.q; render(d); }
+  const trace=(d&&Array.isArray(d.trace))?d.trace:null;
   (async()=>{
-    for(const nd of LAYERS[0].nodes){nodes.get(nd.id).st=1;await wait(90);nodes.get(nd.id).st=2;}
-    for(const key of STAGES){
-      const ly=LAYERS.find(l=>l.key===key);
-      for(const nd of ly.nodes){
-        nodes.get(nd.id).st=1;
-        const prev=LAYERS[LAYERS.indexOf(ly)-1];
-        for(const p of prev.nodes) burst(p.id,nd.id);
-        await wait(ly.ms/ly.nodes.length/4);
-        nodes.get(nd.id).st=2;
+    if(trace&&trace.length){
+      let prevId=null;
+      for(const t of trace){
+        if(tok!==runToken)return;
+        const n=nodes.get(t.node); if(!n)continue;
+        n.st=1;
+        if(prevId&&nodes.get(prevId))burst(prevId,t.node);
+        const dwell=Math.max(50,Math.min(1100,Number(t.ms)||80));
+        await wait(dwell);
+        if(tok!==runToken)return;
+        n.st=2;
+        prevId=t.node;
       }
+    }else{
+      for(const nd of LAYERS[0].nodes){ if(tok!==runToken)return; nodes.get(nd.id).st=1; await wait(90); nodes.get(nd.id).st=2; }
+      for(const key of STAGES){
+        const ly=LAYERS.find(l=>l.key===key);
+        for(const nd of ly.nodes){
+          if(tok!==runToken)return;
+          nodes.get(nd.id).st=1;
+          const prev=LAYERS[LAYERS.indexOf(ly)-1];
+          for(const p of prev.nodes) burst(p.id,nd.id);
+          await wait(ly.ms/ly.nodes.length/4);
+          if(tok!==runToken)return;
+          nodes.get(nd.id).st=2;
+        }
+      }
+      for(const nd of LAYERS[LAYERS.length-1].nodes){ if(tok!==runToken)return; nodes.get(nd.id).st=1; await wait(90); nodes.get(nd.id).st=2; }
     }
-    for(const nd of LAYERS[LAYERS.length-1].nodes){nodes.get(nd.id).st=1;await wait(90);nodes.get(nd.id).st=2;}
-    busy=false;
   })();
 }
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -218,34 +315,166 @@ cv.addEventListener('mouseleave',()=>{hover=null;tip.classList.add('hide');});
 // ── controls ────────────────────────────────────────────────────────────────
 window.addEventListener('resize',layout);
 
-// ── live mode: poll RAG backend for real pipeline data (auto-animate) ───────
-// Backend URL: ?backend=<url> query param > localhost dev default > production backend
+// ── backend resolution ──────────────────────────────────────────────────────
+// ?backend=<url> query param > localhost dev default > production backend
 const PROD_BACKEND = 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
 const BACKEND = new URLSearchParams(location.search).get('backend')
   || ((location.hostname==='localhost'||location.hostname==='127.0.0.1') ? 'http://localhost:5199' : PROD_BACKEND);
-let lastQuery = null;
+
+// ── helpers ─────────────────────────────────────────────────────────────────
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+// ── trace / connection log ──────────────────────────────────────────────────
+function traceEntries(d){ return (d&&Array.isArray(d.trace))?d.trace:[]; }
+function renderTrace(trace){
+  const el=$('traceList'); if(!el)return;
+  el.innerHTML='';
+  if(!trace.length){ el.innerHTML='<li class="empty">— no trace yet —</li>'; return; }
+  trace.forEach((t,i)=>{
+    const li=document.createElement('li');
+    li.innerHTML='<span class="ix">#'+String(i+1).padStart(2,'0')+'</span>'+
+      '<span class="nd">'+escapeHtml(t.node)+'</span>'+
+      '<span class="ms">+'+(Number(t.ms)||0)+'ms</span>'+
+      '<span class="nt">'+escapeHtml(t.note||'')+'</span>';
+    el.appendChild(li);
+  });
+}
+let currentUserInfo=null;
+function selectedUsername(){ const s=$('userSelect'); return s?s.value:''; }
+function updateCurrentUser(){
+  const s=$('userSelect'); if(!s)return;
+  const opt=s.options[s.selectedIndex];
+  currentUserInfo=opt?{username:opt.value,role:(opt.dataset.role||''),label:opt.textContent}:null;
+}
+function whoLabel(d){
+  const u=d.viewer||selectedUsername()||'—';
+  const known=currentUserInfo&&currentUserInfo.username===u;
+  return known?u+' ('+currentUserInfo.role+')':u;
+}
+function metaLine(d){
+  const sec=d.responseTimeMs!=null?(d.responseTimeMs/1000).toFixed(1)+'s':'—';
+  const bits=['as '+whoLabel(d),sec];
+  if(d.answerSource)bits.push('answerSource='+d.answerSource);
+  if(d.sqlUsed)bits.push('sqlUsed');
+  if(d.llmUsed)bits.push('llmUsed');
+  if(d.cached)bits.push('cached');
+  return bits.join(' · ');
+}
+function renderAnswer(d){
+  const out=$('assistOutput'), meta=$('assistMeta');
+  if(!out)return;
+  out.textContent=d.answer||'(no answer)';
+  if(meta)meta.innerHTML='<b>'+escapeHtml(metaLine(d))+'</b>';
+}
+
+// ── history (localStorage, cap 50, newest first) ────────────────────────────
+const HISTORY_KEY='be_debug_history';
+function loadHistory(){ try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}catch(e){return [];} }
+function saveHistory(h){ try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0,50))); }catch(e){} }
+function pushHistory(d){
+  const h=loadHistory();
+  h.unshift({
+    query:d.query,
+    at:d.at||new Date().toISOString(),
+    trace:traceEntries(d),
+    answer:(d.answer||'').slice(0,400),
+    answerSource:d.answerSource||'',
+    viewer:d.viewer||selectedUsername(),
+    responseTimeMs:d.responseTimeMs||0,
+    sqlUsed:!!d.sqlUsed, llmUsed:!!d.llmUsed,
+  });
+  saveHistory(h);
+  renderHistory();
+}
+function renderHistory(){
+  const el=$('historyList'); if(!el)return;
+  const h=loadHistory();
+  el.innerHTML='';
+  const cnt=$('histCnt'); if(cnt)cnt.textContent=h.length+'/50';
+  if(!h.length){ el.innerHTML='<li class="empty">— no history yet —</li>'; return; }
+  h.forEach(e=>{
+    const li=document.createElement('li');
+    const tm=new Date(e.at).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    li.innerHTML='<div class="hq">'+escapeHtml(e.query)+'</div>'+
+      '<div class="hm">'+tm+' · '+escapeHtml(e.viewer||'?')+' · '+e.trace.length+' nodes · '+escapeHtml(e.answerSource||'')+'</div>'+
+      '<div class="hn">'+escapeHtml(e.trace.map(x=>x.node).join('→'))+'</div>';
+    li.addEventListener('click',()=>presentPipeline(e,{record:false}));
+    el.appendChild(li);
+  });
+}
+let lastQuery=null;
+// Render one pipeline event everywhere (trace list + answer + history + canvas)
+function presentPipeline(d,{record=true}={}){
+  if(!d||!d.query)return;
+  lastQuery=d.query;
+  renderTrace(traceEntries(d));
+  renderAnswer(d);
+  if(record)pushHistory(d);
+  run({ q:d.query, ans:d.answer||'', lat:d.responseTimeMs||0,
+        chunks:(d.chunks||[]).map(c=>({s:c.s||0.5,t:c.t||''})), trace:traceEntries(d) });
+}
+
+// ── credentials dropdown (150 test accounts) ────────────────────────────────
+async function loadCredentials(){
+  const sel=$('userSelect'), status=$('credsStatus');
+  try{
+    const r=await fetch(BACKEND+'/api/preview/credentials',{cache:'no-store'});
+    if(r.status===403){ status.textContent='⚠ credentials disabled (ENABLE_TEST_CREDS=off on backend)'; sel.innerHTML='<option value="">— creds unavailable —</option>'; return; }
+    if(!r.ok){ status.textContent='⚠ credentials error HTTP '+r.status; return; }
+    const arr=await r.json();
+    if(!Array.isArray(arr)||!arr.length){ status.textContent='⚠ no credentials returned'; return; }
+    arr.sort((a,b)=>a.username.localeCompare(b.username));
+    sel.innerHTML=arr.map(u=>'<option value="'+escapeHtml(u.username)+'" data-role="'+escapeHtml(u.role||'')+'">'+
+      escapeHtml(u.username)+' — '+escapeHtml(u.role||'')+' · '+escapeHtml(u.name||u.jobTitle||'')+'</option>').join('');
+    if(arr.some(u=>u.username==='ceo')) sel.value='ceo';
+    updateCurrentUser();
+    status.textContent='✓ '+arr.length+' test accounts (ENABLE_TEST_CREDS)';
+  }catch(e){ status.textContent='⚠ backend not reachable — '+BACKEND; }
+}
+// ── RAG assistant: auto-login + live chat ───────────────────────────────────
+let currentToken=null, tokenUser=null;
+async function loginAs(username){
+  const r=await fetch(BACKEND+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username,password:TEST_PASSWORD})});
+  if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('login '+r.status+' '+t.slice(0,140)); }
+  const d=await r.json();
+  if(!d.accessToken)throw new Error('login: no accessToken in response');
+  currentToken=d.accessToken; tokenUser=username;   // page-local only — never touches localStorage be_access
+  return d;
+}
+async function sendChat(){
+  const input=$('assistInput'), out=$('assistOutput'), meta=$('assistMeta'), btn=$('assistSend');
+  const query=input.value.trim();
+  if(!query){ out.textContent='✗ enter a query first'; return; }
+  const username=selectedUsername();
+  if(!username){ out.textContent='✗ no user selected'; return; }
+  btn.disabled=true; out.textContent='thinking…'; if(meta)meta.textContent='';
+  try{
+    if(!currentToken||tokenUser!==username) await loginAs(username);
+    const convId=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():('c-'+Date.now()+'-'+Math.random().toString(16).slice(2));
+    const r=await fetch(BACKEND+'/api/chat',{method:'POST',
+      headers:{'Authorization':'Bearer '+currentToken,'Content-Type':'application/json'},
+      body:JSON.stringify({query,conversationId:convId,viewer:username})});
+    if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('chat HTTP '+r.status+' '+t.slice(0,140)); }
+    const d=await r.json();
+    if(!d.viewer)d.viewer=username;
+    presentPipeline(d,{record:true});   // answer + trace + history + canvas truth
+  }catch(e){
+    out.textContent='✗ '+e.message; if(meta)meta.textContent='';
+  }finally{ btn.disabled=false; }
+}
+
+// ── live mode: poll the RAG backend for real pipeline data (auto-animate) ───
 async function pollPipeline(){
   try{
     const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store'});
     if(!r.ok)return;
     const d=await r.json();
-    if(d.query && d.query!==lastQuery){
-      lastQuery=d.query;
-      // map backend data → run() format
-      run({
-        q:d.query, ans:d.answer||'',
-        in:0, out:0, spd:0, lat:d.responseTimeMs||0,
-        chunks:(d.chunks||[]).map(c=>({s:c.s||0.5,t:c.t||''})),
-        ctx:'—',
-      });
-    }
+    if(d.query && d.query!==lastQuery) presentPipeline(d,{record:true});
   }catch(e){/* backend not up yet */}
 }
 setInterval(pollPipeline, 2000);
-pollPipeline();
 
 // ── online users (who is logged in now) ─────────────────────────────────────
-const onlineElId='online';
 async function pollOnline(){
   try{
     const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store'});
@@ -257,10 +486,37 @@ async function pollOnline(){
   }catch(e){ onlineEl.innerHTML='<div class="ol-h">● ออนไลน์</div>'; }
 }
 setInterval(pollOnline, 3000);
-pollOnline();
 
-layout();
-draw();
+// ── admin gate (root / 1234) — overlay only, scripts keep running ───────────
+const gate=$('gate');
+if(sessionStorage.getItem('be_debug_admin')==='1') gate.classList.add('hide');
+$('gateBtn').addEventListener('click',()=>{
+  const u=$('gateUser').value.trim(), p=$('gatePass').value;
+  if(u==='root'&&p==='1234'){ sessionStorage.setItem('be_debug_admin','1'); gate.classList.add('hide'); $('gateErr').textContent=''; }
+  else $('gateErr').textContent='✗ wrong credentials — root / 1234';
+});
+$('gatePass').addEventListener('keydown',e=>{ if(e.key==='Enter')$('gateBtn').click(); });
+
+// ── widget wiring ───────────────────────────────────────────────────────────
+$('userSelect').addEventListener('change',updateCurrentUser);
+$('assistSend').addEventListener('click',sendChat);
+$('assistInput').addEventListener('keydown',e=>{ if(e.key==='Enter')sendChat(); });
+$('histClear').addEventListener('click',()=>{ localStorage.removeItem(HISTORY_KEY); renderHistory(); });
+
+const chip=$('chip'); if(chip)chip.textContent='backend · '+BACKEND;
+
+// ── init ────────────────────────────────────────────────────────────────────
+layout(); draw();
+loadCredentials();
+renderTrace([]); renderHistory();
+pollPipeline(); pollOnline();
 </script>
 </body>
 </html>
+
+
+
+
+
+
+

@@ -79,6 +79,15 @@ Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — lo
 - Deploy: commit `ad631f5` → CI success → **login ceo/CEO@Landyi2026 บน https://builders-eye.vercel.app/app.html ได้แล้ว** (verify: login 200, chat OK, #online แสดง ceo)
 - 🔴 คำเตือน: production ตอนนี้ใครก็ login เป็น ceo (หรือ user ใดก็ได้) ด้วยรหัสเดียวกันได้ + `/api/preview/credentials` เปิดแสดงรายชื่อ user → **ควรทำให้ repo เป็น private** หรือเปลี่ยน `TEST_ACCOUNT_PASSWORD` เป็นค่าที่ไม่เปิดเผย แล้วปิด ENABLE_TEST_CREDS หลังทดสอบเสร็จ
 
+## ✅ แก้ "เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่" (2026-08-11) — session อยู่รอด cold start
+สาเหตุ: session เก็บใน `server/.data/auth/sessions.json` (filesystem ephemeral) + container scale-to-zero (`minReplicas:0`) → ทุก cold start = session ถูกลบ → refresh ล้มเหลว → ถูกเตะออก
+แก้: เก็บ session ลง **Neon Postgres** (ตาราง `auth_sessions`) เมื่อมี `DATABASE_URL` (prod) ส่วน local ยังใช้ไฟล์เหมือนเดิม
+- `server/authStore.js`: session ops async + durable (loadSessionsDurable/saveSessionsDurable + ensureAuthSessionsTable)
+- `server/index.js`: routes auth (`/api/auth/login|refresh|logout`) + `/api/debug/online` เป็น async
+- `server/neonStore.js`: เพิ่มตาราง `auth_sessions` ใน initNeonSchema
+- commit `e562e98` → CI success → verify บน prod: login → `az containerapp restart` → **refresh เดิม → 200** ✅, online แสดง ceo ✅, UI login+reload ยัง login อยู่ ✅
+- หมายเหตุ: local backend ใช้ DATABASE_URL เดียวกันกับ prod → local sessions ลงตารางเดียวกัน (ผู้ใช้จะโผล่ online บน prod ด้วย — เป็นแค่ cosmetic)
+
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้
 - debug page ใช้ backend: hostname localhost → http://localhost:5199 (ในโค้ด debug_neural_network_diagram.html)

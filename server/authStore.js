@@ -65,6 +65,15 @@ export function seedUsers(identityGraph) {
   if (existing && Array.isArray(existing.users) && existing.users.length > 0) {
     return existing.users.length;
   }
+  // TEST MODE (ENABLE_TEST_CREDS=true + TEST_ACCOUNT_PASSWORD set): seed a KNOWN password for all
+  // accounts so demo/test users can actually log in on staging/prod (M4 "Test Accounts Panel").
+  // Otherwise passwords stay random (secure default — nobody knows them, mustChangePassword=true).
+  const testMode = process.env.ENABLE_TEST_CREDS === 'true';
+  const testPassword = process.env.TEST_ACCOUNT_PASSWORD || '';
+  const useKnownPassword = testMode && testPassword.length >= 8;
+  if (testMode && !useKnownPassword) {
+    console.warn('[auth] ENABLE_TEST_CREDS=true but TEST_ACCOUNT_PASSWORD is missing/short (<8) — falling back to random passwords');
+  }
   const identities = identityGraph?.identities || [];
   const users = identities.map((idn) => {
     const role = roleForIdentity(idn);
@@ -73,13 +82,13 @@ export function seedUsers(identityGraph) {
       id: idn.pk,
       employeeId: idn.pk,
       username,
-      passwordHash: bcrypt.hashSync(randomInitialPassword(), 10),
+      passwordHash: bcrypt.hashSync(useKnownPassword ? testPassword : randomInitialPassword(), 10),
       role,
       dept: idn.department || '',
       name: idn.name || username,
       jobTitle: idn.jobTitle || '',
       isActive: true,
-      mustChangePassword: true, // SECURITY: force change on first login
+      mustChangePassword: useKnownPassword ? false : true, // test mode: ไม่บังคับเปลี่ยนรหัส
       createdAt: new Date().toISOString(),
     };
   });

@@ -96,6 +96,19 @@ Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — lo
 - verify: preset/RUN/chip ไม่อยู่, live chat → animation 19/19 ยังทำงาน, ไม่มี JS error
 - commit `?` → Vercel auto-deploy
 
+## ✅ RAG Assistant + node-truth + trace log ใน debug page (2026-08-11) — DONE
+- **backend** (`chatController.js` + `index.js`): ทุก chat เก็บ `trace[]` = `[{node, ms, note}]` (node ∈ 19 ids จริง) + route facts (`answerSource`, `llmUsed`, `sqlUsed`, `matchersUsed`, `cached`, `viewer`) ลงใน latestPipeline — ผ่าน return path ทั้งหมด (blocked/cached/clarification/normal)
+- **frontend** (`debug_neural_network_diagram.html`, 522 บรรทัด):
+  - Admin gate: `root` / `1234` (sessionStorage `be_debug_admin`) — กันหน้าไว้ก่อนเข้าใช้
+  - RAG Assistant: dropdown 150 คน (จาก /api/preview/credentials) + chat → **auto-login** (รหัส `CEO@Landyi2026` = TEST_ACCOUNT_PASSWORD ทั้ง local+prod) → /api/chat → แสดงคำตอบ + caption (as user · s · answerSource · sqlUsed · llmUsed · cached)
+  - **Node truth**: เฉพาะ node ใน trace สว่าง/animate ตามลำดับ+ms, ที่เหลือหรี่ (เช่น cache hit → แค่ q→pol→sql→pron→cache→mem)
+  - Trace/connection log: `#idx node +ms note` + History (localStorage `be_debug_history`, cap 50, คลิกดูย้อนหลังได้)
+  - คงเดิม: 19-node network, pollPipeline/pollOnline, #online, ?backend=, tooltip
+- **QA (Playwright) 19/19 PASS** — short/long/vector/SQL/cache-hit/role-switch (emp144 Employee) ครบ
+- **Production**: deploy แล้ว (commit `cb7d758` → CI + Vercel) — smoke test ผ่าน (gate, 150 users, chat emp144 → trace 14 nodes, no JS error)
+- หมายเหตุ: query บางตัว backend route ต่างจากป้าย เช่น "ใครทำ OT เทปูนข้ามคืน" → SQL (regex 'ปัญหา' + LLM ตี TEXT_TO_SQL) — หน้าแสดง trace ตามความจริงที่ backend ส่ง
+- 🔴 ความปลอดภัย: root/1234 เป็น client-side (ใครอ่านโค้ดก็รู้), รหัส CEO@Landyi2026 อยู่ในโค้ดหน้าเว็บ (test mode) — repo ยัง public ควรทำ private
+
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้
 - debug page ใช้ backend: hostname localhost → http://localhost:5199 (ในโค้ด debug_neural_network_diagram.html)

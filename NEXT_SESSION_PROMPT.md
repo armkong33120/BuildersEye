@@ -88,6 +88,14 @@ Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — lo
 - commit `e562e98` → CI success → verify บน prod: login → `az containerapp restart` → **refresh เดิม → 200** ✅, online แสดง ceo ✅, UI login+reload ยัง login อยู่ ✅
 - หมายเหตุ: local backend ใช้ DATABASE_URL เดียวกันกับ prod → local sessions ลงตารางเดียวกัน (ผู้ใช้จะโผล่ online บน prod ด้วย — เป็นแค่ cosmetic)
 
+## ✅ ลบ preset/RUN/chip ออกจาก debug page (2026-08-11)
+ผู้ใช้ให้ลบ `OT เทปูน · vector` (select preset), ปุ่ม RUN, chip สถานะ (deepseek-v4-flash / live · เวลา) เพราะเห็นว่าไม่มีประโยชน์
+- ลบ HTML: `<select id="preset">`, `<button id="run">`, `<span id="chip">`
+- ลบ JS: DATA array (3 presets), SYS const, wiring `$('preset').onchange`/`$('run').onclick`, chip update ใน pollPipeline, `render(DATA[0])` ที่ init
+- คงไว้: 19-node LAYERS, run()/burst() animation, pollPipeline (live) + pollOnline (#online), ช่อง #q, tooltip hover
+- verify: preset/RUN/chip ไม่อยู่, live chat → animation 19/19 ยังทำงาน, ไม่มี JS error
+- commit `?` → Vercel auto-deploy
+
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้
 - debug page ใช้ backend: hostname localhost → http://localhost:5199 (ในโค้ด debug_neural_network_diagram.html)

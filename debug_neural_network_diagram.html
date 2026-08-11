@@ -66,13 +66,6 @@
   <div class="top">
     <span class="brand"><i></i>NEURAL RAG</span>
     <input id="q" value="วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง?" />
-    <select id="preset">
-      <option value="0">OT เทปูน · vector</option>
-      <option value="1">IT Security · hybrid</option>
-      <option value="2">Headcount · sql</option>
-    </select>
-    <button id="run">RUN</button>
-    <span id="chip">deepseek-v4-flash</span>
   </div>
   <main>
     <div id="stage">
@@ -119,55 +112,6 @@ const LAYERS = [
 ];
 // ลำดับรัน = เรียงตามชั้น (h1..out)
 const STAGES = LAYERS.filter(l=>l.ms).map(l=>l.key);
-
-
-// ── ข้อมูลตัวอย่าง (3 presets) ───────────────────────────────────────────────
-const SYS = 'Answer only from context. Reply in Thai. Cite as [1][2]. Never invent employee IDs.';
-const DATA = [
-  { q:'วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง และเจอปัญหาอะไรหน้างาน?',
-    in:2845, out:214, spd:178, lat:1539,
-    chunks:[
-      {s:0.95, t:'เทปูนคานชั้นดาดฟ้า อยู่ OT ข้ามคืนเพราะมิกเซอร์ CPAC มาช้า — Timesheet_Log EMP070'},
-      {s:0.92, t:'ผรห. ทิ้งงานกลางคันหลังเบิกเงินล่วงหน้า ต้องเปลี่ยนใหม่ — Project_History EMP063'},
-      {s:0.90, t:'ปูน CPAC เข้าช้า 4 ชม. เทคอนกรีตไม่ทัน ต้องขอ OT — Project_History EMP068'},
-      {s:0.87, t:'แรงงานต่างด้าวกลับบ้านช่วงเทศกาล งานดีเลย์ — KPI_OKR_History EMP063'},
-      {s:0.85, t:'QC งานฉาบผนังพบรอยร้าวแนวเสา เรียก ผรห. กลับมาแก้ — Timesheet_Log EMP070'},
-    ],
-    ctx:['[1] (0.95) Timesheet_Log EMP070: เทปูนคานชั้นดาดฟ้า OT ข้ามคืน CPAC มาช้า',
-         '[2] (0.92) Project_History EMP063: ผรห. ทิ้งงาน เปลี่ยนใหม่ ดีเลย์ 2 สัปดาห์',
-         '[3] (0.90) Project_History EMP068: ปูน CPAC เข้าช้า 4 ชม. ขอ OT',
-         '[4] (0.87) KPI_OKR_History EMP063: แรงงานต่างด้าวกลับบ้าน เทศกาล',
-         '[5] (0.85) Timesheet_Log EMP070: QC ฉาบผนัง รอยร้าวแนวเสา'].join('\n'),
-    ans:'EMP070 ทำ OT เทปูนข้ามคืน (CPAC มาช้า). ปัญหา: ผรห. ทิ้งงาน, CPAC ช้า 4 ชม., แรงงานต่างด้าวกลับบ้าน'},
-  { q:'สรุปความเสี่ยง IT Security และรายชื่อคนที่เกี่ยวข้อง',
-    in:3210, out:268, spd:164, lat:1874,
-    chunks:[
-      {s:0.95, t:'Ransomware .locked บนเครื่องฝ่ายขาย คัดแยก + กู้ backup — IT_Ticket_Log EMP145'},
-      {s:0.89, t:'BSOD ซ้ำบน Dell Latitude RAM เสื่อม เปลี่ยนแรม — IT_Ticket_Log EMP144'},
-      {s:0.83, t:'รั่วไหลข้อมูลลูกค้า 1,200 ราย ขึ้น Drive ส่วนตัว เสี่ยง PDPA — IT_Ticket_Log EMP146'},
-      {s:0.72, t:'แชร์ password กับผู้อื่น formal warning — Warning EMP135'},
-      {s:0.58, t:'อบรม Cybersecurity ผ่านเกณฑ์ — Learning_Development EMP143'},
-    ],
-    ctx:['[1] (0.95) IT_Ticket_Log EMP145: Ransomware .locked',
-         '[2] (0.89) IT_Ticket_Log EMP144: BSOD RAM เสื่อม',
-         '[3] (0.83) IT_Ticket_Log EMP146: รั่วไหลลูกค้า 1,200 ราย',
-         '[4] (0.72) Warning EMP135: แชร์ password',
-         '[5] (0.58) Learning EMP143: อบรมไซเบอร์'].join('\n'),
-    ans:'เสี่ยงสูง 4 ราย: EMP145 (Ransomware), EMP144 (BSOD), EMP146 (รั่วไหล PDPA), EMP135 (แชร์ password)'},
-  { q:'จำนวนพนักงานแยกแผนก และกี่คนได้เกรด C ขึ้นไป',
-    in:1980, out:152, spd:191, lat:1042,
-    chunks:[
-      {s:0.99, t:'SELECT department, COUNT(DISTINCT employeeId) FROM employee_data GROUP BY department — 12 แผนก'},
-      {s:0.98, t:'Engineering 38 · Sales 28 · Design 18 · CS 12 · Procurement 12 · Marketing 10 · Finance 10 · HR 8 · Exec 6 · IT 4 · Legal 2 · Office 2 = 150'},
-      {s:0.84, t:'Band ล่าสุด: B=108 · C=24 · D=8 (KPI_OKR_History)'},
-      {s:0.66, t:'พนักงานได้เกรด C ขึ้นไป = 132 คน (88%)'},
-    ],
-    ctx:['[1] (0.99) analytics.sql: GROUP BY department',
-         '[2] (0.98) sql_result: 12 แผนก = 150 คน',
-         '[3] (0.84) KPI_OKR_History: B=108 C=24 D=8',
-         '[4] (0.66) analytics: C ขึ้นไป 132 คน'].join('\n'),
-    ans:'150 คน / 12 แผนก (ใหญ่สุด Engineering 38). เกรด C ขึ้นไป = 132 คน (88%)'},
-];
 
 // ── engine ───────────────────────────────────────────────────────────────────
 const cv=document.getElementById('cv'), st=document.getElementById('stage'),
@@ -233,7 +177,7 @@ function burst(from,to){
 // ── render (เพียงอัปเดต query) ─────────────────────────────────────────────
 function render(d){ $('q').value=d.q; }
 function run(d){
-  if(busy)return; busy=true; $('run').textContent='RUN…';
+  if(busy)return; busy=true;
   for(const n of nodes.values())n.st=0;
   parts.length=0;
   $('q').value=d.q; render(d);
@@ -250,7 +194,7 @@ function run(d){
       }
     }
     for(const nd of LAYERS[LAYERS.length-1].nodes){nodes.get(nd.id).st=1;await wait(90);nodes.get(nd.id).st=2;}
-    busy=false; $('run').textContent='RUN';
+    busy=false;
   })();
 }
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
@@ -272,8 +216,6 @@ cv.addEventListener('mousemove',e=>{
 cv.addEventListener('mouseleave',()=>{hover=null;tip.classList.add('hide');});
 
 // ── controls ────────────────────────────────────────────────────────────────
-$('preset').onchange=e=>{const d=DATA[+e.target.value];$('q').value=d.q;render(d);};
-$('run').onclick=()=>run(DATA[+$('preset').value]);
 window.addEventListener('resize',layout);
 
 // ── live mode: poll RAG backend for real pipeline data (auto-animate) ───────
@@ -282,7 +224,6 @@ const PROD_BACKEND = 'https://builderseye-backend.wittybush-d59275bd.southeastas
 const BACKEND = new URLSearchParams(location.search).get('backend')
   || ((location.hostname==='localhost'||location.hostname==='127.0.0.1') ? 'http://localhost:5199' : PROD_BACKEND);
 let lastQuery = null;
-const chip=$('chip');
 async function pollPipeline(){
   try{
     const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store'});
@@ -290,7 +231,6 @@ async function pollPipeline(){
     const d=await r.json();
     if(d.query && d.query!==lastQuery){
       lastQuery=d.query;
-      chip.textContent='live · '+new Date(d.at).toLocaleTimeString();
       // map backend data → run() format
       run({
         q:d.query, ans:d.answer||'',
@@ -319,7 +259,7 @@ async function pollOnline(){
 setInterval(pollOnline, 3000);
 pollOnline();
 
-layout(); render(DATA[0]);
+layout();
 draw();
 </script>
 </body>

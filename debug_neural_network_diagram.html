@@ -7,7 +7,7 @@
 <style>
   :root{
     --bg:#070a12; --panel:#0b101b; --line:#1c2740; --txt:#d8e1f0; --dim:#71809c; --faint:#46536e;
-    --c0:#22d3ee; --c1:#4f8bff; --c2:#a78bfa; --c3:#e879f9; --co:#f472b6;
+    --c0:#22d3ee; --c1:#4f8bff; --c2:#a78bfa; --c3:#e879f9; --co:#f472b6; --amber:#fbbf24;
     --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
   }
   *{box-sizing:border-box;margin:0}
@@ -34,7 +34,7 @@
   #tip .d{color:var(--dim);margin-top:3px;line-height:1.5}
   #tip.hide{display:none}
   /* online users overlay */
-  #online{position:absolute;top:10px;left:10px;z-index:9;background:rgba(9,13,22,.85);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:11px;max-width:230px}
+  #online{position:absolute;top:10px;left:10px;z-index:9;background:rgba(9,13,22,.85);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:11px;max-width:230px;pointer-events:none}
   #online .ol-h{color:var(--co);font-weight:700;letter-spacing:.05em;margin-bottom:5px}
   #online .ol-list{display:flex;flex-wrap:wrap;gap:4px}
   #online .ol{background:#0d1422;border:1px solid var(--line);border-radius:99px;padding:2px 8px;color:var(--c0);font-size:10px;cursor:default}
@@ -72,7 +72,7 @@
       <option value="2">Headcount · sql</option>
     </select>
     <button id="run">RUN</button>
-    <span id="chip">ollama</span>
+    <span id="chip">deepseek-v4-flash</span>
   </div>
   <main>
     <div id="stage">
@@ -83,34 +83,38 @@
   </main>
 <script>
 
-// ── เครือข่าย: 6 ชั้น · โหนด = ขั้น pipeline (ทุกโหนดผูกไฟล์จริงใน repo) ─────
+// ── เครือข่าย: 6 ชั้น · 19 โหนด = ขั้น pipeline จริง (audit 2026-08-11) ────────
 const LAYERS = [
   { key:'input', color:'#22d3ee', nodes:[
-    {id:'q',    label:'User Query', file:'app.html · src/main.js', detail:'raw question text'},
-    {id:'int',  label:'Intent',     file:'server/security/intentParser.js', detail:'employee-lookup · 0.92'},
-    {id:'role', label:'Role',       file:'server/security/policy.js', detail:'RBAC scope · viewer'},
-    {id:'mem',  label:'Memory',     file:'server/chatMemory.js', detail:'session turns'},
+    {id:'q',    label:'User Query',     file:'app.html · src/main.js', detail:'raw question text'},
+    {id:'mem',  label:'Conversation Memory', file:'server/chatMemory.js', detail:'user message persisted + history turns'},
   ]},
   { key:'h1', color:'#4f8bff', ms:120, nodes:[
-    {id:'hyde', label:'Query Rewrite', file:'server/core/llmRerank.js', detail:'hydeExpand() · HyDE + Thai normalize'},
-    {id:'alias',label:'Alias Map',     file:'server/sheetAliases.js', detail:'detectSheetMentions() · OT→Timesheet_Log'},
+    {id:'pol',   label:'Policy Check',   file:'server/policy.js', detail:'checkQueryPolicy() · role-block regex · STOP on Blocked'},
+    {id:'sql',   label:'SQL Detect',     file:'server/chatController.js', detail:'needsSqlAnalytics regex flag (avg/compare/salary/turnover…)'},
+    {id:'pron',  label:'Pronoun Resolve',file:'server/pronounResolver.js', detail:'history-based EMP/name enrichment'},
+    {id:'cache', label:'Response Cache', file:'server/responseCache.js', detail:'cacheGet/cacheSet · TTL 15 min · LLM-on only · STOP on hit'},
+    {id:'sem',   label:'Semantic Intent',file:'server/semanticParser.js', detail:'LLM JSON intent · STOP on clarification'},
+    {id:'scope', label:'RBAC Scope',     file:'server/chatController.js', detail:'buildScopeCodesForRole() · null(CEO/HR) | Set<code>'},
+    {id:'sheet', label:'Sheet Mentions', file:'server/sheetAliases.js', detail:'bilingual alias → sheet set'},
   ]},
   { key:'h2', color:'#a78bfa', ms:87, nodes:[
-    {id:'emb',  label:'Embed',    file:'server/core/localEmbedder.js', detail:'e5-small · 384d'},
-    {id:'scan', label:'Top-K Scan',file:'server/core/vectorStore.js', detail:'searchVectors() · 5 hits ≥ 0.65'},
-    {id:'flt',  label:'Score Filter',file:'vectorStore.js + policy.js', detail:'cosine + RBAC cut'},
+    {id:'kw',   label:'Keyword Search', file:'server/searchIndex.js', detail:'search() · 7 matchers + mergeAndRank → top 15'},
+    {id:'rbac', label:'RBAC Re-check',  file:'server/policy.js', detail:'resolveScope()/applyFieldRedaction() · per-hit scope + redaction'},
+    {id:'sqle', label:'SQL Engine',     file:'server/sqlEngine.js', detail:'generateAndRunSQL() · CONDITIONAL: SQL route, scoped table'},
+    {id:'emb',  label:'Embed',          file:'server/localEmbedder.js', detail:'embedOne() · CONDITIONAL: vector route, Xenova/multilingual-e5-small 384d'},
+    {id:'vec',  label:'Vector Search',  file:'server/vectorStore.js', detail:'searchVectors() · CONDITIONAL: k=15, min 0.85, sheetBoost 1.10'},
   ]},
   { key:'h3', color:'#c084fc', ms:32, nodes:[
-    {id:'rr',   label:'Rerank',   file:'server/core/llmRerank.js', detail:'llmRerank() · listwise scoring'},
-    {id:'ctx',  label:'Context',  file:'server/anonymizer.js', detail:'buildContext() · assemble chunks'},
+    {id:'ctx',  label:'Context Build',  file:'server/anonymizer.js', detail:'buildContext() · chunks → LLM context ≤8000 chars'},
+    {id:'anom', label:'Anonymize / De-anonymize', file:'server/anonymizer.js', detail:'anonymize()/deAnonymize() · Tier1→3 label mapping'},
   ]},
   { key:'h4', color:'#e879f9', ms:1200, nodes:[
-    {id:'pb',   label:'Prompt',   file:'server/chatController.js', detail:'system+ctx+user'},
-    {id:'gen',  label:'Generate', file:'server/core/llmClient.js', detail:'llama3.1:8b · 178 tok/s'},
+    {id:'llm',  label:'LLM Generate',   file:'server/llmClient.js', detail:'generateAnswer() · CONDITIONAL: DeepSeek deepseek-v4-flash, max_tokens 500'},
+    {id:'tpl',  label:'Template Fallback', file:'server/searchIndex.js', detail:'buildAnswer() · deterministic when no LLM / no branch won'},
   ]},
   { key:'out', color:'#f472b6', nodes:[
-    {id:'ans',  label:'Answer',   file:'server/chatController.js', detail:'markdown + citations'},
-    {id:'cite', label:'Evidence', file:'server/searchIndex.js', detail:'top-5 source rows'},
+    {id:'out',  label:'Answer Enrich + Save', file:'server/chatController.js', detail:'PK/name highlight · chatMemory save · cacheSet · latestPipeline'},
   ]},
 ];
 // ลำดับรัน = เรียงตามชั้น (h1..out)
@@ -123,17 +127,17 @@ const DATA = [
   { q:'วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง และเจอปัญหาอะไรหน้างาน?',
     in:2845, out:214, spd:178, lat:1539,
     chunks:[
-      {s:0.92, t:'เทปูนคานชั้นดาดฟ้า อยู่ OT ข้ามคืนเพราะมิกเซอร์ CPAC มาช้า — Timesheet_Log EMP070'},
-      {s:0.87, t:'ผรห. ทิ้งงานกลางคันหลังเบิกเงินล่วงหน้า ต้องเปลี่ยนใหม่ — Project_History EMP063'},
-      {s:0.81, t:'ปูน CPAC เข้าช้า 4 ชม. เทคอนกรีตไม่ทัน ต้องขอ OT — Project_History EMP068'},
-      {s:0.74, t:'แรงงานต่างด้าวกลับบ้านช่วงเทศกาล งานดีเลย์ — KPI_OKR_History EMP063'},
-      {s:0.65, t:'QC งานฉาบผนังพบรอยร้าวแนวเสา เรียก ผรห. กลับมาแก้ — Timesheet_Log EMP070'},
+      {s:0.95, t:'เทปูนคานชั้นดาดฟ้า อยู่ OT ข้ามคืนเพราะมิกเซอร์ CPAC มาช้า — Timesheet_Log EMP070'},
+      {s:0.92, t:'ผรห. ทิ้งงานกลางคันหลังเบิกเงินล่วงหน้า ต้องเปลี่ยนใหม่ — Project_History EMP063'},
+      {s:0.90, t:'ปูน CPAC เข้าช้า 4 ชม. เทคอนกรีตไม่ทัน ต้องขอ OT — Project_History EMP068'},
+      {s:0.87, t:'แรงงานต่างด้าวกลับบ้านช่วงเทศกาล งานดีเลย์ — KPI_OKR_History EMP063'},
+      {s:0.85, t:'QC งานฉาบผนังพบรอยร้าวแนวเสา เรียก ผรห. กลับมาแก้ — Timesheet_Log EMP070'},
     ],
-    ctx:['[1] (0.92) Timesheet_Log EMP070: เทปูนคานชั้นดาดฟ้า OT ข้ามคืน CPAC มาช้า',
-         '[2] (0.87) Project_History EMP063: ผรห. ทิ้งงาน เปลี่ยนใหม่ ดีเลย์ 2 สัปดาห์',
-         '[3] (0.81) Project_History EMP068: ปูน CPAC เข้าช้า 4 ชม. ขอ OT',
-         '[4] (0.74) KPI_OKR_History EMP063: แรงงานต่างด้าวกลับบ้าน เทศกาล',
-         '[5] (0.65) Timesheet_Log EMP070: QC ฉาบผนัง รอยร้าวแนวเสา'].join('\n'),
+    ctx:['[1] (0.95) Timesheet_Log EMP070: เทปูนคานชั้นดาดฟ้า OT ข้ามคืน CPAC มาช้า',
+         '[2] (0.92) Project_History EMP063: ผรห. ทิ้งงาน เปลี่ยนใหม่ ดีเลย์ 2 สัปดาห์',
+         '[3] (0.90) Project_History EMP068: ปูน CPAC เข้าช้า 4 ชม. ขอ OT',
+         '[4] (0.87) KPI_OKR_History EMP063: แรงงานต่างด้าวกลับบ้าน เทศกาล',
+         '[5] (0.85) Timesheet_Log EMP070: QC ฉาบผนัง รอยร้าวแนวเสา'].join('\n'),
     ans:'EMP070 ทำ OT เทปูนข้ามคืน (CPAC มาช้า). ปัญหา: ผรห. ทิ้งงาน, CPAC ช้า 4 ชม., แรงงานต่างด้าวกลับบ้าน'},
   { q:'สรุปความเสี่ยง IT Security และรายชื่อคนที่เกี่ยวข้อง',
     in:3210, out:268, spd:164, lat:1874,
@@ -179,7 +183,7 @@ function layout(){
   nodes.clear();
   LAYERS.forEach((ly,ci)=>{
     const x=pad+colW*ci+colW/2, n=ly.nodes.length;
-    const gap=Math.min(52,(H-120)/Math.max(n,1)), y0=(H-(n-1)*gap)/2;
+    const gap=Math.max(34,Math.min(52,(H-120)/Math.max(n,1))), y0=(H-(n-1)*gap)/2;
     ly.nodes.forEach((nd,ni)=>nodes.set(nd.id,{x,y:y0+ni*gap,r:15,nd,ly,st:0}));
   });
   edges.length=0;

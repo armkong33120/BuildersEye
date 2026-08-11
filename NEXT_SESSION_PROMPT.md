@@ -61,7 +61,8 @@ Script: `scripts/test_ui_playwright_production.mjs` (รัน headful: `node sc
 - ลบ node ที่ไม่จริง: `hyde`/`rr` (llmRerank ไม่ได้ใช้ใน chat), `flt` (รวมใน rbac) ฯลฯ
 - Model จริง: `deepseek-v4-flash` (เดิมเขียน llama3.1:8b)
 - CSS: เพิ่ม `--amber`, `#online` เป็น `pointer-events:none` (ไม่บัง node q/mem)
-- ยังไม่ได้ deploy ขึ้น Vercel (ต้อง git commit+push) — ลองดูได้ที่ http://localhost:5174/debug_neural_network_diagram.html
+- ✅ **deploy ขึ้น Vercel เรียบร้อยแล้ว** (commit `b09a9d7`, push main → auto-deploy) — ดูได้ที่ https://builders-eye.vercel.app/debug_neural_network_diagram.html (verify 19 nodes, chip=deepseek-v4-flash, ไม่มี JS error)
+- ไฟล์ที่ยังไม่ได้ commit (ตั้งใจข้าม, repo public): `pdf_extracted.txt` (ข้อมูล HR demo), `server/setup_local_auth.mjs` (มีรหัส ceo), log/screenshot, ไฟล์ source ที่แก้ค้างจาก session ก่อน (app.html, src/main.js, server/anonymizer.js, server/sqlEngine.js — push ตัว server/* จะ trigger backend Azure redeploy)
 
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้

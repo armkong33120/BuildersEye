@@ -12,10 +12,10 @@ const APP_URL = 'https://builders-eye.vercel.app/app.html?backend=' + LOCAL_BACK
 const DEBUG_URL = 'https://builders-eye.vercel.app/debug_neural_network_diagram.html?backend=' + LOCAL_BACKEND;
 
 const ROLES = [
-  { key: 'ceo',        username: 'ceo',    password: 'CEO@Landyi2026', role: 'CEO',      query: 'CEO คือใคร' },
-  { key: 'hr',         username: 'emp135', password: 'Pass@1234',      role: 'HR',       query: 'สรุปจำนวนพนักงานแยกแผนก' },
-  { key: 'manager',    username: 'emp007', password: 'Pass@1234',      role: 'Manager',  query: 'EMP007 คือใคร' },
-  { key: 'employee',   username: 'emp012', password: 'Pass@1234',      role: 'Employee', query: 'EMP012 คือใคร' },
+  { key: 'ceo',        username: 'ceo',    password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', role: 'CEO',      query: 'CEO คือใคร' },
+  { key: 'hr',         username: 'emp135', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]',      role: 'HR',       query: 'สรุปจำนวนพนักงานแยกแผนก' },
+  { key: 'manager',    username: 'emp007', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]',      role: 'Manager',  query: 'EMP007 คือใคร' },
+  { key: 'employee',   username: 'emp012', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]',      role: 'Employee', query: 'EMP012 คือใคร' },
 ];
 
 fs.mkdirSync(SHOTS_DIR, { recursive: true });

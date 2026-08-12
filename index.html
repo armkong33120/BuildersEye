@@ -23,7 +23,10 @@
           <a href="#roadmap">Roadmap</a>
           <a href="#try-it">ทดลองใช้</a>
         </nav>
-        <a href="/app.html" class="btn btn-primary-nav">เปิดแอป 3D 🚀</a>
+        <div class="nav-actions">
+          <a href="/debug_neural_network_diagram.html" class="btn btn-outline-nav" title="ดูเส้นทางเดินคำถามผ่าน Neural Network Pipeline">🧠 Neural Trace</a>
+          <a href="/app.html" class="btn btn-primary-nav">เปิดแอป 3D 🚀</a>
+        </div>
       </div>
     </header>
 
@@ -521,36 +524,36 @@
             <span class="badge badge-ceo">CEO</span>
             <h4>Managing Director</h4>
             <div class="cred-field"><span>Username:</span> <code>ceo</code></div>
-            <div class="cred-field"><span>Password:</span> <code>CEO@Landyi2026</code></div>
+            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
             <div class="cred-scope">🔍 สิทธิ์: ดูข้อมูลได้ทั้งหมด 100%</div>
-            <button class="btn-copy-cred" data-user="ceo" data-pass="CEO@Landyi2026">คัดลอกรหัส</button>
+            <button class="btn-copy-cred" data-user="ceo" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
           </div>
 
           <div class="glass-card cred-card border-hr">
             <span class="badge badge-hr">HR</span>
             <h4>HR Manager</h4>
             <div class="cred-field"><span>Username:</span> <code>hr-manager</code></div>
-            <div class="cred-field"><span>Password:</span> <code>HR@2026test</code></div>
+            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
             <div class="cred-scope">🔍 สิทธิ์: ดูประวัติ HR พนักงานทั้งหมด</div>
-            <button class="btn-copy-cred" data-user="hr-manager" data-pass="HR@2026test">คัดลอกรหัส</button>
+            <button class="btn-copy-cred" data-user="hr-manager" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
           </div>
 
           <div class="glass-card cred-card border-manager">
             <span class="badge badge-manager">Manager</span>
             <h4>IT Manager</h4>
             <div class="cred-field"><span>Username:</span> <code>it-manager</code></div>
-            <div class="cred-field"><span>Password:</span> <code>Exec@2026test</code></div>
+            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
             <div class="cred-scope">🔍 สิทธิ์: ดูเฉพาะทีมในสายงาน (Subtree)</div>
-            <button class="btn-copy-cred" data-user="it-manager" data-pass="Exec@2026test">คัดลอกรหัส</button>
+            <button class="btn-copy-cred" data-user="it-manager" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
           </div>
 
           <div class="glass-card cred-card border-employee">
             <span class="badge badge-employee">Employee</span>
             <h4>Staff Member</h4>
             <div class="cred-field"><span>Username:</span> <code>emp144</code></div>
-            <div class="cred-field"><span>Password:</span> <code>Emp@2026test</code></div>
+            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
             <div class="cred-scope">🔍 สิทธิ์: ดูเฉพาะตัวเอง (Self Scope)</div>
-            <button class="btn-copy-cred" data-user="emp144" data-pass="Emp@2026test">คัดลอกรหัส</button>
+            <button class="btn-copy-cred" data-user="emp144" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
           </div>
         </div>
 
@@ -559,7 +562,7 @@
           <div class="challenge-icon">💡</div>
           <h3>ลองท้าทายระบบ RBAC Security!</h3>
           <p class="challenge-desc">
-            1. กดเข้าแอปด้วยบัญชี Employee: <code>emp144</code> / <code>Emp@2026test</code> <br />
+            1. กดเข้าแอปด้วยบัญชี Employee: <code>emp144</code> / <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code> <br />
             2. พิมพ์คำถามใน AI Chat: <strong>"เงินเดือน CEO เท่าไหร่?"</strong> <br />
             3. ระบบจะแสดงข้อความ <strong>"Query blocked by governance policy"</strong> ทันที!
           </p>

@@ -5,12 +5,31 @@ import OpenAI from 'openai';
 //   LLM_BASE_URL   (default https://api.deepseek.com for DeepSeek)
 //   LLM_API_KEY    (default: DEEPSEEK_API_KEY, then OPENAI_API_KEY)
 //   LLM_MODEL      (default: deepseek-chat)
+//   LLM_TIMEOUT_MS (default: 30000 — 30s for the underlying HTTP call)
+//   LLM_MAX_RETRIES (default: 2 — bounded retries on transient errors)
 //   OPENAI_API_KEY / OPENAI_MODEL  (kept for backward compat)
 const BASE_URL = process.env.LLM_BASE_URL || 'https://api.deepseek.com';
 const API_KEY = process.env.LLM_API_KEY || process.env.DEEPSEEK_API_KEY || process.env.OPENAI_API_KEY;
 const MODEL = process.env.LLM_MODEL || process.env.OPENAI_MODEL || 'deepseek-chat';
+const LLM_TIMEOUT_MS = Number(process.env.LLM_TIMEOUT_MS || 30000);
+const LLM_MAX_RETRIES = Number(process.env.LLM_MAX_RETRIES || 2);
 
 let client = null;
+
+// ── Latency tracker (p50/p95) ──
+const latencySamples = [];
+const MAX_LATENCY_SAMPLES = 200;
+function recordLatency(ms) {
+  latencySamples.push(ms);
+  if (latencySamples.length > MAX_LATENCY_SAMPLES) latencySamples.shift();
+}
+export function getLLMLatencyStats() {
+  if (latencySamples.length === 0) return { p50: null, p95: null, samples: 0 };
+  const sorted = [...latencySamples].sort((a, b) => a - b);
+  const p50 = sorted[Math.floor(sorted.length * 0.5)];
+  const p95 = sorted[Math.floor(sorted.length * 0.95)];
+  return { p50, p95, samples: sorted.length };
+}
 
 // ── API Cost tracking (เก็บ tokens จริงจาก response.usage) ──
 // ราคา USD / 1M tokens (deepseek-v4-flash) — ปรับได้ผ่าน env (LLM_PRICE_INPUT/OUTPUT/CACHE)
@@ -55,7 +74,12 @@ export function getUsageStats() {
 
 export function getClient() {
   if (!client && API_KEY && API_KEY !== 'your_api_key_here') {
-    client = new OpenAI({ apiKey: API_KEY, baseURL: BASE_URL });
+    client = new OpenAI({
+      apiKey: API_KEY,
+      baseURL: BASE_URL,
+      timeout: LLM_TIMEOUT_MS,
+      maxRetries: 0, // we handle retries ourselves for controlled backoff
+    });
   }
   return client;
 }
@@ -97,33 +121,65 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
   const thinkingDisabled = process.env.LLM_THINKING === 'disabled';
   const reasoningEffort = process.env.LLM_REASONING_EFFORT; // undefined = ค่า default ของ model
 
-  try {
-    const openai = getClient();
-    if (!openai) return null;
+  const completionArgs = {
+    model: model,
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userPrompt },
+    ],
+    // rawSql ต้องมีที่ว่างพอ (SQL ซับซ้อน + v4-flash เผา token กับ reasoning) — 1200 ไม่ใช่ 600
+    max_tokens: options.rawSql ? 1200 : 500,
+    temperature: options.rawSql ? 0.0 : 0.3,
+  };
+  // IMPORTANT: DeepSeek รับ `thinking` เป็น TOP-LEVEL param (ไม่ใช่ extra_body) —
+  // extra_body ถูก ignore → reasoning ยังกิน token จน content ว่าง (finish=length)
+  if (thinkingDisabled) completionArgs.thinking = { type: 'disabled' };
+  else if (reasoningEffort) completionArgs.reasoning_effort = reasoningEffort;
 
-    const completionArgs = {
-      model: model,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      // rawSql ต้องมีที่ว่างพอ (SQL ซับซ้อน + v4-flash เผา token กับ reasoning) — 1200 ไม่ใช่ 600
-      max_tokens: options.rawSql ? 1200 : 500,
-      temperature: options.rawSql ? 0.0 : 0.3,
-    };
-    // IMPORTANT: DeepSeek รับ `thinking` เป็น TOP-LEVEL param (ไม่ใช่ extra_body) —
-    // extra_body ถูก ignore → reasoning ยังกิน token จน content ว่าง (finish=length)
-    if (thinkingDisabled) completionArgs.thinking = { type: 'disabled' };
-    else if (reasoningEffort) completionArgs.reasoning_effort = reasoningEffort;
+  // ── Bounded retry with exponential backoff ──
+  const maxRetries = LLM_MAX_RETRIES;
+  let lastError = null;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    const t0 = Date.now();
+    try {
+      const openai = getClient();
+      if (!openai) return null;
 
-    const response = await openai.chat.completions.create(completionArgs);
+      const response = await openai.chat.completions.create(completionArgs);
 
-    trackUsage(response?.usage, model);
-    return response.choices?.[0]?.message?.content || null;
-  } catch (e) {
-    // SECURITY FIX R4-2: log only a safe, truncated error (no full message that
-    // could contain URLs/keys/stack internals).
-    console.error('[llm] LLM API error:', String(e?.message || 'unknown').slice(0, 200));
-    return null;
+      const elapsed = Date.now() - t0;
+      recordLatency(elapsed);
+      trackUsage(response?.usage, model);
+      return response.choices?.[0]?.message?.content || null;
+    } catch (e) {
+      lastError = e;
+      const elapsed = Date.now() - t0;
+      const status = e?.status || e?.code;
+      // Only retry on transient errors (network issues, rate limits, 5xx)
+      const isTransient =
+        status === 429 || (status >= 500 && status < 600) ||
+        e?.message?.toLowerCase?.()?.includes?.('timeout') ||
+        e?.message?.toLowerCase?.()?.includes?.('econnrefused') ||
+        e?.message?.toLowerCase?.()?.includes?.('econnreset') ||
+        e?.message?.toLowerCase?.()?.includes?.('etimedout') ||
+        e?.name === 'APIConnectionError' ||
+        e?.name === 'APIConnectionTimeoutError' ||
+        e?.name === 'RateLimitError';
+
+      if (attempt < maxRetries && isTransient) {
+        const backoffMs = Math.min(1000 * Math.pow(2, attempt), 8000);
+        console.warn(`[llm] attempt ${attempt + 1}/${maxRetries + 1} failed (${elapsed}ms, ${e?.message?.slice(0, 100)}) — retrying in ${backoffMs}ms`);
+        await new Promise(r => setTimeout(r, backoffMs));
+        continue;
+      }
+
+      // SECURITY FIX R4-2: log only a safe, truncated error (no full message that
+      // could contain URLs/keys/stack internals).
+      console.error('[llm] LLM API error:', String(e?.message || 'unknown').slice(0, 200));
+      return null;
+    }
   }
+
+  console.error('[llm] All retries exhausted:', String(lastError?.message || 'unknown').slice(0, 200));
+  return null;
 }

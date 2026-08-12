@@ -90,7 +90,7 @@ curl -s https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontai
 
 # Login จริง (JWT)
 curl -s -X POST <BACKEND>/api/auth/login -H 'Content-Type: application/json' \
-  -d '{"username":"ceo","password":"CEO@Landyi2026"}'
+  -d '{"username":"ceo","password":"[REDACTED_TEST_PASSWORD]"}'
 
 # ดู deploy CI/CD
 cd "AI Test/mail-onedrive-org-graph" && gh run list --workflow deploy-aca.yml --limit 3

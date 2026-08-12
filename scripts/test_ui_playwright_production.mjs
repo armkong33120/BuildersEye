@@ -1,6 +1,6 @@
 // test_ui_playwright_production.mjs — Playwright HEADFUL E2E test for the PRODUCTION environment of BuildersEye
 // เปิด Chromium แบบเห็นหน้าจอ (headful: headless:false) ทดสอบ PRODUCTION (https://builders-eye.vercel.app) เป็น 3 scenarios:
-//   S1) Pure Production login attempt — คาดหวัง FAIL (security-by-design): login ceo/CEO@Landyi2026 กับ prod backend
+//   S1) Pure Production login attempt — คาดหวัง FAIL (security-by-design): login ceo/[TEST_ACCOUNT_PASSWORD] กับ prod backend
 //       ต้องโดน 401 → #loginError แสดง error, overlay ยังอยู่, app ไม่ crash. (ห้าม retry — rate limit 5 ครั้ง/นาที)
 //   S2) Production frontend + LOCAL backend ผ่าน ?backend=http://localhost:5199 — full flow:
 //       Login (สำเร็จ) → RAG Chat (รอ answer) → Debug page (pipeline อัปเดตเป็น query ใหม่ + chip live + ceo online)
@@ -19,7 +19,7 @@ const PROD_APP_URL = PROD_FRONTEND + '/app.html';
 const PROD_DEBUG_URL = PROD_FRONTEND + '/debug_neural_network_diagram.html';
 const LOCAL_BACKEND = 'http://localhost:5199';
 const USERNAME = 'ceo';
-const PASSWORD = 'CEO@Landyi2026';
+const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]';
 // ต้องต่างจาก query ที่มีอยู่แล้วใน local pipeline ("CEO คือใคร") เพื่อให้ debug page อัปเดตให้เห็นชัดเจน
 const S2_QUERY = 'ประวัติและการทำงานของ CEO';
 

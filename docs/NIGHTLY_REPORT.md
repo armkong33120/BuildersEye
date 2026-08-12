@@ -41,7 +41,7 @@
 ## 🧪 ทดสอบตอนเช้า
 ```
 local:  cd server && node test_registry_e2e.js   (17/17 ✅)
-cloud:  https://builders-eye.vercel.app  → login ceo / CEO@Landyi2026
+cloud:  https://builders-eye.vercel.app  → login ceo / [REDACTED_TEST_PASSWORD]
         ลองถาม "ใครเคยทำโปรเจกต์พลาด" (semantic), "EMP143" (hybrid exact)
 ```
 

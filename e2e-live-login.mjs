@@ -29,7 +29,7 @@ try {
   const t2 = Date.now();
   await page.waitForSelector('#loginForm', { timeout: 30000 });
   await page.fill('#loginUsername', 'ceo');
-  await page.fill('#loginPassword', 'CEO@Landyi2026');
+  await page.fill('#loginPassword', process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]');
   await page.click('#loginSubmit');
   console.log('🔑 กด login แล้ว รอผล...');
 

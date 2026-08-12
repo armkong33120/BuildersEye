@@ -1,0 +1,652 @@
+[
+  {
+    "id": "q001",
+    "query": "CEO คือใคร",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who is the CEO - factual identity lookup"
+  },
+  {
+    "id": "q002",
+    "query": "EMP042 ทำงานตำแหน่งอะไร",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "What position does EMP042 hold"
+  },
+  {
+    "id": "q003",
+    "query": "EMP005 อยู่แผนกไหน",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Which department is EMP005 in"
+  },
+  {
+    "id": "q004",
+    "query": "ใครคือหัวหน้าฝ่ายวิศวกรรม",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who is the head of engineering"
+  },
+  {
+    "id": "q005",
+    "query": "ใครอยู่ในฝ่ายขายบ้าง",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who is in the sales department"
+  },
+  {
+    "id": "q006",
+    "query": "ใครอยู่ในฝ่าย HR บ้าง",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who is in HR department"
+  },
+  {
+    "id": "q007",
+    "query": "พนักงานในแผนก IT มีใครบ้าง",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "IT department members"
+  },
+  {
+    "id": "q008",
+    "query": "ใครมี KPI สูงสุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has the highest KPI score"
+  },
+  {
+    "id": "q009",
+    "query": "ใครมี KPI ต่ำสุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has the lowest KPI score"
+  },
+  {
+    "id": "q010",
+    "query": "แผนกไหนมีเงินเดือนเฉลี่ยสูงสุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Which department has the highest average salary"
+  },
+  {
+    "id": "q011",
+    "query": "มีกี่คนที่ KPI ต่ำกว่า 3",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "How many people have KPI below 3"
+  },
+  {
+    "id": "q012",
+    "query": "รวมโบนัสทั้งหมดของทั้งบริษัทเท่าไหร่",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Total bonus across the company"
+  },
+  {
+    "id": "q013",
+    "query": "ใครมีประสบการณ์ด้านความปลอดภัย",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has safety experience"
+  },
+  {
+    "id": "q014",
+    "query": "ใครเคยทำโปรเจกต์ใหญ่บ้าง",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has worked on major projects"
+  },
+  {
+    "id": "q015",
+    "query": "ใครมีทักษะด้านภาษา",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has language skills"
+  },
+  {
+    "id": "q016",
+    "query": "คนที่ทำงานดี",
+    "category": "ambiguous",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Ambiguous: 'people who work well'"
+  },
+  {
+    "id": "q017",
+    "query": "ใครมี warning",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has warnings - sheet category search"
+  },
+  {
+    "id": "q018",
+    "query": "ใครมี performance band exceptional",
+    "category": "keyword_retrieval",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has exceptional performance band"
+  },
+  {
+    "id": "q019",
+    "query": "จำนวนพนักงานทั้งหมด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Total employee count - SQL count"
+  },
+  {
+    "id": "q020",
+    "query": "ใครลาป่วยมากที่สุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has the most sick leave days"
+  },
+  {
+    "id": "q021",
+    "query": "EMP010 มีประวัติการอบรมอะไรบ้าง",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "EMP010 training history"
+  },
+  {
+    "id": "q022",
+    "query": "ใครมี notebook ยี่ห้ออะไรบ้าง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "IT asset notebook query"
+  },
+  {
+    "id": "q023",
+    "query": "ประวัติการทำงานของ EMP025",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Career timeline for EMP025"
+  },
+  {
+    "id": "q024",
+    "query": "มีใครได้ bonus มากกว่า 2 เดือนบ้าง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Employees with bonus > 2 months"
+  },
+  {
+    "id": "q025",
+    "query": "ใครมาสายบ่อยที่สุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Most frequently late employee"
+  },
+  {
+    "id": "q026",
+    "query": "วิศวกรคนไหนทำ OT เทปูนข้ามคืน",
+    "category": "sql_misclassification",
+    "expectedRoute": "keyword",
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "expectedNotRoute": "sql",
+    "description": "REGRESSION: OT query triggering 'ปัญหา' keyword - MUST NOT route to SQL path"
+  },
+  {
+    "id": "q027",
+    "query": "ใครมีใบเซอร์ Professional Engineer",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Professional Engineer certification holders"
+  },
+  {
+    "id": "q028",
+    "query": "ใครเสี่ยง burnout สูง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "High burnout risk employees"
+  },
+  {
+    "id": "q029",
+    "query": "อัตราการลาออกของแผนก IT",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Turnover rate in IT"
+  },
+  {
+    "id": "q030",
+    "query": "ใครเป็นลูกทีมของหัวหน้าฝ่ายขาย",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Team members of sales head"
+  },
+  {
+    "id": "q031",
+    "query": "EMP099 มีโปรเจกต์อะไรที่ทำอยู่",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Current projects for EMP099"
+  },
+  {
+    "id": "q032",
+    "query": "งบประมาณโปรเจกต์รวมทั้งหมดเท่าไหร่",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Total project budget"
+  },
+  {
+    "id": "q033",
+    "query": "EMP001 เงินเดือนเท่าไหร่",
+    "category": "rbac_sensitive",
+    "expectedRoute": "blocked",
+    "expectedMinResults": 0,
+    "expectedBlocked": true,
+    "rbacRole": "Employee",
+    "description": "Employee asks about EMP001 salary - should be blocked"
+  },
+  {
+    "id": "q034",
+    "query": "EMP001 เงินเดือนเท่าไหร่",
+    "category": "rbac_sensitive",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "CEO asks about EMP001 salary - should be allowed"
+  },
+  {
+    "id": "q035",
+    "query": "เงินเดือน CEO เท่าไหร่",
+    "category": "blocked_policy",
+    "expectedRoute": "blocked",
+    "expectedMinResults": 0,
+    "expectedBlocked": true,
+    "rbacRole": "Employee",
+    "description": "Employee asking about CEO salary - MUST be blocked"
+  },
+  {
+    "id": "q036",
+    "query": "เงินเดือน CEO เท่าไหร่",
+    "category": "blocked_policy",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "CEO asking about own salary - allowed for CEO"
+  },
+  {
+    "id": "q037",
+    "query": "ใครมี KPI สูงสุดในทีมฉัน",
+    "category": "rbac_sensitive",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "Manager",
+    "description": "Manager asks about team top KPI - keyword without LLM, sql with LLM"
+  },
+  {
+    "id": "q038",
+    "query": "โบนัสเฉลี่ยของพนักงานในแผนกบัญชี",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Average bonus in accounting department"
+  },
+  {
+    "id": "q039",
+    "query": "ใครมีใบเตือนมากกว่า 2 ครั้ง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Employees with more than 2 warnings"
+  },
+  {
+    "id": "q040",
+    "query": "สรุปจำนวนอุปกรณ์ IT ทั้งหมด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Summary of all IT assets"
+  },
+  {
+    "id": "q041",
+    "query": "ใครมี OKR สูงสุดในฝ่ายการตลาด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Highest OKR in marketing"
+  },
+  {
+    "id": "q042",
+    "query": "มีใครลาออกจากงานบ้าง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who has resigned - triggered by 'ลาออก' keyword"
+  },
+  {
+    "id": "q043",
+    "query": "EMP055 มีวันลาป่วยกี่วัน",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Sick leave days for EMP055"
+  },
+  {
+    "id": "q044",
+    "query": "ใครเคยได้รับการร้องเรียนจากลูกค้า",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Customer complaints - grievance log"
+  },
+  {
+    "id": "q045",
+    "query": "EMP003 มี eNPS เท่าไหร่",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "eNPS score for EMP003"
+  },
+  {
+    "id": "q046",
+    "query": "ใครมี flight risk สูง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "High flight risk employees"
+  },
+  {
+    "id": "q047",
+    "query": "ใบเตือนของ EMP044 มีอะไรบ้าง",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Warnings for EMP044"
+  },
+  {
+    "id": "q048",
+    "query": "ค่าใช้จ่ายเดินทางเฉลี่ยต่อคน",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Average travel expense per person"
+  },
+  {
+    "id": "q049",
+    "query": "ใครมีทักษะ Python และ SQL",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Python and SQL skills - semantic search"
+  },
+  {
+    "id": "q050",
+    "query": "พนักงานที่ KPI ดีขึ้นทุกปีมีใครบ้าง",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Employees with improving KPI year-over-year"
+  },
+  {
+    "id": "q051",
+    "query": "EMP001 ทำงานที่ไหน",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Where does EMP001 work - department lookup"
+  },
+  {
+    "id": "q052",
+    "query": "ใครเป็นคนจัดการเรื่อง PDPA",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Who handles PDPA compliance - semantic"
+  },
+  {
+    "id": "q053",
+    "query": "เงินเดือนเฉลี่ยของบริษัทเทียบกับแผนก IT",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Company avg salary vs IT department"
+  },
+  {
+    "id": "q054",
+    "query": "พนักงานที่ใกล้เกษียณมีใครบ้าง",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Near-retirement employees - semantic"
+  },
+  {
+    "id": "q055",
+    "query": "ใครมีผลงานโดดเด่นด้านการขาย",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Top sales performers - semantic search"
+  },
+  {
+    "id": "q056",
+    "query": "EMP030 มีวันลากิจกี่วัน",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Personal leave days for EMP030"
+  },
+  {
+    "id": "q057",
+    "query": "สรุปภาพรวมของฝ่าย HR",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "HR department overview - SQL summary"
+  },
+  {
+    "id": "q058",
+    "query": "โครงสร้างองค์กรมีกี่ระดับ",
+    "category": "vector_retrieval",
+    "expectedRoute": "vector",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Organizational structure depth - semantic"
+  },
+  {
+    "id": "q059",
+    "query": "พนักงานใหม่ล่าสุดคือใคร",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Newest employee by onboarding"
+  },
+  {
+    "id": "q060",
+    "query": "ปัญหาที่พบในโปรเจกต์ PRJ001",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Issues in PRJ001 - has 'ปัญหา' but genuinely wants project issues via SQL"
+  },
+  {
+    "id": "q061",
+    "query": "EMP001 bonus",
+    "category": "factual_lookup",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 1,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Short: EMP001 bonus info"
+  },
+  {
+    "id": "q062",
+    "query": "ใครได้คะแนน interview สูงสุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Highest interview score"
+  },
+  {
+    "id": "q063",
+    "query": "รายได้รวมของบริษัทปีนี้เท่าไหร่",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Total company revenue this year"
+  },
+  {
+    "id": "q064",
+    "query": "พนักงานในแผนกไหนมี turnover สูงสุด",
+    "category": "sql_analytics",
+    "expectedRoute": "sql",
+    "expectedMinResults": 0,
+    "expectedBlocked": false,
+    "rbacRole": "CEO",
+    "description": "Department with highest turnover"
+  },
+  {
+    "id": "q065",
+    "query": "เงินเดือนฉันเท่าไหร่",
+    "category": "rbac_sensitive",
+    "expectedRoute": "keyword",
+    "expectedMinResults": 0,
+    "expectedBlocked": true,
+    "rbacRole": "Employee",
+    "description": "Employee asks about own salary - blocked by current policy (no self-exception)"
+  }
+]

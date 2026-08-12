@@ -1,0 +1,83 @@
+# BuildersEye Cline Rules
+
+## Working style
+
+- For large tasks, use Plan mode first and Act mode only after the plan is approved.
+- Before editing, inspect the real production code path and identify the files involved.
+- Make whatever repository changes are necessary to complete the approved task, including
+  refactoring, moving, creating, or deleting obsolete project files when justified.
+- Do not stop merely because a file appears only indirectly related; follow the dependency
+  chain and complete the work end-to-end.
+- Preserve unrelated user changes when practical, but prioritize completing the approved task.
+- Never reset the repository or run broad destructive commands such as `git reset --hard`.
+- Keep responses and agent summaries concise: findings, files changed, tests, and blockers.
+- Do not repeat full file contents in responses.
+
+## Token and context efficiency
+
+- Read only files relevant to the current task.
+- Do not read `node_modules/`, `.git/`, logs, screenshots, archives, generated reports,
+  `.xlsx`, `.zip`, or large data files unless directly required.
+- Prefer targeted search with `rg` over scanning the whole repository.
+- Use summaries between team members instead of passing full source files.
+- Avoid concurrent edits to the same file when practical. If overlap is required, have the
+  coordinator reconcile the final version.
+- Assign teams a primary scope, but allow them to edit supporting files needed to finish their
+  work.
+- Run targeted tests after each logical group of changes instead of rerunning the full suite
+  after every small edit.
+- Use high reasoning for architecture/security decisions and medium reasoning for simple
+  syntax fixes, formatting, and test execution.
+- When context becomes large, summarize completed work before continuing.
+
+## Security
+
+- Never print, expose, commit, or hardcode API keys, passwords, JWT secrets, database URLs,
+  refresh tokens, or other credentials.
+- Do not copy secrets into documentation, test output, screenshots, or reports.
+- Keep test credentials local-only and ensure production-safe defaults.
+- Treat client-side gates as UI convenience only, never as real authorization.
+- Validate authentication and authorization on the server.
+- Redact sensitive values from logs and error messages.
+
+## External systems and deployment
+
+- Do not modify Azure, Vercel, Neon, GitHub, DNS, production environment variables,
+  deployed containers, or external services.
+- Do not push commits, open pull requests, or deploy changes unless explicitly requested.
+- If an external secret must be rotated, document the exact action without performing it
+  automatically and without displaying the secret value.
+
+## Testing and verification
+
+- Do not claim a test passed unless it was actually executed and passed.
+- Prefer deterministic tests that do not require an external LLM key.
+- If an LLM-dependent test cannot run, mark it as skipped and explain why.
+- Verify changed JavaScript with syntax checks and run the narrowest relevant test first.
+- Check imports and the actual runtime path; do not test stale or unused modules as if they
+  were production code.
+- Include exact commands and results in the final summary.
+
+## Repository-specific guidance
+
+- The active backend code is primarily in the flat `server/*.js` files. Verify imports before
+  editing anything under `server/core/`, `server/security/`, `server/controllers/`, or
+  `server/services/`, because some of those paths may contain stale code.
+- The frontend uses Vite with root-level HTML entry points and `src/` JavaScript/CSS.
+- Keep the existing Vercel frontend, Azure Container Apps backend, and Neon Postgres design
+  compatible unless the task explicitly requests an architectural change.
+- Preserve trace node names and ensure documentation matches the actual chat pipeline.
+- Remove obsolete code, generated artifacts, stale documentation, or unsafe demo files when
+  that is necessary for the approved task. Do not delete broad directories or irreplaceable
+  user data without first verifying the target.
+
+## Final response format
+
+Always report:
+
+1. Short result summary.
+2. Files changed.
+3. Tests actually run and their results.
+4. Tests skipped and the reason.
+5. Remaining risks or blockers.
+6. Whether external deployment is still required.

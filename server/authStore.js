@@ -69,9 +69,29 @@ export function seedUsers(identityGraph) {
   // TEST MODE (ENABLE_TEST_CREDS=true + TEST_ACCOUNT_PASSWORD set): seed a KNOWN password for all
   // accounts so demo/test users can actually log in on staging/prod (M4 "Test Accounts Panel").
   // Otherwise passwords stay random (secure default — nobody knows them, mustChangePassword=true).
+  // SECURITY: production with ENABLE_TEST_CREDS=true is a MAJOR risk — log a loud warning.
+  const nodeEnv = (process.env.NODE_ENV || '').toLowerCase();
   const testMode = process.env.ENABLE_TEST_CREDS === 'true';
   const testPassword = process.env.TEST_ACCOUNT_PASSWORD || '';
   const useKnownPassword = testMode && testPassword.length >= 8;
+
+  if (testMode && nodeEnv === 'production') {
+    console.error('╔══════════════════════════════════════════════════════════════╗');
+    console.error('║  [SECURITY] ENABLE_TEST_CREDS=true in PRODUCTION!          ║');
+    console.error('║  All 150 users share the same known password.              ║');
+    console.error('║  This is intended ONLY for demo/staging environments.      ║');
+    console.error('║  Set ENABLE_TEST_CREDS=false for real production use.      ║');
+    console.error('╚══════════════════════════════════════════════════════════════╝');
+    // SECURITY: REFUSE to start in production with test credentials enabled.
+    // Previously this was just a warning — now it hard-exits to prevent
+    // accidental production exposure of known passwords.
+    if (useKnownPassword) {
+      console.error('[SECURITY] FATAL: Refusing to seed known test passwords in production.');
+      console.error('[SECURITY] Set ENABLE_TEST_CREDS=false or unset TEST_ACCOUNT_PASSWORD.');
+      process.exit(1);
+    }
+  }
+
   if (testMode && !useKnownPassword) {
     console.warn('[auth] ENABLE_TEST_CREDS=true but TEST_ACCOUNT_PASSWORD is missing/short (<8) — falling back to random passwords');
   }
@@ -85,6 +105,7 @@ export function seedUsers(identityGraph) {
       username,
       passwordHash: bcrypt.hashSync(useKnownPassword ? testPassword : randomInitialPassword(), 10),
       role,
+      isAdmin: role === 'CEO', // CEO is the system admin
       dept: idn.department || '',
       name: idn.name || username,
       jobTitle: idn.jobTitle || '',
@@ -155,7 +176,7 @@ async function saveSessionsDurable(sessions) {
 }
 
 function publicUser(u) {
-  return { id: u.id, employeeId: u.employeeId, username: u.username, role: u.role, dept: u.dept, name: u.name, jobTitle: u.jobTitle, mustChangePassword: !!u.mustChangePassword };
+  return { id: u.id, employeeId: u.employeeId, username: u.username, role: u.role, isAdmin: !!u.isAdmin, dept: u.dept, name: u.name, jobTitle: u.jobTitle, mustChangePassword: !!u.mustChangePassword };
 }
 
 async function issueTokens(user) {

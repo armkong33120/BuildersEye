@@ -101,7 +101,7 @@ async function runPlaywrightTests() {
   if (await chatInput.isVisible()) {
     console.log('4. Entering test query into RAG Chat...');
     await chatInput.fill('notebook ทั้งบริษัทมีกี่เครื่อง');
-    await sendChatBtn.click();
+    await chatInput.press('Enter');
     await mobilePage.waitForTimeout(3500);
 
     const chatMessages = mobilePage.locator('#chatMessages');

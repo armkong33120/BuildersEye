@@ -1,0 +1,6533 @@
+{
+  "runAt": "2026-08-12T06:27:03.585Z",
+  "config": {
+    "mode": "direct",
+    "llmAvailable": false,
+    "questionCount": 65
+  },
+  "metrics": {
+    "summary": {
+      "total": 65,
+      "ok": 65,
+      "errors": 0,
+      "blocked": 3,
+      "skipped": 39,
+      "llmAvailable": false,
+      "mode": "direct",
+      "totalTimeMs": 4345
+    },
+    "scores": {
+      "routeAccuracy": "100.0",
+      "blockAccuracy": "100.0",
+      "resultRate": "95.7",
+      "sqlMisclassification": "PASS",
+      "rbacLeakageRate": "0.0",
+      "fallbackRate": "88.5",
+      "unsupportedCount": 0,
+      "avgLatencyMs": "70",
+      "p50LatencyMs": 9,
+      "p95LatencyMs": 18
+    },
+    "byCategory": {
+      "factual_lookup": {
+        "total": 12,
+        "routeOk": 12,
+        "blockOk": 12,
+        "resultOk": 12,
+        "errors": 0,
+        "skipped": 0
+      },
+      "keyword_retrieval": {
+        "total": 6,
+        "routeOk": 6,
+        "blockOk": 6,
+        "resultOk": 6,
+        "errors": 0,
+        "skipped": 0
+      },
+      "sql_analytics": {
+        "total": 29,
+        "routeOk": 0,
+        "blockOk": 29,
+        "resultOk": 29,
+        "errors": 0,
+        "skipped": 29
+      },
+      "vector_retrieval": {
+        "total": 10,
+        "routeOk": 10,
+        "blockOk": 10,
+        "resultOk": 10,
+        "errors": 0,
+        "skipped": 10
+      },
+      "ambiguous": {
+        "total": 1,
+        "routeOk": 1,
+        "blockOk": 1,
+        "resultOk": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "sql_misclassification": {
+        "total": 1,
+        "routeOk": 1,
+        "blockOk": 1,
+        "resultOk": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "rbac_sensitive": {
+        "total": 4,
+        "routeOk": 4,
+        "blockOk": 4,
+        "resultOk": 4,
+        "errors": 0,
+        "skipped": 0
+      },
+      "blocked_policy": {
+        "total": 2,
+        "routeOk": 2,
+        "blockOk": 2,
+        "resultOk": 2,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "byRole": {
+      "CEO": {
+        "total": 61,
+        "routeOk": 32,
+        "blockOk": 61,
+        "leakage": 0
+      },
+      "Employee": {
+        "total": 3,
+        "routeOk": 3,
+        "blockOk": 3,
+        "leakage": 0
+      },
+      "Manager": {
+        "total": 1,
+        "routeOk": 1,
+        "blockOk": 1,
+        "leakage": 0
+      }
+    },
+    "sqlMisclassification": [
+      {
+        "id": "q026",
+        "query": "วิศวกรคนไหนทำ OT เทปูนข้ามคืน",
+        "sqlUsed": false,
+        "actualRoute": "keyword",
+        "routeMatch": true,
+        "details": "REGRESSION: sqlUsed=false, route=keyword"
+      }
+    ],
+    "rbacLeakages": [],
+    "errors": [],
+    "skipped": [
+      {
+        "id": "q008",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q009",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q010",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q011",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q012",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q013",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q014",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q015",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q019",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q020",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q022",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q024",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q025",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q027",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q028",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q029",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q030",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q032",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q038",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q039",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q040",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q041",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q042",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q044",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q046",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q048",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q049",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q050",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q052",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q053",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q054",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q055",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q057",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q058",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q059",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q060",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q062",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q063",
+        "reason": "LLM key unavailable"
+      },
+      {
+        "id": "q064",
+        "reason": "LLM key unavailable"
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "q001",
+      "query": "CEO คือใคร",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 17,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Engineering & Construction, Sales, HR & Admin, Marketing, Finance & Accounting, Executive:\n- อัครเดช ศรีสุวรรณ [score: 33.7]\n  Matched: Skill_Matrix.Notes, Skill_Matrix.Core_Skill, Timesheet_Log.Notes\n- อัครเดช หิรัญญา [score: 28.7]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.managerFeedback, name\n- อัครเดช สุขประเสริฐ [score: 27.7]\n  Matched: Skill_Matrix.Notes, name\n- EMP043 [score: 14.0]\n  Matched: Skill_Matrix.Notes, Expense_Reports.Description, KPI_OKR_Hi",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 14,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 17ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q002",
+      "query": "EMP042 ทำงานตำแหน่งอะไร",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 3,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Marketing:\n- สมชาย บุญมี (Graphic Designer) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 0,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 3ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q003",
+      "query": "EMP005 อยู่แผนกไหน",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Executive:\n- วรพล สุวรรณกิจ (Head of Construction) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q004",
+      "query": "ใครคือหัวหน้าฝ่ายวิศวกรรม",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 15,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Office Support, HR & Admin, Customer Service & Warranty, Engineering & Construction:\n- EMP150 [score: 8.0]\n  Matched: Grievance_Log.Description, Grievance_Log.Resolution, Grievance_Log.Against\n- EMP140 [score: 4.0]\n  Matched: Warning_Disciplinary_History.summary\n- EMP142 [score: 4.0]\n  Matched: Warning_Disciplinary_History.summary\n- EMP114 [score: 3.0]\n  Matched: IT_Ticket_Log.Description, Grievance_Log.Description, Grievance_Log.Resolution\n- EMP080 [score: 2.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 14,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 15ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q005",
+      "query": "ใครอยู่ในฝ่ายขายบ้าง",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Engineering & Construction, Marketing, Procurement & Warehouse, Finance & Accounting:\n- EMP051 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback\n- EMP056 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, Project_History.mistakeIssue, Collaboration_Network.resolutionSummary\n- EMP060 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.strongArea, Project_History.mistakeIss",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q006",
+      "query": "ใครอยู่ในฝ่าย HR บ้าง",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 4,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 8,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 8 matching employee(s) in HR & Admin:\n- วรรณภา บุญส่ง (HR & Admin Manager) [score: 0.0]\n- พิมพ์ชนก วัฒนชัย (Recruiter) [score: 0.0]\n- สุภัสสรา สิริกุล (Recruiter) [score: 0.0]\n- อัครเดช สุขประเสริฐ (Payroll Officer) [score: 0.0]\n- ภูริณัฐ รุ่งเรืองกิจ (HR Admin) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 3,
+          "note": "8 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 4ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q007",
+      "query": "พนักงานในแผนก IT มีใครบ้าง",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 3,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 4,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 4 matching employee(s) in IT:\n- Pattharawadee Sukata (IT Manager) [score: 0.0]\n- กรวิชญ์ วัฒนากุล (System / Network Admin) [score: 0.0]\n- ศักรินทร์ พงษ์ไพโรจน์ (IT Support) [score: 0.0]\n- ณัฐวุฒิ หิรัญญา (IT Support) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 2,
+          "note": "4 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 3ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q008",
+      "query": "ใครมี KPI สูงสุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Engineering & Construction, Executive, Design & Architecture, Sales, Marketing:\n- สุภัสสรา สิริกุล [score: 206.0]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- สิรวิชญ์ สุวรรณกิจ [score: 197.0]\n  Matched: Skill_Matrix.Notes, Project_History.mistakeIssue, Project_History.individualOutcome\n- ธนกฤต ศรีสุวรรณ [score: 196.0]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback, Project",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "sheetCategory",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q009",
+      "query": "ใครมี KPI ต่ำสุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 13,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Sales, Engineering & Construction, Design & Architecture, Procurement & Warehouse:\n- ธนพัฒน์ ทรัพย์สมบัติ [score: 206.0]\n  Matched: Learning_Development.relatedMistake, Skill_Matrix.Core_Skill, Skill_Matrix.Notes\n- ศุภชัย ทรัพย์สมบัติ [score: 205.0]\n  Matched: Learning_Development.relatedMistake, Skill_Matrix.Notes, Skill_Matrix.Core_Skill\n- จักริน ตั้งเจริญ [score: 199.0]\n  Matched: Skill_Matrix.Notes, Skill_Matrix.Core_Skill, KPI_OKR_History.managerFeedback\n- ธ",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "sheetCategory",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 12,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 13ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q010",
+      "query": "แผนกไหนมีเงินเดือนเฉลี่ยสูงสุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Sales, Marketing, Legal, Engineering & Construction, Design & Architecture, HR & Admin, Executive:\n- EMP018 [score: 80.0]\n  Matched: KPI_OKR_History.weakArea, KPI_OKR_History.managerFeedback, Project_History.individualOutcome\n- EMP031 [score: 74.0]\n  Matched: KPI_OKR_History.weakArea, KPI_OKR_History.managerFeedback, Project_History.mistakeIssue\n- EMP037 [score: 74.0]\n  Matched: Timesheet_Log.Notes, KPI_OKR_History.managerFeedback, KPI_OKR_History.improvementPlan",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 7,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q011",
+      "query": "มีกี่คนที่ KPI ต่ำกว่า 3",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 12,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Executive, Engineering & Construction, Sales, Design & Architecture, Office Support:\n- กิตติพงศ์ วิริยะกุล (CFO / Finance Director) [score: 275.0]\n  Matched: Skill_Matrix.Notes, Project_History.contributionSummary, Project_History.recoveryAction\n- ศุภชัย ทรัพย์สมบัติ [score: 235.0]\n  Matched: Timesheet_Log.Notes, KPI_OKR_History.managerFeedback, Project_History.recoveryAction\n- นราธิป กิตติธนากร [score: 232.0]\n  Matched: KPI_OKR_History.managerFeedback, Project_H",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeId",
+        "employeeName",
+        "sheetCategory",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 11,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 12ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q012",
+      "query": "รวมโบนัสทั้งหมดของทั้งบริษัทเท่าไหร่",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Office Support, Engineering & Construction, IT, Finance & Accounting, Procurement & Warehouse, Executive, Sales, Design & Architecture:\n- EMP150 [score: 17.0]\n  Matched: Skill_Matrix.Notes, Skill_Matrix.Core_Skill, Grievance_Log.Description\n- EMP095 [score: 8.0]\n  Matched: Warning_Disciplinary_History.summary\n- EMP145 [score: 8.0]\n  Matched: KPI_OKR_History.managerFeedback, Skill_Matrix.Notes, Warning_Disciplinary_History.summary\n- EMP127 [score: 7.0]\n  Matched: ",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q013",
+      "query": "ใครมีประสบการณ์ด้านความปลอดภัย",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Executive, Procurement & Warehouse, Marketing, Sales, Engineering & Construction, Customer Service & Warranty, HR & Admin:\n- สุรีย์พร วัฒนชัย [score: 58.0]\n  Matched: KPI_OKR_History.managerFeedback, KPI_OKR_History.improvementPlan, Project_History.mistakeIssue\n- กุลธิดา เพชรนิยม [score: 46.0]\n  Matched: KPI_OKR_History.strongArea, Project_History.mistakeIssue, Project_History.recoveryAction\n- ศุภชัย มหานิยม [score: 45.0]\n  Matched: Skill_M",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q014",
+      "query": "ใครเคยทำโปรเจกต์ใหญ่บ้าง",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Sales, Design & Architecture, Engineering & Construction, Finance & Accounting, Marketing, Executive:\n- สิรวิชญ์ บุญญาภา [score: 47.0]\n  Matched: Project_History.individualOutcome, Warning_Disciplinary_History.rootCause, KPI_OKR_History.improvementPlan\n- ชยพล บุญส่ง [score: 42.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.managerFeedback, Project_History.contributionSummary\n- พัชราภา บุญญาภา [score: 42.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_His",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q015",
+      "query": "ใครมีทักษะด้านภาษา",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Customer Service & Warranty, Marketing, Finance & Accounting, Engineering & Construction, Procurement & Warehouse, Sales, HR & Admin:\n- นงลักษณ์ พรหมพิทักษ์ [score: 44.0]\n  Matched: Skill_Matrix.Notes, IT_Ticket_Log.Resolution, KPI_OKR_History.managerFeedback\n- วิภาวี รุ่งพิทักษ์ [score: 44.0]\n  Matched: Skill_Matrix.Notes, IT_Ticket_Log.Resolution, Project_History.individualOutcome\n- จิราภา รุ่งพิทักษ์ [score: 43.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q016",
+      "query": "คนที่ทำงานดี",
+      "category": "ambiguous",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 6,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Executive, Sales, Marketing:\n- EMP049 [score: 61.0]\n  Matched: Project_History.recoveryAction, performanceBand\n- EMP001 [score: 60.0]\n  Matched: performanceBand\n- EMP002 [score: 60.0]\n  Matched: performanceBand\n- EMP003 [score: 60.0]\n  Matched: performanceBand\n- EMP004 [score: 60.0]\n  Matched: performanceBand\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 5,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 6ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q017",
+      "query": "ใครมี warning",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Office Support, Marketing, Engineering & Construction, Sales, Finance & Accounting, Design & Architecture, Procurement & Warehouse, IT:\n- EMP135 [score: 99.0]\n  Matched: Warning_Disciplinary_History.actionTaken\n- EMP142 [score: 98.0]\n- EMP150 [score: 94.0]\n- EMP141 [score: 86.0]\n- EMP036 [score: 85.0]\n  Matched: Warning_Disciplinary_History.actionTaken\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "sheetCategory"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q018",
+      "query": "ใครมี performance band exceptional",
+      "category": "keyword_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 6,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Executive, Marketing, HR & Admin, Legal, Design & Architecture, IT, Sales:\n- ธนกฤต ศรีสุวรรณ (CEO / Managing Director) [score: 25.0]\n  Matched: KPI_OKR_History.performanceBand\n- ณัฐพล บุญมี (COO / Operations Director) [score: 25.0]\n  Matched: KPI_OKR_History.performanceBand\n- ภาคิน กาญจนกุล (Head of Sales) [score: 25.0]\n  Matched: KPI_OKR_History.performanceBand\n- นภัสสร ปัญญาดี (Marketing Manager) [score: 25.0]\n  Matched: KPI_OKR_History.performanceBand\n- วรรณภา",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 5,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 6ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q019",
+      "query": "จำนวนพนักงานทั้งหมด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 8,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 8 matching employee(s) in Customer Service & Warranty, HR & Admin, IT, Office Support:\n- EMP122 [score: 1.0]\n  Matched: IT_Ticket_Log.Resolution\n- EMP137 [score: 1.0]\n  Matched: Warning_Disciplinary_History.actionTaken\n- EMP139 [score: 1.0]\n  Matched: Warning_Disciplinary_History.actionTaken\n- EMP143 [score: 1.0]\n  Matched: IT_Ticket_Log.Resolution\n- EMP144 [score: 1.0]\n  Matched: IT_Ticket_Log.Resolution\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "8 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q020",
+      "query": "ใครลาป่วยมากที่สุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, HR & Admin, Executive, Engineering & Construction, Procurement & Warehouse, Finance & Accounting, Sales, Marketing:\n- สุวิมล สุทธิกุล [score: 69.0]\n  Matched: KPI_OKR_History.managerFeedback, Project_History.mistakeIssue, Employee_Profile.name\n- สุภัสสรา สิริกุล [score: 69.0]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- สุรีย์พร วัฒนชัย [score: 65.0]\n  Matched: KPI_OKR_History.managerFe",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q021",
+      "query": "EMP010 มีประวัติการอบรมอะไรบ้าง",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Sales:\n- ชยพล บุญส่ง (Branch Manager) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q022",
+      "query": "ใครมี notebook ยี่ห้ออะไรบ้าง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Procurement & Warehouse, Design & Architecture, Executive, Marketing, Customer Service & Warranty, IT, HR & Admin, Sales, Engineering & Construction:\n- เอกชัย หิรัญญา [score: 59.7]\n  Matched: IT_Asset_Register.Asset_Type, Employee_Profile.name, Collaboration_Network.collaboratorName\n- สุรีย์พร วัฒนชัย [score: 55.3]\n  Matched: IT_Asset_Register.Asset_Type, Skill_Matrix.Notes, KPI_OKR_History.managerFeedback\n- ศุภชัย มหานิยม [score: 40.3]\n  Matched: IT_Asset_Regist",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q023",
+      "query": "ประวัติการทำงานของ EMP025",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Sales:\n- สิรวิชญ์ อินทรักษา (Sales Consultant) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q024",
+      "query": "มีใครได้ bonus มากกว่า 2 เดือนบ้าง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 12,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Executive, Engineering & Construction, Design & Architecture, IT, Finance & Accounting:\n- ณัฐพล บุญมี (COO / Operations Director) [score: 143.0]\n  Matched: Skill_Matrix.Notes, Project_History.contributionSummary, KPI_OKR_History.weakArea\n- EMP088 [score: 41.0]\n  Matched: Skill_Matrix.Core_Skill, Timesheet_Log.Notes, KPI_OKR_History.improvementPlan\n- สุวิมล สุทธิกุล [score: 40.9]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.improvementPlan, KPI_OKR_History.",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeId",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 1,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 12ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q025",
+      "query": "ใครมาสายบ่อยที่สุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, HR & Admin, Executive, Engineering & Construction, Procurement & Warehouse, Finance & Accounting, Sales, Marketing:\n- สุวิมล สุทธิกุล [score: 69.0]\n  Matched: KPI_OKR_History.managerFeedback, Project_History.mistakeIssue, Employee_Profile.name\n- สุภัสสรา สิริกุล [score: 69.0]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- สุรีย์พร วัฒนชัย [score: 65.0]\n  Matched: KPI_OKR_History.managerFe",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q026",
+      "query": "วิศวกรคนไหนทำ OT เทปูนข้ามคืน",
+      "category": "sql_misclassification",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "REGRESSION: sqlUsed=false, route=keyword",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "resultCountOk": false,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Engineering & Construction, Customer Service & Warranty, Executive, IT, Procurement & Warehouse:\n- ธีรพงษ์ วงศ์วัฒนะ [score: 68.4]\n  Matched: KPI_OKR_History.weakArea, Project_History.mistakeIssue, Project_History.recoveryAction\n- สุรีย์พร วัฒนชัย [score: 61.4]\n  Matched: KPI_OKR_History.weakArea, Employee_Profile.name, Learning_Development.notes\n- ภาคิน ตั้งเจริญ [score: 60.4]\n  Matched: Skill_Matrix.Certification, Learning_Development.not",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q027",
+      "query": "ใครมีใบเซอร์ Professional Engineer",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Engineering & Construction:\n- EMP070 (Site Engineer) [score: 18.0]\n  Matched: Skill_Matrix.Certification, Learning_Development.trainingName, Career_Timeline.title\n- EMP099 (Planning Engineer) [score: 18.0]\n  Matched: Skill_Matrix.Certification, Learning_Development.trainingName, Career_Timeline.title\n- EMP081 (Site Engineer) [score: 16.0]\n  Matched: Skill_Matrix.Certification, Grievance_Log.Against, Career_Timeline.title\n- EMP069 (Site Engineer) [score: 15.0]\n  M",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q028",
+      "query": "ใครเสี่ยง burnout สูง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Executive, Engineering & Construction, Design & Architecture, Marketing, Sales:\n- สุภัสสรา สิริกุล [score: 131.0]\n  Matched: Warning_Disciplinary_History.summary, KPI_OKR_History.managerFeedback, Employee_Profile.name\n- วรรณภา บุญส่ง [score: 129.0]\n  Matched: Warning_Disciplinary_History.summary, Project_History.mistakeIssue, Employee_Profile.managerName\n- ธนกฤต ศรีสุวรรณ [score: 127.0]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFee",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 7,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q029",
+      "query": "อัตราการลาออกของแผนก IT",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 3,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 4,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 4 matching employee(s) in IT:\n- Pattharawadee Sukata (IT Manager) [score: 0.0]\n- กรวิชญ์ วัฒนากุล (System / Network Admin) [score: 0.0]\n- ศักรินทร์ พงษ์ไพโรจน์ (IT Support) [score: 0.0]\n- ณัฐวุฒิ หิรัญญา (IT Support) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "4 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 3ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q030",
+      "query": "ใครเป็นลูกทีมของหัวหน้าฝ่ายขาย",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Sales, Office Support:\n- EMP018 [score: 13.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.weakArea, KPI_OKR_History.managerFeedback\n- EMP017 [score: 9.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.improvementPlan, KPI_OKR_History.managerFeedback\n- EMP030 [score: 9.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.weakArea, KPI_OKR_History.managerFeedback\n- EMP031 [score: 9.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.weakArea, KPI_OKR_History.improvem",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q031",
+      "query": "EMP099 มีโปรเจกต์อะไรที่ทำอยู่",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Engineering & Construction:\n- แพรวพรรณ วัฒนากุล (Planning Engineer) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q032",
+      "query": "งบประมาณโปรเจกต์รวมทั้งหมดเท่าไหร่",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 3778,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 9,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "No matching employees found.",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "0 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "emb",
+          "ms": 902,
+          "note": "query embedded"
+        },
+        {
+          "node": "vec",
+          "ms": 2856,
+          "note": "15 hits"
+        },
+        {
+          "node": "ctx",
+          "ms": 1,
+          "note": "vector tagged context (15 chunks)"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "vector answer generation"
+        },
+        {
+          "node": "tpl",
+          "ms": 1,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 10,
+          "note": "final answer ready in 3778ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q033",
+      "query": "EMP001 เงินเดือนเท่าไหร่",
+      "category": "rbac_sensitive",
+      "rbacRole": "Employee",
+      "status": "OK",
+      "latencyMs": 0,
+      "actualRoute": "blocked",
+      "expectedRoute": "blocked",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": true,
+      "actualBlocked": true,
+      "blockedMatch": true,
+      "resultCount": 0,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Query blocked by governance policy.",
+      "answerSource": "unknown",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Blocked"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Blocked"
+    },
+    {
+      "id": "q034",
+      "query": "EMP001 เงินเดือนเท่าไหร่",
+      "category": "rbac_sensitive",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 7,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Executive:\n- ธนกฤต ศรีสุวรรณ (CEO / Managing Director) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 2,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 4,
+          "note": "final answer ready in 7ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q035",
+      "query": "เงินเดือน CEO เท่าไหร่",
+      "category": "blocked_policy",
+      "rbacRole": "Employee",
+      "status": "OK",
+      "latencyMs": 0,
+      "actualRoute": "blocked",
+      "expectedRoute": "blocked",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": true,
+      "actualBlocked": true,
+      "blockedMatch": true,
+      "resultCount": 0,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Query blocked by governance policy.",
+      "answerSource": "unknown",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Blocked"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Blocked"
+    },
+    {
+      "id": "q036",
+      "query": "เงินเดือน CEO เท่าไหร่",
+      "category": "blocked_policy",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 31,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Procurement & Warehouse, Design & Architecture, Finance & Accounting, Executive, Sales, Engineering & Construction:\n- อนุชา ทรัพย์สมบัติ [score: 30.3]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.managerFeedback, KPI_OKR_History.improvementPlan\n- อนุชา มหานิยม [score: 23.3]\n  Matched: Employee_Profile.name, name\n- EMP054 [score: 17.0]\n  Matched: KPI_OKR_History.improvementPlan, KPI_OKR_History.managerFeedback, Project_History.mistakeIssue\n- EMP132 [score: 15.0]",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 28,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 1,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 31ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q037",
+      "query": "ใครมี KPI สูงสุดในทีมฉัน",
+      "category": "rbac_sensitive",
+      "rbacRole": "Manager",
+      "status": "OK",
+      "latencyMs": 6,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Sales:\n- EMP010 [score: 112.0]\n  Matched: KPI_OKR_History.managerFeedback, Collaboration_Network.collaboratorName, Warning_Disciplinary_History.actionTaken\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "sheetCategory"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "scoped(1 codes)"
+        },
+        {
+          "node": "kw",
+          "ms": 3,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 6ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q038",
+      "query": "โบนัสเฉลี่ยของพนักงานในแผนกบัญชี",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 16,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Finance & Accounting, Procurement & Warehouse, IT, Executive, Sales:\n- EMP126 [score: 5.0]\n  Matched: Skill_Matrix.Certification, Skill_Matrix.Core_Skill, Expense_Reports.Description\n- EMP129 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, Skill_Matrix.Certification, Expense_Reports.Description\n- EMP131 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, Skill_Matrix.Certification, Expense_Reports.Description\n- EMP133 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 14,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 16ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q039",
+      "query": "ใครมีใบเตือนมากกว่า 2 ครั้ง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 15,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Executive, HR & Admin, Sales, Engineering & Construction, Design & Architecture, Finance & Accounting:\n- ณัฐพล บุญมี (COO / Operations Director) [score: 139.0]\n  Matched: KPI_OKR_History.weakArea, KPI_OKR_History.managerFeedback, Collaboration_Network.conflictSummary\n- วรรณภา บุญส่ง [score: 40.4]\n  Matched: Skill_Matrix.Notes, Project_History.contributionSummary, Attendance_Record.Notes\n- ปรียาภรณ์ รุ่งเรืองกิจ [score: 39.4]\n  Matched: KPI_OKR_History.improvement",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeId",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 13,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 15ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q040",
+      "query": "สรุปจำนวนอุปกรณ์ IT ทั้งหมด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 5,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 4,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 4 matching employee(s) in IT:\n- Pattharawadee Sukata (IT Manager) [score: 0.0]\n- กรวิชญ์ วัฒนากุล (System / Network Admin) [score: 0.0]\n- ศักรินทร์ พงษ์ไพโรจน์ (IT Support) [score: 0.0]\n- ณัฐวุฒิ หิรัญญา (IT Support) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 3,
+          "note": "4 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 5ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q041",
+      "query": "ใครมี OKR สูงสุดในฝ่ายการตลาด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Engineering & Construction, Executive, Design & Architecture, Sales, Marketing:\n- สุภัสสรา สิริกุล [score: 197.3]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- สิรวิชญ์ สุวรรณกิจ [score: 186.3]\n  Matched: Skill_Matrix.Notes, Project_History.mistakeIssue, Project_History.individualOutcome\n- ธนกฤต ศรีสุวรรณ [score: 185.3]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback, Project",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "sheetCategory",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q042",
+      "query": "มีใครลาออกจากงานบ้าง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 50,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Engineering & Construction, Design & Architecture, Customer Service & Warranty, Finance & Accounting, HR & Admin, Executive, Office Support, Sales:\n- พิมพ์ชนก ภักดีวงศ์ [score: 44.7]\n  Matched: Skill_Matrix.Core_Skill, Skill_Matrix.Notes, Timesheet_Log.Notes\n- สุวิมล สุทธิกุล [score: 42.7]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.improvementPlan, KPI_OKR_History.managerFeedback\n- ธนพัฒน์ มหานิยม [score: 38.7]\n  Matched: Skill_Matrix.Core_Skill, Skill_M",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 49,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 50ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q043",
+      "query": "EMP055 มีวันลาป่วยกี่วัน",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Design & Architecture:\n- กุลธิดา เพชรนิยม (Draftsman) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q044",
+      "query": "ใครเคยได้รับการร้องเรียนจากลูกค้า",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 13,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Sales, Design & Architecture, Engineering & Construction:\n- ปรียาภรณ์ รุ่งเรืองกิจ [score: 82.4]\n  Matched: Project_History.individualOutcome, Project_History.contributionSummary, Project_History.recoveryAction\n- พิชญา สิริกุล [score: 81.4]\n  Matched: KPI_OKR_History.improvementPlan, Project_History.individualOutcome, Project_History.recoveryAction\n- EMP018 [score: 75.0]\n  Matched: KPI_OKR_History.improvementPlan, Project_History.recoveryAction, Project_History.i",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 12,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 13ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q045",
+      "query": "EMP003 มี eNPS เท่าไหร่",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Executive:\n- กิตติพงศ์ วิริยะกุล (CFO / Finance Director) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q046",
+      "query": "ใครมี flight risk สูง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Executive, HR & Admin, Engineering & Construction, Design & Architecture, Marketing, Sales:\n- ธนกฤต ศรีสุวรรณ [score: 127.0]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback, Project_History.contributionSummary\n- สุภัสสรา สิริกุล [score: 127.0]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- วรรณภา บุญส่ง [score: 125.0]\n  Matched: Project_History.mistakeIssue, Employee_Profile.managerName, ",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q047",
+      "query": "ใบเตือนของ EMP044 มีอะไรบ้าง",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Marketing:\n- ประเสริฐ กาญจนกุล (CRM / Event Officer) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q048",
+      "query": "ค่าใช้จ่ายเดินทางเฉลี่ยต่อคน",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 12,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Finance & Accounting, Engineering & Construction, Executive, Marketing, Design & Architecture, Procurement & Warehouse, Sales, Customer Service & Warranty:\n- กัญญารัตน์ สุวรรณกิจ [score: 48.4]\n  Matched: Skill_Matrix.Core_Skill, Expense_Reports.Category, Expense_Reports.Description\n- ปรียาภรณ์ จิรภัทร [score: 41.4]\n  Matched: Skill_Matrix.Notes, Skill_Matrix.Core_Skill, Timesheet_Log.Notes\n- วรพล สุวรรณกิจ [score: 40.4]\n  Matched: Skill_Matrix.Notes, KPI_OKR_Hist",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 1,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 12ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q049",
+      "query": "ใครมีทักษะ Python และ SQL",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Marketing, Customer Service & Warranty, Finance & Accounting, Engineering & Construction, Procurement & Warehouse, Sales, Design & Architecture:\n- จิราภา รุ่งพิทักษ์ [score: 39.3]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.improvementPlan, KPI_OKR_History.strongArea\n- วิภาวี รุ่งพิทักษ์ [score: 39.3]\n  Matched: Skill_Matrix.Notes, IT_Ticket_Log.Resolution, Project_History.individualOutcome\n- นงลักษณ์ พรหมพิทักษ์ [score: 37.3]\n  Matched: Skill_Matrix.Notes, IT",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q050",
+      "query": "พนักงานที่ KPI ดีขึ้นทุกปีมีใครบ้าง",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Engineering & Construction, IT, Sales, Marketing, Design & Architecture, Executive:\n- มนัสนันท์ สุขประเสริฐ [score: 203.0]\n  Matched: Project_History.individualOutcome, Project_History.mistakeIssue, Collaboration_Network.resolutionSummary\n- EMP066 [score: 188.0]\n  Matched: Learning_Development.relatedMistake, Timesheet_Log.Notes, KPI_OKR_History.managerFeedback\n- EMP072 [score: 180.0]\n  Matched: KPI_OKR_History.managerFeedback, Project_History.contributionSummary",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "sheetCategory",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q051",
+      "query": "EMP001 ทำงานที่ไหน",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Executive:\n- ธนกฤต ศรีสุวรรณ (CEO / Managing Director) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q052",
+      "query": "ใครเป็นคนจัดการเรื่อง PDPA",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 18,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Engineering & Construction, HR & Admin, Sales, IT, Marketing, Legal, Procurement & Warehouse, Executive:\n- เมธาวี เรืองเดช [score: 29.0]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.managerFeedback, Project_History.mistakeIssue\n- ธัญญารัตน์ รุ่งเรืองกิจ [score: 24.0]\n  Matched: Skill_Matrix.Notes, Warning_Disciplinary_History.summary, Compliance_Mandates.Mandate\n- ภูริณัฐ รุ่งเรืองกิจ [score: 22.0]\n  Matched: KPI_OKR_History.managerFeedba",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 16,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 18ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q053",
+      "query": "เงินเดือนเฉลี่ยของบริษัทเทียบกับแผนก IT",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 4,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 4 matching employee(s) in IT:\n- Pattharawadee Sukata (IT Manager) [score: 0.0]\n- กรวิชญ์ วัฒนากุล (System / Network Admin) [score: 0.0]\n- ศักรินทร์ พงษ์ไพโรจน์ (IT Support) [score: 0.0]\n- ณัฐวุฒิ หิรัญญา (IT Support) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "4 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q054",
+      "query": "พนักงานที่ใกล้เกษียณมีใครบ้าง",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Engineering & Construction, IT, Marketing, Procurement & Warehouse, Finance & Accounting:\n- EMP051 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback\n- EMP056 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, Project_History.mistakeIssue, Collaboration_Network.resolutionSummary\n- EMP060 [score: 5.0]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.strongArea, Project_History.mistak",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q055",
+      "query": "ใครมีผลงานโดดเด่นด้านการขาย",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Sales, Engineering & Construction:\n- EMP015 [score: 2.0]\n  Matched: Project_History.contributionSummary\n- EMP032 [score: 2.0]\n  Matched: Project_History.contributionSummary\n- EMP066 [score: 2.0]\n  Matched: Project_History.contributionSummary\n- EMP067 [score: 2.0]\n  Matched: Project_History.contributionSummary\n- EMP016 [score: 1.0]\n  Matched: Project_History.contributionSummary\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q056",
+      "query": "EMP030 มีวันลากิจกี่วัน",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 1,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Sales:\n- วริศ เกียรติไพบูลย์ (Sales Coordinator) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 0,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 1ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q057",
+      "query": "สรุปภาพรวมของฝ่าย HR",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 8,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 8 matching employee(s) in HR & Admin:\n- วรรณภา บุญส่ง (HR & Admin Manager) [score: 0.0]\n- พิมพ์ชนก วัฒนชัย (Recruiter) [score: 0.0]\n- สุภัสสรา สิริกุล (Recruiter) [score: 0.0]\n- อัครเดช สุขประเสริฐ (Payroll Officer) [score: 0.0]\n- ภูริณัฐ รุ่งเรืองกิจ (HR Admin) [score: 0.0]\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "filter"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "8 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q058",
+      "query": "โครงสร้างองค์กรมีกี่ระดับ",
+      "category": "vector_retrieval",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "vector",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Sales, Finance & Accounting, Engineering & Construction, HR & Admin, Executive:\n- กฤษณะ บุญส่ง [score: 66.7]\n  Matched: Skill_Matrix.Notes, Skill_Matrix.Certification, KPI_OKR_History.improvementPlan\n- พิชญา สิริกุล [score: 58.3]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback\n- ธนากร กิตติธนากร [score: 53.3]\n  Matched: Skill_Matrix.Certification, Skill_Matrix.Notes, KPI_OKR_History.improvementPlan",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 9,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 1,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q059",
+      "query": "พนักงานใหม่ล่าสุดคือใคร",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Design & Architecture, Sales, Engineering & Construction, Executive, Finance & Accounting, IT:\n- สายใจ สิริกุล [score: 41.3]\n  Matched: KPI_OKR_History.managerFeedback, KPI_OKR_History.improvementPlan, KPI_OKR_History.strongArea\n- พิชญา สิริกุล [score: 40.3]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.improvementPlan, KPI_OKR_History.managerFeedback\n- พิมพ์ชนก วัฒนากุล [score: 36.3]\n  Matched: Skill_Matrix.Core_Skill, KPI_OKR_History.managerFeedback, Proj",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q060",
+      "query": "ปัญหาที่พบในโปรเจกต์ PRJ001",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 11,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Engineering & Construction, Executive, Sales, Finance & Accounting, Marketing, Customer Service & Warranty:\n- EMP080 [score: 120.0]\n  Matched: Project_History.individualOutcome, Collaboration_Network.collaboratorName, Career_Timeline.title\n- EMP073 [score: 119.0]\n  Matched: Project_History.individualOutcome, Collaboration_Network.collaboratorName, Career_Timeline.title\n- EMP065 [score: 115.0]\n  Matched: Project_History.individualOutcome, Collaboration_Network.col",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "projectId"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 10,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 11ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q061",
+      "query": "EMP001 bonus",
+      "category": "factual_lookup",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 2,
+      "actualRoute": "keyword",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 1,
+      "expectedMinResults": 1,
+      "resultCountOk": true,
+      "answer": "Found 1 matching employee(s) in Executive:\n- ธนกฤต ศรีสุวรรณ (CEO / Managing Director) [score: 100.0]\n  Matched: code\n",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "exact-employee"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 1,
+          "note": "1 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 2ms"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q062",
+      "query": "ใครได้คะแนน interview สูงสุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Executive, Engineering & Construction, Design & Architecture, Sales, Marketing:\n- สุภัสสรา สิริกุล [score: 123.3]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- ธนกฤต ศรีสุวรรณ [score: 112.3]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback, Project_History.contributionSummary\n- สิรวิชญ์ สุวรรณกิจ [score: 110.3]\n  Matched: Skill_Matrix.Notes, Project_History.mistakeIssue, Proje",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 7,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q063",
+      "query": "รายได้รวมของบริษัทปีนี้เท่าไหร่",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 10,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in Customer Service & Warranty, Executive, HR & Admin, IT, Design & Architecture, Office Support, Engineering & Construction, Sales:\n- ภาคิน จันทร์หอม [score: 39.4]\n  Matched: Skill_Matrix.Notes, IT_Ticket_Log.Ticket_Issue, IT_Ticket_Log.Description\n- ภาคิน กาญจนกุล [score: 36.4]\n  Matched: KPI_OKR_History.managerFeedback, KPI_OKR_History.weakArea, Project_History.mistakeIssue\n- จักริน สุทธิกุล [score: 35.4]\n  Matched: Skill_Matrix.Notes, KPI_OKR_History.managerFeed",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 8,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 1,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 1,
+          "note": "final answer ready in 10ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q064",
+      "query": "พนักงานในแผนกไหนมี turnover สูงสุด",
+      "category": "sql_analytics",
+      "rbacRole": "CEO",
+      "status": "OK",
+      "latencyMs": 9,
+      "actualRoute": "keyword",
+      "expectedRoute": "sql",
+      "routeMatch": false,
+      "routeDetails": "",
+      "expectedBlocked": false,
+      "actualBlocked": false,
+      "blockedMatch": true,
+      "resultCount": 15,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Found 15 matching employee(s) in HR & Admin, Executive, Engineering & Construction, Design & Architecture, Sales, Marketing:\n- สุภัสสรา สิริกุล [score: 123.3]\n  Matched: KPI_OKR_History.managerFeedback, Employee_Profile.name, Employee_Profile.learningTheme\n- ธนกฤต ศรีสุวรรณ [score: 112.3]\n  Matched: KPI_OKR_History.strongArea, KPI_OKR_History.managerFeedback, Project_History.contributionSummary\n- สิรวิชญ์ สุวรรณกิจ [score: 110.3]\n  Matched: Skill_Matrix.Notes, Project_History.mistakeIssue, Proje",
+      "answerSource": "template",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [
+        "keyword",
+        "employeeName",
+        "severityBand"
+      ],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Allowed"
+        },
+        {
+          "node": "sql",
+          "ms": 0,
+          "note": "analytics"
+        },
+        {
+          "node": "pron",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "cache",
+          "ms": 0,
+          "note": "off (LLM unavailable)"
+        },
+        {
+          "node": "sem",
+          "ms": 0,
+          "note": "failed"
+        },
+        {
+          "node": "scope",
+          "ms": 0,
+          "note": "unrestricted"
+        },
+        {
+          "node": "kw",
+          "ms": 7,
+          "note": "15 hits"
+        },
+        {
+          "node": "sheet",
+          "ms": 0,
+          "note": "none"
+        },
+        {
+          "node": "rbac",
+          "ms": 0,
+          "note": "0 redacted, 0 blocked"
+        },
+        {
+          "node": "sqle",
+          "ms": 0,
+          "note": "error: LLM not available"
+        },
+        {
+          "node": "ctx",
+          "ms": 0,
+          "note": "sql error — fallback to keyword/vector answer"
+        },
+        {
+          "node": "llm",
+          "ms": 0,
+          "note": "keyword fallback (SQL failed)"
+        },
+        {
+          "node": "tpl",
+          "ms": 0,
+          "note": "template answer used"
+        },
+        {
+          "node": "out",
+          "ms": 2,
+          "note": "final answer ready in 9ms"
+        }
+      ],
+      "llmSkipped": true,
+      "skippedReason": "LLM key unavailable",
+      "cached": false,
+      "policyStatus": "Allowed"
+    },
+    {
+      "id": "q065",
+      "query": "เงินเดือนฉันเท่าไหร่",
+      "category": "rbac_sensitive",
+      "rbacRole": "Employee",
+      "status": "OK",
+      "latencyMs": 0,
+      "actualRoute": "blocked",
+      "expectedRoute": "keyword",
+      "routeMatch": true,
+      "routeDetails": "",
+      "expectedBlocked": true,
+      "actualBlocked": true,
+      "blockedMatch": true,
+      "resultCount": 0,
+      "expectedMinResults": 0,
+      "resultCountOk": true,
+      "answer": "Query blocked by governance policy.",
+      "answerSource": "unknown",
+      "llmUsed": false,
+      "sqlUsed": false,
+      "matchersUsed": [],
+      "rbacLeakageDetected": false,
+      "rbacNotes": "",
+      "trace": [
+        {
+          "node": "q",
+          "ms": 0,
+          "note": "query received"
+        },
+        {
+          "node": "pol",
+          "ms": 0,
+          "note": "Blocked"
+        }
+      ],
+      "llmSkipped": false,
+      "skippedReason": "",
+      "cached": false,
+      "policyStatus": "Blocked"
+    }
+  ]
+}

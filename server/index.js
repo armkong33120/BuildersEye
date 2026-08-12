@@ -6,7 +6,7 @@ import cors from 'cors';
 import { ingestAll } from './ingestExcel.js';
 import { initDatabase } from './sqlEngine.js';
 import { buildVectorIndex } from './vectorEngine.js';
-import { chatHandler } from './chatController.js';
+import { chatHandler, getPipelineLatencyStats } from './chatController.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
 import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials, listOnlineUsers } from './authStore.js';
 import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
@@ -189,6 +189,18 @@ function resolveViewer(req) {
   return { role: 'Employee', employeeId: 0 };
 }
 
+// requireAdmin: requires JWT auth AND CEO role. Use AFTER requireAuth.
+// Admin = CEO (role='CEO') or user.isAdmin === true (explicit flag for flexibility).
+function requireAdmin(req, res, next) {
+  if (!req.authUser) {
+    return res.status(401).json({ error: 'Unauthorized: authentication required' });
+  }
+  if (req.authUser.role !== 'CEO' && !req.authUser.isAdmin) {
+    return res.status(403).json({ error: 'Forbidden: admin access only' });
+  }
+  return next();
+}
+
 app.get('/api/health', (req, res) => {
   const uniqueFiles = new Set(flatIndex.filter(r => r.sheetName === 'Employee_Profile').map(r => r.fileName));
   res.json({
@@ -258,7 +270,8 @@ app.get('/api/auth/me', requireAuth, (req, res) => {
 });
 
 // Preview credentials (M4) — enabled only when ENABLE_TEST_CREDS=true
-app.get('/api/preview/credentials', (req, res) => {
+// SECURITY: requires valid JWT auth (prevents unauthenticated user enumeration).
+app.get('/api/preview/credentials', requireAuth, (req, res) => {
   const creds = previewCredentials();
   if (!creds) return res.status(403).json({ error: 'Preview credentials disabled' });
   res.json(creds);
@@ -315,17 +328,30 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   }
 });
 
-// Debug pipeline inspector — returns the latest chat retrieval data (no auth,
-// read-only, so the standalone debug page can poll it).
-app.get('/api/debug/pipeline', (req, res) => {
+// Debug pipeline inspector — returns the latest chat retrieval data.
+// SECURITY: requires valid JWT auth (was previously unauthenticated).
+app.get('/api/debug/pipeline', requireAuth, (req, res) => {
   if (!latestPipeline) return res.status(404).json({ error: 'No pipeline data yet' });
   res.json(latestPipeline);
 });
 
 // Debug online users — who is currently logged in (active sessions).
-app.get('/api/debug/online', async (req, res) => {
+// SECURITY: requires valid JWT auth (was previously unauthenticated).
+app.get('/api/debug/online', requireAuth, async (req, res) => {
   const users = await listOnlineUsers();
   res.json({ count: users.length, users });
+});
+
+// Debug latency stats — p50/p95 pipeline + LLM latencies
+app.get('/api/debug/latency', requireAuth, (req, res) => {
+  const pipelineStats = getPipelineLatencyStats();
+  // Lazy-import LLM latency to avoid circular dep
+  import('./llmClient.js').then(({ getLLMLatencyStats }) => {
+    const llmStats = getLLMLatencyStats();
+    res.json({ pipeline: pipelineStats, llm: llmStats });
+  }).catch(() => {
+    res.json({ pipeline: pipelineStats, llm: null });
+  });
 });
 
 // --- Conversation history ---

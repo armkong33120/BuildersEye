@@ -39,7 +39,7 @@ function shuffle(arr) {
 const graph = JSON.parse(fs.readFileSync(path.join(__dirname, 'src', 'data', 'identity-graph.json'), 'utf-8'));
 const byPk = new Map(graph.identities.map((i) => [i.pk, i]));
 const users = JSON.parse(fs.readFileSync(path.join(__dirname, 'server', '.data', 'auth', 'users.json'), 'utf-8')).users;
-const PASSWORD = { CEO: 'CEO@Landyi2026', HR: 'HR@2026test', Manager: 'Exec@2026test', Employee: 'Emp@2026test' };
+const PASSWORD = { CEO: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', HR: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', Manager: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', Employee: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]' };
 
 // ---------- State ----------
 const done = new Set(); // users เสร็จแล้ว (สำหรับ resume)

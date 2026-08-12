@@ -125,6 +125,19 @@ export function buildContext(finalResults, flatIndex) {
   let totalChars = 0;
   const MAX_CHARS = 8000;
 
+  // Group records by (sheet, rowNumber) → dict of fieldName → content
+  function rowMap(records, sheet) {
+    const map = new Map();
+    for (const r of records) {
+      if (r.sheetName !== sheet) continue;
+      const key = r.rowNumber || 0;
+      if (!map.has(key)) map.set(key, {});
+      map.get(key)[r.fieldName] = r.content;
+    }
+    return map;
+  }
+  const rowAt = (map, row, field) => map.get(row)?.[field] ?? '';
+
   for (const entry of finalResults) {
     if (totalChars >= MAX_CHARS) break;
 
@@ -142,51 +155,99 @@ export function buildContext(finalResults, flatIndex) {
 
     let empBlock = `${name} (${code}, department: ${dept}, title: ${title}):\n`;
 
-    // KPI records
-    const kpiRecs = records.filter(r => r.sheetName === 'KPI_OKR_History');
-    if (kpiRecs.length > 0) {
-      const latestKpi = kpiRecs[kpiRecs.length - 1]; // Last KPI record (most recent)
-      // Since records may be mixed, find the one with the latest reviewPeriod
-      const sortedKpis = kpiRecs.sort((a, b) => (b.rowNumber || 0) - (a.rowNumber || 0));
-      const kpi = sortedKpis[0];
-      const band = records.find(r => r.fieldName === 'performanceBand');
-      const score = records.find(r => r.fieldName === 'kpiScore');
-      if (score) empBlock += `  - KPI Score: ${score.content}\n`;
-      if (band) empBlock += `  - Performance Band: ${band.content}\n`;
-    }
-
-    // Warning records
-    const warnRecs = records.filter(r => r.sheetName === 'Warning_Disciplinary_History' && r.fieldName === 'severity');
-    if (warnRecs.length > 0) {
-      for (const wr of warnRecs) {
-        // Find companion fields from same row
-        const row = wr.rowNumber;
-        const type = records.find(r => r.sheetName === 'Warning_Disciplinary_History' && r.fieldName === 'caseType' && r.rowNumber === row);
-        const date = records.find(r => r.sheetName === 'Warning_Disciplinary_History' && r.fieldName === 'caseDate' && r.rowNumber === row);
-        empBlock += `  - Warning: severity=${wr.content}, type=${type?.content || ''}, date=${date?.content || ''}\n`;
-        if (totalChars > MAX_CHARS) break;
+    // ── KPI / OKR ──
+    const kpiMap = rowMap(records, 'KPI_OKR_History');
+    const kpiRows = [...kpiMap.keys()].sort((a, b) => b - a);
+    if (kpiRows.length > 0) {
+      const latest = kpiMap.get(kpiRows[0]) || {};
+      empBlock += `  - KPI Score: ${latest.kpiScore ?? ''} | Band: ${latest.performanceBand ?? ''} | Review: ${latest.reviewPeriod ?? ''}\n`;
+      // managerFeedback ของ 2 ช่วงล่าสุด (ข้อมูลที่เป็นธรรมชาติที่สุด)
+      for (const row of kpiRows.slice(0, 2)) {
+        const fb = rowAt(kpiMap, row, 'managerFeedback');
+        if (fb) empBlock += `  - managerFeedback: ${fb}\n`;
       }
     }
 
-    // Training records
+    // ── Warning / Disciplinary ──
+    const warnMap = rowMap(records, 'Warning_Disciplinary_History');
+    const warnRows = [...warnMap.keys()].slice(0, 3);
+    for (const row of warnRows) {
+      const w = warnMap.get(row) || {};
+      empBlock += `  - Warning: severity=${w.severity ?? ''}, type=${w.caseType ?? ''}, date=${w.caseDate ?? ''} | ${w.summary ?? ''}\n`;
+    }
+
+    // ── Training ──
     const trainRecs = records.filter(r => r.sheetName === 'Learning_Development' && r.fieldName === 'trainingName');
     if (trainRecs.length > 0) {
       const incomplete = records.some(r => r.fieldName === 'completionStatus' && r.content === 'Incomplete');
-      empBlock += `  - Trainings: ${trainRecs.length} total`;
-      if (incomplete) empBlock += ` (incomplete)`;
-      empBlock += '\n';
+      empBlock += `  - Trainings: ${trainRecs.length} total${incomplete ? ' (มีรายการไม่จบ)' : ''}\n`;
     }
 
-    // Project records
-    const projRecs = records.filter(r => r.sheetName === 'Project_History' && r.fieldName === 'projectId');
-    if (projRecs.length > 0) {
+    // ── Project_History (รวม mistakeIssue ที่ enrich มา) ──
+    const projMap = rowMap(records, 'Project_History');
+    const projRows = [...projMap.keys()].slice(0, 4);
+    if (projRows.length > 0) {
       empBlock += `  - Projects:\n`;
-      for (const pr of projRecs.slice(0, 5)) { // Limit to top 5 projects per employee to conserve space
-        const row = pr.rowNumber;
-        const role = records.find(r => r.sheetName === 'Project_History' && r.fieldName === 'role' && r.rowNumber === row)?.content || 'Member';
-        const contrib = records.find(r => r.sheetName === 'Project_History' && r.fieldName === 'contributionSummary' && r.rowNumber === row)?.content || '';
-        empBlock += `    * ${pr.content} (Role: ${role}, Contribution: ${contrib})\n`;
+      for (const row of projRows) {
+        const p = projMap.get(row) || {};
+        const mistake = p.mistakeIssue ? ` | MISTAKE: ${p.mistakeIssue}` : '';
+        const recovery = p.recoveryAction ? ` | FIX: ${p.recoveryAction}` : '';
+        empBlock += `    * ${p.projectId ?? ''} (Role: ${p.role ?? 'Member'}, ${p.contributionSummary ?? ''})${mistake}${recovery}\n`;
       }
+    }
+
+    // ── Timesheet_Log (OT / เทปูน / missing punch) ──
+    const tsMap = rowMap(records, 'Timesheet_Log');
+    const tsRows = [...tsMap.keys()].filter(r => tsMap.get(r)?.Notes || tsMap.get(r)?.Overtime_Hours).slice(0, 3);
+    for (const row of tsRows) {
+      const t = tsMap.get(row) || {};
+      empBlock += `  - Timesheet: admin=${t.Admin_Hours_Pct ?? ''}% billable=${t.Billable_Hours_Pct ?? ''}% OT=${t.Overtime_Hours ?? 0}h missingPunch=${t.Missing_Punch ?? 'No'} | ${t.Notes ?? ''}\n`;
+    }
+
+    // ── Expense_Reports (line items ที่ enrich) ──
+    const expMap = rowMap(records, 'Expense_Reports');
+    const expRows = [...expMap.keys()].filter(r => expMap.get(r)?.Description).slice(0, 3);
+    for (const row of expRows) {
+      const e = expMap.get(row) || {};
+      empBlock += `  - Expense: [${e.Category ?? ''}] ${e.Description ?? ''} (${e.Amount_THB ?? ''} THB, ${e.Status ?? ''})\n`;
+    }
+
+    // ── IT_Ticket_Log (defect / จอฟ้า / ransomware / เน็ต) ──
+    const itMap = rowMap(records, 'IT_Ticket_Log');
+    const itRows = [...itMap.keys()].filter(r => itMap.get(r)?.Description || itMap.get(r)?.Ticket_Issue).slice(0, 3);
+    for (const row of itRows) {
+      const i = itMap.get(row) || {};
+      empBlock += `  - IT Ticket: ${i.Ticket_Issue ?? ''} (${i.Status ?? ''}) | ${i.Description ?? ''}${i.Priority ? ` | priority=${i.Priority}` : ''}\n`;
+    }
+
+    // ── Grievance_Log ──
+    const grMap = rowMap(records, 'Grievance_Log');
+    const grRows = [...grMap.keys()].filter(r => grMap.get(r)?.Description).slice(0, 2);
+    for (const row of grRows) {
+      const g = grMap.get(row) || {};
+      empBlock += `  - Grievance: [${g.Complaint_Type ?? ''}] ${g.Description ?? ''} (${g.Status ?? ''})\n`;
+    }
+
+    // ── Compliance_Mandates ──
+    const cmMap = rowMap(records, 'Compliance_Mandates');
+    const cmRows = [...cmMap.keys()].filter(r => cmMap.get(r)?.Details).slice(0, 2);
+    for (const row of cmRows) {
+      const c = cmMap.get(row) || {};
+      empBlock += `  - Compliance: ${c.Mandate ?? ''} (${c.Status ?? ''}) | ${c.Details ?? ''}\n`;
+    }
+
+    // ── Attendance_Record (notes) ──
+    const attRows = records.filter(r => r.sheetName === 'Attendance_Record' && r.fieldName === 'Notes' && r.content);
+    for (const a of attRows.slice(0, 1)) {
+      empBlock += `  - Attendance Note: ${a.content}\n`;
+    }
+
+    // ── Skill_Matrix (top 3) ──
+    const skillMap = rowMap(records, 'Skill_Matrix');
+    const skillRows = [...skillMap.keys()].slice(0, 3);
+    if (skillRows.length > 0) {
+      const names = skillRows.map(r => rowAt(skillMap, r, 'Core_Skill')).filter(Boolean);
+      if (names.length) empBlock += `  - Skills: ${names.join(', ')}\n`;
     }
 
     parts.push(empBlock);

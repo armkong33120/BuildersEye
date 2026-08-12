@@ -46,10 +46,10 @@
 - node migrate-to-neon.js   # migrate JSON→Neon
 
 ## บัญชีทดสอบ (demo data)
-- CEO: ceo / CEO@Landyi2026  (เห็นหมด, สร้าง 8 คน)
-- HR: hr-manager / HR@2026test
-- Manager: it-manager / Exec@2026test (เห็น subtree IT 4 คน)
-- Employee: emp144 / Emp@2026test (เห็นตัวเอง)
+- CEO: ceo / [REDACTED_TEST_PASSWORD]  (เห็นหมด, สร้าง 8 คน)
+- HR: hr-manager / [REDACTED_TEST_PASSWORD]
+- Manager: it-manager / [REDACTED_TEST_PASSWORD] (เห็น subtree IT 4 คน)
+- Employee: emp144 / [REDACTED_TEST_PASSWORD] (เห็นตัวเอง)
 - OneDrive demo: account-a = theerachot.si.61@ubu.ac.th (75 ไฟล์), account-b = ddc773@hotmail.com (75 ไฟล์)
 
 ## Secrets/env (อยู่ server/.env local + ACA secrets — ห้าม commit)

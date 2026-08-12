@@ -1,231 +1,108 @@
 # BuildersEye
 
-BuildersEye is an experimental frontend for exploring how enterprise RAG systems can make identity, reporting lines, and workspace ownership visible before an answer is generated.
+**Enterprise RAG System over HR Organization Graph** — a production-oriented Applied AI project that demonstrates Retrieval-Augmented Generation (RAG) with role-based access control, visible retrieval tracing, and a 3D organizational identity graph.
 
-The current prototype renders a 3D organizational identity sphere where people, departments, reporting relationships, and OneDrive ownership are represented as interactive graph objects. The goal is not only to visualize an org chart, but to help non-AI users understand what an AI system is inspecting, why a context was selected, and where governance rules should intervene.
+> Built with: Vite/Vanilla JS Frontend (Vercel) + Node/Express Backend (Azure Container Apps) + Neon Postgres + DeepSeek LLM
 
-## Research Direction
+## What This Project Demonstrates
 
-Most RAG interfaces hide the retrieval process behind a chat box. This project explores the opposite direction: a visible retrieval surface where organizational context, permission boundaries, reporting paths, and workspace ownership can be inspected as part of the answer workflow.
+- ✅ **Full RAG Pipeline**: Keyword search, vector search (384d embeddings), SQL analytics, and LLM generation
+- ✅ **Role-Based Access Control (RBAC)**: CEO/HR/Manager/Employee with scope-based data access enforcement
+- ✅ **Visible Retrieval Surface**: 3D org graph + neural network pipeline inspector showing exactly what the AI inspects
+- ✅ **19-Node Trace Pipeline**: Real-time node-level visibility into every step
+- ✅ **Production Authentication**: JWT access/refresh tokens, rate limiting, Neon-backed sessions
+- ✅ **Evaluation Framework**: 65-question golden dataset, reproducible RAG evaluation
+- ✅ **Security Hardened**: Server-side authorization, threat model documented, production-safe defaults
 
-The working hypothesis is:
+## Architecture Overview
 
-> If users can see which identities, departments, reporting lines, and workspace contexts are being scanned, they will trust enterprise AI answers more and catch unsafe or irrelevant retrieval earlier.
+```
+User (Vercel) ──→ Azure Container Apps (:5199)
+  ├── /api/auth/*         JWT login/refresh/logout
+  ├── /api/chat           RAG pipeline (19 trace nodes)
+  ├── /api/debug/*        Pipeline inspector + latency stats
+  └── /api/preview/*      Test credentials (auth-gated)
+         │
+         ▼
+  Neon Postgres (employees, vectors, auth_sessions, onedrive_tokens)
+```
 
-## Target Outcome
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for full system diagram and request lifecycle.
 
-The imagined end state is a frontend where an employee can ask a question and the system visually shows:
+## Quick Start
 
-- which department or identity cluster is being scanned
-- which reporting paths are relevant to the query
-- which Mail, OneDrive, SharePoint, or Teams sources are candidates for retrieval
-- which governance rule is checked before the LLM responds
-- whether the answer is allowed, blocked, redacted, or needs escalation
+```bash
+# Install
+npm install && cd server && npm install
 
-The UI should make the AI process readable without requiring the user to understand vector databases, embeddings, prompt routing, or access-control internals.
+# Backend (port 5199)
+npm run dev:backend
 
-## Current Prototype
+# Frontend (port 5174) — separate terminal
+npm run dev
 
-The current demo includes:
+# Or both
+npm run dev:all
+```
 
-- 3D identity graph with 150 demo employees
-- 6-level organizational atmosphere model
-- department-colored nodes
-- reporting lines with bidirectional animated communication flow
-- collapsible control panels for a full-screen graph view
-- RAG-style chat panel with demo chat history
-- department keyword scan animation
-- node labels using readable role/team labels instead of internal employee IDs
-- visibility controls for label levels
-- OneDrive ownership metrics as demo workspace context
+## Running Tests
 
-## Research Questions
+```bash
+npm test                    # All deterministic tests (backend must be running)
+npm run test:api            # RBAC matrix test
+npm run test:e2e            # Playwright E2E test
+npm run eval:rag            # RAG evaluation (direct mode, no backend needed)
+npm run verify:security     # Security static analysis
+```
 
-1. Can a 3D graph help business users understand what an enterprise RAG system is looking at?
-2. Does visible retrieval reduce confusion when an AI answer references organizational data?
-3. Can governance checks be presented as part of the normal chat workflow instead of hidden backend logic?
-4. How much graph animation is useful before it becomes visual noise?
-5. Can identity, reporting lines, and workspace ownership become a practical control surface for AI governance?
+## RAG Evaluation
 
-## Scope
+65 golden questions across 8 categories. Dual mode (direct/HTTP). Includes regression test for SQL misclassification.
 
-In scope:
+```bash
+npm run eval:rag                    # Direct mode
+npm run eval:rag -- --http          # HTTP mode
+npm run eval:rag -- --filter=q026   # Single regression test
+```
 
-- frontend visualization for identity-aware RAG
-- organizational hierarchy and department filtering
-- visible retrieval and scan states
-- demo policy-check workflow before answer generation
-- Mail, OneDrive, SharePoint, and Teams as future enterprise context sources
-- UX patterns for non-AI engineers and business users
+See [eval/EVALUATION.md](./eval/EVALUATION.md) for full methodology.
 
-Out of scope for the current prototype:
+## Security
 
-- production authentication
-- real Microsoft Graph API integration
-- real vector database retrieval
-- real LLM policy enforcement
-- real employee data
-- backend audit logging
-- production access-control enforcement
+See [SECURITY.md](./SECURITY.md) for threat model, mitigations, and deployment checklist.
 
-## Success Criteria
+Key features: JWT with server-side refresh token hashing, RBAC, rate limiting, read-only SQL enforcement, production-safe defaults.
 
-This prototype will be considered useful if it can demonstrate:
+## Known Limitations
 
-- a user can visually identify which part of the organization is relevant to a query
-- a department query can trigger a clear scan/highlight animation
-- graph controls can reduce visual clutter without hiding important context
-- labels are readable enough to understand who or what a node represents
-- the chat panel feels connected to the graph instead of being a separate widget
-- the interface can explain an AI decision path at a high level
-
-## Evaluation Plan
-
-Planned evaluation methods:
-
-- usability walkthrough with non-AI users
-- compare plain chat vs graph-assisted chat for context understanding
-- measure whether users can identify relevant department, manager chain, and workspace owner
-- observe which controls are used to reduce visual clutter
-- test whether visual scan states make RAG behavior feel more transparent
-
-Possible metrics:
-
-- time to identify relevant department
-- time to locate a responsible manager or owner
-- number of misunderstood nodes or labels
-- perceived trust in the answer
-- perceived clarity of the retrieval process
-- frame-rate stability during graph animation
-
-## Roadmap
-
-### Phase 1: Visual Prototype
-
-- Build 3D identity sphere
-- Add 6 organizational layers
-- Add department filters and label controls
-- Add bidirectional reporting-line activity
-- Add RAG chat surface
-
-### Phase 2: Retrieval Simulation
-
-- Simulate query-to-department matching
-- Animate graph scan paths
-- Show selected context candidates
-- Add source preview cards
-- Add policy-check status before response
-
-### Phase 3: Governance UX
-
-- Add answer states: allowed, redacted, blocked, escalated
-- Add rule explanation panel
-- Add user role and permission simulation
-- Add audit timeline view
-
-### Phase 4: Real Integration
-
-- Connect Microsoft Graph demo tenant
-- Add real Mail, OneDrive, SharePoint, and Teams metadata
-- Connect vector database retrieval
-- Connect LLM answer generation
-- Add backend audit trail
-
-### Phase 5: Production Hardening
-
-- Replace demo data with permission-scoped data
-- Add authentication
-- Add server-side policy enforcement
-- Add performance budget and graph virtualization
-- Add compliance and security review
+- Repository is currently **public** (should be made private due to HR demo data)
+- Frontend timeout is 15s (streaming is planned future work)
+- Vector index is memory-heavy; disabled on low-RAM via `VECTOR_INDEX_DISABLED=true`
+- Debug page admin gate has a client-side component (backend endpoints are properly secured)
+- `emp001` / `hr-manager` not in actual seed data
 
 ## Tech Stack
 
-- Vite
-- JavaScript ES modules
-- Three.js
-- CSS2DRenderer
-- OrbitControls
-- Lucide icons
-- Playwright-based visual verification
-- Python data generation script
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Vite, Vanilla JS, Three.js (3D) |
+| Backend | Node.js, Express |
+| Database | Neon Postgres + pgvector |
+| LLM | DeepSeek (deepseek-v4-flash) |
+| Auth | JWT, bcrypt, refresh tokens |
+| Embeddings | e5-small (384d, local) |
+| SQL Engine | AlaSQL (in-memory) |
+| Deploy | Vercel (frontend) + Azure Container Apps (backend) |
+| Testing | Playwright (E2E), custom API test suite |
 
-## Development
+## Documentation
 
-### Frontend
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Run locally:
-
-```bash
-npm run dev
-```
-
-Build:
-
-```bash
-npm run build
-```
-
-Preview production build:
-
-```bash
-npm run preview
-```
-
-### Local RAG Backend
-
-The project includes a Node.js Express backend that indexes 150 employee Excel files from a local OneDrive sync folder and exposes a chat search API.
-
-**Setup (first time):**
-
-```bash
-cd server && npm install
-```
-
-**Index HR data:**
-
-```bash
-npm run index:hr
-```
-
-Expected output: `150 files, ~60500 records, ~3500 tokens`
-
-**Start backend:**
-
-```bash
-npm run dev:backend
-```
-
-The backend runs on `http://localhost:5199`.
-
-**Endpoints:**
-
-| Method | Path | Purpose |
-|---|---|---|
-| GET | /api/health | Server status + file count |
-| GET | /api/index/status | Index statistics |
-| POST | /api/chat | Search query → JSON results |
-
-**Start both frontend + backend:**
-
-```bash
-npx concurrently "npm run dev" "npm run dev:backend"
-```
-
-**How it works:**
-
-The RAG chat in the frontend (`.src/main.js`) first tries the backend via `fetch()` to `localhost:5199/api/chat`. If the backend is available, it returns real search results from the indexed Excel files and highlights matched employees in the 3D graph. If the backend is offline, the chat falls back to the existing demo mode.
-
-## Data Notice
-
-All identities, emails, departments, reporting lines, and workspace ownership records in this repository are demo data. They are intended for interface design and research exploration only.
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — System design, module boundaries, request lifecycle
+- [SECURITY.md](./SECURITY.md) — Threat model, mitigations, deployment checklist
+- [eval/EVALUATION.md](./eval/EVALUATION.md) — RAG evaluation methodology
+- [AI_CONTEXT.md](./AI_CONTEXT.md) — Project context for AI collaborators
+- [PROJECT.md](./PROJECT.md) — Feature inventory and milestones
 
 ## Project Status
 
-This is an early frontend research prototype. The current version focuses on making the mental model of enterprise RAG visible before implementing production-grade retrieval, policy enforcement, or Microsoft Graph integration.
+Active Applied AI / RAG Engineering portfolio project. Complete RAG pipeline with RBAC, evaluation framework, security hardening, and test coverage.

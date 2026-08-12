@@ -1,0 +1,1026 @@
+{
+ "departments": {
+  "Executive": [
+   {
+    "id": "EXEC-CAC",
+    "note": "KPI/OKR ต้องพูดถึงการลด CAC และเป้ายอดโอนกรรมสิทธิ์",
+    "sheets": [
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "managerFeedback",
+     "improvementPlan",
+     "strongArea"
+    ],
+    "keywords": [
+     "CAC",
+     "Customer Acquisition",
+     "ค่าหาลูกค้า",
+     "กรรมสิทธิ์",
+     "ยอดโอน",
+     "โอน"
+    ],
+    "threshold": 0.8,
+    "matched": 6,
+    "total": 6,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "EXEC-TRANSFER",
+    "note": "เป้ายอดโอนกรรมสิทธิ์ (transfer target)",
+    "sheets": [
+     "KPI_OKR_History",
+     "Project_History"
+    ],
+    "fields": [
+     "managerFeedback",
+     "contributionSummary"
+    ],
+    "keywords": [
+     "โอน",
+     "กรรมสิทธิ์",
+     "ส่งมอบ",
+     "ยอดปิดการขาย"
+    ],
+    "threshold": 0.8,
+    "matched": 6,
+    "total": 6,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Sales": [
+   {
+    "id": "SALES-REJECT",
+    "note": "ปัญหาลูกค้ากู้แบงก์ไม่ผ่าน (Mortgage Rejection)",
+    "sheets": [
+     "KPI_OKR_History",
+     "Project_History",
+     "Collaboration_Network"
+    ],
+    "fields": [
+     "managerFeedback",
+     "mistakeIssue",
+     "recoveryAction",
+     "individualOutcome",
+     "conflictSummary"
+    ],
+    "keywords": [
+     "กู้",
+     "ไม่ผ่าน",
+     "Reject",
+     "แบงก์",
+     "Mortgage",
+     "สกรีน"
+    ],
+    "threshold": 0.7,
+    "matched": 28,
+    "total": 28,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "SALES-DROP",
+    "note": "เคสทิ้งดาวน์ / ยกเลิกการจอง",
+    "sheets": [
+     "KPI_OKR_History",
+     "Project_History",
+     "Collaboration_Network"
+    ],
+    "fields": [
+     "managerFeedback",
+     "mistakeIssue",
+     "conflictSummary"
+    ],
+    "keywords": [
+     "ทิ้งดาวน์",
+     "ดาวน์",
+     "จอง",
+     "พักจอง"
+    ],
+    "threshold": 0.5,
+    "matched": 28,
+    "total": 28,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "SALES-SITEVISIT",
+    "note": "KPI เรื่องจำนวน Site Visits",
+    "sheets": [
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "managerFeedback",
+     "improvementPlan",
+     "strongArea"
+    ],
+    "keywords": [
+     "Site Visit",
+     "ชมโครงการ",
+     "พาลูกค้า",
+     "เข้าชม"
+    ],
+    "threshold": 0.8,
+    "matched": 28,
+    "total": 28,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Marketing": [
+   {
+    "id": "MKT-FB",
+    "note": "เบิกค่า Facebook Ads",
+    "sheets": [
+     "Expense_Reports",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Category",
+     "Notes",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "Facebook",
+     "Meta",
+     "Ads"
+    ],
+    "threshold": 0.7,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "MKT-TIKTOK",
+    "note": "ยิง TikTok",
+    "sheets": [
+     "Expense_Reports",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Category",
+     "Notes",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "TikTok",
+     "TikTok Ads"
+    ],
+    "threshold": 0.6,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "MKT-EXPO",
+    "note": "ออกบูธมหกรรมบ้านและคอนโด",
+    "sheets": [
+     "Expense_Reports",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Category",
+     "Notes",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "มหกรรม",
+     "บูธ",
+     "งานบ้านและคอนโด",
+     "Home & Condo",
+     "Expo"
+    ],
+    "threshold": 0.6,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Design & Architecture": [
+   {
+    "id": "DES-SHOPDRAW",
+    "note": "แบบ Shop Drawing ไม่ตรงดิ่ง",
+    "sheets": [
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "managerFeedback",
+     "recoveryAction"
+    ],
+    "keywords": [
+     "Shop Drawing",
+     "ดิ่ง",
+     "ไม่ตรง"
+    ],
+    "threshold": 0.6,
+    "matched": 18,
+    "total": 18,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "DES-BOQ",
+    "note": "คำนวณ BOQ พลาด",
+    "sheets": [
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "managerFeedback",
+     "recoveryAction"
+    ],
+    "keywords": [
+     "BOQ",
+     "ปริมาณ",
+     "พลาด",
+     "คลาดเคลื่อน"
+    ],
+    "threshold": 0.6,
+    "matched": 18,
+    "total": 18,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "DES-CHANGE",
+    "note": "ลูกค้าขอแก้แบบจนงานดีเลย์",
+    "sheets": [
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "managerFeedback",
+     "recoveryAction"
+    ],
+    "keywords": [
+     "แก้แบบ",
+     "แปลน",
+     "ดีเลย์",
+     "delay",
+     "ลูกค้าขอ"
+    ],
+    "threshold": 0.6,
+    "matched": 18,
+    "total": 18,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Engineering & Construction": [
+   {
+    "id": "ENG-OT",
+    "note": "ทำ OT ข้ามคืนเทปูน",
+    "sheets": [
+     "Timesheet_Log",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Notes",
+     "Overtime_Hours",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "OT",
+     "เทปูน",
+     "ข้ามคืน",
+     "คอนกรีต"
+    ],
+    "threshold": 0.6,
+    "matched": 38,
+    "total": 38,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "ENG-SUBCON",
+    "note": "ผู้รับเหมาช่วงทิ้งงาน",
+    "sheets": [
+     "Project_History",
+     "Collaboration_Network",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "conflictSummary",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "ผรห.",
+     "ผู้รับเหมา",
+     "ทิ้งงาน",
+     "ซัพคอน"
+    ],
+    "threshold": 0.6,
+    "matched": 38,
+    "total": 38,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "ENG-CPAC",
+    "note": "ปูน CPAC เข้าหน้างานช้า",
+    "sheets": [
+     "Project_History",
+     "Collaboration_Network",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "conflictSummary",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "CPAC",
+     "ปูน",
+     "คอนกรีต",
+     "เข้าหน้างานช้า"
+    ],
+    "threshold": 0.5,
+    "matched": 38,
+    "total": 38,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "ENG-LABOR",
+    "note": "ขาดแคลนแรงงานต่างด้าว",
+    "sheets": [
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "mistakeIssue",
+     "managerFeedback",
+     "recoveryAction"
+    ],
+    "keywords": [
+     "แรงงาน",
+     "ต่างด้าว",
+     "ขาดแคลน",
+     "แรงงานขาด"
+    ],
+    "threshold": 0.5,
+    "matched": 38,
+    "total": 38,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Procurement & Warehouse": [
+   {
+    "id": "PROC-STEEL",
+    "note": "ซัพพลายเออร์ส่งเหล็กเส้นช้า",
+    "sheets": [
+     "Grievance_Log",
+     "Collaboration_Network",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Complaint_Type",
+     "Summary",
+     "conflictSummary",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "เหล็ก",
+     "เส้น",
+     "ช้า",
+     "ล่าช้า",
+     "ซัพพลายเออร์"
+    ],
+    "threshold": 0.7,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "PROC-TILE",
+    "note": "กระเบื้อง Lot สีเพี้ยน",
+    "sheets": [
+     "Grievance_Log",
+     "Collaboration_Network",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Complaint_Type",
+     "Summary",
+     "conflictSummary",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "กระเบื้อง",
+     "สีเพี้ยน",
+     "Lot",
+     "ล็อต"
+    ],
+    "threshold": 0.6,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Customer Service & Warranty": [
+   {
+    "id": "CS-LEAK",
+    "note": "น้ำรั่วซึมจากขอบหน้าต่างอลูมิเนียม",
+    "sheets": [
+     "IT_Ticket_Log",
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "Summary",
+     "mistakeIssue",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "น้ำรั่ว",
+     "หน้าต่าง",
+     "อลูมิเนียม",
+     "ซึม"
+    ],
+    "threshold": 0.6,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "CS-TILE",
+    "note": "กระเบื้องร่อน/โปร่ง",
+    "sheets": [
+     "IT_Ticket_Log",
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "Summary",
+     "mistakeIssue",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "กระเบื้อง",
+     "ร่อน",
+     "โปร่ง"
+    ],
+    "threshold": 0.5,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "CS-CRACK",
+    "note": "ผนังร้าว (Latent Defect)",
+    "sheets": [
+     "IT_Ticket_Log",
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "Summary",
+     "mistakeIssue",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "ผนังร้าว",
+     "ร้าว",
+     "Latent"
+    ],
+    "threshold": 0.6,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "CS-LAMINATE",
+    "note": "พื้นลามิเนตยวบ",
+    "sheets": [
+     "IT_Ticket_Log",
+     "Project_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "Summary",
+     "mistakeIssue",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "ลามิเนต",
+     "ยวบ",
+     "พื้น"
+    ],
+    "threshold": 0.4,
+    "matched": 12,
+    "total": 12,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Finance & Accounting": [
+   {
+    "id": "FIN-ADV",
+    "note": "ปัญหาเบิก Advance หน้างานล่าช้า",
+    "sheets": [
+     "Expense_Reports",
+     "Salary_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Category",
+     "Notes",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "Advance",
+     "เบิกล่วงหน้า",
+     "เบิก",
+     "ล่าช้า",
+     "เงินทดรอง"
+    ],
+    "threshold": 0.7,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "FIN-ENT",
+    "note": "ค่ารับรองลูกค้า",
+    "sheets": [
+     "Expense_Reports",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Description",
+     "Category",
+     "Notes",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "รับรอง",
+     "ลูกค้า",
+     "มื้อ",
+     "ค่ารับรอง"
+    ],
+    "threshold": 0.6,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "FIN-KYS",
+    "note": "หักหนี้ กยศ. (student-loan garnishment)",
+    "sheets": [
+     "Salary_History",
+     "Expense_Reports",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Notes",
+     "Description",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "กยศ.",
+     "กองทุนเงินให้กู้ยืม",
+     "หัก"
+    ],
+    "threshold": 0.5,
+    "matched": 10,
+    "total": 10,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "HR & Admin": [
+   {
+    "id": "HR-SICKPOL",
+    "note": "ลาป่วยการเมือง (politically-motivated sick leave)",
+    "sheets": [
+     "Attendance_Record",
+     "Warning_Disciplinary_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Notes",
+     "summary",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "ลาป่วย",
+     "การเมือง",
+     "ขอลา",
+     "sick"
+    ],
+    "threshold": 0.5,
+    "matched": 8,
+    "total": 8,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "HR-LATE",
+    "note": "มาสายเพราะฝนตก/รถติด",
+    "sheets": [
+     "Attendance_Record",
+     "Warning_Disciplinary_History"
+    ],
+    "fields": [
+     "Notes",
+     "summary"
+    ],
+    "keywords": [
+     "สาย",
+     "ฝน",
+     "รถติด",
+     "Late"
+    ],
+    "threshold": 0.6,
+    "matched": 8,
+    "total": 8,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "HR-CAMP",
+    "note": "ทะเลาะกันในแคมป์คนงาน",
+    "sheets": [
+     "Warning_Disciplinary_History",
+     "Grievance_Log"
+    ],
+    "fields": [
+     "summary",
+     "rootCause",
+     "Description"
+    ],
+    "keywords": [
+     "ทะเลาะ",
+     "แคมป์",
+     "คนงาน",
+     "มีปากเสียง"
+    ],
+    "threshold": 0.5,
+    "matched": 8,
+    "total": 8,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "HR-NEPO",
+    "note": "ปัญหาเด็กเส้น (Nepotism)",
+    "sheets": [
+     "Warning_Disciplinary_History",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "summary",
+     "rootCause",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "เส้น",
+     "Nepotism",
+     "ญาติ",
+     "เด็กเส้น",
+     "คนรู้จัก"
+    ],
+    "threshold": 0.4,
+    "matched": 8,
+    "total": 8,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "HR-SSO",
+    "note": "โดนหักประกันสังคม (SSO)",
+    "sheets": [
+     "Salary_History",
+     "Attendance_Record"
+    ],
+    "fields": [
+     "Notes",
+     "Description"
+    ],
+    "keywords": [
+     "ประกันสังคม",
+     "SSO",
+     "หัก"
+    ],
+    "threshold": 0.5,
+    "matched": 8,
+    "total": 8,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "IT": [
+   {
+    "id": "IT-ASSET",
+    "note": "ระบุยี่ห้อจริง Dell Latitude/ThinkPad/Workstation",
+    "sheets": [
+     "IT_Asset_Register"
+    ],
+    "fields": [
+     "Brand",
+     "Asset_Type",
+     "Model"
+    ],
+    "keywords": [
+     "Dell",
+     "Latitude",
+     "ThinkPad",
+     "Lenovo",
+     "Workstation",
+     "Precision"
+    ],
+    "threshold": 0.8,
+    "matched": 4,
+    "total": 4,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "IT-BSOD",
+    "note": "เคสจอฟ้า",
+    "sheets": [
+     "IT_Ticket_Log",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "จอฟ้า",
+     "BSOD",
+     "Blue Screen"
+    ],
+    "threshold": 0.6,
+    "matched": 4,
+    "total": 4,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "IT-RANSOM",
+    "note": "เคสติด Ransomware",
+    "sheets": [
+     "IT_Ticket_Log",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "Ransomware",
+     "เรียกค่าไถ่",
+     "ไวรัส",
+     "มัลแวร์"
+    ],
+    "threshold": 0.6,
+    "matched": 4,
+    "total": 4,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "IT-NET",
+    "note": "ต่อเน็ตไซต์งานไม่ได้",
+    "sheets": [
+     "IT_Ticket_Log",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Ticket_Issue",
+     "Description",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "เน็ต",
+     "Network",
+     "ไซต์งาน",
+     "เชื่อมต่อ",
+     "internet"
+    ],
+    "threshold": 0.6,
+    "matched": 4,
+    "total": 4,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Legal": [
+   {
+    "id": "LEGAL-TURNKEY",
+    "note": "สัญญาจ้างเหมา Turnkey ผิดนัดส่งมอบ",
+    "sheets": [
+     "Compliance_Mandates",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Details",
+     "Mandate",
+     "Status",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "Turnkey",
+     "เทิร์นคีย์",
+     "สัญญาเหมา",
+     "ผิดนัด",
+     "ส่งมอบ"
+    ],
+    "threshold": 0.5,
+    "matched": 2,
+    "total": 2,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "LEGAL-EIA",
+    "note": "ปัญหาการขอ EIA",
+    "sheets": [
+     "Compliance_Mandates",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Details",
+     "Mandate",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "EIA",
+     "รายงานผลกระทบ",
+     "สิ่งแวดล้อม"
+    ],
+    "threshold": 0.5,
+    "matched": 2,
+    "total": 2,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "LEGAL-SKB",
+    "note": "ลูกบ้านฟ้องร้อง สคบ.",
+    "sheets": [
+     "Compliance_Mandates",
+     "KPI_OKR_History"
+    ],
+    "fields": [
+     "Details",
+     "Mandate",
+     "managerFeedback"
+    ],
+    "keywords": [
+     "สคบ.",
+     "ผู้บริโภค",
+     "ฟ้อง",
+     "คุ้มครอง"
+    ],
+    "threshold": 0.5,
+    "matched": 2,
+    "total": 2,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ],
+  "Office Support": [
+   {
+    "id": "OFF-BADGE",
+    "note": "สถิติทาบบัตร/สแกนนิ้วเข้าไซต์งาน",
+    "sheets": [
+     "Physical_Security"
+    ],
+    "fields": [
+     "Badge_Swipes_Week",
+     "Notes",
+     "Last_Badge_Swipe",
+     "Access_Zone"
+    ],
+    "keywords": [
+     "บัตร",
+     "สแกน",
+     "Badge",
+     "ทาบ"
+    ],
+    "threshold": 0.5,
+    "matched": 2,
+    "total": 2,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   },
+   {
+    "id": "OFF-KEY",
+    "note": "กุญแจรถบริษัทหาย",
+    "sheets": [
+     "Physical_Security",
+     "Grievance_Log"
+    ],
+    "fields": [
+     "Notes",
+     "Description"
+    ],
+    "keywords": [
+     "กุญแจ",
+     "รถบริษัท",
+     "หาย"
+    ],
+    "threshold": 0.5,
+    "matched": 2,
+    "total": 2,
+    "coverage": 1.0,
+    "pass": true,
+    "missing_codes": []
+   }
+  ]
+ },
+ "cross_cutting": {
+  "X-SKILL": {
+   "note": "ทุกคนมี Skill_Matrix >= 3 แถวพร้อมสกิลจริง (AutoCAD/Revit/BIM/etc.)",
+   "matched": 150,
+   "total": 150,
+   "coverage": 1.0,
+   "pass": true
+  },
+  "X-BAND": {
+   "note": "มีพนักงานเกรด C และ D อยู่ในระบบ (ไม่เพอร์เฟกต์)",
+   "C_count": 548,
+   "D_count": 260,
+   "pass": true
+  }
+ },
+ "summary": {
+  "total_checks": 40,
+  "passed": 40,
+  "failed": 0,
+  "all_pass": true
+ }
+}

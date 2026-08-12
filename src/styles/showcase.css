@@ -173,6 +173,28 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-pill);
 }
 
+.btn-outline-nav {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  padding: 8px 18px;
+  font-size: 0.875rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-fast);
+}
+
+.btn-outline-nav:hover {
+  color: var(--accent-teal);
+  border-color: var(--accent-teal);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.25);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .btn-primary-nav:hover {
   opacity: 0.9;
   transform: scale(1.03);

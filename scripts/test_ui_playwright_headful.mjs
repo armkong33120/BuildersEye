@@ -1,6 +1,6 @@
 // test_ui_playwright_headful.mjs — Playwright HEADFUL E2E test: Login → Chat → Debug
 // เปิด Chromium แบบเห็นหน้าจอ (headful: headless:false) เพื่อให้เห็นการทำงานจริงของ BuildersEye:
-//   A) Login ที่ app.html (ceo / CEO@Landyi2026) → overlay หาย + session ถูกเก็บ
+//   A) Login ที่ app.html (ceo / [TEST_ACCOUNT_PASSWORD]) → overlay หาย + session ถูกเก็บ
 //   B) ถาม RAG Chat "CEO คือใคร" → รอคำตอบจาก backend (thinking-dots หาย, มี bubble ใหม่)
 //   C) เปิด Debug page (neural network diagram) → pollPipeline ดึง query ไป + มี ceo online
 // Screenshot ทั้งหมดเซฟลง /tmp/e2e-shots/
@@ -16,7 +16,7 @@ const APP_URL = 'http://localhost:5174/app.html';
 const DEBUG_URL = 'http://localhost:5174/debug_neural_network_diagram.html';
 const CHAT_QUERY = 'CEO คือใคร';
 const USERNAME = 'ceo';
-const PASSWORD = 'CEO@Landyi2026';
+const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]';
 
 const steps = [
   { id: 'login', title: 'A — App Login', passed: false, detail: 'not run' },

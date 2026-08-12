@@ -13,6 +13,21 @@ import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 import { detectSheetMentions } from './sheetAliases.js';
 
+// ── Pipeline latency tracker (p50/p95) ──
+const pipelineLatencies = [];
+const MAX_LATENCY_SAMPLES = 500;
+function recordPipelineLatency(ms) {
+  pipelineLatencies.push(ms);
+  if (pipelineLatencies.length > MAX_LATENCY_SAMPLES) pipelineLatencies.shift();
+}
+export function getPipelineLatencyStats() {
+  if (pipelineLatencies.length === 0) return { p50: null, p95: null, samples: 0 };
+  const sorted = [...pipelineLatencies].sort((a, b) => a - b);
+  const p50 = sorted[Math.floor(sorted.length * 0.5)];
+  const p95 = sorted[Math.floor(sorted.length * 0.95)];
+  return { p50, p95, samples: sorted.length };
+}
+
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
   const startTime = Date.now();
   const viewerRole = viewer?.role || 'CEO';
@@ -185,20 +200,30 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       }).filter(Boolean);
     }
 
-    const contextData = sqlRes.error 
-      ? `Failed to compute SQL: ${sqlRes.error}` 
-      : `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(safeData)}`;
-    mark('ctx', sqlRes.error ? 'sql error context' : 'sql context ready');
-      
-    mark('llm', 'sql answer generation');
-    const finalLLMAnswer = await generateAnswer(query, "Here is the raw data you must format into a natural Thai answer:\n" + contextData);
-    if (finalLLMAnswer) {
-      answer = finalLLMAnswer;
-      llmUsed = true;
-      sqlUsed = true;
-    } else { answer = contextData; }
-  } 
-  else if (parsedIntent?.intents?.some(i => i.type === 'VECTOR_SEARCH') || (finalResults.length === 0 && !parsedIntent?.isClarification)) {
+    // ── SQL failed: fall back to keyword/vector search answer instead of showing error ──
+    // This fixes the "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" regression where a keyword query
+    // is misrouted to SQL (needsSqlAnalytics regex matched "ปัญหา" etc.) and SQL fails.
+    if (sqlRes.error) {
+      mark('ctx', 'sql error — fallback to keyword/vector answer');
+      mark('llm', 'keyword fallback (SQL failed)');
+      // Fall through to the keyword/vector path (answer stays sr.answer)
+      // Don't set llmUsed/sqlUsed yet — the keyword path will handle it
+    } else {
+      const contextData = `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(safeData)}`;
+      mark('ctx', 'sql context ready');
+      mark('llm', 'sql answer generation');
+      const finalLLMAnswer = await generateAnswer(query, "Here is the raw data you must format into a natural Thai answer:\n" + contextData);
+      if (finalLLMAnswer) {
+        answer = finalLLMAnswer;
+        llmUsed = true;
+        sqlUsed = true;
+      } else { answer = contextData; }
+    }
+  }
+  
+  // ── Fallback: if SQL didn't produce an answer (error or not routed), try keyword/LLM path ──
+  if (!llmUsed && !sqlUsed) {
+    if (parsedIntent?.intents?.some(i => i.type === 'VECTOR_SEARCH') || (finalResults.length === 0 && !parsedIntent?.isClarification)) {
     // Vector search ผ่าน production path: localEmbedder (e5-small) + vectorStore
     // — ไม่ใช้ vectorEngine.semanticSearch เก่า (OpenAI model ผ่าน DeepSeek → 404 + มิติผิด)
     try {
@@ -265,6 +290,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       }
     } catch (e) { console.error('[llm] Error:', e.message); }
   }
+  } // end if (!llmUsed && !sqlUsed) — fallback from SQL failure
 
   const finalAnswer = answer;
 
@@ -322,6 +348,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   mark('out', `final answer ready in ${Date.now() - startTime}ms`);
+  recordPipelineLatency(Date.now() - startTime);
   return result;
 }
 

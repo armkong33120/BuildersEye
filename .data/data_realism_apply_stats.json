@@ -1,0 +1,157 @@
+{
+ "applied_at": "2026-08-10T00:38:12.116747Z",
+ "employees": 150,
+ "rows_before": 12407,
+ "rows_after": 12407,
+ "rows_added": 0,
+ "sheets": {
+  "360_Feedback": 150,
+  "Attendance_Record": 166,
+  "Benefit_Claims": 150,
+  "Career_Timeline": 1000,
+  "Collaboration_Network": 4434,
+  "Compliance_Mandates": 756,
+  "Employee_Engagement": 150,
+  "Employee_Profile": 150,
+  "Expense_Reports": 249,
+  "Grievance_Log": 48,
+  "IT_Asset_Register": 188,
+  "IT_Ticket_Log": 240,
+  "KPI_OKR_History": 896,
+  "Learning_Development": 528,
+  "Onboarding_Journey": 150,
+  "Physical_Security": 150,
+  "Project_History": 891,
+  "Salary_History": 150,
+  "Skill_Matrix": 893,
+  "Software_Licenses": 232,
+  "Succession_Planning": 150,
+  "Timesheet_Log": 378,
+  "Warning_Disciplinary_History": 308
+ },
+ "stages": [
+  {
+   "stage": "cluster_a",
+   "description": "Executive + Sales + Marketing + Design & Architecture",
+   "elapsed_s": 0.0,
+   "stats": {
+    "employees_enriched": 62,
+    "kpi_updated": 0,
+    "kpi_rows_added": 0,
+    "sales_proj_rows_added": 0,
+    "design_proj_rows_added": 0,
+    "expense_rows_added": 0,
+    "sales_collab_updated": 18,
+    "skill_rows": 364,
+    "departments": {
+     "Executive": 6,
+     "Sales": 28,
+     "Marketing": 10,
+     "Design & Architecture": 18
+    }
+   }
+  },
+  {
+   "stage": "cluster_b",
+   "description": "Engineering & Construction + Procurement & Warehouse + Customer Service",
+   "elapsed_s": 0.0,
+   "stats": {
+    "cluster": "B",
+    "employees_enriched": 62,
+    "skill_rows": 357,
+    "timesheet_rows_added": 0,
+    "project_rows_added": 0,
+    "kpi_rows_added": 0,
+    "kpi_feedback_updated": 186,
+    "grievance_rows_added": 0,
+    "grievance_rows_filled": 0,
+    "ticket_rows_added": 0,
+    "ticket_rows_filled": 0,
+    "collab_rows_added": 0,
+    "collab_rows_updated": 76,
+    "departments": {
+     "Engineering & Construction": 38,
+     "Procurement & Warehouse": 12,
+     "Customer Service & Warranty": 12
+    }
+   }
+  },
+  {
+   "stage": "cluster_c",
+   "description": "Finance & Accounting + HR & Admin + IT",
+   "elapsed_s": 0.0,
+   "stats": {
+    "employees_enriched": 22,
+    "finance": {
+     "expense_rows": 0,
+     "salary_notes": 0,
+     "kpi": 0,
+     "skill_rows": 0
+    },
+    "hr": {
+     "attendance_rows": 0,
+     "warnings": 0,
+     "salary_notes": 0,
+     "kpi": 0,
+     "skill_rows": 0
+    },
+    "it": {
+     "asset_rows": 0,
+     "ticket_rows": 0,
+     "kpi": 0,
+     "skill_rows": 0
+    },
+    "warning_case_ids": [
+     "CASE292",
+     "CASE293",
+     "CASE294",
+     "CASE295",
+     "CASE296",
+     "CASE297",
+     "CASE298",
+     "CASE299",
+     "CASE300",
+     "CASE301",
+     "CASE302",
+     "CASE303",
+     "CASE304",
+     "CASE305",
+     "CASE306",
+     "CASE307"
+    ]
+   }
+  },
+  {
+   "stage": "cluster_d",
+   "description": "Legal + Office Support",
+   "elapsed_s": 0.0,
+   "stats": {
+    "cluster": "D",
+    "employees_enriched": 4,
+    "skill_rows": 0,
+    "mandate_rows_filled": 0,
+    "mandate_rows_added": 0,
+    "kpi_feedback_updated": 3,
+    "physical_rows_updated": 0,
+    "grievance_rows_added": 0,
+    "grievance_rows_filled": 0,
+    "warning_rows_added": 0,
+    "departments": {
+     "Legal": 2,
+     "Office Support": 2
+    }
+   }
+  },
+  {
+   "stage": "perfection_pass",
+   "description": "Anti-perfect: C/D bands + imperfect timesheets (all 150)",
+   "elapsed_s": 0.0,
+   "stats": {
+    "band_downgraded": 0,
+    "timesheet_rows_added": 0,
+    "attendance_notes": 22,
+    "learning_incomplete": 24
+   }
+  }
+ ]
+}

@@ -14,10 +14,10 @@ let failures = 0;
 const check = (name, ok, extra) => { console.log((ok ? '✅' : '❌'), name, extra || ''); if (!ok) failures++; };
 
 const ROLES = [
-  { name: 'CEO', username: 'ceo', password: 'CEO@Landyi2026', syncVisible: true, rbacProbe: 'เงินเดือนเฉลี่ยของบริษัทเท่าไหร่', rbacExpectedBlock: false, q: 'CEO คือใคร', qExpect: ['ธนกฤต'] },
-  { name: 'HR', username: 'hr-manager', password: 'HR@2026test', syncVisible: true, rbacProbe: 'เงินเดือนของพนักงานทุกคนเท่าไหร่', rbacExpectedBlock: false, q: 'แผนก IT มีกี่คน', qExpect: ['IT'] },
-  { name: 'Manager', username: 'it-manager', password: 'Exec@2026test', syncVisible: false, rbacProbe: 'เงินเดือนของ CEO เท่าไหร่', rbacExpectedBlock: true, q: 'แผนก IT มีกี่คน', qExpect: ['IT', '4'] },
-  { name: 'Employee', username: 'emp144', password: 'Emp@2026test', syncVisible: false, rbacProbe: 'เงินเดือนเฉลี่ยของบริษัทเท่าไหร่', rbacExpectedBlock: true, q: 'EMP144', qExpect: ['EMP144'] },
+  { name: 'CEO', username: 'ceo', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', syncVisible: true, rbacProbe: 'เงินเดือนเฉลี่ยของบริษัทเท่าไหร่', rbacExpectedBlock: false, q: 'CEO คือใคร', qExpect: ['ธนกฤต'] },
+  { name: 'HR', username: 'hr-manager', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', syncVisible: true, rbacProbe: 'เงินเดือนของพนักงานทุกคนเท่าไหร่', rbacExpectedBlock: false, q: 'แผนก IT มีกี่คน', qExpect: ['IT'] },
+  { name: 'Manager', username: 'it-manager', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', syncVisible: false, rbacProbe: 'เงินเดือนของ CEO เท่าไหร่', rbacExpectedBlock: true, q: 'แผนก IT มีกี่คน', qExpect: ['IT', '4'] },
+  { name: 'Employee', username: 'emp144', password: process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]', syncVisible: false, rbacProbe: 'เงินเดือนเฉลี่ยของบริษัทเท่าไหร่', rbacExpectedBlock: true, q: 'EMP144', qExpect: ['EMP144'] },
 ];
 
 async function login(username, password) {

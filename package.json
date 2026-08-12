@@ -11,7 +11,12 @@
     "verify": "node scripts/verify-scene.mjs",
     "dev:backend": "cd server && node --watch index.js",
     "index:hr": "cd server && node index.js --reindex",
-    "dev:all": "concurrently -n frontend,backend -c cyan,yellow \"vite --host 0.0.0.0 --port 5174\" \"cd server && node --watch index.js\""
+    "dev:all": "concurrently -n frontend,backend -c cyan,yellow \"vite --host 0.0.0.0 --port 5174\" \"cd server && node --watch index.js\"",
+    "eval:rag": "node eval/run_eval.mjs",
+    "test": "node scripts/run_all_tests.mjs",
+    "test:api": "node scripts/test_api_rbac_matrix.mjs",
+    "test:e2e": "node scripts/test_ui_playwright_headful.mjs",
+    "verify:security": "node scripts/verify_security.mjs"
   },
   "dependencies": {
     "lucide": "^0.468.0",

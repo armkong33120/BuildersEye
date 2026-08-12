@@ -21,7 +21,7 @@
 ### เสร็จแล้ว
 1. ✅ `server/.env`: JWT_SECRET=random64hex, VECTOR_INDEX_DISABLED=true, ENABLE_TEST_CREDS=true
 2. ✅ `server/setup_local_auth.mjs` สร้าง `server/.data/auth/users.json` 150 users
-   - ceo = `CEO@Landyi2026`, mustChangePassword=false (login ได้ทันที)
+   - ceo = `[REDACTED_TEST_PASSWORD]`, mustChangePassword=false (login ได้ทันที)
 3. ✅ backend local รันที่ http://localhost:5199 (health ok, indexReady=true)
 4. ✅ frontend Vite รันที่ http://localhost:5174 (http 200)
 5. ✅ เขียน `scripts/test_ui_playwright_headful.mjs` (headless:false) แล้ว — Login ceo → Chat "CEO คือใคร" → Debug page ตรวจ pipeline query + online ceo
@@ -41,7 +41,7 @@
 
 ## ✅ ทดสอบ PRODUCTION เสร็จ (2026-08-11 08:13) — ALL PASSED (exit 0)
 Script: `scripts/test_ui_playwright_production.mjs` (รัน headful: `node scripts/test_ui_playwright_production.mjs`)
-- **S1 Pure prod login** ✅ — `ceo/CEO@Landyi2026` โดน 401 `Invalid username or password` (ตั้งใจ — prod users ถูก seed random password + mustChangePassword=true, `.dockerignore` ตัด `**/.data`, preview creds ปิด ENABLE_TEST_CREDS=false → **ไม่มีทาง login prod ด้วย creds ที่รู้จัก**)
+- **S1 Pure prod login** ✅ — `ceo/[REDACTED_TEST_PASSWORD]` โดน 401 `Invalid username or password` (ตั้งใจ — prod users ถูก seed random password + mustChangePassword=true, `.dockerignore` ตัด `**/.data`, preview creds ปิด ENABLE_TEST_CREDS=false → **ไม่มีทาง login prod ด้วย creds ที่รู้จัก**)
 - **S2 Prod frontend + local backend** (`?backend=http://localhost:5199`) ✅ — login OK → chat `ประวัติและการทำงานของ CEO` (answer 403 chars) → debug page ขึ้น query ใหม่ + `chip="live · 8:13:24 AM"` + `ceo` online ✅ (พิสูจน์ว่า UI ที่ deploy บน Vercel ทำงาน flow เต็มได้จริง)
 - **S3 Pure prod debug page** ✅ — default preset, `chip="ollama"`, online count=0 ("ไม่มีใคร login บน prod")
 - ⚠️ **PNA**: Chrome บล็อก HTTPS origin (vercel) → loopback localhost → script มี launch flags `--disable-web-security` + PNA-disable (test-harness only)
@@ -68,15 +68,15 @@ Script: `scripts/test_ui_playwright_production.mjs` (รัน headful: `node sc
 Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — login → chat จริง → เปิด debug page → ตรวจ pipeline pick up query + animation
 - **CEO** (ceo) ✅ chat 417 chars · **HR** (emp135) ✅ chat 1425 chars (SQL route) · **Manager** (emp007) ✅ chat 393 chars · **Employee** (emp012) ✅ chat 438 chars
 - ทุกสิทธิ์: `qPicked=true`, `chip="live · HH:MM:SS"`, **`sawBusy=true sawActive=true`**, **`done=19/19 allVisited=true`** — animation วิ่งครบ 19 nodes ระหว่าง live chat จริง
-- ⚠️ ตั้งรหัส test บน local users.json: emp135/emp007/emp012 = `Pass@1234` (local only, users.json โดน gitignore)
+- ⚠️ ตั้งรหัส test บน local users.json: emp135/emp007/emp012 = `[REDACTED_TEST_PASSWORD]` (local only, users.json โดน gitignore)
 - ⚠️ finding: query "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" ที่ role Manager ถูก LLM intent misclassify เป็น TEXT_TO_SQL → SQL route รันไม่ผ่าน → "Query execution failed" (server/sqlEngine.js:102) — ยังเป็น bug ของ app ต้องแก้ (ไม่ได้อยู่ในขอบเขตงานนี้)
 - screenshots: /tmp/e2e-shots/role-{ceo,hr,manager,employee}-{01,02,03}.png
 
 ## ✅ แก้ login production ไม่ได้ (2026-08-11) — ceo login ได้แล้ว!
 ปัญหา: production seed users ด้วย random password ทุกครั้ง (รวม ceo) + ENABLE_TEST_CREDS=false → "Invalid username or password" เสมอ
 แก้: `server/authStore.js` seedUsers() รองรับ test mode — ถ้า `ENABLE_TEST_CREDS=true` + `TEST_ACCOUNT_PASSWORD` ตั้งไว้ (≥8 ตัว) → ทุก user ได้รหัสที่รู้ค่า + mustChangePassword=false (default ยัง random password เหมือนเดิม)
-- Azure env ที่ตั้ง: `ENABLE_TEST_CREDS=true`, `TEST_ACCOUNT_PASSWORD=CEO@Landyi2026` (az containerapp update)
-- Deploy: commit `ad631f5` → CI success → **login ceo/CEO@Landyi2026 บน https://builders-eye.vercel.app/app.html ได้แล้ว** (verify: login 200, chat OK, #online แสดง ceo)
+- Azure env ที่ตั้ง: `ENABLE_TEST_CREDS=true`, `TEST_ACCOUNT_PASSWORD=[REDACTED_TEST_PASSWORD]` (az containerapp update)
+- Deploy: commit `ad631f5` → CI success → **login ceo/[REDACTED_TEST_PASSWORD] บน https://builders-eye.vercel.app/app.html ได้แล้ว** (verify: login 200, chat OK, #online แสดง ceo)
 - 🔴 คำเตือน: production ตอนนี้ใครก็ login เป็น ceo (หรือ user ใดก็ได้) ด้วยรหัสเดียวกันได้ + `/api/preview/credentials` เปิดแสดงรายชื่อ user → **ควรทำให้ repo เป็น private** หรือเปลี่ยน `TEST_ACCOUNT_PASSWORD` เป็นค่าที่ไม่เปิดเผย แล้วปิด ENABLE_TEST_CREDS หลังทดสอบเสร็จ
 
 ## ✅ แก้ "เซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่" (2026-08-11) — session อยู่รอด cold start
@@ -100,14 +100,14 @@ Script: `scripts/test_ui_playwright_role_live.mjs` (headless + PNA flags) — lo
 - **backend** (`chatController.js` + `index.js`): ทุก chat เก็บ `trace[]` = `[{node, ms, note}]` (node ∈ 19 ids จริง) + route facts (`answerSource`, `llmUsed`, `sqlUsed`, `matchersUsed`, `cached`, `viewer`) ลงใน latestPipeline — ผ่าน return path ทั้งหมด (blocked/cached/clarification/normal)
 - **frontend** (`debug_neural_network_diagram.html`, 522 บรรทัด):
   - Admin gate: `root` / `1234` (sessionStorage `be_debug_admin`) — กันหน้าไว้ก่อนเข้าใช้
-  - RAG Assistant: dropdown 150 คน (จาก /api/preview/credentials) + chat → **auto-login** (รหัส `CEO@Landyi2026` = TEST_ACCOUNT_PASSWORD ทั้ง local+prod) → /api/chat → แสดงคำตอบ + caption (as user · s · answerSource · sqlUsed · llmUsed · cached)
+  - RAG Assistant: dropdown 150 คน (จาก /api/preview/credentials) + chat → **auto-login** (รหัส `[REDACTED_TEST_PASSWORD]` = TEST_ACCOUNT_PASSWORD ทั้ง local+prod) → /api/chat → แสดงคำตอบ + caption (as user · s · answerSource · sqlUsed · llmUsed · cached)
   - **Node truth**: เฉพาะ node ใน trace สว่าง/animate ตามลำดับ+ms, ที่เหลือหรี่ (เช่น cache hit → แค่ q→pol→sql→pron→cache→mem)
   - Trace/connection log: `#idx node +ms note` + History (localStorage `be_debug_history`, cap 50, คลิกดูย้อนหลังได้)
   - คงเดิม: 19-node network, pollPipeline/pollOnline, #online, ?backend=, tooltip
 - **QA (Playwright) 19/19 PASS** — short/long/vector/SQL/cache-hit/role-switch (emp144 Employee) ครบ
 - **Production**: deploy แล้ว (commit `cb7d758` → CI + Vercel) — smoke test ผ่าน (gate, 150 users, chat emp144 → trace 14 nodes, no JS error)
 - หมายเหตุ: query บางตัว backend route ต่างจากป้าย เช่น "ใครทำ OT เทปูนข้ามคืน" → SQL (regex 'ปัญหา' + LLM ตี TEXT_TO_SQL) — หน้าแสดง trace ตามความจริงที่ backend ส่ง
-- 🔴 ความปลอดภัย: root/1234 เป็น client-side (ใครอ่านโค้ดก็รู้), รหัส CEO@Landyi2026 อยู่ในโค้ดหน้าเว็บ (test mode) — repo ยัง public ควรทำ private
+- 🔴 ความปลอดภัย: root/1234 เป็น client-side (ใครอ่านโค้ดก็รู้), รหัส [REDACTED_TEST_PASSWORD] อยู่ในโค้ดหน้าเว็บ (test mode) — repo ยัง public ควรทำ private
 
 ### ข้อควรรู้
 - local ไม่มี LLM_API_KEY → chat ตอบ template answer (llmUsed=false) แต่ยังบันทึก latestPipeline + highlight node ได้

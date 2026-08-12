@@ -220,11 +220,11 @@ Hybrid Brain: [A] Frontier API + [B] Local (เลือกสมองที่
 ### 5.2 ตารางบัญชีทดสอบ (ตัวอย่างครบทุก role)
 | Role | ตำแหน่ง | Username | Password |
 |------|---------|----------|----------|
-| **CEO** | CEO / Managing Director | `ceo` | `CEO@Landyi2026` |
-| **Manager** | COO / CFO / CMO | `coo` `cfo` `cmo` | `Exec@2026test` |
-| **Manager** | IT Manager | `it-manager` | `Exec@2026test` |
-| **HR** | HR Manager | `hr-manager` | `HR@2026test` |
-| **Employee** | พนักงานทั่วไป | `emp013` … `emp150` | `Emp@2026test` |
+| **CEO** | CEO / Managing Director | `ceo` | `[REDACTED_TEST_PASSWORD]` |
+| **Manager** | COO / CFO / CMO | `coo` `cfo` `cmo` | `[REDACTED_TEST_PASSWORD]` |
+| **Manager** | IT Manager | `it-manager` | `[REDACTED_TEST_PASSWORD]` |
+| **HR** | HR Manager | `hr-manager` | `[REDACTED_TEST_PASSWORD]` |
+| **Employee** | พนักงานทั่วไป | `emp013` … `emp150` | `[REDACTED_TEST_PASSWORD]` |
 
 ### 5.3 สิ่งที่แต่ละ role จะเห็นต่างกัน (โชว์ใน demo)
 | Role | ถามเงินเดือนคนอื่น | เห็นข้อมูล |
@@ -234,7 +234,7 @@ Hybrid Brain: [A] Frontier API + [B] Local (เลือกสมองที่
 | Manager | ❌ blocked | เฉพาะลูกน้อง (subtree) |
 | Employee | ❌ blocked | เฉพาะตัวเอง (self) |
 
-> 💡 **จุดขาย demo:** ให้ลอง login เป็น Employee (`emp144`/`Emp@2026test`) แล้วถาม "เงินเดือน CEO เท่าไหร่" → ระบบจะตอบ *"Query blocked by governance policy"* → แสดง RBAC ทำงานจริง
+> 💡 **จุดขาย demo:** ให้ลอง login เป็น Employee (`emp144`/`[REDACTED_TEST_PASSWORD]`) แล้วถาม "เงินเดือน CEO เท่าไหร่" → ระบบจะตอบ *"Query blocked by governance policy"* → แสดง RBAC ทำงานจริง
 
 ### 5.4 API ดึงบัญชี (ถ้าอยากทำ dynamic)
 - `GET https://builderseye-backend.onrender.com/api/preview/credentials` → คืนบัญชีทั้ง 150 (username/password/role/name/jobTitle)

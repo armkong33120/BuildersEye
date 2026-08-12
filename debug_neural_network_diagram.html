@@ -128,6 +128,7 @@
       <p>debug inspector — root access only</p>
       <label>username</label><input id="gateUser" autocomplete="off" />
       <label>password</label><input id="gatePass" type="password" autocomplete="off" />
+      <label>test password <span style="color:#71809c;font-size:10px">(for RAG auto-login)</span></label><input id="gateTestPw" type="password" autocomplete="off" />
       <div id="gateErr"></div>
       <button id="gateBtn">UNLOCK</button>
     </div>
@@ -146,10 +147,13 @@
 // ════════════════════════════════════════════════════════════════════════════
 
 // ── TEST ACCOUNT PASSWORD ────────────────────────────────────────────────────
-// Demo/test feature: ALL seeded accounts (150) share this one known password.
-// It matches TEST_ACCOUNT_PASSWORD on prod AND the local dev seed, so this
-// inspector can auto-login as ANY selected user and run live RAG queries.
-const TEST_PASSWORD = 'CEO@Landyi2026';
+// SECURITY: no longer hardcoded. Password is set via the gate overlay at the
+// bottom of the page (stored in sessionStorage, never persisted). If your
+// backend has ENABLE_TEST_CREDS=true, enter the shared TEST_ACCOUNT_PASSWORD
+// in the gate's "test password" field to enable auto-login for the RAG assistant.
+function getTestPassword() {
+  try { return sessionStorage.getItem('be_debug_test_pw') || ''; } catch { return ''; }
+}
 
 // ── เครือข่าย: 6 ชั้น · 19 โหนด = ขั้น pipeline จริง (audit 2026-08-11) ────────
 const LAYERS = [
@@ -417,7 +421,9 @@ function presentPipeline(d,{record=true}={}){
 async function loadCredentials(){
   const sel=$('userSelect'), status=$('credsStatus');
   try{
-    const r=await fetch(BACKEND+'/api/preview/credentials',{cache:'no-store'});
+    const headers = {};
+    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+    const r=await fetch(BACKEND+'/api/preview/credentials',{cache:'no-store',headers});
     if(r.status===403){ status.textContent='⚠ credentials disabled (ENABLE_TEST_CREDS=off on backend)'; sel.innerHTML='<option value="">— creds unavailable —</option>'; return; }
     if(!r.ok){ status.textContent='⚠ credentials error HTTP '+r.status; return; }
     const arr=await r.json();
@@ -433,8 +439,10 @@ async function loadCredentials(){
 // ── RAG assistant: auto-login + live chat ───────────────────────────────────
 let currentToken=null, tokenUser=null;
 async function loginAs(username){
+  const pw = getTestPassword();
+  if (!pw) throw new Error('test password not set — enter it in the gate overlay');
   const r=await fetch(BACKEND+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({username,password:TEST_PASSWORD})});
+    body:JSON.stringify({username,password:pw})});
   if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('login '+r.status+' '+t.slice(0,140)); }
   const d=await r.json();
   if(!d.accessToken)throw new Error('login: no accessToken in response');
@@ -466,7 +474,9 @@ async function sendChat(){
 // ── live mode: poll the RAG backend for real pipeline data (auto-animate) ───
 async function pollPipeline(){
   try{
-    const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store'});
+    const headers = {};
+    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+    const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store',headers});
     if(!r.ok)return;
     const d=await r.json();
     if(d.query && d.query!==lastQuery) presentPipeline(d,{record:true});
@@ -477,7 +487,9 @@ setInterval(pollPipeline, 2000);
 // ── online users (who is logged in now) ─────────────────────────────────────
 async function pollOnline(){
   try{
-    const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store'});
+    const headers = {};
+    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+    const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store',headers});
     if(!r.ok)return;
     const d=await r.json();
     const list=(d.users||[]).map(u=>
@@ -492,7 +504,19 @@ const gate=$('gate');
 if(sessionStorage.getItem('be_debug_admin')==='1') gate.classList.add('hide');
 $('gateBtn').addEventListener('click',()=>{
   const u=$('gateUser').value.trim(), p=$('gatePass').value;
-  if(u==='root'&&p==='1234'){ sessionStorage.setItem('be_debug_admin','1'); gate.classList.add('hide'); $('gateErr').textContent=''; }
+  if(u==='root'&&p==='1234'){
+    sessionStorage.setItem('be_debug_admin','1');
+    const tp = $('gateTestPw').value.trim();
+    if (tp) sessionStorage.setItem('be_debug_test_pw', tp);
+    gate.classList.add('hide'); $('gateErr').textContent='';
+    // After gate unlock, try to authenticate and load credentials
+    (async () => {
+      try {
+        if (tp) { await loginAs('ceo'); await loadCredentials(); }
+        else { loadCredentials(); } // will 401 but gate warned
+      } catch(e) { /* auth failed — user can enter creds manually */ }
+    })();
+  }
   else $('gateErr').textContent='✗ wrong credentials — root / 1234';
 });
 $('gatePass').addEventListener('keydown',e=>{ if(e.key==='Enter')$('gateBtn').click(); });
@@ -507,7 +531,6 @@ const chip=$('chip'); if(chip)chip.textContent='backend · '+BACKEND;
 
 // ── init ────────────────────────────────────────────────────────────────────
 layout(); draw();
-loadCredentials();
 renderTrace([]); renderHistory();
 pollPipeline(); pollOnline();
 </script>

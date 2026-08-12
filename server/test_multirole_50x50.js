@@ -34,7 +34,7 @@ const graph = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'src', 'data
 const byPk = new Map(graph.identities.map((i) => [i.pk, i]));
 const users = JSON.parse(fs.readFileSync(path.join(__dirname, '.data', 'auth', 'users.json'), 'utf-8')).users;
 
-const PASSWORD = { CEO: 'CEO@Landyi2026', HR: 'HR@2026test', Manager: 'Exec@2026test', Employee: 'Emp@2026test' };
+const TEST_PW = process.env.TEST_ACCOUNT_PASSWORD || (console.error('Set TEST_ACCOUNT_PASSWORD env var'), process.exit(1)); const PASSWORD = { CEO: TEST_PW, HR: TEST_PW, Manager: TEST_PW, Employee: TEST_PW };
 
 // ---------- Question banks ----------
 const ceoTemplates = [

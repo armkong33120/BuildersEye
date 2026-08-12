@@ -27,6 +27,7 @@ __pycache__/
 .env.production.local
 server/.data/
 server/server/
+*.log
 
 tools/upgrade_360/output/
 tools/upgrade_360/.venv/

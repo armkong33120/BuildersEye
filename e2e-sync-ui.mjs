@@ -17,7 +17,7 @@ try {
   await page.goto(BASE + '/app.html', { waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#loginForm', { timeout: 30000 });
   await page.fill('#loginUsername', 'ceo');
-  await page.fill('#loginPassword', 'CEO@Landyi2026');
+  await page.fill('#loginPassword', process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]');
   await page.click('#loginSubmit');
   await page.waitForFunction(() => {
     const ov = document.getElementById('loginOverlay');
@@ -59,7 +59,7 @@ try {
   await page.reload({ waitUntil: 'domcontentloaded' });
   await page.waitForSelector('#loginForm', { timeout: 30000 });
   await page.fill('#loginUsername', 'emp144');
-  await page.fill('#loginPassword', 'Emp@2026test');
+  await page.fill('#loginPassword', process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]');
   await page.click('#loginSubmit');
   await page.waitForFunction(() => {
     const ov = document.getElementById('loginOverlay');

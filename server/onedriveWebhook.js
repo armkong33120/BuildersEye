@@ -9,7 +9,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OD_DIR = path.join(__dirname, '.data', 'onedrive');
 const MSAL_FILE = path.join(OD_DIR, 'msal-cache.json');
 const STATE_FILE = path.join(OD_DIR, 'state.json');
-const WEBHOOK_SECRET = process.env.WEBHOOK_CLIENT_STATE || 'builderseye-realtime-sync';
+const WEBHOOK_SECRET = process.env.WEBHOOK_CLIENT_STATE;
+if (!WEBHOOK_SECRET) {
+  console.error('[SECURITY] WEBHOOK_CLIENT_STATE is REQUIRED for webhook validation. Set it to a random string.');
+  process.exit(1);
+}
 
 export const WEBHOOK_PATH = '/api/webhook/onedrive';
 

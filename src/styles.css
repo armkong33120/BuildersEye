@@ -1473,3 +1473,133 @@ h1 {
     padding: 8px 4px;
   }
 }
+
+/* ==========================================================================
+   Live Neural Network Execution Flow Tracer (Embedded in RAG Chat)
+   ========================================================================== */
+.neural-trace-accordion {
+  margin: 10px 0 6px 0;
+  background: rgba(10, 15, 30, 0.75);
+  border: 1px solid rgba(79, 139, 255, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.nt-accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.12), rgba(167, 139, 250, 0.12));
+  border: none;
+  color: #22d3ee;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.nt-accordion-toggle:hover {
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.22), rgba(167, 139, 250, 0.22));
+}
+
+.nt-accordion-toggle .nt-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(167, 139, 250, 0.25);
+  color: #a78bfa;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+}
+
+.nt-accordion-body {
+  display: none;
+  padding: 10px 12px;
+  border-top: 1px solid rgba(79, 139, 255, 0.2);
+  font-size: 11px;
+  color: #c9d4e0;
+}
+
+.nt-accordion-body.is-open {
+  display: block;
+}
+
+.nt-step-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  padding-left: 14px;
+  border-left: 2px dashed rgba(79, 139, 255, 0.35);
+}
+
+.nt-step-item {
+  position: relative;
+}
+
+.nt-step-item::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+
+.nt-step-header {
+  font-weight: 700;
+  color: #e6edf3;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+}
+
+.nt-step-header .nt-layer-tag {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(79, 139, 255, 0.2);
+  color: #7cf7ff;
+}
+
+.nt-step-details {
+  margin-top: 3px;
+  line-height: 1.4;
+  color: #8b98a9;
+}
+
+.nt-file-link {
+  color: #34d399 !important;
+  font-family: monospace;
+  font-size: 11px;
+  text-decoration: underline;
+}
+
+.nt-file-link:hover {
+  color: #6ee7b7 !important;
+}
+
+.nt-data-code {
+  display: block;
+  margin-top: 4px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-family: "SF Mono", "JetBrains Mono", Consolas, monospace;
+  font-size: 10px;
+  color: #fbbf24;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 100px;
+  overflow-y: auto;
+}
+

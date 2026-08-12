@@ -24,9 +24,9 @@ async function get(path, tok) {
 
 console.log('🧪 Registry E2E Test —', BASE);
 
-const ceo = await login('ceo', 'CEO@Landyi2026');
-const emp = await login('emp144', 'Emp@2026test');
-const mgr = await login('it-manager', 'Exec@2026test');
+const TEST_PW = process.env.TEST_ACCOUNT_PASSWORD || (console.error('Set TEST_ACCOUNT_PASSWORD env var'), process.exit(1)); const ceo = await login('ceo', TEST_PW);
+const emp = await login('emp144', TEST_PW);
+const mgr = await login('it-manager', TEST_PW);
 ok('login ceo/emp144/it-manager', Boolean(ceo && emp && mgr));
 
 // 1) status

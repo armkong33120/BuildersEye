@@ -70,6 +70,37 @@
   #historyList .hm{color:var(--faint);margin-top:2px;font-size:9.5px}
   #historyList .hn{color:var(--co);margin-top:2px;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .empty{color:var(--faint);font-size:10.5px;padding:4px 2px;list-style:none}
+  /* ── evidence pane ─────────────────────────────────────────────────── */
+  .badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:10px;font-weight:700;letter-spacing:.04em;margin:2px 3px 2px 0}
+  .badge-src{background:rgba(34,211,238,.15);color:var(--c0);border:1px solid rgba(34,211,238,.35)}
+  .badge-route{background:rgba(168,139,250,.15);color:var(--c2);border:1px solid rgba(168,139,250,.35)}
+  .badge-tag{background:#0d1422;border:1px solid var(--line);color:var(--dim);font-size:9.5px;font-weight:400}
+  .badge-on{background:rgba(34,211,238,.12);color:var(--c0);border:1px solid rgba(34,211,238,.3)}
+  .badge-off{background:transparent;color:var(--faint);border:1px solid rgba(70,83,110,.25)}
+  .bar-wrap{background:#0d1422;border-radius:4px;height:8px;margin:2px 0 0;overflow:hidden;min-width:60px}
+  .bar-fill{height:100%;background:var(--c0);border-radius:4px;transition:width .3s}
+  .bar-fill.hi{background:var(--c1)} .bar-fill.md{background:var(--c2)} .bar-fill.lo{background:var(--amber)}
+  #evTable{width:100%;border-collapse:collapse;font-size:10px;margin-top:4px}
+  #evTable td,#evTable th{padding:2px 6px;text-align:left;border-bottom:1px solid var(--line)}
+  #evTable th{color:var(--faint);font-weight:400;letter-spacing:.06em;font-size:9px;text-transform:uppercase}
+  #evTable .nd{color:var(--c0);font-weight:700}
+  #evTable .ms{color:var(--amber)}
+  #evTable .nt{color:var(--dim);font-size:9.5px}
+  .ev-row{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:10.5px}
+  .ev-label{color:var(--faint);min-width:82px;font-size:10px;letter-spacing:.04em}
+  .ev-val{color:var(--txt);word-break:break-word}
+  .ev-chunk{font-size:10px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:#0d1422;margin:3px 0}
+  .ev-chunk .t{color:var(--dim);line-height:1.4;margin-bottom:2px}
+  /* ── how-this-works collapsible ─────────────────────────────────────── */
+  #howPane{border-top:1px solid var(--line);margin-top:auto}
+  #howToggle{width:100%;background:transparent;border:none;color:var(--faint);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:12px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  #howToggle:hover{color:var(--c0)}
+  #howToggle .arr{display:inline-block;transition:transform .25s;font-size:10px}
+  #howToggle.open .arr{transform:rotate(90deg)}
+  #howBody{padding:0 12px 12px 12px;color:var(--dim);font-size:10.5px;line-height:1.7;display:none}
+  #howBody.show{display:block}
+  #howBody b{color:var(--c0)}
+  #howBody i{color:var(--faint)}
   ::-webkit-scrollbar{width:7px}::-webkit-scrollbar-thumb{background:#233047;border-radius:6px}
   /* admin gate overlay — content stays loaded underneath, never removed */
   #gate{position:fixed;inset:0;z-index:50;background:rgba(4,7,14,.93);display:flex;align-items:center;justify-content:center}
@@ -90,6 +121,7 @@
     <span class="brand"><i></i>NEURAL RAG · INSPECTOR</span>
     <input id="q" value="วิศวกรคนไหนทำ OT เทปูนข้ามคืนบ้าง?" />
     <span id="chip"></span>
+    <button id="topLogout" style="display:none;background:transparent;border:1px solid #f87171;color:#f87171;border-radius:6px;padding:4px 10px;font-family:var(--mono);font-size:11px;cursor:pointer;white-space:nowrap;">✕ LOGOUT</button>
   </div>
   <main>
     <div id="stage">
@@ -120,17 +152,36 @@
         </div>
         <ul id="historyList"></ul>
       </section>
+      <section class="pane" id="evidencePane">
+        <h3 class="pane-h">RETRIEVAL EVIDENCE <b>· per-query truth</b></h3>
+        <div id="evContent"><span class="empty">— no data yet —</span></div>
+      </section>
+      <section class="pane" id="howPane">
+        <button id="howToggle"><span class="arr">▶</span> HOW THIS WORKS</button>
+        <div id="howBody">
+          <b>Pipeline</b><br>
+          query → <i>policy check</i> → SQL detect → pronoun → cache → semantic → scope → keyword → vector → context → LLM/template → output<br><br>
+          <b>19-node trace</b>: แสดงโหนดที่ยิงจริง (ไม่ใช่ animation ปลอม) — canvas ใช้ข้อมูลจาก <i>d.trace</i> จริงจาก backend<br><br>
+          <b>RBAC</b>: CEO เห็นทั้งหมด · HR เห็นทั้งหมด · Manager เห็นเฉพาะทีม · Employee เห็นเฉพาะตัวเอง<br><br>
+          <b>Answer sources</b>:<br>
+          <span class="badge badge-src" style="margin:3px 2px">gemini</span> LLM generate (DeepSeek)<br>
+          <span class="badge badge-src" style="margin:3px 2px;background:rgba(168,139,250,.15);color:var(--c2);border-color:rgba(168,139,250,.35)">sql-analytics</span> Aggregation query<br>
+          <span class="badge badge-src" style="margin:3px 2px;background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.35)">template</span> No LLM fallback<br><br>
+          <b>Cache</b>: TTL 15 นาที · LLM-on เท่านั้น · cache hit = ข้าม LLM<br>
+          <b>Matchers</b>: 7 matchers (name / job / dept / alias / prefix / fuzzy / sheet) → mergeAndRank → top 15<br>
+          <b>Vector</b>: multilingual-e5-small 384d · k=15 · min score 0.85 · sheetBoost 1.10
+        </div>
+      </section>
     </aside>
   </main>
   <div id="gate">
     <div id="gateBox">
-      <h1>🔒 NEURAL RAG · ADMIN GATE</h1>
-      <p>debug inspector — root access only</p>
+      <h1>🔒 NEURAL RAG · LOGIN</h1>
+      <p>Sign in with your BuildersEye account</p>
       <label>username</label><input id="gateUser" autocomplete="off" />
       <label>password</label><input id="gatePass" type="password" autocomplete="off" />
-      <label>test password <span style="color:#71809c;font-size:10px">(for RAG auto-login)</span></label><input id="gateTestPw" type="password" autocomplete="off" />
       <div id="gateErr"></div>
-      <button id="gateBtn">UNLOCK</button>
+      <button id="gateBtn">SIGN IN</button>
     </div>
   </div>
 <script>
@@ -146,14 +197,7 @@
 //   GET  /api/debug/pipeline      → {query, answer, trace[], responseTimeMs, ...}
 // ════════════════════════════════════════════════════════════════════════════
 
-// ── TEST ACCOUNT PASSWORD ────────────────────────────────────────────────────
-// SECURITY: no longer hardcoded. Password is set via the gate overlay at the
-// bottom of the page (stored in sessionStorage, never persisted). If your
-// backend has ENABLE_TEST_CREDS=true, enter the shared TEST_ACCOUNT_PASSWORD
-// in the gate's "test password" field to enable auto-login for the RAG assistant.
-function getTestPassword() {
-  try { return sessionStorage.getItem('be_debug_test_pw') || ''; } catch { return ''; }
-}
+// ── AUTH: JWT-based login — no hardcoded passwords, no sessionStorage ────────
 
 // ── เครือข่าย: 6 ชั้น · 19 โหนด = ขั้น pipeline จริง (audit 2026-08-11) ────────
 const LAYERS = [
@@ -342,6 +386,85 @@ function renderTrace(trace){
     el.appendChild(li);
   });
 }
+// ── evidence pane ──────────────────────────────────────────────────────────
+function renderEvidence(d){
+  const el=$('evContent'); if(!el)return;
+  if(!d||!d.query){ el.innerHTML='<span class="empty">— no data yet —</span>'; return; }
+  const src=d.answerSource||'—';
+  const route=d.route||(d.sqlUsed?'SQL':d.llmUsed?'vector':d.cached?'cached':'keyword');
+  const boolBadge=(v,label)=>
+    '<span class="badge '+(v?'badge-on':'badge-off')+'">'+(v?'&#10003;':'&#10007;')+' '+label+'</span>';
+  const matchers=d.matchersUsed&&Array.isArray(d.matchersUsed)?d.matchersUsed:[];
+  const chunks=d.chunks||d.results||[];
+  const trace=traceEntries(d);
+  const totalMs=d.responseTimeMs||0;
+
+  let html='';
+
+  // row 1: answer source + route badges
+  html+='<div class="ev-row"><span class="ev-label">Answer Source</span>'+
+    '<span class="badge badge-src">'+escapeHtml(src)+'</span>'+
+    '<span class="badge badge-route">Route: '+escapeHtml(route)+'</span></div>';
+
+  // row 2: SQL / LLM / Cache indicators
+  html+='<div class="ev-row"><span class="ev-label">Flags</span>'+
+    boolBadge(!!d.sqlUsed,'SQL')+' '+
+    boolBadge(!!d.llmUsed,'LLM')+' '+
+    boolBadge(!!d.cached,'Cache')+'</div>';
+
+  // row 3: matchers used
+  if(matchers.length){
+    html+='<div class="ev-row"><span class="ev-label">Matchers</span>'+
+      matchers.map(function(m){return'<span class="badge badge-tag">'+escapeHtml(m)+'</span>';}).join(' ')+'</div>';
+  }else{
+    html+='<div class="ev-row"><span class="ev-label">Matchers</span><span class="ev-val" style="color:var(--faint)">— none —</span></div>';
+  }
+
+  // row 4: RBAC scope
+  var role=d.role||(d.viewer&&currentUserInfo&&currentUserInfo.username===d.viewer?currentUserInfo.role:'—');
+  var empId=d.employeeId||d.empId||'—';
+  html+='<div class="ev-row"><span class="ev-label">RBAC Scope</span><span class="ev-val">role='+escapeHtml(role)+' · empId='+escapeHtml(String(empId))+'</span></div>';
+
+  // row 5: fallback reason (if template)
+  if(src==='template'||d.fallbackReason){
+    html+='<div class="ev-row"><span class="ev-label">Fallback</span><span class="ev-val" style="color:var(--amber)">'+escapeHtml(d.fallbackReason||'(template answer — no LLM used)')+'</span></div>';
+  }
+
+  // row 6: chunks with score bars
+  if(chunks.length){
+    html+='<div class="ev-row" style="margin-top:6px"><span class="ev-label">Chunks ('+chunks.length+')</span></div>';
+    var maxC=Math.min(chunks.length,8);
+    for(var i=0;i<maxC;i++){
+      var c=chunks[i]; var score=Number(c.s||c.score||0); var pct=Math.round(score*100);
+      var cls=pct>=85?'hi':pct>=60?'md':'lo';
+      var preview=(c.t||c.text||c.content||'').slice(0,80);
+      html+='<div class="ev-chunk"><div class="t">'+escapeHtml(preview)+(preview.length>=80?'…':'')+'</div>'+
+        '<div style="display:flex;align-items:center;gap:6px">'+
+        '<div class="bar-wrap" style="flex:1"><div class="bar-fill '+cls+'" style="width:'+pct+'%"></div></div>'+
+        '<span style="font-size:9px;color:var(--faint);min-width:36px;text-align:right">'+pct+'%</span></div></div>';
+    }
+    if(chunks.length>8) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(chunks.length-8)+' more chunks</div>';
+  }
+
+  // row 7: latency table
+  if(trace.length){
+    html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">Latency</span></div>';
+    html+='<table id="evTable"><thead><tr><th>Node</th><th>ms</th><th>note</th></tr></thead><tbody>';
+    for(var j=0;j<trace.length;j++){
+      var t=trace[j];
+      html+='<tr><td class="nd">'+escapeHtml(t.node)+'</td>'+
+        '<td class="ms">+'+(Number(t.ms)||0)+'ms</td>'+
+        '<td class="nt">'+escapeHtml(t.note||'')+'</td></tr>';
+    }
+    html+='</tbody></table>';
+  }
+
+  // row 8: total time
+  html+='<div class="ev-row" style="margin-top:6px"><span class="ev-label">Total</span>'+
+    '<span class="ev-val" style="color:var(--c0);font-weight:700">'+(totalMs?totalMs+'ms':'—')+'</span></div>';
+
+  el.innerHTML=html;
+}
 let currentUserInfo=null;
 function selectedUsername(){ const s=$('userSelect'); return s?s.value:''; }
 function updateCurrentUser(){
@@ -357,10 +480,13 @@ function whoLabel(d){
 function metaLine(d){
   const sec=d.responseTimeMs!=null?(d.responseTimeMs/1000).toFixed(1)+'s':'—';
   const bits=['as '+whoLabel(d),sec];
-  if(d.answerSource)bits.push('answerSource='+d.answerSource);
-  if(d.sqlUsed)bits.push('sqlUsed');
-  if(d.llmUsed)bits.push('llmUsed');
-  if(d.cached)bits.push('cached');
+  if(d.answerSource)bits.push('src='+d.answerSource);
+  if(d.sqlUsed)bits.push('SQL');
+  if(d.llmUsed)bits.push('LLM');
+  if(d.cached)bits.push('CACHED');
+  if(d.matchersUsed&&Array.isArray(d.matchersUsed))bits.push('matchers='+d.matchersUsed.length);
+  if(d.chunks&&Array.isArray(d.chunks))bits.push('chunks='+d.chunks.length);
+  if(d.route)bits.push('route='+d.route);
   return bits.join(' · ');
 }
 function renderAnswer(d){
@@ -411,6 +537,7 @@ function presentPipeline(d,{record=true}={}){
   if(!d||!d.query)return;
   lastQuery=d.query;
   renderTrace(traceEntries(d));
+  renderEvidence(d);
   renderAnswer(d);
   if(record)pushHistory(d);
   run({ q:d.query, ans:d.answer||'', lat:d.responseTimeMs||0,
@@ -424,6 +551,8 @@ async function loadCredentials(){
     const headers = {};
     if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
     const r=await fetch(BACKEND+'/api/preview/credentials',{cache:'no-store',headers});
+    if(r.status===401){ handleAuthError(401); return; }
+
     if(r.status===403){ status.textContent='⚠ credentials disabled (ENABLE_TEST_CREDS=off on backend)'; sel.innerHTML='<option value="">— creds unavailable —</option>'; return; }
     if(!r.ok){ status.textContent='⚠ credentials error HTTP '+r.status; return; }
     const arr=await r.json();
@@ -438,16 +567,26 @@ async function loadCredentials(){
 }
 // ── RAG assistant: auto-login + live chat ───────────────────────────────────
 let currentToken=null, tokenUser=null;
-async function loginAs(username){
-  const pw = getTestPassword();
-  if (!pw) throw new Error('test password not set — enter it in the gate overlay');
+let gatePassword=''; // stored in memory only (never in sessionStorage)
+
+async function loginAs(username, password){
+  if (!password) throw new Error('password not provided');
   const r=await fetch(BACKEND+'/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({username,password:pw})});
+    body:JSON.stringify({username,password})});
   if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('login '+r.status+' '+t.slice(0,140)); }
   const d=await r.json();
   if(!d.accessToken)throw new Error('login: no accessToken in response');
-  currentToken=d.accessToken; tokenUser=username;   // page-local only — never touches localStorage be_access
+  currentToken=d.accessToken; tokenUser=username;
   return d;
+}
+
+function handleAuthError(status){
+  if(status===401){
+    // Only show "expired" if there was a previous session — not on first load
+    const hadSession = !!(currentToken || tokenUser);
+    currentToken=null; tokenUser=null; gatePassword='';
+    showGate(hadSession ? 'Session expired — please sign in again' : '');
+  }
 }
 async function sendChat(){
   const input=$('assistInput'), out=$('assistOutput'), meta=$('assistMeta'), btn=$('assistSend');
@@ -457,26 +596,33 @@ async function sendChat(){
   if(!username){ out.textContent='✗ no user selected'; return; }
   btn.disabled=true; out.textContent='thinking…'; if(meta)meta.textContent='';
   try{
-    if(!currentToken||tokenUser!==username) await loginAs(username);
+    if(!currentToken||tokenUser!==username) {
+      if(!gatePassword){ out.textContent='✗ not authenticated — sign in first'; showGate('Please sign in'); btn.disabled=false; return; }
+      await loginAs(username, gatePassword);
+    }
     const convId=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():('c-'+Date.now()+'-'+Math.random().toString(16).slice(2));
     const r=await fetch(BACKEND+'/api/chat',{method:'POST',
       headers:{'Authorization':'Bearer '+currentToken,'Content-Type':'application/json'},
       body:JSON.stringify({query,conversationId:convId,viewer:username})});
-    if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('chat HTTP '+r.status+' '+t.slice(0,140)); }
+    if(!r.ok){ const t=await r.text().catch(()=>''); const err=new Error('chat HTTP '+r.status+' '+t.slice(0,140)); err.status=r.status; throw err; }
     const d=await r.json();
     if(!d.viewer)d.viewer=username;
     presentPipeline(d,{record:true});   // answer + trace + history + canvas truth
   }catch(e){
+    if(e.status===401) handleAuthError(401);
     out.textContent='✗ '+e.message; if(meta)meta.textContent='';
   }finally{ btn.disabled=false; }
 }
 
 // ── live mode: poll the RAG backend for real pipeline data (auto-animate) ───
 async function pollPipeline(){
+  // Don't poll authenticated endpoints until user has logged in
+  if (!currentToken) return;
   try{
     const headers = {};
-    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+    headers['Authorization'] = 'Bearer ' + currentToken;
     const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store',headers});
+    if(r.status===401){ handleAuthError(401); return; }
     if(!r.ok)return;
     const d=await r.json();
     if(d.query && d.query!==lastQuery) presentPipeline(d,{record:true});
@@ -486,10 +632,13 @@ setInterval(pollPipeline, 2000);
 
 // ── online users (who is logged in now) ─────────────────────────────────────
 async function pollOnline(){
+  // Don't poll until authenticated
+  if (!currentToken) return;
   try{
     const headers = {};
-    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+    headers['Authorization'] = 'Bearer ' + currentToken;
     const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store',headers});
+    if(r.status===401){ handleAuthError(401); return; }
     if(!r.ok)return;
     const d=await r.json();
     const list=(d.users||[]).map(u=>
@@ -499,25 +648,44 @@ async function pollOnline(){
 }
 setInterval(pollOnline, 3000);
 
-// ── admin gate (root / 1234) — overlay only, scripts keep running ───────────
+// ── auth gate: JWT login form ────────────────────────────────────────────────
 const gate=$('gate');
-if(sessionStorage.getItem('be_debug_admin')==='1') gate.classList.add('hide');
-$('gateBtn').addEventListener('click',()=>{
+const topLogout=$('topLogout');
+
+function showGate(errMsg=''){
+  gate.classList.remove('hide');
+  if(errMsg) $('gateErr').textContent=errMsg;
+  if(topLogout) topLogout.style.display='none';
+}
+
+function hideGate(){
+  gate.classList.add('hide');
+  $('gateErr').textContent='';
+  if(topLogout) topLogout.style.display='inline-block';
+}
+
+// Logout: clear token, show gate
+function doLogout(){
+  currentToken=null; tokenUser=null; gatePassword='';
+  $('gatePass').value='';
+  fetch(BACKEND+'/api/auth/logout',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({refreshToken:''})}).catch(()=>{});
+  showGate();
+}
+if(topLogout) topLogout.addEventListener('click',doLogout);
+
+$('gateBtn').addEventListener('click',async ()=>{
   const u=$('gateUser').value.trim(), p=$('gatePass').value;
-  if(u==='root'&&p==='1234'){
-    sessionStorage.setItem('be_debug_admin','1');
-    const tp = $('gateTestPw').value.trim();
-    if (tp) sessionStorage.setItem('be_debug_test_pw', tp);
-    gate.classList.add('hide'); $('gateErr').textContent='';
-    // After gate unlock, try to authenticate and load credentials
-    (async () => {
-      try {
-        if (tp) { await loginAs('ceo'); await loadCredentials(); }
-        else { loadCredentials(); } // will 401 but gate warned
-      } catch(e) { /* auth failed — user can enter creds manually */ }
-    })();
-  }
-  else $('gateErr').textContent='✗ wrong credentials — root / 1234';
+  if(!u||!p){ $('gateErr').textContent='✗ enter username and password'; return; }
+  $('gateBtn').disabled=true; $('gateErr').textContent='Signing in…';
+  try{
+    const d=await loginAs(u,p);
+    gatePassword=p;
+    hideGate();
+    await loadCredentials();
+  }catch(e){
+    $('gateErr').textContent='✗ '+e.message;
+  }finally{ $('gateBtn').disabled=false; }
 });
 $('gatePass').addEventListener('keydown',e=>{ if(e.key==='Enter')$('gateBtn').click(); });
 
@@ -526,6 +694,11 @@ $('userSelect').addEventListener('change',updateCurrentUser);
 $('assistSend').addEventListener('click',sendChat);
 $('assistInput').addEventListener('keydown',e=>{ if(e.key==='Enter')sendChat(); });
 $('histClear').addEventListener('click',()=>{ localStorage.removeItem(HISTORY_KEY); renderHistory(); });
+// how-this-works toggle
+$('howToggle').addEventListener('click',function(){
+  this.classList.toggle('open');
+  $('howBody').classList.toggle('show');
+});
 
 const chip=$('chip'); if(chip)chip.textContent='backend · '+BACKEND;
 

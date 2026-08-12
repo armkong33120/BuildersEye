@@ -36,12 +36,15 @@
 | ไฟล์ | ทีม | การเปลี่ยนแปลง |
 |------|-----|---------------|
 | `server/index.js` | T1, T4 | requireAdmin, requireAuth บน debug/preview, /api/debug/latency |
-| `server/authStore.js` | T1 | isAdmin field, production ENABLE_TEST_CREDS warning |
+| `server/authStore.js` | T1 | isAdmin field, production ENABLE_TEST_CREDS warning → **process.exit(1) hard-stop** |
 | `server/chatController.js` | T4 | SQL failure fallback, p50/p95 latency tracking |
 | `server/llmClient.js` | T4 | LLM timeout (30s), bounded retry (max 2) |
 | `package.json` | T2, T4 | เพิ่ม eval:rag, test, test:api, test:e2e, verify:security |
 | `README.md` | Coord | Rewrite ให้สะท้อนสถานะจริง |
-| `AI_CONTEXT.md` | T3, Coord | อัปเดต security fixes, archive, evaluation, tests |
+| `AI_CONTEXT.md` | T3, Coord | อัปเดต security fixes, archive, evaluation, tests, **repo PRIVATE, gate removed, production safety** |
+| `scripts/verify_security.mjs` | T1 | ขยายจาก 8 checks → **34+ checks** (12 categories: secret scan, route auth, CORS, .gitignore, frontend PW scan, webhook validation) |
+| `.gitignore` | Coord | เพิ่ม `*.log` ป้องกัน log files หลุดเข้า git |
+| `SECURITY.md` | T1, Coord | Threat model, risks, deployment checklist, **production safety hard-stop documented** |
 
 ### ไฟล์ที่ย้ายไป Archive
 `server/core/*`, `server/security/*`, `server/controllers/*`, `server/services/*` → `server/archive/`
@@ -128,12 +131,15 @@ npm run eval:rag -- --filter=q026  # Regression test only
 ## 8. Release Checklist (Team 4 — Documentation & Release Report)
 
 ### ✅ Verified Locally
-- [x] `npm run build` — frontend builds without errors (Vite)
-- [x] `npm run verify:security` — security static analysis script exists
-- [ ] `npm test` — all deterministic API tests (requires backend running on localhost:5199)
-- [ ] `npm run eval:rag` — RAG evaluation direct mode (tested: route classification, RBAC, policy checks work)
-- [x] `npm run dev:backend` — backend starts on port 5199
-- [x] `npm run dev` — frontend starts on port 5174
+- [x] `npm run build` — ✅ PASSED (Vite, 1.30s, 1565 modules)
+- [x] `npm run verify:security` — ✅ PASSED (34/34 checks)
+- [x] `npm run eval:rag` (LLM_SKIP=true) — ✅ PASSED (65/65, Route 100%, Block 100%, RBAC Leak 0%)
+- [x] `npm run eval:rag -- --filter=q026` — ✅ PASSED (q026 regression: route=vector ✅)
+- [x] Backend health — ✅ PASSED (`{"status":"ok","indexReady":true,"indexedFiles":150}`)
+- [x] `npm test` — ✅ 1 passed (Invalid Login), 8 skipped (no credentials)
+- [x] `npm run test:api` — ⏭️ skipped (no TEST_USERNAME/TEST_PASSWORD)
+- [x] `npm run dev:backend` — ✅ backend starts on port 5199
+- [x] `npm run dev` — ✅ frontend starts on port 5174
 
 ### ⏭️ Skipped (Local — Reason)
 - [ ] LLM-dependent answer correctness — ⏭️ skipped (no LLM_API_KEY configured)
@@ -149,11 +155,15 @@ npm run eval:rag -- --filter=q026  # Regression test only
 - [x] SQL failure fallback — ✅ confirmed (server/chatController.js lines 206-210)
 - [x] LLM timeout (30s) + bounded retry (max 2) — ✅ confirmed (server/llmClient.js lines 14-15, 139-160)
 - [x] p50/p95 latency tracking — ✅ confirmed (chatController.js lines 17-32, llmClient.js lines 20-32)
-- [x] ENABLE_TEST_CREDS production warning — ✅ confirmed (server/authStore.js lines 78-80)
+- [x] ENABLE_TEST_CREDS production warning → **now process.exit(1) hard-stop** — ✅ confirmed (server/authStore.js lines 78-92)
 - [x] `isAdmin` field in user — ✅ confirmed (server/authStore.js)
 - [x] Archived files NOT imported — ✅ confirmed (zero archive imports found via grep)
 - [x] 65 golden questions — ✅ confirmed (grep -c '"id":' eval/golden_questions.json = 65)
 - [x] SECURITY.md threat model matches code — ✅ confirmed
+- [x] Client-side gate (root/1234) **removed** — ✅ confirmed (not found in debug_neural_network_diagram.html)
+- [x] `*.log` added to .gitignore — ✅ confirmed
+- [x] verify_security.mjs expanded to 34+ checks — ✅ confirmed (12 categories)
+- [x] Repo visibility **PRIVATE** — ✅ confirmed (`gh repo view --json visibility`)
 
 ### 🔒 Requires External Credentials
 - [ ] RAG evaluation HTTP mode — 🔒 requires running backend with DATABASE_URL and LLM_API_KEY

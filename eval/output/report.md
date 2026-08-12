@@ -1,9 +1,9 @@
 # BuildersEye RAG Evaluation Report
 
-**Generated:** 2026-08-12T06:27:03.586Z
+**Generated:** 2026-08-12T14:04:30.263Z
 **Mode:** direct
 **LLM Available:** No (LLM-dependent tests SKIPPED)
-**Total Time:** 4345ms
+**Total Time:** 4167ms
 
 ## 1. Summary
 | Metric | Value |
@@ -23,9 +23,9 @@
 | SQL Misclassification (q026) | **PASS** |
 | RBAC Leakage Rate | 0.0% |
 | Template Fallback Rate | 88.5% |
-| Avg Latency | 70ms |
+| Avg Latency | 67ms |
 | P50 Latency | 9ms |
-| P95 Latency | 18ms |
+| P95 Latency | 15ms |
 
 ## 3. By Category
 | Category | Total | Route OK | Block OK | Result OK | Errors | Skipped |

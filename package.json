@@ -16,7 +16,8 @@
     "test": "node scripts/run_all_tests.mjs",
     "test:api": "node scripts/test_api_rbac_matrix.mjs",
     "test:e2e": "node scripts/test_ui_playwright_headful.mjs",
-    "verify:security": "node scripts/verify_security.mjs"
+    "verify:security": "node scripts/verify_security.mjs",
+    "test:debug-page": "node scripts/test_debug_page.mjs"
   },
   "dependencies": {
     "lucide": "^0.468.0",

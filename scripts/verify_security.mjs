@@ -200,9 +200,12 @@ async function main() {
   // ========== 11. Client-side debug gate ==========
   console.log('\n── 11. Client-side gate audit ──');
   const debugHtml = readFileSafe(path.join(ROOT, 'debug_neural_network_diagram.html'));
-  const hasClientGate = debugHtml.includes("root'") && debugHtml.includes("'1234'");
-  check('Client-side gate is cosmetic (backend JWT enforced)', hasClientGate,
-    hasClientGate ? 'Gate exists — all backend routes requireAuth ✓' : 'no gate found');
+  const hasClientGate = debugHtml.includes("root") && debugHtml.includes("1234");
+  // PASS if NO gate OR gate is cosmetic-only with backend JWT enforcement
+  const gateOk = !hasClientGate || idx.includes('requireAuth');
+  check('No client-side-only security gate (backend JWT enforced)',
+    gateOk,
+    hasClientGate ? 'Cosmetic gate present — backend routes requireAuth ✓ (safe)' : 'No gate found — clean ✓');
 
   // ========== 12. Frontend password scan ==========
   console.log('\n── 12. Frontend password scan ──');

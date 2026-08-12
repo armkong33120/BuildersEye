@@ -52,7 +52,9 @@ Neon Postgres (DATABASE_URL)  — employees/chunks(embedding 384d)/auth_sessions
 | Azure | rg `rg-builderseye` · ContainerApp `builderseye-backend` (owner: theerachot.si.61@live.ubu.ac.th) |
 | CI/CD | GitHub Actions `deploy-aca.yml` (push `server/**` → build image → deploy) + Vercel auto-deploy (frontend) |
 
-**Azure env (production)**: `JWT_SECRET`(secretRef jwt-secret), `ENABLE_TEST_CREDS=true`, `TEST_ACCOUNT_PASSWORD=[REDACTED_TEST_PASSWORD]`, `LLM_API_KEY`(secretRef llm-api-key), `LLM_BASE_URL=https://api.deepseek.com`, `LLM_MODEL=deepseek-v4-flash`, `DATABASE_URL`(neon), `VECTOR_INDEX_DISABLED=true`, scale = **minReplicas 0 / maxReplicas 1** (scale-to-zero)
+**Azure env (production)**: `JWT_SECRET`(secretRef jwt-secret), `ENABLE_TEST_CREDS=true` ⚠️ (ควรตั้งเป็น `false`), `TEST_ACCOUNT_PASSWORD=[REDACTED_TEST_PASSWORD]`, `LLM_API_KEY`(secretRef llm-api-key), `LLM_BASE_URL=https://api.deepseek.com`, `LLM_MODEL=deepseek-v4-flash`, `DATABASE_URL`(neon), `VECTOR_INDEX_DISABLED=true`, scale = **minReplicas 0 / maxReplicas 1** (scale-to-zero)
+
+> ⚠️ **2026-08-19 update**: Production safety hardened — `server/authStore.js` now calls `process.exit(1)` if `ENABLE_TEST_CREDS=true` + `NODE_ENV=production` + known password is set. Backend will REFUSE to start until this is fixed on Azure.
 
 ---
 
@@ -159,25 +161,26 @@ node scripts/test_ui_playwright_role_live.mjs        # 4 สิทธิ์ (CEO
 
 ## 9. Known issues / ข้อควรระวัง
 
-- 🔴 **Repo ยัง PUBLIC** + มีข้อมูล HR demo → **ควรทำให้ repo เป็น private**
-- ⚠️ Debug page admin gate ยังมี client-side component (`root/1234`) แม้ backend endpoints ป้องกันด้วย JWT แล้ว — frontend gate เป็น cosmetic เท่านั้น
+- ✅ **Repo PRIVATE แล้ว** (2026-08-12) — ไม่มีข้อมูล HR demo หลุดสู่สาธารณะ
+- ✅ Debug page client-side gate (`root/1234`) ถูกลบออกแล้ว — backend endpoints ป้องกันด้วย JWT `requireAuth` อย่างเดียว
 - ⚠️ Chat บาง path ใช้เวลา >15s (frontend AbortSignal.timeout 15s) → streaming เป็น future work
 - ⚠️ `emp001` / `hr-manager` **ไม่มีใน seed จริง** (150 = ceo + it-manager + emp002..emp150)
 - ไฟล์ที่ตั้งใจไม่ commit: `pdf_extracted.txt`, `server/setup_local_auth.mjs`, logs, screenshots
 - ✅ SQL misclassification "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" — แก้แล้ว: SQL failure fallback ไป keyword/vector
 - ✅ Debug endpoints — ป้องกันด้วย JWT requireAuth แล้ว
 - ✅ `[REDACTED_TEST_PASSWORD]` — ลบออกจาก source code, ใช้ env var TEST_ACCOUNT_PASSWORD แทน
+- ✅ Production safety — `ENABLE_TEST_CREDS=true` + `NODE_ENV=production` → `process.exit(1)` (backend ไม่ยอม start)
 
 ---
 
 ## 10. งานค้าง / ไอเดียต่อ
 
-- ทำให้ repo เป็น private + ลบ/สับเปลี่ยนข้อมูล HR demo
+- ✅ ทำให้ repo เป็น private — เสร็จแล้ว (2026-08-12)
 - Streaming สำหรับ long-running queries (>15s)
 - เพิ่มการเก็บ trace ระยะยาว (database แทน in-memory)
 - HTTPS/WSS สำหรับ debug page PNA issue
-- เตรียม production deployment โดยตั้ง `ENABLE_TEST_CREDS=false`
-- Rotate JWT_SECRET และ API keys (ดู SECURITY.md)
+- ✅ Production safety — `ENABLE_TEST_CREDS=true` + production = `process.exit(1)` (backend ปฏิเสธการ start อัตโนมัติ)
+- Rotate JWT_SECRET และ API keys (ดู SECURITY.md) — ต้องทำบน Azure Portal
 
 ## 11. การรันเทสต์และประเมินผล
 

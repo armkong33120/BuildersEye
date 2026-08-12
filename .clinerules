@@ -2,14 +2,31 @@
 
 ## Working style
 
-- For large tasks, use Plan mode first and Act mode only after the plan is approved.
+- Autonomous execution is the default for approved tasks. Do not pause for routine approval.
+- At the start of a substantial task, inspect `git status`, current branch, and remote. Create
+  a recoverable checkpoint before editing:
+  1. preserve existing user changes;
+  2. create a timestamped backup branch from the current HEAD when possible;
+  3. create a task branch for the implementation;
+  4. commit the pre-task checkpoint when there are relevant existing changes;
+  5. push the backup/task branch when authenticated GitHub access is available.
+- Never work directly on `main` for a substantial change unless the user explicitly asks for it.
+- The task branch must be pushed so the user can review, compare, or roll back from GitHub.
+- Use clear branch names such as `codex/debug-rag-inspector-YYYYMMDD` and
+  `codex/backup-before-debug-rag-YYYYMMDD-HHmm`.
+- When the user explicitly requests autonomous execution, use Act mode directly and do not
+  pause for approval between implementation steps. Create and follow an internal plan.
+- Use Plan mode only when the user asks for planning/review before implementation.
 - Before editing, inspect the real production code path and identify the files involved.
 - Make whatever repository changes are necessary to complete the approved task, including
   refactoring, moving, creating, or deleting obsolete project files when justified.
 - Do not stop merely because a file appears only indirectly related; follow the dependency
   chain and complete the work end-to-end.
+- Do not ask the user to approve routine file reads, edits, installs, local server starts,
+  test runs, or local cleanup that is required by the approved task.
 - Preserve unrelated user changes when practical, but prioritize completing the approved task.
 - Never reset the repository or run broad destructive commands such as `git reset --hard`.
+- Never delete the backup branch or checkpoint commit during the task.
 - Keep responses and agent summaries concise: findings, files changed, tests, and blockers.
 - Do not repeat full file contents in responses.
 
@@ -42,21 +59,35 @@
 
 ## External systems and deployment
 
-- Do not modify Azure, Vercel, Neon, GitHub, DNS, production environment variables,
-  deployed containers, or external services.
-- Do not push commits, open pull requests, or deploy changes unless explicitly requested.
-- If an external secret must be rotated, document the exact action without performing it
-  automatically and without displaying the secret value.
+- When the approved task requires an end-to-end working result, you may use the available
+  authenticated CLI/tools to commit, push, deploy, and verify changes on GitHub, Vercel,
+  Azure Container Apps, Neon, or other project services.
+- Do not pause to ask for approval for routine deployment steps that are explicitly part of
+  the current task.
+- Before deployment, run the relevant local build and focused tests, inspect the diff, and
+  confirm that no secret, log, screenshot, or unrelated file is included.
+- Deploy only the project changes required by the current task. Do not change unrelated
+  infrastructure or data.
+- Prefer a preview/staging deployment from the task branch first when the hosting setup
+  supports it. Deploy to production only when the approved task explicitly requires the
+  production URL to be fixed.
+- Production environment changes are allowed when required to make the approved feature work.
+  Use existing secret references and environment mechanisms; never print secret values.
+- Secret rotation is allowed only when the user explicitly includes rotation in the task.
+  Perform it without displaying the new or old secret values, then verify service health.
+- If an external service is unavailable, continue all local work and report the exact blocker.
 
 ## Testing and verification
 
-- Do not claim a test passed unless it was actually executed and passed.
+- Do not claim a test or deployment passed unless it was actually executed and passed.
 - Prefer deterministic tests that do not require an external LLM key.
 - If an LLM-dependent test cannot run, mark it as skipped and explain why.
 - Verify changed JavaScript with syntax checks and run the narrowest relevant test first.
 - Check imports and the actual runtime path; do not test stale or unused modules as if they
   were production code.
 - Include exact commands and results in the final summary.
+- If the user asks for a production fix, verify the deployed URL/API after deployment instead
+  of stopping after a local build.
 
 ## Repository-specific guidance
 
@@ -81,3 +112,4 @@ Always report:
 4. Tests skipped and the reason.
 5. Remaining risks or blockers.
 6. Whether external deployment is still required.
+7. Current branch, backup branch, task branch, checkpoint commit, and pushed remote status.

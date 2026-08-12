@@ -9,8 +9,10 @@
 - ✅ **Full RAG Pipeline**: Keyword search, vector search (384d embeddings), SQL analytics, and LLM generation
 - ✅ **Role-Based Access Control (RBAC)**: CEO/HR/Manager/Employee with scope-based data access enforcement
 - ✅ **Visible Retrieval Surface**: 3D org graph + neural network pipeline inspector showing exactly what the AI inspects
-- ✅ **19-Node Trace Pipeline**: Real-time node-level visibility into every step
-- ✅ **Production Authentication**: JWT access/refresh tokens, rate limiting, Neon-backed sessions
+- ✅ **19-Node Trace Pipeline**: Real-time node-level visibility into every step of retrieval→generation
+- ✅ **Retrieval Evidence Panel**: Per-answer source display showing which documents/chunks fed the LLM
+- ✅ **RAG Assistant** (debug page): Interactive query tester — select any user, ask questions, inspect full pipeline trace with node-by-node timing and retrieval evidence
+- ✅ **Production Authentication**: JWT access/refresh tokens, rate limiting, Neon-backed sessions — debug page upgraded from client-side `root/1234` gate to real JWT login
 - ✅ **Evaluation Framework**: 65-question golden dataset, reproducible RAG evaluation
 - ✅ **Security Hardened**: Server-side authorization, threat model documented, production-safe defaults
 
@@ -75,10 +77,10 @@ Key features: JWT with server-side refresh token hashing, RBAC, rate limiting, r
 
 ## Known Limitations
 
-- Repository is currently **public** (should be made private due to HR demo data)
+- Repository is now **private** (was public with HR demo data — changed 2026-08-12)
 - Frontend timeout is 15s (streaming is planned future work)
 - Vector index is memory-heavy; disabled on low-RAM via `VECTOR_INDEX_DISABLED=true`
-- Debug page admin gate has a client-side component (backend endpoints are properly secured)
+- Debug page admin gate upgraded to real JWT login (was `root/1234` client-side gate)
 - `emp001` / `hr-manager` not in actual seed data
 
 ## Tech Stack

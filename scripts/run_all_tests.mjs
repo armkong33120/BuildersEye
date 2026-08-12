@@ -80,6 +80,16 @@ async function main() {
       continue;
     }
 
+    // Rate limit: 5/min per username+IP. Space auth-requiring tests by 14s
+    // to avoid 429 throttling across suites.
+    if (suite.requiresAuth && results.length > 0) {
+      const prevAuth = [...results].reverse().find(r => r.requiresAuth);
+      if (prevAuth) {
+        console.log(`  ⏳ Rate-limit delay (14s)...`);
+        await new Promise(r => setTimeout(r, 14_000));
+      }
+    }
+
     console.log(`\n── ${suite.name} ──`);
     const result = await runTest(suite.file);
     results.push({ ...suite, ...result });

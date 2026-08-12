@@ -1,0 +1,41 @@
+# Backend — deployed separately to Azure (not part of the frontend build)
+server/
+
+# Dependencies — Vercel installs these from package.json
+node_modules/
+
+# Git metadata
+.git/
+
+# Build output — Vercel rebuilds this from source
+dist/
+
+# HR dataset (xlsx/zip) — only needed by the backend, not the frontend
+src/data/hr_onedrive_demo/
+
+# Large/irrelevant local files
+.data/
+.agents/
+docs/
+eval/
+tools/
+artifacts/
+scripts/
+pdf_extracted.txt
+*.png
+*.jpg
+*.log
+*.csv
+.DS_Store
+.env
+.env.local
+render.yaml
+
+# Local scratch / docs files
+target_a____local_dist_.png
+playwright_desktop.png
+playwright_mobile.png
+test_20_queries.*
+e2e*.mjs
+.clinerules
+

@@ -31,3 +31,5 @@ server/server/
 
 tools/upgrade_360/output/
 tools/upgrade_360/.venv/
+.vercel
+.env*

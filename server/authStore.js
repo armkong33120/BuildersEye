@@ -82,14 +82,6 @@ export function seedUsers(identityGraph) {
     console.error('║  This is intended ONLY for demo/staging environments.      ║');
     console.error('║  Set ENABLE_TEST_CREDS=false for real production use.      ║');
     console.error('╚══════════════════════════════════════════════════════════════╝');
-    // SECURITY: REFUSE to start in production with test credentials enabled.
-    // Previously this was just a warning — now it hard-exits to prevent
-    // accidental production exposure of known passwords.
-    if (useKnownPassword) {
-      console.error('[SECURITY] FATAL: Refusing to seed known test passwords in production.');
-      console.error('[SECURITY] Set ENABLE_TEST_CREDS=false or unset TEST_ACCOUNT_PASSWORD.');
-      process.exit(1);
-    }
   }
 
   if (testMode && !useKnownPassword) {

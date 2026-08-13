@@ -413,15 +413,25 @@ function renderEvidence(d){
     '<span class="badge badge-route">Route: '+escapeHtml(route)+'</span></div>';
 
   // row 1b: provider/model + executed nodes (values come from the backend — never hardcoded)
+  var executedEntries=(d.executedEntries!=null)?d.executedEntries:(trace.length||0);
+  var uniqueNodes=(d.uniqueExecutedNodes!=null)?d.uniqueExecutedNodes:(d.executedNodes||0);
   html+='<div class="ev-row"><span class="ev-label">Model</span>'+
     '<span class="badge badge-tag">'+escapeHtml((d.provider||'—')+' / '+(d.model||'—'))+'</span>'+
-    '<span class="ev-val" style="color:var(--faint)">'+escapeHtml((d.executedNodes||0)+'/'+(d.totalNodes||0)+' nodes executed')+'</span></div>';
+    '<span class="ev-val" style="color:var(--faint)">'+escapeHtml(executedEntries+' entries · '+uniqueNodes+'/'+(d.totalNodes||0)+' unique nodes')+'</span></div>';
 
   // row 2: SQL / LLM / Cache indicators
   html+='<div class="ev-row"><span class="ev-label">Flags</span>'+
     boolBadge(!!d.sqlUsed,'SQL')+' '+
     boolBadge(!!d.llmUsed,'LLM')+' '+
     boolBadge(!!d.cached,'Cache')+'</div>';
+
+  // row 2b: SQL lifecycle — authoritative metadata from the backend
+  html+='<div class="ev-row"><span class="ev-label">SQL Lifecycle</span>'+
+    boolBadge(!!d.sqlDetected,'Detected')+' '+
+    boolBadge(!!d.sqlAttempted,'Attempted')+' '+
+    boolBadge(!!d.sqlSucceeded,'Succeeded')+
+    (d.fallbackRoute?' <span class="badge badge-route">fallback→'+escapeHtml(d.fallbackRoute)+'</span>':'')+
+    '</div>';
 
   // row 3: matchers used
   if(matchers.length){
@@ -459,6 +469,27 @@ function renderEvidence(d){
         '<span style="font-size:9px;color:var(--faint);min-width:36px;text-align:right">'+pct+'%</span></div></div>';
     }
     if(chunks.length>8) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(chunks.length-8)+' more chunks</div>';
+  }
+
+  // row 6b: safe retrieval evidence per top result — source/sheet/field/employeeId/score/snippet
+  // (only fields the backend actually returned; snippet omitted when redacted)
+  var evidence=(d.retrievalEvidence&&Array.isArray(d.retrievalEvidence))?d.retrievalEvidence:[];
+  if(evidence.length){
+    html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">Retrieval Evidence ('+evidence.length+')</span></div>';
+    var maxE=Math.min(evidence.length,5);
+    for(var k=0;k<maxE;k++){
+      var e=evidence[k]||{};
+      var bits=[];
+      if(e.source)bits.push('src='+e.source);
+      if(e.sheet)bits.push('sheet='+e.sheet);
+      if(e.field)bits.push('field='+e.field);
+      if(e.employeeId!=null)bits.push('emp='+e.employeeId);
+      if(e.score!=null)bits.push('score='+Math.round(normalizeScore(e.score))+'%');
+      html+='<div class="ev-chunk"><div class="t">'+escapeHtml(bits.join(' · '))+'</div>';
+      if(e.snippet)html+='<div style="color:var(--dim);font-size:9.5px;margin-top:3px;word-break:break-all">'+escapeHtml(e.snippet)+'</div>';
+      html+='</div>';
+    }
+    if(evidence.length>maxE) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(evidence.length-maxE)+' more evidence</div>';
   }
 
   // row 7: latency table — per-node duration + cumulative elapsed (one consistent meaning)

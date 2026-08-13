@@ -22,6 +22,7 @@ const TEST_SUITES = [
   { name: 'SQL Query',            file: 'test_api_sql_query.mjs',        requiresAuth: true },
   { name: 'Cache Hit',            file: 'test_api_cache.mjs',            requiresAuth: true },
   { name: 'SQL Fallback',         file: 'test_api_sql_fallback.mjs',     requiresAuth: true },
+  { name: 'SQL Metadata + Evidence', file: 'test_sql_metadata_evidence.mjs', requiresAuth: true },
   { name: 'Debug Inspector',      file: 'test_debug_inspector.mjs',     requiresAuth: false },
   { name: 'RBAC Matrix',          file: 'test_api_rbac_matrix.mjs',      requiresAuth: true },
 ];

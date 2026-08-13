@@ -37,6 +37,16 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const TOTAL_PIPELINE_NODES = 19; // matches the 19-node visualization on the debug page
   const executedNodeCount = (t) => new Set((t || []).map((e) => e.node)).size;
 
+  // ── SQL metadata (authoritative, single source of truth) ─────────────────
+  // sqlDetected   = SQL analytics intent recognized (regex OR semantic TEXT_TO_SQL)
+  // sqlAttempted  = generateAndRunSQL() was actually invoked
+  // sqlSucceeded  = SQL produced the final answer (equals sqlUsed)
+  // fallbackRoute = route that produced the answer after a failed SQL attempt (else null)
+  let sqlDetected = false;
+  let sqlAttempted = false;
+  let sqlSucceeded = false;
+  let fallbackRoute = null;
+
   // ── Connection log: ordered node trace for the debug page ──
   const trace = [];
   const traceT0 = Date.now();
@@ -61,12 +71,16 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       scannedFileCount: 0, responseTimeMs: Date.now() - startTime, matchersUsed: [],
       route: 'blocked', answerSource: 'blocked',
       provider: llmInfo.provider, model: llmInfo.model,
-      executedNodes: executedNodeCount(trace), totalNodes: TOTAL_PIPELINE_NODES,
+      sqlDetected, sqlAttempted, sqlSucceeded, fallbackRoute,
+      retrievalEvidence: [],
+      executedNodes: executedNodeCount(trace), uniqueExecutedNodes: executedNodeCount(trace),
+      executedEntries: trace.length, totalNodes: TOTAL_PIPELINE_NODES,
       trace };
   }
 
   // LOOP 15: SQL analytics detection (LOOP 20: expanded for HR/IT)
   const needsSqlAnalytics = detectSqlAnalyticsIntent(query);
+  sqlDetected = needsSqlAnalytics;
   mark('sql', isQualitativeQuery(query) ? 'none: qualitative' : (needsSqlAnalytics ? 'analytics' : 'none'));
 
   // Pronoun resolution (LOOP 13C — deterministic)
@@ -98,7 +112,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         route: 'cache',
         provider: llmInfo.provider,
         model: llmInfo.model,
+        sqlDetected, sqlAttempted: false, sqlSucceeded: false, fallbackRoute: null,
+        retrievalEvidence: Array.isArray(cached.retrievalEvidence) ? cached.retrievalEvidence : [],
         executedNodes: executedNodeCount(trace),
+        uniqueExecutedNodes: executedNodeCount(trace),
+        executedEntries: trace.length,
         totalNodes: TOTAL_PIPELINE_NODES,
         responseTimeMs: Date.now() - startTime,
         trace,
@@ -131,7 +149,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       llmUsed: false, sqlUsed: false, answerSource: 'clarification',
       route: 'clarification',
       provider: llmInfo.provider, model: llmInfo.model,
-      executedNodes: executedNodeCount(trace), totalNodes: TOTAL_PIPELINE_NODES,
+      sqlDetected, sqlAttempted: false, sqlSucceeded: false, fallbackRoute: null,
+      retrievalEvidence: [],
+      executedNodes: executedNodeCount(trace), uniqueExecutedNodes: executedNodeCount(trace),
+      executedEntries: trace.length, totalNodes: TOTAL_PIPELINE_NODES,
       trace,
     };
   }
@@ -201,6 +222,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const isExactEmployeeQuery = /EMP\d{3}/i.test(query);
   const shouldRouteSql = isTextToSql || (needsSqlAnalytics && !isExactEmployeeQuery);
 
+  // SQL metadata lifecycle: detected (regex or semantic) → attempted (routed to SQL)
+  sqlDetected = needsSqlAnalytics || isTextToSql;
+  sqlAttempted = shouldRouteSql;
+
   if (shouldRouteSql) {
     let sqlRes;
     // RBAC: ส่ง viewer scope เข้า SQL path (Layer 1+2) — generateAndRunSQL สร้าง scoped table
@@ -258,6 +283,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         answer = finalLLMAnswer;
         llmUsed = true;
         sqlUsed = true;
+        sqlSucceeded = true;
       } else { answer = contextData; }
     }
   }
@@ -366,6 +392,14 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   const route = sqlUsed ? 'sql' : (usedVector ? 'vector' : (llmUsed ? 'keyword' : 'template'));
 
+  // SQL fallback route: only meaningful when SQL was attempted but did not answer.
+  fallbackRoute = (sqlAttempted && !sqlSucceeded) ? route : null;
+
+  // Safe retrieval source evidence (Layer 3): built ONLY from RBAC-filtered
+  // finalResults — scope + field redaction already applied upstream. Fields are
+  // included only when actually present; snippets omitted when redacted.
+  const retrievalEvidence = buildRetrievalEvidence(finalResults, sources, 10);
+
   const result = {
     query, answer: finalAnswer,
     suggestedOptions,
@@ -385,7 +419,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     route,
     provider: llmInfo.provider,
     model: llmInfo.model,
+    sqlDetected, sqlAttempted, sqlSucceeded, fallbackRoute,
+    retrievalEvidence,
     executedNodes: executedNodeCount(trace),
+    uniqueExecutedNodes: executedNodeCount(trace),
+    executedEntries: trace.length,
     totalNodes: TOTAL_PIPELINE_NODES,
     cached: false,
     trace,
@@ -398,8 +436,48 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   mark('out', `final answer ready in ${Date.now() - startTime}ms`);
   result.executedNodes = executedNodeCount(trace); // include the final 'out' node
+  result.uniqueExecutedNodes = result.executedNodes;
+  result.executedEntries = trace.length;
   recordPipelineLatency(Date.now() - startTime);
   return result;
+}
+
+// ── Safe retrieval source evidence (Layer 3) ──
+// Builds per-top-result evidence ONLY from RBAC-filtered results (scope + field
+// redaction already applied upstream by the caller). Fields are included only
+// when actually present; snippets are omitted whenever the content is redacted
+// or unavailable, so no out-of-scope / policy-redacted text ever leaks here.
+export function buildRetrievalEvidence(finalResults, sources = [], limit = 10) {
+  const safeSources = Array.isArray(sources) ? sources : [];
+  return (finalResults || [])
+    .slice(0, limit)
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') return null;
+      const rec = (Array.isArray(entry.matchedRecords) && entry.matchedRecords[0]) || {};
+      const ev = {};
+
+      // source: prefer the record's own file name, else the matching source file
+      let fileName = typeof rec.fileName === 'string' ? rec.fileName : '';
+      if (!fileName) {
+        const src = safeSources.find((s) => {
+          const m = s && typeof s.fileName === 'string' ? s.fileName.match(/EMP(\d{3})/i) : null;
+          return m && parseInt(m[1], 10) === Number(entry.employeeId);
+        });
+        if (src && typeof src.fileName === 'string') fileName = src.fileName;
+      }
+      if (fileName) ev.source = fileName;
+      if (rec.sheetName) ev.sheet = rec.sheetName;
+      if (rec.fieldName) ev.field = rec.fieldName;
+      if (entry.employeeId != null) ev.employeeId = entry.employeeId;
+      if (typeof entry.score === 'number') ev.score = entry.score;
+
+      const content = typeof rec.content === 'string' ? rec.content : '';
+      const isRedacted = !!(rec && rec.redacted) || /^\[Redacted/.test(content);
+      if (content && !isRedacted) ev.snippet = content.slice(0, 200);
+
+      return Object.keys(ev).length > 0 ? ev : null;
+    })
+    .filter(Boolean);
 }
 
 // ── RBAC scope helper (SQL path) ──

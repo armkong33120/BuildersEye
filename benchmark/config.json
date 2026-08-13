@@ -1,0 +1,23 @@
+{
+  "iterations": 3,
+  "kValues": [5, 10, 15],
+  "roles": ["CEO", "HR", "Manager", "Employee"],
+  "roleMapping": {
+    "CEO": { "role": "CEO", "employeeId": 1 },
+    "HR": { "role": "HR", "employeeId": 135 },
+    "Manager": { "role": "Manager", "employeeId": 9 },
+    "Employee": { "role": "Employee", "employeeId": 42 }
+  },
+  "defaultBackend": "http://localhost:5199",
+  "latencyBudgetMs": 2000,
+  "fallbackRateBudgetPct": 30,
+  "routeAccuracyTargetPct": 85,
+  "blockAccuracyTargetPct": 95,
+  "leakageBudgetPct": 5,
+  "recallAtKTarget": 0.7,
+  "report": {
+    "includeRawResults": true,
+    "includeFailures": true,
+    "includeLeakages": true
+  }
+}

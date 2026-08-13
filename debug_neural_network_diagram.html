@@ -164,7 +164,7 @@
           <b>19-node trace</b>: แสดงโหนดที่ยิงจริง (ไม่ใช่ animation ปลอม) — canvas ใช้ข้อมูลจาก <i>d.trace</i> จริงจาก backend<br><br>
           <b>RBAC</b>: CEO เห็นทั้งหมด · HR เห็นทั้งหมด · Manager เห็นเฉพาะทีม · Employee เห็นเฉพาะตัวเอง<br><br>
           <b>Answer sources</b>:<br>
-          <span class="badge badge-src" style="margin:3px 2px">gemini</span> LLM generate (DeepSeek)<br>
+          <span class="badge badge-src" style="margin:3px 2px">llm</span> LLM generate (provider/model read from backend)<br>
           <span class="badge badge-src" style="margin:3px 2px;background:rgba(168,139,250,.15);color:var(--c2);border-color:rgba(168,139,250,.35)">sql-analytics</span> Aggregation query<br>
           <span class="badge badge-src" style="margin:3px 2px;background:rgba(248,113,113,.15);color:#f87171;border-color:rgba(248,113,113,.35)">template</span> No LLM fallback<br><br>
           <b>Cache</b>: TTL 15 นาที · LLM-on เท่านั้น · cache hit = ข้าม LLM<br>
@@ -226,7 +226,7 @@ const LAYERS = [
     {id:'anom', label:'Anonymize / De-anonymize', file:'server/anonymizer.js', detail:'anonymize()/deAnonymize() · Tier1→3 label mapping'},
   ]},
   { key:'h4', color:'#e879f9', ms:1200, nodes:[
-    {id:'llm',  label:'LLM Generate',   file:'server/llmClient.js', detail:'generateAnswer() · CONDITIONAL: DeepSeek deepseek-v4-flash, max_tokens 500'},
+    {id:'llm',  label:'LLM Generate',   file:'server/llmClient.js', detail:'generateAnswer() · CONDITIONAL: configured LLM (provider/model from backend), max_tokens 500'},
     {id:'tpl',  label:'Template Fallback', file:'server/searchIndex.js', detail:'buildAnswer() · deterministic when no LLM / no branch won'},
   ]},
   { key:'out', color:'#f472b6', nodes:[
@@ -318,7 +318,7 @@ function run(d){
         const n=nodes.get(t.node); if(!n)continue;
         n.st=1;
         if(prevId&&nodes.get(prevId))burst(prevId,t.node);
-        const dwell=Math.max(50,Math.min(1100,Number(t.ms)||80));
+        const dwell=Math.max(50,Math.min(1100,Number(t.durationMs)||80));
         await wait(dwell);
         if(tok!==runToken)return;
         n.st=2;
@@ -371,6 +371,12 @@ const BACKEND = new URLSearchParams(location.search).get('backend')
 
 // ── helpers ─────────────────────────────────────────────────────────────────
 function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+// ── score normalization (single source of truth, mirrors server/score.js) ──
+// Keyword scores are 0..100; vector cosine scores are 0..1. Normalize ONCE to
+// a 0..100 percentage and never exceed 100%.
+//   1 → 100%, 0.91 → 91%, 100 → 100%, 137 → 100%
+function normalizeScore(score){var n=Number(score); if(!isFinite(n))return 0; var pct=n>1?n:n*100; return Math.max(0,Math.min(100,pct));}
+function percentLabel(score){return Math.round(normalizeScore(score))+'%';}
 // ── trace / connection log ──────────────────────────────────────────────────
 function traceEntries(d){ return (d&&Array.isArray(d.trace))?d.trace:[]; }
 function renderTrace(trace){
@@ -381,7 +387,7 @@ function renderTrace(trace){
     const li=document.createElement('li');
     li.innerHTML='<span class="ix">#'+String(i+1).padStart(2,'0')+'</span>'+
       '<span class="nd">'+escapeHtml(t.node)+'</span>'+
-      '<span class="ms">+'+(Number(t.ms)||0)+'ms</span>'+
+      '<span class="ms">+'+(Number(t.elapsedMs)||0)+'ms</span>'+
       '<span class="nt">'+escapeHtml(t.note||'')+'</span>';
     el.appendChild(li);
   });
@@ -406,6 +412,11 @@ function renderEvidence(d){
     '<span class="badge badge-src">'+escapeHtml(src)+'</span>'+
     '<span class="badge badge-route">Route: '+escapeHtml(route)+'</span></div>';
 
+  // row 1b: provider/model + executed nodes (values come from the backend — never hardcoded)
+  html+='<div class="ev-row"><span class="ev-label">Model</span>'+
+    '<span class="badge badge-tag">'+escapeHtml((d.provider||'—')+' / '+(d.model||'—'))+'</span>'+
+    '<span class="ev-val" style="color:var(--faint)">'+escapeHtml((d.executedNodes||0)+'/'+(d.totalNodes||0)+' nodes executed')+'</span></div>';
+
   // row 2: SQL / LLM / Cache indicators
   html+='<div class="ev-row"><span class="ev-label">Flags</span>'+
     boolBadge(!!d.sqlUsed,'SQL')+' '+
@@ -420,10 +431,14 @@ function renderEvidence(d){
     html+='<div class="ev-row"><span class="ev-label">Matchers</span><span class="ev-val" style="color:var(--faint)">— none —</span></div>';
   }
 
-  // row 4: RBAC scope
-  var role=d.role||(d.viewer&&currentUserInfo&&currentUserInfo.username===d.viewer?currentUserInfo.role:'—');
-  var empId=d.employeeId||d.empId||'—';
-  html+='<div class="ev-row"><span class="ev-label">RBAC Scope</span><span class="ev-val">role='+escapeHtml(role)+' · empId='+escapeHtml(String(empId))+'</span></div>';
+  // row 4: viewer identity (from signed JWT — never the request body)
+  var v=d.viewer&&typeof d.viewer==='object'?d.viewer:null;
+  var role=(d.role!=null)?d.role:(v?v.role:(currentUserInfo?currentUserInfo.role:'—'));
+  var empId=(d.employeeId!=null)?d.employeeId:(v?v.employeeId:'—');
+  var dept=(d.department!=null)?d.department:(v?v.department:'');
+  var vuser=v?v.username:null;
+  html+='<div class="ev-row"><span class="ev-label">Viewer (JWT)</span><span class="ev-val">'+
+    escapeHtml(vuser||'—')+' · role='+escapeHtml(role)+' · empId='+escapeHtml(String(empId))+(dept?' · dept='+escapeHtml(dept):'')+'</span></div>';
 
   // row 5: fallback reason (if template)
   if(src==='template'||d.fallbackReason){
@@ -435,7 +450,7 @@ function renderEvidence(d){
     html+='<div class="ev-row" style="margin-top:6px"><span class="ev-label">Chunks ('+chunks.length+')</span></div>';
     var maxC=Math.min(chunks.length,8);
     for(var i=0;i<maxC;i++){
-      var c=chunks[i]; var score=Number(c.s||c.score||0); var pct=Math.round(score*100);
+      var c=chunks[i]; var score=Number(c.s||c.score||0); var pct=Math.round(normalizeScore(score));
       var cls=pct>=85?'hi':pct>=60?'md':'lo';
       var preview=(c.t||c.text||c.content||'').slice(0,80);
       html+='<div class="ev-chunk"><div class="t">'+escapeHtml(preview)+(preview.length>=80?'…':'')+'</div>'+
@@ -446,14 +461,15 @@ function renderEvidence(d){
     if(chunks.length>8) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(chunks.length-8)+' more chunks</div>';
   }
 
-  // row 7: latency table
+  // row 7: latency table — per-node duration + cumulative elapsed (one consistent meaning)
   if(trace.length){
     html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">Latency</span></div>';
-    html+='<table id="evTable"><thead><tr><th>Node</th><th>ms</th><th>note</th></tr></thead><tbody>';
+    html+='<table id="evTable"><thead><tr><th>Node</th><th>dur</th><th>elapsed</th><th>note</th></tr></thead><tbody>';
     for(var j=0;j<trace.length;j++){
       var t=trace[j];
       html+='<tr><td class="nd">'+escapeHtml(t.node)+'</td>'+
-        '<td class="ms">+'+(Number(t.ms)||0)+'ms</td>'+
+        '<td class="ms">'+(Number(t.durationMs)||0)+'ms</td>'+
+        '<td class="ms">+'+(Number(t.elapsedMs)||0)+'ms</td>'+
         '<td class="nt">'+escapeHtml(t.note||'')+'</td></tr>';
     }
     html+='</tbody></table>';
@@ -473,9 +489,10 @@ function updateCurrentUser(){
   currentUserInfo=opt?{username:opt.value,role:(opt.dataset.role||''),label:opt.textContent}:null;
 }
 function whoLabel(d){
-  const u=d.viewer||selectedUsername()||'—';
-  const known=currentUserInfo&&currentUserInfo.username===u;
-  return known?u+' ('+currentUserInfo.role+')':u;
+  const v=(d.viewer&&typeof d.viewer==='object')?d.viewer:null;
+  const u=(v&&v.username)||selectedUsername()||'—';
+  const role=(v&&v.role)||(d.role!=null?d.role:(currentUserInfo?currentUserInfo.role:''));
+  return role?(u+' ('+role+')'):u;
 }
 function metaLine(d){
   const sec=d.responseTimeMs!=null?(d.responseTimeMs/1000).toFixed(1)+'s':'—';
@@ -502,13 +519,19 @@ function loadHistory(){ try{return JSON.parse(localStorage.getItem(HISTORY_KEY)|
 function saveHistory(h){ try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0,50))); }catch(e){} }
 function pushHistory(d){
   const h=loadHistory();
+  const id=d.id||(d.query+'|'+(d.at||''));
+  // Deduplicate: every successful query appears EXACTLY once. Live polling
+  // re-delivers the same pipeline event (same id) — skip if already recorded.
+  if(h.some(e=>e.id===id)) return;
+  const vName=(d.viewer&&typeof d.viewer==='object')?(d.viewer.username||''):(d.viewer||selectedUsername());
   h.unshift({
+    id:id,
     query:d.query,
     at:d.at||new Date().toISOString(),
     trace:traceEntries(d),
     answer:(d.answer||'').slice(0,400),
     answerSource:d.answerSource||'',
-    viewer:d.viewer||selectedUsername(),
+    viewer:vName,
     responseTimeMs:d.responseTimeMs||0,
     sqlUsed:!!d.sqlUsed, llmUsed:!!d.llmUsed,
   });
@@ -531,11 +554,12 @@ function renderHistory(){
     el.appendChild(li);
   });
 }
-let lastQuery=null;
+let lastQuery=null, lastId=null;
 // Render one pipeline event everywhere (trace list + answer + history + canvas)
 function presentPipeline(d,{record=true}={}){
   if(!d||!d.query)return;
   lastQuery=d.query;
+  lastId=d.id||null;
   renderTrace(traceEntries(d));
   renderEvidence(d);
   renderAnswer(d);
@@ -548,10 +572,7 @@ function presentPipeline(d,{record=true}={}){
 async function loadCredentials(){
   const sel=$('userSelect'), status=$('credsStatus');
   try{
-    const headers = {};
-    if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
-    const r=await fetch(BACKEND+'/api/preview/credentials',{cache:'no-store',headers});
-    if(r.status===401){ handleAuthError(401); return; }
+    const r=await fetchAuth('/api/preview/credentials',{cache:'no-store'});
 
     if(r.status===403){ status.textContent='⚠ credentials disabled (ENABLE_TEST_CREDS=off on backend)'; sel.innerHTML='<option value="">— creds unavailable —</option>'; return; }
     if(!r.ok){ status.textContent='⚠ credentials error HTTP '+r.status; return; }
@@ -566,7 +587,7 @@ async function loadCredentials(){
   }catch(e){ status.textContent='⚠ backend not reachable — '+BACKEND; }
 }
 // ── RAG assistant: auto-login + live chat ───────────────────────────────────
-let currentToken=null, tokenUser=null;
+let currentToken=null, currentRefreshToken=null, tokenUser=null, tokenUserInfo=null;
 let gatePassword=''; // stored in memory only (never in sessionStorage)
 
 async function loginAs(username, password){
@@ -576,7 +597,10 @@ async function loginAs(username, password){
   if(!r.ok){ const t=await r.text().catch(()=>''); throw new Error('login '+r.status+' '+t.slice(0,140)); }
   const d=await r.json();
   if(!d.accessToken)throw new Error('login: no accessToken in response');
-  currentToken=d.accessToken; tokenUser=username;
+  currentToken=d.accessToken;
+  currentRefreshToken=d.refreshToken||currentRefreshToken;
+  tokenUser=username;
+  tokenUserInfo=d.user||null;
   return d;
 }
 
@@ -584,10 +608,44 @@ function handleAuthError(status){
   if(status===401){
     // Only show "expired" if there was a previous session — not on first load
     const hadSession = !!(currentToken || tokenUser);
-    currentToken=null; tokenUser=null; gatePassword='';
+    currentToken=null; currentRefreshToken=null; tokenUser=null; tokenUserInfo=null; gatePassword='';
     showGate(hadSession ? 'Session expired — please sign in again' : '');
   }
 }
+
+// Silent token refresh using the stored refresh token (returns true on success).
+async function refreshAccessToken(){
+  if(!currentRefreshToken) return false;
+  try{
+    const r=await fetch(BACKEND+'/api/auth/refresh',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({refreshToken:currentRefreshToken})});
+    if(!r.ok) return false;
+    const d=await r.json();
+    if(!d.accessToken) return false;
+    currentToken=d.accessToken;
+    if(d.refreshToken) currentRefreshToken=d.refreshToken;
+    if(d.user) tokenUserInfo=d.user;
+    return true;
+  }catch(e){ return false; }
+}
+
+// fetch with Bearer token attached + one silent refresh retry on 401.
+async function fetchAuth(path, options){
+  options=options||{};
+  options.headers=Object.assign({}, options.headers||{});
+  if(currentToken) options.headers['Authorization']='Bearer '+currentToken;
+  let r=await fetch(BACKEND+path, options);
+  if(r.status===401 && currentRefreshToken){
+    const ok=await refreshAccessToken();
+    if(ok){
+      options.headers['Authorization']='Bearer '+currentToken;
+      r=await fetch(BACKEND+path, options);
+    }
+  }
+  if(r.status===401) handleAuthError(401);
+  return r;
+}
+
 async function sendChat(){
   const input=$('assistInput'), out=$('assistOutput'), meta=$('assistMeta'), btn=$('assistSend');
   const query=input.value.trim();
@@ -601,12 +659,14 @@ async function sendChat(){
       await loginAs(username, gatePassword);
     }
     const convId=(typeof crypto!=='undefined'&&crypto.randomUUID)?crypto.randomUUID():('c-'+Date.now()+'-'+Math.random().toString(16).slice(2));
-    const r=await fetch(BACKEND+'/api/chat',{method:'POST',
-      headers:{'Authorization':'Bearer '+currentToken,'Content-Type':'application/json'},
-      body:JSON.stringify({query,conversationId:convId,viewer:username})});
+    // NOTE: viewer identity is NOT sent in the body — the backend derives it
+    // from the signed JWT in the Authorization header.
+    const r=await fetchAuth('/api/chat',{method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({query,conversationId:convId})});
     if(!r.ok){ const t=await r.text().catch(()=>''); const err=new Error('chat HTTP '+r.status+' '+t.slice(0,140)); err.status=r.status; throw err; }
     const d=await r.json();
-    if(!d.viewer)d.viewer=username;
+    if(!d.viewer)d.viewer={username:username, role:(tokenUserInfo&&tokenUserInfo.role)||'', employeeId:(tokenUserInfo&&tokenUserInfo.employeeId)||null, department:(tokenUserInfo&&tokenUserInfo.dept)||''};
     presentPipeline(d,{record:true});   // answer + trace + history + canvas truth
   }catch(e){
     if(e.status===401) handleAuthError(401);
@@ -619,13 +679,12 @@ async function pollPipeline(){
   // Don't poll authenticated endpoints until user has logged in
   if (!currentToken) return;
   try{
-    const headers = {};
-    headers['Authorization'] = 'Bearer ' + currentToken;
-    const r=await fetch(BACKEND+'/api/debug/pipeline',{cache:'no-store',headers});
-    if(r.status===401){ handleAuthError(401); return; }
+    const r=await fetchAuth('/api/debug/pipeline',{cache:'no-store'});
     if(!r.ok)return;
     const d=await r.json();
-    if(d.query && d.query!==lastQuery) presentPipeline(d,{record:true});
+    // Dedup by stable id (not query text) so live polling never double-records
+    // a pipeline event the user already saw, even across reloads.
+    if(d.query && d.id!==lastId) presentPipeline(d,{record:true});
   }catch(e){/* backend not up yet */}
 }
 setInterval(pollPipeline, 2000);
@@ -635,10 +694,7 @@ async function pollOnline(){
   // Don't poll until authenticated
   if (!currentToken) return;
   try{
-    const headers = {};
-    headers['Authorization'] = 'Bearer ' + currentToken;
-    const r=await fetch(BACKEND+'/api/debug/online',{cache:'no-store',headers});
-    if(r.status===401){ handleAuthError(401); return; }
+    const r=await fetchAuth('/api/debug/online',{cache:'no-store'});
     if(!r.ok)return;
     const d=await r.json();
     const list=(d.users||[]).map(u=>
@@ -666,10 +722,12 @@ function hideGate(){
 
 // Logout: clear token, show gate
 function doLogout(){
-  currentToken=null; tokenUser=null; gatePassword='';
+  const rt=currentRefreshToken;
+  currentToken=null; currentRefreshToken=null; tokenUser=null; tokenUserInfo=null; gatePassword='';
   $('gatePass').value='';
+  // Send the ACTUAL refresh token so the server can revoke the session.
   fetch(BACKEND+'/api/auth/logout',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({refreshToken:''})}).catch(()=>{});
+    body:JSON.stringify({refreshToken:rt||''})}).catch(()=>{});
   showGate();
 }
 if(topLogout) topLogout.addEventListener('click',doLogout);

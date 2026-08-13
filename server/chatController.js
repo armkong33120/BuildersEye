@@ -6,7 +6,7 @@ import { parseIntentSemantically } from './semanticParser.js';
 import { parseIntent } from './intentParser.js';
 import { addMessage, getHistory } from './chatMemory.js';
 import { resolvePronouns } from './pronounResolver.js';
-import { generateAnswer, isLLMAvailable } from './llmClient.js';
+import { generateAnswer, isLLMAvailable, getProviderInfo } from './llmClient.js';
 import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 // หมายเหตุ: ไม่ใช้ semanticSearch จาก vectorEngine.js แล้ว (มัน embed ด้วย text-embedding-3-small
 // ผ่าน DeepSeek → 404 + มิติผิด 1536 vs 384) — ใช้ production path embedOne + searchVectors แทน
@@ -33,20 +33,36 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const startTime = Date.now();
   const viewerRole = viewer?.role || 'CEO';
   const viewerPk = viewer?.employeeId || 1;
+  const llmInfo = getProviderInfo();
+  const TOTAL_PIPELINE_NODES = 19; // matches the 19-node visualization on the debug page
+  const executedNodeCount = (t) => new Set((t || []).map((e) => e.node)).size;
 
   // ── Connection log: ordered node trace for the debug page ──
   const trace = [];
   const traceT0 = Date.now();
-  const mark = (node, note) => { trace.push({ node, ms: Math.round(Date.now() - (trace._last || traceT0)), note: note || '' }); trace._last = Date.now(); };
+  let tracePrev = traceT0;
+  // Trace timing contract (ONE consistent meaning):
+  //   durationMs = time spent in THIS node (delta from the previous trace entry)
+  //   elapsedMs  = cumulative ms since pipeline start
+  const mark = (node, note) => {
+    const now = Date.now();
+    trace.push({ node, note: note || '', durationMs: now - tracePrev, elapsedMs: now - traceT0 });
+    tracePrev = now;
+  };
   mark('q', 'query received');
 
   const qp = checkQueryPolicy(query, viewerRole);
   mark('pol', qp.status === 'Blocked' ? 'Blocked' : 'Allowed');
   if (qp.status === 'Blocked') {
+    // Blocked query stops at policy: trace ends at 'pol', no LLM/search nodes.
     return { query, answer: 'Query blocked by governance policy.', suggestedOptions: [],
       matchedEmployeePks: [], matchedDepartments: [], results: [], sources: [],
       policy: qp, scan: { employeePks: [], highlightEdges: false, sourcePk: 1, durationMs: 0 },
-      scannedFileCount: 0, responseTimeMs: Date.now() - startTime, matchersUsed: [], trace };
+      scannedFileCount: 0, responseTimeMs: Date.now() - startTime, matchersUsed: [],
+      route: 'blocked', answerSource: 'blocked',
+      provider: llmInfo.provider, model: llmInfo.model,
+      executedNodes: executedNodeCount(trace), totalNodes: TOTAL_PIPELINE_NODES,
+      trace };
   }
 
   // LOOP 15: SQL analytics detection (LOOP 20: expanded for HR/IT)
@@ -70,7 +86,23 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       addMessage(conversationId, 'user', query);
       addMessage(conversationId, 'assistant', cached.answer);
       mark('mem', 'cached answer saved to memory');
-      return { ...cached, cached: true, responseTimeMs: Date.now() - startTime, trace };
+      // Cache hit must NOT present as LLM generation — the answer was reused,
+      // so clear llm/sql flags and relabel source + route. Trace stops at 'mem'
+      // (no llm/ctx/vec/emb nodes), matching the "cache hit = skip LLM" contract.
+      return {
+        ...cached,
+        cached: true,
+        llmUsed: false,
+        sqlUsed: false,
+        answerSource: 'cache',
+        route: 'cache',
+        provider: llmInfo.provider,
+        model: llmInfo.model,
+        executedNodes: executedNodeCount(trace),
+        totalNodes: TOTAL_PIPELINE_NODES,
+        responseTimeMs: Date.now() - startTime,
+        trace,
+      };
     }
   } else {
     mark('cache', 'off (LLM unavailable)');
@@ -96,7 +128,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       scan: { employeePks: [], highlightEdges: false, sourcePk: 1, durationMs: 0 },
       scannedFileCount: 0, responseTimeMs: Date.now() - startTime,
       matchersUsed: [], _parsedIntent: parsedIntent,
-      llmUsed: false, answerSource: 'clarification',
+      llmUsed: false, sqlUsed: false, answerSource: 'clarification',
+      route: 'clarification',
+      provider: llmInfo.provider, model: llmInfo.model,
+      executedNodes: executedNodeCount(trace), totalNodes: TOTAL_PIPELINE_NODES,
       trace,
     };
   }
@@ -115,7 +150,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const sheetBoost = Number(process.env.RAG_SHEET_BOOST || 1.10);
   const sheetCoverage = Number(process.env.RAG_SHEET_COVERAGE || 2);
   const matchedPks = []; const matchedDepts = new Set(); const finalResults = [];
-  let redactedCount = 0; let blockedCount = 0;
+  let redactedCount = 0; let blockedCount = 0; let usedVector = false;
 
   for (const entry of sr.results) {
     const pk = entry.employeeId;
@@ -240,6 +275,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       mark('emb', 'query embedded');
       const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
       mark('vec', `${(out.results || []).length} hits`);
+      usedVector = true;
       const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));
       if (vectorHits.length > 0) {
         // Extract employee PKs from vector hits for graph highlighting
@@ -328,6 +364,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   addMessage(conversationId, 'user', query);
   addMessage(conversationId, 'assistant', finalAnswer);
 
+  const route = sqlUsed ? 'sql' : (usedVector ? 'vector' : (llmUsed ? 'keyword' : 'template'));
+
   const result = {
     query, answer: finalAnswer,
     suggestedOptions,
@@ -343,7 +381,12 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     _parsedIntent: parsedIntent || parseIntent(query),
     llmUsed: llmUsed,
     sqlUsed: sqlUsed,
-    answerSource: sqlUsed ? 'sql-analytics' : (llmUsed ? 'gemini' : 'template'),
+    answerSource: sqlUsed ? 'sql-analytics' : (llmUsed ? 'llm' : 'template'),
+    route,
+    provider: llmInfo.provider,
+    model: llmInfo.model,
+    executedNodes: executedNodeCount(trace),
+    totalNodes: TOTAL_PIPELINE_NODES,
     cached: false,
     trace,
   };
@@ -354,6 +397,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   mark('out', `final answer ready in ${Date.now() - startTime}ms`);
+  result.executedNodes = executedNodeCount(trace); // include the final 'out' node
   recordPipelineLatency(Date.now() - startTime);
   return result;
 }

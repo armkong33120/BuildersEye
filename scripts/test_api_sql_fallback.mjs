@@ -99,9 +99,10 @@ async function main() {
     assert('SQL not needed → direct keyword', true, 'query handled by keyword path');
   }
 
-  // 6. answerSource should be 'template' if LLM unavailable, or something meaningful
+  // 6. answerSource should be a meaningful pipeline source (LLM is no longer
+  // hardcoded to 'gemini'; it is 'llm' with provider/model returned separately).
   assert('answerSource is valid',
-    ['template', 'gemini', 'sql-analytics'].includes(data.answerSource),
+    ['template', 'llm', 'sql-analytics', 'cache'].includes(data.answerSource),
     `answerSource=${data.answerSource}`);
 
   console.log(`\n📊 Results: ${passed} passed, ${failed} failed, ${skipped} skipped / ${tests.length} total`);

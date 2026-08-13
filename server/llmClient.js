@@ -90,6 +90,22 @@ export function isLLMAvailable() {
   return !skip && hasKey;
 }
 
+// ── Provider/model metadata (SAFE — never includes the API key) ─────────────
+// The UI must NOT hardcode a provider (gemini/deepseek). It reads these values
+// from the backend so the displayed provider/model always matches the active
+// LLM configuration (LLM_BASE_URL / LLM_MODEL env).
+export function getProviderInfo() {
+  let provider = 'custom';
+  try {
+    const host = new URL(BASE_URL).hostname || '';
+    if (/deepseek/i.test(host)) provider = 'deepseek';
+    else if (/openai/i.test(host)) provider = 'openai';
+    else if (/google|gemini|generativelanguage/i.test(host)) provider = 'gemini';
+    else if (host) provider = host;
+  } catch { provider = 'custom'; }
+  return { provider, model: MODEL, baseUrl: BASE_URL, available: isLLMAvailable() };
+}
+
 export async function generateAnswer(query, anonymizedContext, options = {}) {
   if (!isLLMAvailable()) return null;
 
@@ -111,6 +127,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         "6. If the query asks for a COUNT ('How many', 'กี่คน', 'มีกี่'), respond with the exact number and a brief summary (e.g., 'มีทั้งหมด 10 คนครับ โดย...')",
         "7. If the context is an analytics summary (maximum/minimum KPI), rephrase it into a natural sentence (e.g., 'คนที่ได้ KPI สูงสุดคือ...')",
         "8. Never dump raw data — always write like a helpful human assistant",
+        "9. Answer ONLY what was asked. For simple identity questions (e.g. 'X คือใคร', 'who is X'), give identity basics only (name, job title, department, role). Do NOT add KPI scores, compensation, bonuses, warnings, attendance or other unrelated facts unless the user explicitly asked for them.",
       ].join("\n");
 
   const userPrompt = "Context:\n" + anonymizedContext + "\n\nQuestion: " + query;

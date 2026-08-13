@@ -164,17 +164,23 @@ async function runPlaywrightTests() {
   try {
     log('\n=== Step C: Debug Page ===');
     await debugPage.goto(DEBUG_URL, { waitUntil: 'load', timeout: 30000 });
-    await debugPage.waitForTimeout(1500);
+    await debugPage.waitForTimeout(800);
+    // The debug page requires its own JWT SIGN IN — it does not share the
+    // app.html session (tokens are held in memory only, never sessionStorage).
+    await debugPage.fill('#gateUser', USERNAME).catch(() => {});
+    await debugPage.fill('#gatePass', PASSWORD).catch(() => {});
+    await debugPage.click('#gateBtn').catch(() => {});
+    await debugPage.waitForTimeout(2000);
     await shoot(debugPage, '04-debug-page.png');
 
-    // pollPipeline (ทุก 2 วิ) → #q ต้องได้ query ที่เพิ่งถาม, #chip ต้องขึ้น "live · HH:MM:SS"
+    // pollPipeline (ทุก 2 วิ) → #q ต้องได้ query ที่เพิ่งถาม, #chip ต้องขึ้น "backend · ..."
     const pipelinePickedUp = await debugPage
       .waitForFunction(() => {
         const q = document.querySelector('#q');
         const chip = document.querySelector('#chip');
         const qv = q ? q.value : '';
         const cv = chip ? chip.textContent.trim() : '';
-        return (qv.includes('CEO') || qv.includes('ใคร')) && cv.startsWith('live');
+        return (qv.includes('CEO') || qv.includes('ใคร')) && cv.includes('backend');
       }, null, { timeout: 20000 })
       .then(() => true)
       .catch(() => false);

@@ -4,6 +4,12 @@ import { getHistory } from './chatMemory.js';
 export async function parseIntentSemantically(query, viewerContext, flatIndex, conversationId = '') {
   if (!isLLMAvailable()) return null;
 
+  // Skip semantic LLM parsing for degenerate inputs: empty/whitespace queries
+  // and overly long queries would waste LLM tokens and can time out (the LLM
+  // has a 30s timeout + retries). Fall back to keyword/vector search instead.
+  const trimmedQuery = String(query || '').trim();
+  if (!trimmedQuery || trimmedQuery.length > 500) return null;
+
   const viewerId = viewerContext?.employeeId || 1;
   const viewerRole = viewerContext?.role || 'CEO';
   

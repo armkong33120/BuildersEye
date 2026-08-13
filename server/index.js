@@ -7,6 +7,7 @@ import { ingestAll } from './ingestExcel.js';
 import { initDatabase } from './sqlEngine.js';
 import { buildVectorIndex } from './vectorEngine.js';
 import { chatHandler, getPipelineLatencyStats } from './chatController.js';
+import { normalizeScore } from './score.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
 import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials, listOnlineUsers } from './authStore.js';
 import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
@@ -282,9 +283,21 @@ let latestPipeline = null;
 
 app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   try {
-    const { query, conversationId } = req.body;
+    const { conversationId } = req.body || {};
+    const query = String(req.body?.query || '').trim();
     if (!query) return res.status(400).json({ error: 'query is required' });
     const viewer = resolveViewer(req);
+
+    // Viewer identity comes SOLELY from the signed JWT (req.authUser) — never
+    // from req.body.viewer. This is what the UI displays (username/role/
+    // employeeId/department), so the client cannot spoof who it is.
+    const viewerInfo = req.authUser ? {
+      username: req.authUser.username,
+      role: req.authUser.role,
+      employeeId: req.authUser.employeeId,
+      department: req.authUser.dept || '',
+      name: req.authUser.name || '',
+    } : null;
 
     // Save user message to conversation history
     const convId = conversationId || 'conv-' + Date.now();
@@ -292,12 +305,17 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
 
     const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, convId);
 
+    // Stable id shared by the direct chat response AND latestPipeline so the
+    // debug page can deduplicate history (live polling must not double-record).
+    const pipelineId = 'pl-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+
     // Store for debug page (pipeline inspector)
     latestPipeline = {
+      id: pipelineId,
       query: result.query,
       answer: result.answer,
       chunks: (result.results || []).slice(0, 5).map((r) => ({
-        s: r.score != null ? r.score : (r.matchedRecords && r.matchedRecords[0] ? 0.5 : 0),
+        s: normalizeScore(r.score != null ? r.score : (r.matchedRecords && r.matchedRecords[0] ? 0.5 : 0)),
         t: (r.matchedRecords && r.matchedRecords[0] && r.matchedRecords[0].content) || (r.employeeId ? 'EMP' + String(r.employeeId).padStart(3, '0') : ''),
       })),
       sources: (result.sources || []).slice(0, 5),
@@ -309,9 +327,14 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       llmUsed: !!result.llmUsed,
       sqlUsed: !!result.sqlUsed,
       answerSource: result.answerSource || 'template',
+      route: result.route || 'template',
+      provider: result.provider || null,
+      model: result.model || null,
+      executedNodes: result.executedNodes || 0,
+      totalNodes: result.totalNodes || 0,
       matchersUsed: result.matchersUsed || [],
       cached: !!result.cached,
-      viewer: req.viewer || null,
+      viewer: viewerInfo,
     };
 
     // Save assistant response
@@ -319,8 +342,13 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       addMessage(convId, 'assistant', result.answer);
     }
 
-    // Include conversationId in response
+    // Include conversationId + identity in the direct response
     result.conversationId = convId;
+    result.id = pipelineId;
+    result.viewer = viewerInfo;
+    result.role = viewerInfo?.role || null;
+    result.employeeId = viewerInfo?.employeeId ?? null;
+    result.department = viewerInfo?.department || null;
     res.json(result);
   } catch (e) {
     console.error('[chat] Error:', e.message);

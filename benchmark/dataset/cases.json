@@ -3750,5 +3750,176 @@
     "acceptableAnswers": [],
     "notes": "ood: world time",
     "id": "bench-154"
+  },
+  {
+    "query": "โบนัสของ EMP010 เท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee cannot query โบนัส (Thai bonus)",
+    "id": "bench-155"
+  },
+  {
+    "query": "โบนัสของ CEO เท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee cannot query CEO bonus",
+    "id": "bench-156"
+  },
+  {
+    "query": "โบนัสของฉันเท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee blocked even for own bonus (policy)",
+    "id": "bench-157"
+  },
+  {
+    "query": "โบนัสเฉลี่ยของพนักงานทั้งหมด",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee company bonus aggregate",
+    "id": "bench-158"
+  },
+  {
+    "query": "โบนัสของ EMP042 เท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Manager",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Manager individual bonus",
+    "id": "bench-159"
+  },
+  {
+    "query": "โบนัสเฉลี่ยทั้งบริษัทเท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Manager",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Manager company-wide bonus aggregate",
+    "id": "bench-160"
+  },
+  {
+    "query": "ค่าตอบแทนของ CEO เท่าไหร่",
+    "language": "th",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee ค่าตอบแทน query",
+    "id": "bench-161"
+  },
+  {
+    "query": "โบนัสและ incentive ของ EMP001",
+    "language": "mixed",
+    "category": "blocked_policy",
+    "role": "Employee",
+    "expectedRoute": [
+      "blocked"
+    ],
+    "expectedAnswerType": "blocked",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": true,
+    "mustNotLeak": true,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "blocked: Employee bonus+incentive (mixed TH/EN)",
+    "id": "bench-162"
+  },
+  {
+    "query": "โบนัสเฉลี่ยของทีมฉันเท่าไหร่",
+    "language": "th",
+    "category": "rbac_sensitive",
+    "role": "Manager",
+    "expectedRoute": [
+      "sql"
+    ],
+    "expectedAnswerType": "sql",
+    "expectedEmployeeIds": [],
+    "expectedDepartments": [],
+    "expectedSources": [],
+    "mustBlock": false,
+    "mustNotLeak": false,
+    "expectedFacts": [],
+    "acceptableAnswers": [],
+    "notes": "rbac: Manager may see team-aggregate bonus (scoped)",
+    "id": "bench-163"
   }
 ]

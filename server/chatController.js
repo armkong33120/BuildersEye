@@ -12,6 +12,7 @@ import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 // ผ่าน DeepSeek → 404 + มิติผิด 1536 vs 384) — ใช้ production path embedOne + searchVectors แทน
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 import { detectSheetMentions } from './sheetAliases.js';
+import { detectSqlAnalyticsIntent, isQualitativeQuery } from './sqlRouting.js';
 
 // ── Pipeline latency tracker (p50/p95) ──
 const pipelineLatencies = [];
@@ -49,8 +50,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   // LOOP 15: SQL analytics detection (LOOP 20: expanded for HR/IT)
-  const needsSqlAnalytics = /average|avg|เฉลี่ย|mean|group by|compare|เทียบ|เปรียบเทียบ|standard deviation|เงินเดือน|โบนัส|ขึ้นเงินเดือน|ลาป่วย|ลากิจ|มาสาย|notebook|cost_thb|base_salary|sick_leave|attendance|asset|license|salary|bonus|สรุป|อุปกรณ์|เป็นเงิน|รวม|เท่าไหร่|มูลค่า|กี่ชิ้น|ปัญหา|วิกฤต|ความเสี่ยง|เสี่ยง|จุดอ่อน|ลาออก|ลาออกจากงาน|เทิร์นโอเวอร์|turnover|อัตราการ/i.test(query);
-  mark('sql', needsSqlAnalytics ? 'analytics' : 'none');
+  const needsSqlAnalytics = detectSqlAnalyticsIntent(query);
+  mark('sql', isQualitativeQuery(query) ? 'none: qualitative' : (needsSqlAnalytics ? 'analytics' : 'none'));
 
   // Pronoun resolution (LOOP 13C — deterministic)
   const pronounResult = resolvePronouns(query, conversationId);
@@ -204,6 +205,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     // This fixes the "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" regression where a keyword query
     // is misrouted to SQL (needsSqlAnalytics regex matched "ปัญหา" etc.) and SQL fails.
     if (sqlRes.error) {
+      const fallbackReason = /blocked/i.test(sqlRes.error) ? 'blocked'
+        : /llm|generate|available/i.test(sqlRes.error) ? 'llm failed'
+        : /database|initialized/i.test(sqlRes.error) ? 'db not ready'
+        : 'execution failed';
+      mark('sql-fallback', fallbackReason);
       mark('ctx', 'sql error — fallback to keyword/vector answer');
       mark('llm', 'keyword fallback (SQL failed)');
       // Fall through to the keyword/vector path (answer stays sr.answer)

@@ -184,6 +184,7 @@
       <button id="gateBtn">SIGN IN</button>
     </div>
   </div>
+<script src="./debug-history.js"></script>
 <script>
 // ════════════════════════════════════════════════════════════════════════════
 // NEURAL RAG · RAG Assistant / Org graph retrieval / online live chat inspector
@@ -404,6 +405,7 @@ function renderEvidence(d){
   const chunks=d.chunks||d.results||[];
   const trace=traceEntries(d);
   const totalMs=d.responseTimeMs||0;
+  const isSqlRoute=(route==='sql')||(src==='sql-analytics');
 
   let html='';
 
@@ -455,8 +457,8 @@ function renderEvidence(d){
     html+='<div class="ev-row"><span class="ev-label">Fallback</span><span class="ev-val" style="color:var(--amber)">'+escapeHtml(d.fallbackReason||'(template answer — no LLM used)')+'</span></div>';
   }
 
-  // row 6: chunks with score bars
-  if(chunks.length){
+  // row 6: chunks with score bars (keyword/vector retrieval — hidden for SQL routes)
+  if(!isSqlRoute && chunks.length){
     html+='<div class="ev-row" style="margin-top:6px"><span class="ev-label">Chunks ('+chunks.length+')</span></div>';
     var maxC=Math.min(chunks.length,8);
     for(var i=0;i<maxC;i++){
@@ -471,25 +473,51 @@ function renderEvidence(d){
     if(chunks.length>8) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(chunks.length-8)+' more chunks</div>';
   }
 
-  // row 6b: safe retrieval evidence per top result — source/sheet/field/employeeId/score/snippet
-  // (only fields the backend actually returned; snippet omitted when redacted)
-  var evidence=(d.retrievalEvidence&&Array.isArray(d.retrievalEvidence))?d.retrievalEvidence:[];
-  if(evidence.length){
-    html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">Retrieval Evidence ('+evidence.length+')</span></div>';
-    var maxE=Math.min(evidence.length,5);
-    for(var k=0;k<maxE;k++){
-      var e=evidence[k]||{};
-      var bits=[];
-      if(e.source)bits.push('src='+e.source);
-      if(e.sheet)bits.push('sheet='+e.sheet);
-      if(e.field)bits.push('field='+e.field);
-      if(e.employeeId!=null)bits.push('emp='+e.employeeId);
-      if(e.score!=null)bits.push('score='+Math.round(normalizeScore(e.score))+'%');
-      html+='<div class="ev-chunk"><div class="t">'+escapeHtml(bits.join(' · '))+'</div>';
-      if(e.snippet)html+='<div style="color:var(--dim);font-size:9.5px;margin-top:3px;word-break:break-all">'+escapeHtml(e.snippet)+'</div>';
+  // row 6b: evidence — SQL routes show ONLY SQL-result evidence (never keyword/
+  // vector chunks); non-SQL routes keep the retrieval evidence panel unchanged.
+  if(isSqlRoute){
+    var sqlEv=(d.sqlEvidence&&typeof d.sqlEvidence==='object'&&!Array.isArray(d.sqlEvidence))?d.sqlEvidence:null;
+    var sqlUnavailable=!sqlEv || sqlEv.status==='unavailable' || !(Array.isArray(sqlEv.values)&&sqlEv.values.length);
+    if(sqlUnavailable){
+      html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">SQL Evidence</span><span class="ev-val" style="color:var(--faint)">SQL result evidence unavailable</span></div>';
+    }else{
+      var sb=[];
+      if(sqlEv.source)sb.push('source='+sqlEv.source);
+      if(sqlEv.metric)sb.push('metric='+sqlEv.metric);
+      if(sqlEv.rowCount!=null)sb.push('rows='+sqlEv.rowCount);
+      if(Array.isArray(sqlEv.fields)&&sqlEv.fields.length)sb.push('fields='+sqlEv.fields.join(','));
+      html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">SQL Evidence</span></div>';
+      html+='<div class="ev-chunk"><div class="t">'+escapeHtml(sb.join(' · '))+'</div>';
+      if(sqlEv.sql)html+='<div style="color:var(--dim);font-size:9.5px;margin-top:3px;word-break:break-all">'+escapeHtml(String(sqlEv.sql).slice(0,200))+'</div>';
       html+='</div>';
+      var vals=Array.isArray(sqlEv.values)?sqlEv.values:[];
+      var maxV=Math.min(vals.length,5);
+      for(var vi=0;vi<maxV;vi++){
+        var rowTxt='';
+        try{ rowTxt=JSON.stringify(vals[vi]||{}); }catch(e2){ rowTxt=String(vals[vi]); }
+        html+='<div class="ev-chunk"><div class="t" style="color:var(--dim)">'+escapeHtml(String(rowTxt).slice(0,200))+'</div></div>';
+      }
+      if(vals.length>maxV) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(vals.length-maxV)+' more rows</div>';
     }
-    if(evidence.length>maxE) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(evidence.length-maxE)+' more evidence</div>';
+  }else{
+    var evidence=(d.retrievalEvidence&&Array.isArray(d.retrievalEvidence))?d.retrievalEvidence:[];
+    if(evidence.length){
+      html+='<div class="ev-row" style="margin-top:8px"><span class="ev-label">Retrieval Evidence ('+evidence.length+')</span></div>';
+      var maxE=Math.min(evidence.length,5);
+      for(var k=0;k<maxE;k++){
+        var e=evidence[k]||{};
+        var bits=[];
+        if(e.source)bits.push('src='+e.source);
+        if(e.sheet)bits.push('sheet='+e.sheet);
+        if(e.field)bits.push('field='+e.field);
+        if(e.employeeId!=null)bits.push('emp='+e.employeeId);
+        if(e.score!=null)bits.push('score='+Math.round(normalizeScore(e.score))+'%');
+        html+='<div class="ev-chunk"><div class="t">'+escapeHtml(bits.join(' · '))+'</div>';
+        if(e.snippet)html+='<div style="color:var(--dim);font-size:9.5px;margin-top:3px;word-break:break-all">'+escapeHtml(e.snippet)+'</div>';
+        html+='</div>';
+      }
+      if(evidence.length>maxE) html+='<div style="font-size:9.5px;color:var(--faint);margin-left:88px">… +'+(evidence.length-maxE)+' more evidence</div>';
+    }
   }
 
   // row 7: latency table — per-node duration + cumulative elapsed (one consistent meaning)
@@ -545,28 +573,33 @@ function renderAnswer(d){
 }
 
 // ── history (localStorage, cap 50, newest first) ────────────────────────────
+// Viewer/actor data is normalized through the shared debug-history.js helpers
+// (window.ViewerUtils) so a raw JS object is NEVER rendered — legacy entries
+// that stored `viewer` as an object are coerced to a readable string on load.
 const HISTORY_KEY='be_debug_history';
-function loadHistory(){ try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');}catch(e){return [];} }
-function saveHistory(h){ try{ localStorage.setItem(HISTORY_KEY, JSON.stringify(h.slice(0,50))); }catch(e){} }
+const VU=(typeof window!=='undefined'&&window.ViewerUtils)?window.ViewerUtils:null;
+function loadHistory(){ try{ const raw=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]'); return VU?VU.normalizeHistory(raw,50):(Array.isArray(raw)?raw:[]); }catch(e){ return []; } }
+function saveHistory(h){ try{ const list=VU?VU.normalizeHistory(h,50):(Array.isArray(h)?h:[]); localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0,50))); }catch(e){} }
 function pushHistory(d){
   const h=loadHistory();
-  const id=d.id||(d.query+'|'+(d.at||''));
-  // Deduplicate: every successful query appears EXACTLY once. Live polling
-  // re-delivers the same pipeline event (same id) — skip if already recorded.
-  if(h.some(e=>e.id===id)) return;
-  const vName=(d.viewer&&typeof d.viewer==='object')?(d.viewer.username||''):(d.viewer||selectedUsername());
-  h.unshift({
+  const id=VU?VU.stableId(d):(d&&d.id);
+  // Deduplicate by STABLE identity (backend pipeline/message id). Live polling
+  // re-delivers the same event (same id) — skip if already recorded. Two
+  // genuinely different messages with the same text keep different ids.
+  if(id && h.some(e=>e.id===id)) return;
+  const entry={
     id:id,
     query:d.query,
     at:d.at||new Date().toISOString(),
     trace:traceEntries(d),
     answer:(d.answer||'').slice(0,400),
     answerSource:d.answerSource||'',
-    viewer:vName,
+    viewer:VU?VU.viewerLabel(d, selectedUsername()):String(d.viewer||''),
     responseTimeMs:d.responseTimeMs||0,
     sqlUsed:!!d.sqlUsed, llmUsed:!!d.llmUsed,
-  });
-  saveHistory(h);
+  };
+  const next=VU?VU.dedupeHistory(h, entry, 50):[entry,...h].slice(0,50);
+  saveHistory(next);
   renderHistory();
 }
 function renderHistory(){
@@ -578,9 +611,11 @@ function renderHistory(){
   h.forEach(e=>{
     const li=document.createElement('li');
     const tm=new Date(e.at).toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const actor=(VU?VU.actorString(e.viewer):String(e.viewer||'?'))||'?';
+    const tr=Array.isArray(e.trace)?e.trace:[];
     li.innerHTML='<div class="hq">'+escapeHtml(e.query)+'</div>'+
-      '<div class="hm">'+tm+' · '+escapeHtml(e.viewer||'?')+' · '+e.trace.length+' nodes · '+escapeHtml(e.answerSource||'')+'</div>'+
-      '<div class="hn">'+escapeHtml(e.trace.map(x=>x.node).join('→'))+'</div>';
+      '<div class="hm">'+tm+' · '+escapeHtml(actor)+' · '+tr.length+' nodes · '+escapeHtml(e.answerSource||'')+'</div>'+
+      '<div class="hn">'+escapeHtml(tr.map(x=>x.node).join('→'))+'</div>';
     li.addEventListener('click',()=>presentPipeline(e,{record:false}));
     el.appendChild(li);
   });

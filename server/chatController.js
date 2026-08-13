@@ -46,6 +46,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   let sqlAttempted = false;
   let sqlSucceeded = false;
   let fallbackRoute = null;
+  // Raw SQL execution result + scope-filtered/redacted rows — kept at function
+  // scope so the final result can build SQL evidence from the REAL SQL output.
+  let sqlRes = null;
+  let sqlSafeData = null;
 
   // ── Connection log: ordered node trace for the debug page ──
   const trace = [];
@@ -73,6 +77,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       provider: llmInfo.provider, model: llmInfo.model,
       sqlDetected, sqlAttempted, sqlSucceeded, fallbackRoute,
       retrievalEvidence: [],
+      sqlEvidence: null,
       executedNodes: executedNodeCount(trace), uniqueExecutedNodes: executedNodeCount(trace),
       executedEntries: trace.length, totalNodes: TOTAL_PIPELINE_NODES,
       trace };
@@ -114,6 +119,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         model: llmInfo.model,
         sqlDetected, sqlAttempted: false, sqlSucceeded: false, fallbackRoute: null,
         retrievalEvidence: Array.isArray(cached.retrievalEvidence) ? cached.retrievalEvidence : [],
+        sqlEvidence: null,
         executedNodes: executedNodeCount(trace),
         uniqueExecutedNodes: executedNodeCount(trace),
         executedEntries: trace.length,
@@ -151,6 +157,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       provider: llmInfo.provider, model: llmInfo.model,
       sqlDetected, sqlAttempted: false, sqlSucceeded: false, fallbackRoute: null,
       retrievalEvidence: [],
+      sqlEvidence: null,
       executedNodes: executedNodeCount(trace), uniqueExecutedNodes: executedNodeCount(trace),
       executedEntries: trace.length, totalNodes: TOTAL_PIPELINE_NODES,
       trace,
@@ -227,7 +234,6 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   sqlAttempted = shouldRouteSql;
 
   if (shouldRouteSql) {
-    let sqlRes;
     // RBAC: ส่ง viewer scope เข้า SQL path (Layer 1+2) — generateAndRunSQL สร้าง scoped table
     // scopeCodes: null=CEO/HR เห็นทั้งหมด | Set<code>=Employee/Manager (จาก identityGraph subtree)
     const scopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
@@ -260,6 +266,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         return row;
       }).filter(Boolean);
     }
+    sqlSafeData = safeData;
 
     // ── SQL failed: fall back to keyword/vector search answer instead of showing error ──
     // This fixes the "วิศวกรคนไหนทำ OT เทปูนข้ามคืน" regression where a keyword query
@@ -398,7 +405,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   // Safe retrieval source evidence (Layer 3): built ONLY from RBAC-filtered
   // finalResults — scope + field redaction already applied upstream. Fields are
   // included only when actually present; snippets omitted when redacted.
-  const retrievalEvidence = buildRetrievalEvidence(finalResults, sources, 10);
+  // SQL evidence comes ONLY from the actual SQL output; when SQL answered the
+  // query, keyword/vector chunks must NOT be presented as SQL evidence.
+  const retrievalEvidence = sqlUsed ? [] : buildRetrievalEvidence(finalResults, sources, 10);
+  const sqlEvidence = sqlUsed ? buildSqlEvidence(sqlRes, sqlSafeData) : null;
 
   const result = {
     query, answer: finalAnswer,
@@ -421,6 +431,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     model: llmInfo.model,
     sqlDetected, sqlAttempted, sqlSucceeded, fallbackRoute,
     retrievalEvidence,
+    sqlEvidence,
     executedNodes: executedNodeCount(trace),
     uniqueExecutedNodes: executedNodeCount(trace),
     executedEntries: trace.length,
@@ -504,4 +515,71 @@ export function buildScopeCodesForRole(viewerRole, viewerPk, identityGraph) {
     return visible;
   }
   return new Set();
+}
+
+// ── SQL result evidence (Layer 3, SQL path) ─────────────────────────────────
+// Builds evidence STRICTLY from the SQL execution output (never keyword/vector
+// retrieval chunks). `safeData` is the scope-filtered + field-redacted result
+// produced by the SQL path, so evidence here preserves RBAC and never leaks
+// hidden fields. When no safe SQL output exists, returns an explicit
+// "unavailable" marker instead of fabricating source/sheet/field/score/snippet.
+export function buildSqlEvidence(sqlRes, safeData) {
+  const rows = Array.isArray(safeData) ? safeData.filter((r) => r && typeof r === 'object') : [];
+  const res = sqlRes && typeof sqlRes === 'object' ? sqlRes : null;
+  const sql = res && typeof res.sql === 'string' ? res.sql : '';
+
+  if (!res || res.error || !sql) {
+    return {
+      source: 'sql-analytics',
+      status: 'unavailable',
+      metric: null,
+      sql: null,
+      rowCount: rows.length,
+      fields: [],
+      values: [],
+    };
+  }
+
+  const evidence = {
+    source: 'sql-analytics',
+    metric: detectSqlMetric(sql),
+    rowCount: rows.length,
+    fields: [],
+    values: [],
+    sql,
+  };
+
+  const firstRow = rows[0];
+  if (firstRow) {
+    evidence.fields = Object.keys(firstRow).filter((k) => typeof k === 'string');
+  }
+
+  // Authorized result values — rows have already been scope-verified + field-
+  // redacted upstream. Cap rows and cell length so evidence stays a concise,
+  // safe summary (never dumping free text or out-of-scope rows).
+  const MAX_SQL_ROWS = 5;
+  const MAX_SQL_CELL = 200;
+  evidence.values = rows.slice(0, MAX_SQL_ROWS).map((row) => {
+    const out = {};
+    for (const k of Object.keys(row)) {
+      const v = row[k];
+      if (v == null) { out[k] = null; continue; }
+      if (typeof v === 'string') out[k] = v.slice(0, MAX_SQL_CELL);
+      else if (typeof v === 'number' || typeof v === 'boolean') out[k] = v;
+      else out[k] = String(v).slice(0, MAX_SQL_CELL);
+    }
+    return out;
+  });
+
+  return evidence;
+}
+
+// Detect the aggregate/metric type of a SQL query so evidence can label it
+// (AVG/COUNT/SUM/MIN/MAX). Falls back to 'aggregate' (GROUP BY) or 'query'.
+export function detectSqlMetric(sql) {
+  if (typeof sql !== 'string') return 'query';
+  const m = String(sql).match(/\b(AVG|COUNT|SUM|MIN|MAX)\s*\(/i);
+  if (m) return m[1].toUpperCase();
+  if (/\bGROUP\s+BY\b/i.test(sql)) return 'aggregate';
+  return 'query';
 }

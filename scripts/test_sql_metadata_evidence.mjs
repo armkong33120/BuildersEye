@@ -113,7 +113,11 @@ async function sectionApi() {
   console.log(`  🔑 role=${login.d.user?.role}`);
 
   async function chat(query) {
-    return fj(`${BACKEND}/api/chat`, { method: 'POST', headers: H, body: JSON.stringify({ query, conversationId: 't-sqlmeta-' + Date.now() }) });
+    // Cache-bust: the response cache is keyed on normalized query + role, so an
+    // identical query in a warm cache returns route=cache (sqlAttempted=false).
+    // Append a unique nonce so this test always exercises the real SQL path.
+    const q = query + ' ' + Math.random().toString(36).slice(2, 8);
+    return fj(`${BACKEND}/api/chat`, { method: 'POST', headers: H, body: JSON.stringify({ query: q, conversationId: 't-sqlmeta-' + Date.now() }) });
   }
 
   // 3a. analytics query → SQL lifecycle populated + consistent

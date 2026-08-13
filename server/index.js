@@ -339,6 +339,7 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       executedEntries: result.executedEntries || 0,
       totalNodes: result.totalNodes || 0,
       retrievalEvidence: result.retrievalEvidence || [],
+      sqlEvidence: result.sqlEvidence || null,
       matchersUsed: result.matchersUsed || [],
       cached: !!result.cached,
       viewer: viewerInfo,

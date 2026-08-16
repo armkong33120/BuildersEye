@@ -7,7 +7,7 @@ import readline from 'readline';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const VECTOR_DIR = path.join(__dirname, '.data', 'vectors');
+const VECTOR_DIR = process.env.VECTOR_DATA_DIR || path.join(__dirname, '.data', 'vectors');
 const CHUNKS_FILE = path.join(VECTOR_DIR, 'chunks.jsonl');
 const META_FILE = path.join(VECTOR_DIR, 'meta.json');
 
@@ -32,6 +32,26 @@ export function vectorsExist() {
 
 export function getVectorMeta() {
   try { return JSON.parse(fs.readFileSync(META_FILE, 'utf-8')); } catch { return null; }
+}
+
+// Registry employees file (org truth) — used to detect a stale vector index.
+const REGISTRY_EMPLOYEES_FILE = process.env.REGISTRY_EMPLOYEES_FILE
+  || path.join(__dirname, '.data', 'registry', 'employees.json');
+
+// True when the vector index is stale relative to the current org data: the
+// registry (employees.json) was written AFTER the vectors (chunks.jsonl) were
+// built. Conservative (safe) direction — a false positive only triggers an
+// unnecessary rebuild, never serves stale data.
+export function isVectorIndexStale() {
+  if (process.env.DATABASE_URL) return false; // Neon: vectors live in Postgres, not local files
+  if (!fs.existsSync(CHUNKS_FILE)) return false; // no vectors yet → not "stale"
+  try {
+    const regMtime = fs.statSync(REGISTRY_EMPLOYEES_FILE).mtimeMs;
+    const chunksMtime = fs.statSync(CHUNKS_FILE).mtimeMs;
+    return regMtime > chunksMtime;
+  } catch {
+    return false;
+  }
 }
 
 // เขียน chunks+vectors ทับไฟล์เดิม (build ใหม่ทั้งชุด — ง่ายและ atomic พอสำหรับขนาดนี้)

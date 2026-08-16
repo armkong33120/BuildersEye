@@ -15,7 +15,7 @@ import { registryToFlatIndex } from './registryIngest.js';
 import { getCacheDirSafe } from './runRegistry.js';
 import { isConfigured as odConfigured, listAccounts, syncAll } from './onedriveSync.js';
 import { handleWebhook, seedTokensFromNeon, pushTokensToNeon, ensureSubscriptions, WEBHOOK_PATH } from './onedriveWebhook.js';
-import { searchVectors, vectorsExist, getVectorMeta } from './vectorStore.js';
+import { searchVectors, vectorsExist, getVectorMeta, isVectorIndexStale } from './vectorStore.js';
 import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -72,6 +72,9 @@ function loadDataFromFiles() {
 }
 
 // hot-reload: เรียกหลัง sync/rebuild → swap index + re-init DB (chat/search ใช้ข้อมูลใหม่ทันที)
+// Guard against concurrent vector rebuilds (embedding is slow/expensive).
+let vectorRebuildInFlight = false;
+
 function reloadData(reason = 'manual') {
   const start = Date.now();
   const loaded = loadDataRegistryFirst() || loadDataFromFiles();
@@ -80,6 +83,25 @@ function reloadData(reason = 'manual') {
   dataSource = loaded.source;
   initDatabase(flatIndex);
   console.log(`[reload:${reason}] source=${dataSource} records=${flatIndex.length} tokens=${searchIndex.size} in ${Date.now() - start}ms`);
+
+  // Data freshness: after an org change (sync/webhook/manual), the keyword index
+  // is rebuilt above; the vector index must also be rebuilt so deactivated/moved
+  // employees' stale chunks are dropped. Rebuild is async (embedding is slow) and
+  // skipped when the embedder is unavailable (cloud) — retrieval still enforces
+  // scope at query time, so stale chunks are never served to unauthorized users.
+  try {
+    if (!vectorRebuildInFlight && process.env.VECTOR_INDEX_DISABLED !== 'true' && isVectorIndexStale()) {
+      vectorRebuildInFlight = true;
+      import('./rebuildVectors.js')
+        .then(({ rebuildVectors }) => rebuildVectors({ log: (m) => console.log(m) }))
+        .then((r) => console.log(`[reload:${reason}] vectors rebuilt: ${r.total} chunks in ${r.ms}ms`))
+        .catch((e) => console.warn(`[reload:${reason}] vector rebuild skipped: ${e.message}`))
+        .finally(() => { vectorRebuildInFlight = false; });
+    }
+  } catch (e) {
+    console.warn(`[reload:${reason}] staleness check failed: ${e.message}`);
+  }
+
   return { source: dataSource, records: flatIndex.length, employees: loaded.count };
 }
 
@@ -507,7 +529,7 @@ app.get('/api/registry/status', requireAuth, (req, res) => {
       accounts: odConfigured() ? listAccounts() : [],
       lastSync: readLastSync(),
     },
-    vectors: { built: vectorsExist(), meta: getVectorMeta() },
+    vectors: { built: vectorsExist(), meta: getVectorMeta(), stale: isVectorIndexStale() },
   });
 });
 

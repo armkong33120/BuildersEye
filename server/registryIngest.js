@@ -3,6 +3,7 @@
 // โดยไม่ต้องแก้ logic เดิมเลย — ข้อมูลไหล: OneDrive → cache → registry → engines
 import { buildOrgSnapshot, resolveScopeCodes } from './access/scopeResolver.js';
 import { profileForLegacyRole } from './access/compatAdapter.js';
+import { canIngestSource } from './access/sourceLinks.js';
 
 // sheet → recordType (รู้จักก็ map, ไม่รู้จัก → derive จากชื่อ sheet อัตโนมัติ ไม่ hardcode fail)
 const RECORD_TYPE_MAP = {
@@ -42,6 +43,9 @@ export function registryToFlatIndex(employees) {
 
   for (const emp of employees) {
     if (emp.status !== 'active') continue;
+    // Source-link gating: skip sources that are disabled or owned by another
+    // employee (duplicate-ownership prevention). No matching link → ingest as-is.
+    if (!canIngestSource(emp.fileName, emp.code)) continue;
     const employeeId = emp.pk || 0;
     const confidentiality = CONFIDENTIALITY_MAP[emp.department] || 'Tier 3 — Standard';
 
@@ -63,6 +67,7 @@ export function registryToFlatIndex(employees) {
             confidentialityLevel: confidentiality,
             fileName: emp.fileName,
             filePath: '',
+            sourceId: emp.fileName,
             recordType,
           };
           flatIndex.push(entry);

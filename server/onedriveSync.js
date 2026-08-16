@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { PublicClientApplication } from '@azure/msal-node';
+import { isSourceEnabled } from './access/sourceLinks.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STORE_DIR = path.join(__dirname, '.data', 'onedrive');
@@ -120,6 +121,9 @@ async function syncFolder(account, folderName, log) {
     for (const item of data.value || []) {
       if (!item.file) continue;                            // ข้ามโฟลเดอร์
       if (!/\.xlsx$/i.test(item.name)) continue;           // เฉพาะไฟล์พนักงาน (format-agnostic)
+      // Source-link gating: skip disabled sources (admin can disable a source
+      // so it is neither downloaded nor ingested).
+      if (!isSourceEnabled(item.name)) continue;
       const localPath = path.join(CACHE_DIR, item.name);
 
       if (item.deleted) {

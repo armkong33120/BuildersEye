@@ -3,6 +3,7 @@ export * from './accessModel.js';
 export * from './compatAdapter.js';
 export * from './scopeResolver.js';
 export * from './scopeContext.js';
+export * from './sourceLinks.js';
 export * from './policyEngine.js';
 export * from './accessStore.js';
 export * from './auditStore.js';

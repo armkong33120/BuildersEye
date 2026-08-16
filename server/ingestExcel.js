@@ -1,6 +1,7 @@
 import xlsx from 'xlsx';
 import fs from 'fs';
 import path from 'path';
+import { canIngestSource } from './access/sourceLinks.js';
 
 const CONFIDENTIALITY_MAP = {
   'Executive': 'Tier 1 — Strict',
@@ -63,6 +64,10 @@ export function ingestAll(dataDir) {
     const workbook = xlsx.readFile(filePath);
     const code = fileName.match(/EMP\d+/i)?.[0] || fileName.replace('.xlsx', '');
 
+    // Source-link gating: skip sources that are disabled or owned by another
+    // employee (duplicate-ownership prevention). No matching link → ingest as-is.
+    if (!canIngestSource(fileName, code)) continue;
+
     const profileData = parseSheet(workbook, 'Employee_Profile');
     if (!profileData || profileData.length === 0) continue;
 
@@ -79,7 +84,7 @@ export function ingestAll(dataDir) {
           employeeId, employeeCode: code, employeeName, department,
           sheetName, rowNumber: record.rowNumber, fieldName: record.fieldName,
           content: record.content, confidentialityLevel: confidentiality,
-          fileName, filePath, recordType: getRecordType(sheetName),
+          fileName, filePath, sourceId: fileName, recordType: getRecordType(sheetName),
         };
         flatIndex.push(entry);
         const idx = flatIndex.length - 1;

@@ -28,6 +28,9 @@ const { evaluatePolicies, findMatchingPolicies, applyFieldRedactionPolicy, canSe
   await import('../server/access/policyEngine.js');
 const { canIngestSource, isSourceEnabled } =
   await import('../server/access/sourceLinks.js');
+const { assertOrgIntegrity, assertNoDuplicateEmployeeCodes, assertAcyclicManagerGraph, assertManagerExists } =
+  await import('../server/access/orgIntegrity.js');
+const adminService = await import('../server/access/adminService.js');
 const rcache = await import('../server/responseCache.js');
 const chatMem = await import('../server/chatMemory.js');
 
@@ -394,6 +397,94 @@ console.log('\n── 10. Freshness ──');
 const snapshotChanged = snap2.active.size === 24 && snap6.active.size === 24;
 assert('all mutated snapshots consistent', snapshotChanged);
 
+// ═══ 11. Write-path org integrity (orgIntegrity.js, M2) ═══════════════════════
+// The read path is deliberately last-wins / cycle-breaking so legacy bad data can
+// never crash the resolver. The WRITE path is the enforcement point: adminService
+// validates the whole org (with the proposed change applied) BEFORE persisting, so
+// a rejected write leaves the store byte-identical (no partial write).
+console.log('\n── 11. Write-path org integrity (orgIntegrity.js) ──');
+
+// 11a. Duplicate employeeCode "create" → rejected with 409.
+let dupCreateErr = null;
+try {
+  assertNoDuplicateEmployeeCodes([...makeOrg().employees, E('J-01', 'SELF_ONLY', 'L-02')]);
+} catch (e) { dupCreateErr = e; }
+assert('duplicate employeeCode create rejected (409)',
+  dupCreateErr && dupCreateErr.status === 409, dupCreateErr?.message);
+
+// 11b. Direct cycle A→A (self-manager) → rejected with 400.
+let selfMgrErr = null;
+try { assertAcyclicManagerGraph([{ code: 'A', managerCode: 'A' }]); } catch (e) { selfMgrErr = e; }
+assert('direct self-manager A→A rejected (400)',
+  selfMgrErr && selfMgrErr.status === 400, selfMgrErr?.message);
+
+// 11c. Indirect cycles A→B→A and A→B→C→A → rejected with 409.
+let cyc2Err = null;
+try {
+  assertAcyclicManagerGraph([{ code: 'A', managerCode: 'B' }, { code: 'B', managerCode: 'A' }]);
+} catch (e) { cyc2Err = e; }
+assert('indirect cycle A→B→A rejected (409)', cyc2Err && cyc2Err.status === 409, cyc2Err?.message);
+let cyc3Err = null;
+try {
+  assertAcyclicManagerGraph([{ code: 'A', managerCode: 'B' }, { code: 'B', managerCode: 'C' }, { code: 'C', managerCode: 'A' }]);
+} catch (e) { cyc3Err = e; }
+assert('indirect cycle A→B→C→A rejected (409)', cyc3Err && cyc3Err.status === 409, cyc3Err?.message);
+
+// 11d. Missing manager (non-null, unresolvable) → rejected with 400. NULL/empty = root.
+let missingMgrErr = null;
+try { assertManagerExists([{ code: 'R1' }, { code: 'B', managerCode: 'GHOST' }]); } catch (e) { missingMgrErr = e; }
+assert('missing manager (non-null, unresolvable) rejected (400)',
+  missingMgrErr && missingMgrErr.status === 400, missingMgrErr?.message);
+
+// 11e. Valid single root AND valid multi-root both pass integrity.
+let singleRootErr = null;
+try { assertOrgIntegrity([{ code: 'R1' }, { code: 'E1', managerCode: 'R1' }]); } catch (e) { singleRootErr = e; }
+assert('valid single-root org passes integrity', !singleRootErr, singleRootErr?.message);
+let multiRootErr = null;
+try {
+  assertOrgIntegrity([{ code: 'R1' }, { code: 'R2' }, { code: 'E1', managerCode: 'R1' }, { code: 'E2', managerCode: 'R2' }]);
+} catch (e) { multiRootErr = e; }
+assert('valid multi-root org passes integrity (roots preserved)', !multiRootErr, multiRootErr?.message);
+
+// 11f–11j. Full adminService write path against the SAME deterministic fixture.
+// Seed the store with the fixture, then exercise setManager. A rejected write must
+// leave the store byte-identical (no partial write); a valid move must persist.
+const adminActor = { username: 'bench-admin', employeeId: 1, role: 'CEO' };
+accStore.saveEmployees(makeOrg().employees);
+accStore.saveRelationships([]);
+const storeState = () => JSON.stringify({ employees: accStore.getEmployees(), relationships: accStore.getRelationships() });
+
+const moveRes = adminService.setManager(adminActor, 'L-02', 'M-06');
+assert('move to valid manager succeeds', moveRes.ok);
+assert('relationship L-02→M-06 persisted',
+  accStore.getRelationships().some((r) => r.employeeCode === 'L-02' && r.managerCode === 'M-06'));
+
+const smBefore = storeState();
+let smSvc = null;
+try { adminService.setManager(adminActor, 'J-01', 'J-01'); } catch (e) { smSvc = e; }
+assert('self-manager A→A via setManager rejected (400)', smSvc && smSvc.status === 400, smSvc?.message);
+assert('self-manager rejection left store unchanged (no partial write)', storeState() === smBefore);
+
+const cycBefore = storeState();
+let cycSvc = null;
+// CL-01 already reports to CEO-01; making CEO-01 report to CL-01 closes a cycle.
+try { adminService.setManager(adminActor, 'CEO-01', 'CL-01'); } catch (e) { cycSvc = e; }
+assert('indirect cycle A→B→A via setManager rejected (409)', cycSvc && cycSvc.status === 409, cycSvc?.message);
+assert('cycle rejection left store unchanged (no partial write)', storeState() === cycBefore);
+
+const mmBefore = storeState();
+let mmSvc = null;
+try { adminService.setManager(adminActor, 'J-02', 'GHOST'); } catch (e) { mmSvc = e; }
+assert('missing manager via setManager rejected (400)', mmSvc && mmSvc.status === 400, mmSvc?.message);
+assert('missing-manager rejection left store unchanged (no partial write)', storeState() === mmBefore);
+
+const rootMove = adminService.setManager(adminActor, 'J-03', null);
+assert('move to root (null manager) succeeds — multi-root preserved', rootMove.ok);
+const finalSnapshot = buildOrgSnapshot(accStore.getEmployees(), accStore.getRelationships());
+assert('org snapshot reflects valid moves (multi-root intact)',
+  finalSnapshot.active.size >= 24 && finalSnapshot.roots.length >= 2,
+  `active=${finalSnapshot.active.size} roots=${JSON.stringify(finalSnapshot.roots)}`);
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const elapsedMs = Date.now() - started;
 const latencyAvg = metrics.latencyMs.length
@@ -417,10 +508,10 @@ console.log(`  total elapsed         ${elapsedMs} ms`);
 console.log(`  assertions            ${pass} passed / ${fail} failed`);
 console.log('──────────────────────────────────────────────────────────');
 console.log('  KNOWN GAPS (reported, not fabricated):');
-console.log('  - duplicate employeeCode: resolver collapses deterministically (last-wins), but the');
-console.log('    write path (adminService) does NOT reject duplicates — enforcement is DEFERRED.');
-console.log('  - cyclic hierarchy: resolver breaks cycles with a visited set (no infinite loop),');
-console.log('    but does NOT reject them — PROPOSED FUTURE STATE.');
+console.log('  - write path now ENFORCES org integrity (orgIntegrity.js, section 11): duplicate');
+console.log('    employeeCode → 409, self-manager → 400, hierarchy cycles → 409, missing manager → 400.');
+console.log('  - the READ path (buildOrgSnapshot) stays last-wins / cycle-breaking so legacy bad data');
+console.log('    can never crash the resolver; adminService rejects those writes before persist.');
 console.log('  - benchmark is logic-level (no LLM, no HTTP): SQL/vector/evidence containment is');
 console.log('    simulated against scopeCodes; live E2E remains blocked on credentials/Playwright.');
 console.log('══════════════════════════════════════════════════════════');

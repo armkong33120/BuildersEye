@@ -1,7 +1,8 @@
-# PERSISTENCE.md — Access-Model Persistence Review (Phase 5, production-hardening)
+# PERSISTENCE.md — Access-Model Persistence Review (Phase 5 / P2, production-hardening)
 
-Status: **VERIFIED IN CODE** (file-backed behavior) · **NOT YET IMPLEMENTED** (Neon
-write-through for the access model) · **BLOCKED** (multi-instance production readiness)
+Status: **VERIFIED IN CODE** (file-backed behavior) · **SAFE** (single-instance:
+atomic rename + advisory write lock) · **BLOCKED** (multi-instance production
+readiness — no cross-host lock; Neon write-through not implemented)
 
 ## 1. What is persisted, and where
 
@@ -38,23 +39,36 @@ adapter. **No silent half-adapter exists**: every access read/write goes through
 |-----------------------------|--------------------------------------------------------------------------------------------|
 | Runtime-authoritative       | JSON files under `server/.data/access/` (all processes share the same filesystem path).     |
 | After process restart       | All 7 file-backed stores survive restart; in-memory `responseCache`, `latestPipelineByUser`, `chatMemory` reset (by design, bounded memory). Verified by `scripts/test_persistence_restart.mjs` (spawns a fresh process). |
-| Multiple backend instances  | **NOT SAFE for concurrent admin writes.** No file locking; last-writer-wins on any file. Reads are safe. |
-| Policy version shared       | Single `policy_version.json` on a shared filesystem → consistent version, but the bump is an unlocked write (two concurrent admins can both bump). |
+| Crash during a write        | **SAFE (single instance).** Every JSON mutation is committed via temp file + atomic `fs.renameSync` — a crash can never leave a torn/truncated store file; readers see the complete old or complete new content. Stale `.tmp-<pid>` files from a crash are removed on startup. |
+| Concurrent admin editing    | **Serialized (same filesystem).** Mutation helpers (`saveProfiles`/`savePolicies`/`saveSourceLinks`/`saveEmployees`/`saveRelationships`/`bumpPolicyVersion`) acquire an advisory write lock (`withAccessWriteLock`, atomic `mkdir` on `.lock`, ~5s timeout, stale-lock break via mtime) and run their read-modify-write inside it. |
+| Multiple backend instances  | **Single instance / same host: SAFE.** **Separate hosts: BLOCKED** — the lock is advisory and filesystem-local; there is NO cross-host lock (a host on another machine does not see `.lock`). |
+| Policy version shared       | Single `policy_version.json`; the bump's read-modify-write runs inside the advisory lock and is committed atomically (serialized bumps, durable cache-invalidation baseline). |
 | Source-link state durable   | Yes — `source_links.json`.                                                                  |
-| Audit state durable         | Yes — `audit.jsonl`, append-only.                                                           |
-| Concurrent admin editing    | Unlocked last-writer-wins. No optimistic-concurrency check on JSON writes.                  |
+| Audit state durable         | Yes — `audit.jsonl`, append-only, line-atomic (single `O_APPEND` `write(2)` per event; a concurrent/crashed writer cannot tear a line). |
+| Rollback                    | Supported via `adminService.rollback` (previous snapshots from `audit.jsonl`) — see `docs/ROLLBACK_PLAN.md`. |
 
 ## 4. Production-readiness verdict for this area
 
-**BLOCKED for multi-instance access persistence.** File-backed persistence is fine
-for a single-instance demo/dev deployment and survives restarts, but:
+**Single instance: SAFE.** File-backed persistence with atomic temp-file +
+`renameSync` and an advisory write lock is fine for a single-instance demo/dev
+deployment and survives restarts, concurrent admin edits on the same host, and
+crashes mid-write.
 
-1. Concurrent admin writes across instances can lose updates (no locking / no
-   compare-and-swap on `saveEmployees`/`savePolicies`/etc.).
-2. `policy_version` bump is not atomic across instances, so cache invalidation
-   could theoretically race.
-3. Full Neon write-through for the access model is **not implemented** and this
-   task deliberately did not force it.
+**Multi-instance (separate hosts): BLOCKED.** The advisory lock is filesystem-local
+and cannot coordinate hosts that do not share the same data directory:
+
+1. Two instances on separate hosts can each hold their own `.lock` — the lock
+   only serializes writers on the same filesystem. Concurrent admin writes
+   across hosts can still lose updates (last-writer-wins).
+2. `policy_version` bumps are serialized only per filesystem, so cross-host cache
+   invalidation could theoretically race.
+3. Full Neon write-through for the access model is **not implemented**; this task
+   deliberately did not force it (see §5).
+
+A shared network filesystem (NFS/SMB) is NOT a substitute for a cross-host lock:
+`mkdir`-based locks are not NFS-atomic in general, so multi-instance production
+readiness stays **BLOCKED** until a real cross-host mechanism (e.g. Neon
+write-through with conditional UPDATE, §5) lands.
 
 ## 5. Migration / rollback design (PROPOSED FUTURE STATE)
 
@@ -81,12 +95,22 @@ A Neon write-through adapter should:
   process restart (fresh `node` child, same `ACCESS_DATA_DIR`);
 - `policy_version` survives restart (durable cache-invalidation baseline);
 - `audit.jsonl` survives restart;
-- `responseCache` is process-local and empty after restart (expected).
+- `responseCache` is process-local and empty after restart (expected);
+- **concurrent writers serialize via the advisory lock**: two child processes
+  hammer `saveEmployees` simultaneously and the final file is valid JSON equal
+  to one complete writer payload (no torn/interleaved state);
+- **atomic rename in use**: after writes there are no lingering `.tmp-*` files
+  and the lock directory is released.
 
 ## 7. What was NOT done (honest)
 
 - No Neon DDL / write-through for the access model (would require a live Neon
   instance and credential handling this task must not touch).
-- No file locking / optimistic concurrency for JSON writes (single-instance
-  assumption documented above).
-- Production multi-instance access persistence remains **BLOCKED**.
+- No **cross-host** write lock: the advisory lock serializes writers that share
+  a filesystem/data dir only. Production multi-instance access persistence
+  remains **BLOCKED**.
+- No optimistic-concurrency (compare-and-swap) on JSON writes; within one host
+  the advisory lock serializes mutations, across hosts it does not.
+- `audit.jsonl` uses line-atomic append (verified for typical event sizes); it
+  is not journaled/checksummed, and a torn final line after an OS crash is
+  possible in theory (a line that was being written when the machine lost power).

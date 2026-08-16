@@ -9,12 +9,18 @@
 //   3. audit.jsonl survives restart.
 //   4. responseCache is process-local → empty after restart (expected, bounded
 //      memory by design; permission changes invalidate via policy_version).
+//   5. Concurrent writers serialize via the advisory write lock: two children
+//      hammering saveEmployees() on the same data dir leave a final file that is
+//      valid JSON equal to ONE complete writer payload (no torn/interleaved state).
+//   6. Atomic rename in use: no lingering `.tmp-*` files after writes, and the
+//      `.lock` directory is released (no stale lock).
 //
 // Persistence gap verified-and-documented (NOT fabricated away):
 //   - The access model is JSON-file authoritative; Neon covers only the RAG
-//     registry (server/neonStore.js). Multi-instance writes are not locked.
+//     registry (server/neonStore.js). The advisory lock is filesystem-local: it
+//     serializes writers that share a data dir, but NOT separate hosts.
 //   - Full Neon write-through for the access model is DEFERRED — production
-//     readiness for multi-instance access persistence is BLOCKED.
+//     readiness for multi-instance (cross-host) access persistence is BLOCKED.
 //
 // Usage: node scripts/test_persistence_restart.mjs
 
@@ -22,7 +28,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { spawnSync } from 'child_process';
+import { spawn, spawnSync } from 'child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'be-persist-'));
@@ -108,6 +114,64 @@ if (child.status !== 0) {
   assert('response cache is process-local (empty after restart — by design)',
     got.cacheSize === 0, `cacheSize=${got.cacheSize}`);
 }
+
+// ── Phase 3: concurrent writers serialize via the advisory write lock ─────────
+// Two child processes hammer saveEmployees() on the SAME data dir at the same
+// time. Each save is a complete-file replacement performed under the advisory
+// lock + atomic rename, so the final file must be valid JSON equal to exactly
+// ONE writer's complete payload — never a torn/interleaved mix. After the dust
+// settles there must be no lingering .tmp-* files and no leftover .lock dir.
+console.log('\n── Concurrent writers serialize via advisory lock ──');
+
+function runChildAsync(code) {
+  return new Promise((resolve) => {
+    const child = spawn('node', ['--input-type=module', '-e', code], {
+      cwd: ROOT,
+      env: { ...process.env, PERSIST_TMP: TMP },
+      stdio: ['ignore', 'pipe', 'pipe'],
+      timeout: 60_000,
+    });
+    let stdout = '', stderr = '';
+    child.stdout.on('data', (d) => { stdout += d.toString(); });
+    child.stderr.on('data', (d) => { stderr += d.toString(); });
+    child.on('close', (code) => resolve({ code, stdout, stderr }));
+  });
+}
+
+const WRITERS = ['A', 'B'];
+const WRITES_PER_WRITER = 25;
+const writerCode = (who, n) => `
+import fs from 'fs';
+process.env.ACCESS_DATA_DIR = process.env.PERSIST_TMP;
+const store = await import('${ROOT}/server/access/accessStore.js');
+for (let i = 0; i < ${n}; i++) {
+  store.saveEmployees([{ employeeCode: 'EMP-W-${who}', who: '${who}', seq: i, accessProfile: 'SELF_ONLY', status: 'active' }]);
+}
+`;
+const writerRuns = await Promise.all(
+  WRITERS.map((w) => runChildAsync(writerCode(w, WRITES_PER_WRITER)))
+);
+
+assert('concurrent writers all exited cleanly',
+  writerRuns.every((r) => r.code === 0),
+  writerRuns.map((r) => `code=${r.code} stderr=${(r.stderr || '').slice(0, 120)}`).join(' '));
+
+let finalEmployees = null;
+try {
+  finalEmployees = JSON.parse(fs.readFileSync(path.join(TMP, 'employees.json'), 'utf-8'));
+} catch (e) { /* reported by the next assertion */ }
+assert('final employees.json is valid JSON (no torn state)',
+  Array.isArray(finalEmployees), `parse error: ${String(finalEmployees)}`);
+assert('final file equals ONE complete writer payload (serialized, not interleaved)',
+  Array.isArray(finalEmployees) && finalEmployees.length === 1
+    && WRITERS.includes(finalEmployees[0]?.who)
+    && typeof finalEmployees[0]?.seq === 'number'
+    && finalEmployees[0].seq >= 0 && finalEmployees[0].seq < WRITES_PER_WRITER,
+  `length=${Array.isArray(finalEmployees) ? finalEmployees.length : '?'} who=${finalEmployees?.[0]?.who} seq=${finalEmployees?.[0]?.seq}`);
+
+const leftoverTmp = fs.readdirSync(TMP).filter((f) => /\.tmp-\d+$/.test(f));
+assert('atomic rename in use — no lingering .tmp files after writes', leftoverTmp.length === 0, leftoverTmp.join(', '));
+assert('advisory lock released — no .lock directory remains', !fs.existsSync(path.join(TMP, '.lock')));
 
 fs.rmSync(TMP, { recursive: true, force: true });
 console.log(`\n📊 Results: ${passed} passed, ${failed} failed / ${passed + failed} total`);

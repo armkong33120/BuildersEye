@@ -6,6 +6,17 @@
 //   previous (snapshot), new (snapshot), policyVersion, and rollback info.
 //
 // Old permission versions are retained so they are auditable and restorable.
+//
+// WRITE SEMANTICS (line-atomicity): recordAudit appends with
+//   fs.appendFileSync(AUDIT_FILE, line)   // flag 'a' → O_APPEND
+// On POSIX this issues a single write(2) syscall for the whole line, and
+// O_APPEND makes the file-offset update + data write atomic with respect to
+// other writers of the same file. For typical event sizes (a few KB — far below
+// any partial-write threshold) a concurrent or crashed writer can therefore
+// never interleave bytes or tear a single audit line: each JSON line is either
+// fully present or absent. The audit file is APPEND-ONLY (never rewritten in
+// place), so it survives process restart and does not need the advisory write
+// lock that accessStore uses for replace-in-place JSON files.
 
 import fs from 'fs';
 import path from 'path';
@@ -45,6 +56,9 @@ export function recordAudit(actor, change, { previous = null, next = null, polic
     next,
     policyVersion: policyVersion ?? getPolicyVersion(),
   };
+  // Line-atomic append: single O_APPEND write(2) of the whole JSON line — a
+  // concurrent or crashed writer can never tear a single audit line (see the
+  // WRITE SEMANTICS note in the header).
   fs.appendFileSync(AUDIT_FILE, JSON.stringify(event) + '\n');
   return event;
 }

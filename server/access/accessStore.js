@@ -4,6 +4,20 @@
 // set, a Neon write-through can be added later (see neonSync.js) without
 // changing this module's public API.
 //
+// Persistence safety (Phase P2):
+//   - Every JSON mutation is written ATOMICALLY: the new content goes to a
+//     unique temp file (`<file>.tmp-<pid>`) in the same directory, then
+//     fs.renameSync() replaces the target. rename is atomic on the same
+//     filesystem, so a crash can never leave a torn/truncated store file —
+//     readers see either the complete old file or the complete new file.
+//   - Mutation helpers (saveProfiles/savePolicies/saveSourceLinks/saveEmployees/
+//     saveRelationships/bumpPolicyVersion) are serialized by an ADVISORY write
+//     lock (withAccessWriteLock) using atomic mkdir on a lock directory. The
+//     lock serializes writers that share the same data dir / filesystem; it is
+//     NOT a cross-host lock (multi-instance persistence on separate hosts
+//     remains BLOCKED — see docs/PERSISTENCE.md).
+//   - Stale temp files left by a crash mid-rename are cleaned on startup.
+//
 // Layout:
 //   profiles.json     — access profiles (seeded)
 //   policies.json     — permission policies (seeded)
@@ -37,6 +51,79 @@ const FILES = {
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 
+// ── Advisory write lock ───────────────────────────────────────────────────────
+// Serializes JSON mutations that share this data dir using an atomic mkdir as
+// the lock primitive (mkdir succeeds for exactly one holder). The lock is
+// ADVISORY and filesystem-local: it coordinates writers on the same host / same
+// filesystem only. Separate hosts have NO cross-host lock — multi-instance
+// persistence remains BLOCKED (see docs/PERSISTENCE.md).
+const LOCK_DIR = path.join(DATA_DIR, '.lock');
+const LOCK_TIMEOUT_MS = 5000;  // give up after ~5s of contention
+const LOCK_RETRY_MS = 50;      // poll interval while waiting
+const LOCK_STALE_MS = 10000;   // break a lock this old (holder crashed)
+
+let lockHeldInProcess = false;
+
+// Synchronous sleep (Atomics.wait is allowed on the main thread in Node).
+function sleepSync(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+function acquireWriteLock() {
+  const deadline = Date.now() + LOCK_TIMEOUT_MS;
+  for (;;) {
+    try {
+      fs.mkdirSync(LOCK_DIR);
+      return;
+    } catch (err) {
+      if (err.code !== 'EEXIST') throw err;
+      // A lock exists. Break it only if it is stale (previous holder crashed).
+      try {
+        const st = fs.statSync(LOCK_DIR);
+        if (Date.now() - st.mtimeMs > LOCK_STALE_MS) {
+          fs.rmSync(LOCK_DIR, { recursive: true, force: true });
+          continue;
+        }
+      } catch { /* stat raced (lock just released) — retry the mkdir */ }
+      if (Date.now() >= deadline) {
+        const e = new Error('Timed out waiting for the access write lock');
+        e.code = 'ELOCKTIMEOUT';
+        throw e;
+      }
+      sleepSync(LOCK_RETRY_MS);
+    }
+  }
+}
+
+// Run `fn` while holding the advisory access write lock (released on finally).
+// Reentrant within this process: a helper already holding the lock may call
+// another locked helper without deadlocking (Node is single-threaded, so the
+// only way to nest is an explicit call chain).
+export function withAccessWriteLock(fn) {
+  if (lockHeldInProcess) return fn();
+  acquireWriteLock();
+  lockHeldInProcess = true;
+  try {
+    return fn();
+  } finally {
+    lockHeldInProcess = false;
+    try { fs.rmSync(LOCK_DIR, { recursive: true, force: true }); } catch { /* ignore */ }
+  }
+}
+
+// Remove stale `<file>.tmp-<pid>` files left by a crash mid-rename. Ignore any
+// failure (best-effort startup hygiene; a leftover tmp file is never read).
+function cleanupStaleTmpFiles() {
+  try {
+    for (const entry of fs.readdirSync(DATA_DIR)) {
+      if (/\.tmp-\d+$/.test(entry)) {
+        try { fs.unlinkSync(path.join(DATA_DIR, entry)); } catch { /* ignore */ }
+      }
+    }
+  } catch { /* ignore */ }
+}
+cleanupStaleTmpFiles();
+
 function readJson(name, fallback) {
   try {
     return JSON.parse(fs.readFileSync(path.join(DATA_DIR, name), 'utf-8'));
@@ -45,8 +132,16 @@ function readJson(name, fallback) {
   }
 }
 
+// Atomic write: serialize to a unique temp file in the SAME directory, then
+// fs.renameSync() over the target. rename is atomic on the same filesystem
+// (POSIX; same-volume on Windows), so a crash mid-write can never leave a torn
+// store file — a concurrent reader sees either the complete old or the complete
+// new content. Stale tmp files from a crash are cleaned on startup.
 function writeJson(name, obj) {
-  fs.writeFileSync(path.join(DATA_DIR, name), JSON.stringify(obj, null, 2), 'utf-8');
+  const file = path.join(DATA_DIR, name);
+  const tmp = `${file}.tmp-${process.pid}`;
+  fs.writeFileSync(tmp, JSON.stringify(obj, null, 2), 'utf-8');
+  fs.renameSync(tmp, file);
 }
 
 // ── Profiles ─────────────────────────────────────────────────────────────────
@@ -65,7 +160,7 @@ export function getProfile(code) {
 }
 
 export function saveProfiles(profiles) {
-  writeJson(FILES.profiles, profiles);
+  return withAccessWriteLock(() => writeJson(FILES.profiles, profiles));
 }
 
 // ── Policies ─────────────────────────────────────────────────────────────────
@@ -74,7 +169,7 @@ export function getPolicies() {
 }
 
 export function savePolicies(policies) {
-  writeJson(FILES.policies, policies);
+  return withAccessWriteLock(() => writeJson(FILES.policies, policies));
 }
 
 // ── Source links ─────────────────────────────────────────────────────────────
@@ -83,7 +178,7 @@ export function getSourceLinks() {
 }
 
 export function saveSourceLinks(links) {
-  writeJson(FILES.sourceLinks, links);
+  return withAccessWriteLock(() => writeJson(FILES.sourceLinks, links));
 }
 
 // ── Employees (normalized) ───────────────────────────────────────────────────
@@ -92,7 +187,7 @@ export function getEmployees() {
 }
 
 export function saveEmployees(employees) {
-  writeJson(FILES.employees, employees);
+  return withAccessWriteLock(() => writeJson(FILES.employees, employees));
 }
 
 export function getEmployeeByCode(code) {
@@ -106,7 +201,7 @@ export function getRelationships() {
 }
 
 export function saveRelationships(relationships) {
-  writeJson(FILES.relationships, relationships);
+  return withAccessWriteLock(() => writeJson(FILES.relationships, relationships));
 }
 
 // ── Policy version (for cache keys) ──────────────────────────────────────────
@@ -115,9 +210,13 @@ export function getPolicyVersion() {
 }
 
 export function bumpPolicyVersion() {
-  const cur = getPolicyVersion();
-  writeJson('policy_version.json', { version: cur + 1, updatedAt: new Date().toISOString() });
-  return cur + 1;
+  // The read-modify-write of policy_version.json runs INSIDE the advisory lock
+  // so concurrent bumps serialize instead of both reading the same version.
+  return withAccessWriteLock(() => {
+    const cur = getPolicyVersion();
+    writeJson('policy_version.json', { version: cur + 1, updatedAt: new Date().toISOString() });
+    return cur + 1;
+  });
 }
 
 export function getDataDir() { return DATA_DIR; }

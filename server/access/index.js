@@ -1,6 +1,7 @@
 // access/index.js — Barrel export for the normalized access-control layer.
 export * from './accessModel.js';
 export * from './compatAdapter.js';
+export * from './orgIntegrity.js';
 export * from './scopeResolver.js';
 export * from './scopeContext.js';
 export * from './sourceLinks.js';

@@ -38,12 +38,15 @@ export function buildOrgSnapshot(employees = [], relationships = []) {
 
   // Temporal relationships: if provided, the latest active edge wins.
   // relationship: { employeeCode, managerCode, relationshipType, effectiveFrom, effectiveTo }
-  const managerOf = new Map(); // employeeCode -> managerCode (resolved)
+  // A NULL managerCode edge is an EXPLICIT root assignment — it overrides a stale
+  // employee.managerCode (so "move to root" via adminService.setManager(_, null)
+  // actually takes effect) and preserves multi-root orgs.
+  const managerOf = new Map(); // employeeCode -> managerCode (null = root)
   for (const r of relationships || []) {
     const child = employeeKey(r.employeeCode ?? r.childCode);
     const mgr = employeeKey(r.managerCode ?? r.parentCode);
-    if (!child || !mgr) continue;
-    managerOf.set(child, mgr);
+    if (!child) continue;
+    managerOf.set(child, mgr || null);
   }
 
   // Fall back to employee.managerCode for any employee without an explicit edge.

@@ -33,6 +33,7 @@ import {
 } from './accessStore.js';
 import { buildOrgSnapshot, resolveAccess } from './scopeResolver.js';
 import { evaluatePolicies, isCompensationField, isSensitiveResource } from './policyEngine.js';
+import { assertNoDuplicateEmployeeCodes, assertAcyclicManagerGraph, assertManagerExists } from './orgIntegrity.js';
 import { POLICY_EFFECTS } from './accessModel.js';
 import { recordAudit, listAudit, findPreviousSnapshot } from './auditStore.js';
 
@@ -53,6 +54,19 @@ function applyAndAudit(actor, entity, action, entityId, previous, next) {
   const policyVersion = bumpPolicyVersion();
   recordAudit(actor, { entity, action, entityId }, { previous, next, policyVersion });
   return { ok: true, policyVersion };
+}
+
+// Record a REJECTED write (org-integrity violation). The audit detail is a safe
+// category string — it never contains employee data, record content, or query
+// text. A rejected write records no snapshot and does NOT bump the policy
+// version (no config change happened).
+function recordRejected(actor, entity, entityId, err) {
+  const msg = String(err?.message || '');
+  let detail = 'org integrity violation';
+  if (/duplicate employeeCode/i.test(msg)) detail = 'duplicate employeeCode';
+  else if (/self-manager|hierarchy cycle/i.test(msg)) detail = 'hierarchy cycle';
+  else if (/manager .* does not exist/i.test(msg)) detail = 'missing manager';
+  recordAudit(actor, { entity, action: 'rejected', entityId, detail }, { previous: null, next: null });
 }
 
 // ── Profile updates ──────────────────────────────────────────────────────────
@@ -182,6 +196,20 @@ export function assignProfile(actor, employeeCode, profileCode) {
   if (idx === -1) { const e = new Error('Employee not found'); e.status = 404; throw e; }
   const previous = employees[idx];
   const next = { ...previous, accessProfile: profileCode, version: nextVersion(previous.version), updatedAt: nowIso() };
+
+  // Write-path org integrity: validate the WHOLE org with this change applied
+  // BEFORE saving anything. A rejected write never mutates the store.
+  const candidate = employees.slice();
+  candidate[idx] = next;
+  try {
+    assertNoDuplicateEmployeeCodes(candidate);
+    assertAcyclicManagerGraph(candidate, getRelationships());
+    assertManagerExists(candidate, getRelationships());
+  } catch (e) {
+    recordRejected(actor, 'employee', key, e);
+    throw e;
+  }
+
   employees[idx] = next;
   saveEmployees(employees);
   return applyAndAudit(actor, 'employee', 'assign_profile', key, previous, next);
@@ -189,13 +217,21 @@ export function assignProfile(actor, employeeCode, profileCode) {
 
 // ── Organization relationships (move employee / change manager) ──────────────
 export function setManager(actor, employeeCode, managerCode) {
+  const employees = getEmployees();
   const relationships = getRelationships();
   const child = employeeKey(employeeCode);
-  const mgr = employeeKey(managerCode);
+  // NULL (or empty) managerCode = root — allowed (multi-root preserved).
+  const mgr = employeeKey(managerCode) || null;
+
+  // The child must exist as an employee — never create dangling edges.
+  if (!employees.some((e) => employeeKey(e.code ?? e.employeeCode) === child)) {
+    const e = new Error('Employee not found'); e.status = 404; throw e;
+  }
+
   const existing = relationships.find((r) => employeeKey(r.employeeCode) === child);
   const previous = existing || null;
   const next = {
-    relationshipId: existing?.relationshipId || stableId('rel', child, mgr),
+    relationshipId: existing?.relationshipId || stableId('rel', child, mgr || ''),
     employeeCode: child,
     managerCode: mgr,
     relationshipType: 'reports_to_manager',
@@ -203,6 +239,20 @@ export function setManager(actor, employeeCode, managerCode) {
     effectiveFrom: nowIso(),
     effectiveTo: null,
   };
+
+  // Write-path org integrity: validate the WHOLE org with this edge applied
+  // BEFORE saving anything. A rejected write never mutates the store.
+  const candidateRels = relationships.filter((r) => employeeKey(r.employeeCode) !== child);
+  candidateRels.push(next);
+  try {
+    assertNoDuplicateEmployeeCodes(employees);
+    assertAcyclicManagerGraph(employees, candidateRels);
+    assertManagerExists(employees, candidateRels);
+  } catch (e) {
+    recordRejected(actor, 'relationship', child, e);
+    throw e;
+  }
+
   if (existing) {
     relationships[relationships.indexOf(existing)] = next;
   } else {

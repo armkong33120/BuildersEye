@@ -16,7 +16,7 @@ Change: `CHG-production-hardening-final` · Branch: `codex/final-hardening-20260
 - `adminService.setManager(actor, employeeCode, null)` now records an explicit root relationship (move-to-root actually takes effect; multi-root preserved).
 
 ### Verified (real numbers, 2026-08-16)
-- `npm test`: **12 passed / 0 failed / 11 skipped** with a live local backend (all 11 skipped are auth-gated — require `TEST_USERNAME`/`TEST_PASSWORD`; Invalid Login ran live 5/5). Without a live backend, Invalid Login is also skipped: 11 passed / 12 skipped.
+- `npm test`: **14 passed / 0 failed / 11 skipped** with a live local backend (all 11 skipped are auth-gated — require `TEST_USERNAME`/`TEST_PASSWORD`; Invalid Login ran live 5/5). Without a live backend, Invalid Login is also skipped: 13 passed / 12 skipped.
 - `verify:security`: **34/34**. `npm run build`: **OK**.
 - `benchmark:dynamic`: **75/75** (58 original + 17 write-path org-integrity), leakage **0%**, all metrics 100%.
 - `test_org_integrity` 32/32 · `test_canonical_policy` 25/25 · `test_legacy_shim_parity` 38/38 · `test_isolation_security` 46/46 · `test_persistence_restart` 14/14 · `test_admin_preview_contract` 48/48 · live backend invalid-login 5/5.

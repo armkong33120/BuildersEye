@@ -120,11 +120,12 @@ Commit hashes: `3f7795c`, `27cc3de`, `b9a8760`, `2589a9e`, `5a3601c`, `6cd986c`,
   `docs/PERSISTENCE.md`).
 
 ## Tests run (real numbers, 2026-08-16)
-- `npm test` → **12 passed / 0 failed** with a live local backend (11 skipped — all
+- `npm test` → **14 passed / 0 failed** with a live local backend (11 skipped — all
   auth-gated; Invalid Login ran live 5/5). Without a live backend Invalid Login is
-  also skipped: 11 passed / 12 skipped. *The 0.3.0 published figure was 10 passed;
-  the Admin Preview Contract suite joined `npm test` (commit `5a3601c`), making the
-  current real count 12 with a live backend.*
+  also skipped: 13 passed / 12 skipped. *The 0.3.0 published figure was 10 passed;
+  the Admin Preview Contract (`5a3601c`) and Org Integrity + Canonical Policy
+  (`af0b6d2`) suites joined `npm test`, making the current real count 14 with a live
+  backend.*
 - `verify:security` → 34/34. `npm run build` → OK.
 - `benchmark:dynamic` → **75/75**, leakage **0%** (scope 14/14, authz 21/21,
   recall 1/1, route 4/4, cache 6/6, freshness 6/6, error 0%).

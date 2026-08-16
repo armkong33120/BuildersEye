@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BuildersEye — Admin Console</title>
+    <link rel="stylesheet" href="/src/styles/admin.css" />
+  </head>
+  <body>
+    <div class="admin-shell" id="adminShell">
+      <aside class="admin-sidebar">
+        <div class="admin-brand">
+          <div class="brand-mark"></div>
+          <div>
+            <h1>BuildersEye</h1>
+            <p>Admin Console</p>
+          </div>
+        </div>
+
+        <nav class="admin-nav" id="adminNav">
+          <button class="admin-nav-item is-active" data-section="org" type="button">
+            <span class="nav-icon">🌳</span><span>Organization Tree</span>
+          </button>
+          <button class="admin-nav-item" data-section="sources" type="button">
+            <span class="nav-icon">📁</span><span>Data Sources</span>
+          </button>
+          <button class="admin-nav-item" data-section="matrix" type="button">
+            <span class="nav-icon">🛡️</span><span>Permission Matrix</span>
+          </button>
+          <button class="admin-nav-item" data-section="preview" type="button">
+            <span class="nav-icon">👁️</span><span>Preview As User</span>
+          </button>
+          <button class="admin-nav-item" data-section="audit" type="button">
+            <span class="nav-icon">📜</span><span>Audit &amp; History</span>
+          </button>
+        </nav>
+
+        <div class="admin-sidebar-footer">
+          <div class="policy-version" id="policyVersionChip">Policy v—</div>
+          <div class="admin-env-note">Local / test backend only</div>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <header class="admin-topbar">
+          <div class="admin-topbar-title" id="adminTopbarTitle">Organization Tree</div>
+          <div class="admin-topbar-actions">
+            <button id="refreshAllBtn" class="btn btn-ghost" type="button">↻ Refresh</button>
+            <div id="adminUserChip" class="admin-user-chip is-hidden"></div>
+            <button id="adminLogoutBtn" class="btn btn-ghost" type="button">Sign out</button>
+          </div>
+        </header>
+
+        <div class="admin-content" id="adminContent">
+          <!-- Section: Organization Tree -->
+          <section class="admin-section is-active" id="section-org" data-section-panel="org">
+            <div class="section-head">
+              <h2>Organization Tree</h2>
+              <div class="section-actions">
+                <button id="orgAddBtn" class="btn btn-primary" type="button">+ Add Employee</button>
+                <button id="orgExpandAllBtn" class="btn btn-ghost" type="button">Expand all</button>
+                <button id="orgCollapseAllBtn" class="btn btn-ghost" type="button">Collapse all</button>
+              </div>
+            </div>
+            <div class="section-hint">
+              C-Level / Manager / Lead / Junior / Staff relationships. Change manager, move department,
+              add or deactivate employees. Cycle and invalid-manager errors are surfaced from the backend.
+            </div>
+            <div id="orgTree" class="org-tree"></div>
+          </section>
+
+          <!-- Section: Employee Data Sources -->
+          <section class="admin-section" id="section-sources" data-section-panel="sources">
+            <div class="section-head">
+              <h2>Employee Data Sources</h2>
+              <div class="section-actions">
+                <button id="srcAddBtn" class="btn btn-primary" type="button">+ Link Source</button>
+                <button id="srcReindexBtn" class="btn btn-warn" type="button" title="Protected operation — admin only">⟳ Re-index</button>
+              </div>
+            </div>
+            <div class="section-hint">
+              Link an Excel / OneDrive file to an employee. Duplicate ownership is rejected unless the source
+              is explicitly shared. Re-index is a protected, admin-only operation.
+            </div>
+            <div id="srcTableWrap" class="table-wrap"></div>
+          </section>
+
+          <!-- Section: Permission Matrix -->
+          <section class="admin-section" id="section-matrix" data-section-panel="matrix">
+            <div class="section-head">
+              <h2>Permission Matrix</h2>
+              <div class="section-actions">
+                <button id="polAddBtn" class="btn btn-primary" type="button">+ Add Policy</button>
+              </div>
+            </div>
+            <div class="section-hint">
+              Configure file / sheet / field visibility with allow / deny / redact. Inherited permissions,
+              overrides, effective permission, and conflicts are shown inline.
+            </div>
+            <div id="matrixToolbar" class="matrix-toolbar"></div>
+            <div id="matrixBody" class="matrix-body"></div>
+          </section>
+
+          <!-- Section: Preview As User -->
+          <section class="admin-section" id="section-preview" data-section-panel="preview">
+            <div class="section-head">
+              <h2>Preview As User</h2>
+            </div>
+            <div class="section-hint">
+              Preview what CEO / HR / manager / lead / employee can see. This calls the SAME backend policy
+              engine used by real requests — not a client-side mock.
+            </div>
+            <div id="previewToolbar" class="preview-toolbar"></div>
+            <div id="previewBody" class="preview-body"></div>
+          </section>
+
+          <!-- Section: Audit & Version History -->
+          <section class="admin-section" id="section-audit" data-section-panel="audit">
+            <div class="section-head">
+              <h2>Audit &amp; Version History</h2>
+              <div class="section-actions">
+                <label class="filter-field">
+                  <span>Entity</span>
+                  <select id="auditEntityFilter">
+                    <option value="">All</option>
+                    <option value="profile">Profile</option>
+                    <option value="policy">Policy</option>
+                    <option value="source_link">Source link</option>
+                    <option value="employee">Employee</option>
+                    <option value="relationship">Relationship</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="section-hint">
+              Who / what / when changed, previous value, new value, policy version, and rollback.
+            </div>
+            <div id="auditTableWrap" class="table-wrap"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Login overlay (shown when no valid admin session) -->
+    <div id="adminLoginOverlay" class="login-overlay is-hidden" aria-hidden="true">
+      <div class="login-card">
+        <div class="login-brand">
+          <div class="brand-mark"></div>
+          <div>
+            <h1>BuildersEye</h1>
+            <p>Admin Console — CEO access only</p>
+          </div>
+        </div>
+        <form id="adminLoginForm" class="login-form" autocomplete="off">
+          <label class="login-field">
+            <span>Username</span>
+            <input id="adminLoginUsername" type="text" autocomplete="username" placeholder="e.g. emp001 / ceo" />
+          </label>
+          <label class="login-field">
+            <span>Password</span>
+            <input id="adminLoginPassword" type="password" autocomplete="current-password" placeholder="Password" />
+          </label>
+          <div id="adminLoginError" class="login-error" role="alert"></div>
+          <button id="adminLoginSubmit" class="login-submit" type="submit">Sign in</button>
+        </form>
+        <p class="preview-hint">Credentials are never displayed in this console.</p>
+      </div>
+    </div>
+
+    <script type="module" src="/src/js/admin.js"></script>
+  </body>
+</html>

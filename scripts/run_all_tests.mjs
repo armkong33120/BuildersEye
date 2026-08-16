@@ -32,6 +32,7 @@ const TEST_SUITES = [
   { name: 'SQL Evidence + History',  file: 'test_sql_evidence_history.mjs', requiresAuth: true },
   { name: 'Debug Inspector',      file: 'test_debug_inspector.mjs',     requiresAuth: false },
   { name: 'Isolation Security',   file: 'test_isolation_security.mjs', requiresAuth: false },
+  { name: 'Admin Preview Contract (static)', file: 'test_admin_preview_contract.mjs', requiresAuth: false },
   { name: 'Persistence Restart',  file: 'test_persistence_restart.mjs', requiresAuth: false },
   { name: 'Legacy Shim Parity',   file: 'test_legacy_shim_parity.mjs',  requiresAuth: false },
   { name: 'Isolation API (live)', file: 'test_isolation_api.mjs',      requiresAuth: true },

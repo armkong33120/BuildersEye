@@ -31,8 +31,9 @@ export function getPipelineLatencyStats() {
 
 export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
   const startTime = Date.now();
-  const viewerRole = viewer?.role || 'CEO';
-  const viewerPk = viewer?.employeeId || 1;
+  // Deny-by-default: unknown viewer resolves to SELF_ONLY ('Employee'), never CEO.
+  const viewerRole = viewer?.role || 'Employee';
+  const viewerPk = viewer?.employeeId || 0;
   const llmInfo = getProviderInfo();
   const TOTAL_PIPELINE_NODES = 19; // matches the 19-node visualization on the debug page
   const executedNodeCount = (t) => new Set((t || []).map((e) => e.node)).size;
@@ -376,8 +377,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   // the 3D graph, not just the retrieval hits. Some answers mention
   // managers/colleagues (by name) that were not in the primary search results.
   if (finalAnswer) {
-    // 1) Match explicit employee codes (EMP001, EMP 030, ...)
-    const answerRegex = /EMP\s*(\d{3})/gi;
+    // 1) Match explicit employee codes (EMP001, EMP 030, ...) — format-agnostic
+    const answerRegex = /EMP\s*(\d+)/gi;
     let m;
     while ((m = answerRegex.exec(finalAnswer)) !== null) {
       const pk = parseInt(m[1], 10);
@@ -471,7 +472,7 @@ export function buildRetrievalEvidence(finalResults, sources = [], limit = 10) {
       let fileName = typeof rec.fileName === 'string' ? rec.fileName : '';
       if (!fileName) {
         const src = safeSources.find((s) => {
-          const m = s && typeof s.fileName === 'string' ? s.fileName.match(/EMP(\d{3})/i) : null;
+          const m = s && typeof s.fileName === 'string' ? s.fileName.match(/EMP(\d+)/i) : null;
           return m && parseInt(m[1], 10) === Number(entry.employeeId);
         });
         if (src && typeof src.fileName === 'string') fileName = src.fileName;

@@ -76,8 +76,8 @@ function departmentSearch(query, flatIndex) {
 }
 
 function employeeIdSearch(query, flatIndex) {
-  const cm = query.match(/EMP(\d{1,3})/i);
-  const nm = query.match(/\b(\d{1,3})\b/);
+  const cm = query.match(/EMP(\d+)/i);
+  const nm = query.match(/\b(\d+)\b/);
   let pk = null;
   if (cm) pk = parseInt(cm[1]);
   else if (nm) pk = parseInt(nm[1]);

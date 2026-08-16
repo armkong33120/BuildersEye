@@ -53,13 +53,15 @@ function getRecordType(sheetName) {
 export function ingestAll(dataDir) {
   const flatIndex = [];
   const searchIndex = new Map();
-  const files = fs.readdirSync(dataDir).filter(f => /^EMP\d{3}.*\.xlsx$/i.test(f));
-  if (files.length === 0) throw new Error('No EMP*.xlsx files found in ' + dataDir);
+  // Format-agnostic file pattern: employee codes are no longer limited to
+  // EMP\d{3} (removed the fixed 3-digit + 150 cap assumptions).
+  const files = fs.readdirSync(dataDir).filter(f => /\.xlsx$/i.test(f));
+  if (files.length === 0) throw new Error('No .xlsx files found in ' + dataDir);
 
   for (const fileName of files) {
     const filePath = path.join(dataDir, fileName);
     const workbook = xlsx.readFile(filePath);
-    const code = fileName.match(/EMP\d{3}/i)?.[0] || fileName.replace('.xlsx', '');
+    const code = fileName.match(/EMP\d+/i)?.[0] || fileName.replace('.xlsx', '');
 
     const profileData = parseSheet(workbook, 'Employee_Profile');
     if (!profileData || profileData.length === 0) continue;
@@ -69,7 +71,7 @@ export function ingestAll(dataDir) {
     const department = profileData.find(c => c.fieldName === 'department')?.content || '';
     const confidentiality = CONFIDENTIALITY_MAP[department] || 'Tier 3 — Standard';
 
-    if (employeeId < 1 || employeeId > 150) continue;
+    if (employeeId < 1) continue;
 
     for (const sheetName of workbook.SheetNames) {
       for (const record of parseSheet(workbook, sheetName)) {

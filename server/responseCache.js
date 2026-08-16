@@ -9,6 +9,7 @@
 //  - TTL (default 15 min) + max entries with FIFO eviction → bounded memory.
 //  - Payload is deep-cloned on write/read so callers can't mutate the cache.
 import 'dotenv/config';
+import { getPolicyVersion } from './access/accessStore.js';
 
 const MAX_ENTRIES = Number(process.env.RESPONSE_CACHE_MAX || 1000);
 const TTL_MS = Number(process.env.RESPONSE_CACHE_TTL_MS || 15 * 60 * 1000);
@@ -24,9 +25,13 @@ export function normalizeQuery(query) {
 }
 
 export function cacheKeyFor(query, viewer) {
-  const role = (viewer?.role || 'CEO').trim();
-  const pk = viewer?.employeeId || 1;
-  return `${role}|${pk}|${normalizeQuery(query)}`;
+  // Deny-by-default: unknown viewer → SELF_ONLY ('Employee'), never CEO.
+  const role = (viewer?.role || 'Employee').trim();
+  const pk = viewer?.employeeId || 0;
+  // Cache keys include identity (role + pk) AND the policy version so a
+  // permission change invalidates previously-cached answers for affected users.
+  const policyVersion = getPolicyVersion();
+  return `${role}|${pk}|pv${policyVersion}|${normalizeQuery(query)}`;
 }
 
 export function cacheGet(key) {

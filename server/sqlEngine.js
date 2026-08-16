@@ -21,7 +21,8 @@ export async function generateAndRunSQL(userQuery, ctx = {}) {
   // CEO/HR (scopeCodes=null) → รันบน employee_data ทั้งตาราง (เต็มสิทธิ์)
   // Employee/Manager (scopeCodes=Set) → สร้าง scoped table เฉพาะแถวของคนใน scope
   // แล้วให้ LLM รันกับ scoped table เท่านั้น → count/avg/rows อยู่ใน scope เสมอ
-  const viewerRole = ctx?.viewerRole || 'CEO';
+  // Deny-by-default: unknown viewer → SELF_ONLY ('Employee'), never CEO.
+  const viewerRole = ctx?.viewerRole || 'Employee';
   const scopeCodes = ctx?.scopeCodes || null;
   const isScoped = scopeCodes instanceof Set && scopeCodes.size > 0;
 

@@ -18,7 +18,7 @@ function roleForIdentity(identity) {
   const jt = (identity.jobTitle || '').toLowerCase();
   const dept = identity.department || '';
   if (identity.roleGroup === 'CEO' || identity.hierarchyDepth === 0) return 'CEO';
-  if (dept === 'HR / Admin' || jt.includes('hr ') || jt.includes('human resources') || jt.includes('recruiter')) return 'HR';
+  if (dept === 'HR & Admin' || dept === 'HR / Admin' || jt.includes('hr ') || jt.includes('human resources') || jt.includes('recruiter')) return 'HR';
   if (jt.includes('chief') || jt.includes('manager') || jt.includes('director') || jt.includes('secretary') || jt.includes('head of')) return 'Manager';
   return 'Employee';
 }

@@ -119,7 +119,7 @@ async function syncFolder(account, folderName, log) {
 
     for (const item of data.value || []) {
       if (!item.file) continue;                            // ข้ามโฟลเดอร์
-      if (!/^EMP\d{3}.*\.xlsx$/i.test(item.name)) continue; // เฉพาะไฟล์พนักงาน
+      if (!/\.xlsx$/i.test(item.name)) continue;           // เฉพาะไฟล์พนักงาน (format-agnostic)
       const localPath = path.join(CACHE_DIR, item.name);
 
       if (item.deleted) {
@@ -161,6 +161,6 @@ export async function syncAll(log = console.log) {
     }
   }
   saveState(state);
-  const files = fs.readdirSync(CACHE_DIR).filter(f => /^EMP\d{3}.*\.xlsx$/i.test(f));
+  const files = fs.readdirSync(CACHE_DIR).filter(f => /\.xlsx$/i.test(f));
   return { results, cacheFileCount: files.length, cacheDir: CACHE_DIR, syncedAt: new Date().toISOString() };
 }

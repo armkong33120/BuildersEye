@@ -10,8 +10,9 @@ export async function parseIntentSemantically(query, viewerContext, flatIndex, c
   const trimmedQuery = String(query || '').trim();
   if (!trimmedQuery || trimmedQuery.length > 500) return null;
 
-  const viewerId = viewerContext?.employeeId || 1;
-  const viewerRole = viewerContext?.role || 'CEO';
+  const viewerId = viewerContext?.employeeId || 0;
+  // Deny-by-default: unknown viewer → SELF_ONLY ('Employee'), never CEO.
+  const viewerRole = viewerContext?.role || 'Employee';
   
   const history = getHistory(conversationId);
   const historyStr = history.length > 0

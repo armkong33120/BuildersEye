@@ -32,4 +32,6 @@ services:
       - key: ACCESS_TOKEN_TTL
         value: "30m"    # JWT access token lifetime
       - key: ENABLE_TEST_CREDS
-        value: "true"   # M4: expose /api/preview/credentials for the demo preview page. Set "false" in real prod.
+        value: "true"   # ⚠️ SECURITY FLAG (finding #10): ships known shared test password in prod.
+                        # M4: expose /api/preview/credentials for the demo preview page.
+                        # MUST be set to "false" in real production — all users share one known password.

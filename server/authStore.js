@@ -28,7 +28,8 @@ function roleForIdentity(identity) {
   const jt = (identity.jobTitle || '').toLowerCase();
   const dept = identity.department || '';
   if (identity.roleGroup === 'CEO' || identity.hierarchyDepth === 0) return 'CEO';
-  if (dept === 'HR / Admin' || jt.includes('hr ') || jt.includes('human resources') || jt.includes('recruiter')) return 'HR';
+  // FIX: real data uses 'HR & Admin' (not 'HR / Admin'). Match both.
+  if (dept === 'HR & Admin' || dept === 'HR / Admin' || jt.includes('hr ') || jt.includes('human resources') || jt.includes('recruiter')) return 'HR';
   // Manager = leadership titles only (C-Level, dept Managers, secretaries, heads).
   // IT Support / officers / staff are Employee even if they sit at depth 2.
   if (jt.includes('chief') || jt.includes('manager') || jt.includes('director') || jt.includes('secretary') || jt.includes('head of')) return 'Manager';

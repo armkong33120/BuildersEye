@@ -14,6 +14,9 @@ import fs from 'fs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const TEST_SUITES = [
+  { name: 'Access Model',         file: 'test_access_model.mjs',         requiresAuth: false },
+  { name: 'Admin Service',        file: 'test_admin_service.mjs',        requiresAuth: false },
+  { name: 'Admin API',            file: 'test_admin_api.mjs',            requiresAuth: false },
   { name: 'Invalid Login',        file: 'test_api_invalid_login.mjs',    requiresAuth: false },
   { name: 'Blocked Queries',      file: 'test_api_blocked_query.mjs',    requiresAuth: true },
   { name: 'Debug Auth',           file: 'test_api_debug_auth.mjs',       requiresAuth: true },

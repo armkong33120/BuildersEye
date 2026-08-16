@@ -20,6 +20,8 @@ import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
+import { seedAccessModel, buildOrgSnapshot, resolveAccess, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships } from './access/index.js';
+import { mountAdminRoutes } from './adminRoutes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5199;
@@ -139,6 +141,14 @@ async function startup() {
   } catch (e) {
     console.warn('[auth] seedUsers failed:', e.message);
   }
+  // Seed the normalized access model (profiles/policies/employees) from the
+  // identity graph. Idempotent; derives accessProfile from legacy role.
+  try {
+    const accessSeed = seedAccessModel({ identityGraph });
+    console.log(`[access] Model seeded: ${accessSeed.profiles} profiles, ${accessSeed.policies} policies, ${accessSeed.employees} employees`);
+  } catch (e) {
+    console.warn('[access] seedAccessModel failed:', e.message);
+  }
   // Vector index is memory-heavy (60k embeddings). Disable on low-RAM hosts via VECTOR_INDEX_DISABLED=true
   if (process.env.VECTOR_INDEX_DISABLED !== 'true') {
     try {
@@ -190,17 +200,35 @@ function resolveViewer(req) {
   return { role: 'Employee', employeeId: 0 };
 }
 
-// requireAdmin: requires JWT auth AND CEO role. Use AFTER requireAuth.
-// Admin = CEO (role='CEO') or user.isAdmin === true (explicit flag for flexibility).
+// requireAdmin: requires JWT auth AND admin authorization. Use AFTER requireAuth.
+// Source of truth is the access profile (GLOBAL_ADMIN has isAdmin=true), NOT the
+// request body and NOT the legacy role string alone. The legacy CEO role and the
+// seeded isAdmin flag remain as backward-compatible fallbacks.
+function isAdminAuthorized(authUser) {
+  if (!authUser) return false;
+  // 1) Normalized source of truth: access profile permission.
+  const accessEmp = getAccessEmployees().find((e) => e.employeeId === Number(authUser.employeeId));
+  if (accessEmp?.accessProfile) {
+    const profile = getProfilesMap().get(accessEmp.accessProfile);
+    if (profile?.permissions?.isAdmin === true) return true;
+  }
+  // 2) Backward-compatible fallbacks.
+  return authUser.role === 'CEO' || authUser.isAdmin === true;
+}
+
 function requireAdmin(req, res, next) {
   if (!req.authUser) {
     return res.status(401).json({ error: 'Unauthorized: authentication required' });
   }
-  if (req.authUser.role !== 'CEO' && !req.authUser.isAdmin) {
+  if (!isAdminAuthorized(req.authUser)) {
     return res.status(403).json({ error: 'Forbidden: admin access only' });
   }
   return next();
 }
+
+// Admin-only configuration API (read + write separated). Mounted under
+// /api/admin/* with requireAuth + requireAdmin enforced on every route.
+mountAdminRoutes(app, { requireAuth, requireAdmin });
 
 app.get('/api/health', (req, res) => {
   const uniqueFiles = new Set(flatIndex.filter(r => r.sheetName === 'Employee_Profile').map(r => r.fileName));

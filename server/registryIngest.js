@@ -1,6 +1,8 @@
 // registryIngest.js — แปลง Employee Registry (dynamic) → flatIndex/searchIndex รูปแบบเดิม
 // ทำให้ engine เดิมทุกตัว (search/sql/analytics/vector/chat) ใช้ข้อมูลจาก OneDrive ได้ทันที
 // โดยไม่ต้องแก้ logic เดิมเลย — ข้อมูลไหล: OneDrive → cache → registry → engines
+import { buildOrgSnapshot, resolveScopeCodes } from './access/scopeResolver.js';
+import { profileForLegacyRole } from './access/compatAdapter.js';
 
 // sheet → recordType (รู้จักก็ map, ไม่รู้จัก → derive จากชื่อ sheet อัตโนมัติ ไม่ hardcode fail)
 const RECORD_TYPE_MAP = {
@@ -77,30 +79,13 @@ export function registryToFlatIndex(employees) {
   return { flatIndex, searchIndex };
 }
 
-// สร้าง scope chain: Manager เห็นตัวเอง + ลูกน้องทุกชั้น (ผ่าน managerCode)
+// สร้าง scope chain — @deprecated — เดิม Manager เห็นตัวเอง + ลูกน้องทุกชั้น (ผ่าน managerCode)
 // คืน null = เห็นทั้งหมด (CEO/HR), หรือ Set ของ code ที่มองเห็น
+// ตอนนี้ DELEGATE ไปยัง canonical resolver (buildOrgSnapshot + resolveScopeCodes)
+// เพื่อให้ scope เดียวกันกับ retrieval/SQL/vector path.
 export function buildScopeCodes(viewer, employees) {
-  if (viewer.role === 'CEO' || viewer.role === 'HR') return null;
-  const byPk = new Map(employees.map(e => [e.pk, e]));
-  const me = byPk.get(Number(viewer.employeeId)) || employees.find(e => e.pk === Number(viewer.employeeId));
-  if (!me) return new Set();
-  if (viewer.role === 'Employee') return new Set([me.code]);
-
-  // Manager: ตัวเอง + descendants
-  const childrenOf = new Map();
-  for (const e of employees) {
-    if (!e.managerCode) continue;
-    const key = String(e.managerCode).toUpperCase();
-    if (!childrenOf.has(key)) childrenOf.set(key, []);
-    childrenOf.get(key).push(e.code);
-  }
-  const visible = new Set([me.code]);
-  const queue = [me.code];
-  while (queue.length) {
-    const cur = String(queue.pop()).toUpperCase();
-    for (const child of childrenOf.get(cur) || []) {
-      if (!visible.has(child)) { visible.add(child); queue.push(child); }
-    }
-  }
-  return visible;
+  const snapshot = buildOrgSnapshot(employees);
+  const me = employees.find(e => e.pk === Number(viewer?.employeeId));
+  const profileCode = profileForLegacyRole(viewer?.role);
+  return resolveScopeCodes(profileCode, me?.code, snapshot).scopeCodes;
 }

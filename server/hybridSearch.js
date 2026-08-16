@@ -3,14 +3,22 @@
 import { tokenize } from './registryIngest.js';
 
 // keyword search จาก searchIndex เดิม → [{key, score, entry}]
-function keywordSearch(query, flatIndex, searchIndex, limit = 20) {
+// scopeCodes: null = ทั้งหมด, Set = จำกัดรายคน (deny-by-default: empty Set → ไม่มีผล)
+function keywordSearch(query, flatIndex, searchIndex, limit = 20, scopeCodes = null) {
   const tokens = tokenize(query);
   if (!tokens.length) return [];
   const hitCount = new Map(); // flatIndex idx → count
   for (const t of tokens) {
     const hits = searchIndex.get(t);
     if (!hits) continue;
-    for (const idx of hits) hitCount.set(idx, (hitCount.get(idx) || 0) + 1);
+    for (const idx of hits) {
+      const rec = flatIndex[idx];
+      if (!rec) continue;
+      // RBAC: keyword path must respect the authorized scope (same boundary as
+      // vector pre-retrieval + SQL scoped table). Empty Set (NONE) → nothing.
+      if (scopeCodes instanceof Set && !scopeCodes.has(rec.employeeCode)) continue;
+      hitCount.set(idx, (hitCount.get(idx) || 0) + 1);
+    }
   }
   return [...hitCount.entries()]
     .map(([idx, count]) => ({ key: `kw:${idx}`, score: count / tokens.length, entry: flatIndex[idx] }))
@@ -38,8 +46,8 @@ function rrfFuse(resultLists, k = 60) {
 // vectorResults: [{id, score, text, meta}] จาก vectorStore (อาจว่างถ้าไม่มี vectors)
 // sheetMentions: Set<sheetName> — sheet-aware re-rank + diversity (กัน sheet ใหญ่ครอบ)
 // maxSharePerSheet: cap จำนวน chunk ต่อ sheet ในผลลัพธ์ (default 4, env RAG_SHEET_MAX_SHARE)
-export function hybridFuse(query, flatIndex, searchIndex, vectorResults = [], { k = 10, sheetMentions = null, maxSharePerSheet = 4 } = {}) {
-  const kw = keywordSearch(query, flatIndex, searchIndex, 25).map(r => ({
+export function hybridFuse(query, flatIndex, searchIndex, vectorResults = [], { k = 10, sheetMentions = null, maxSharePerSheet = 4, scopeCodes = null } = {}) {
+  const kw = keywordSearch(query, flatIndex, searchIndex, 25, scopeCodes).map(r => ({
     id: `kw:${r.key}`,
     payload: {
       source: 'keyword',

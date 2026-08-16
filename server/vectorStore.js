@@ -153,9 +153,15 @@ async function searchVectorsNeon(queryVector, { k, scopeCodes, allowSensitive, s
   const vecLiteral = `[${queryVector.join(',')}]`;
   const conditions = [];
   if (!allowSensitive) conditions.push("meta->>'sensitivity' != 'sensitive'");
-  if (scopeCodes && scopeCodes.size > 0) {
-    const codesLiteral = Array.from(scopeCodes).map(c => `'${c.replace(/'/g, "''")}'`).join(',');
-    conditions.push(`(meta->>'kind' = 'orgdoc' OR meta->>'code' IN (${codesLiteral}))`);
+  // Deny-by-default: an EMPTY Set (NONE) must return NO employee chunks (orgdoc
+  // only), never the full corpus. null/undefined (ALL) = no restriction.
+  if (scopeCodes instanceof Set) {
+    if (scopeCodes.size > 0) {
+      const codesLiteral = Array.from(scopeCodes).map(c => `'${c.replace(/'/g, "''")}'`).join(',');
+      conditions.push(`(meta->>'kind' = 'orgdoc' OR meta->>'code' IN (${codesLiteral}))`);
+    } else {
+      conditions.push(`meta->>'kind' = 'orgdoc'`);
+    }
   }
   if (sheet) conditions.push(`meta->>'sheet' = '${sheet.replace(/'/g, "''")}'`);
   const whereSql = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';

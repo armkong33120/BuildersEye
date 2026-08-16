@@ -45,17 +45,12 @@ export function checkQueryPolicy(query, viewerRole) {
   return { status: 'Allowed' };
 }
 
+// @deprecated — delegates to the canonical resolver (legacyResolveScope) so the
+// keyword/vector post-filter shares ONE scope boundary with SQL/vector pre-filter.
+import { legacyResolveScope } from './access/scopeResolver.js';
+
 export function resolveScope(viewerRole, viewerPk, targetPk, identityGraph) {
-  if (viewerRole === 'CEO') return true;
-  if (viewerPk === targetPk) return true;
-  if (viewerRole === 'Employee') return false;
-  if (viewerRole === 'Manager') {
-    const viewer = identityGraph?.identities?.find(e => e.pk === viewerPk);
-    if (!viewer) return false;
-    return (viewer.subtreePks || []).includes(targetPk) || (viewer.directReportPks || []).includes(targetPk);
-  }
-  if (viewerRole === 'HR') return true;
-  return false;
+  return legacyResolveScope(viewerRole, viewerPk, targetPk, identityGraph);
 }
 
 export function applyFieldRedaction(record, viewerRole, viewerPk, targetPk) {

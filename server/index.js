@@ -11,7 +11,7 @@ import { normalizeScore } from './score.js';
 import { listConversations, getConversation, addMessage, deleteConversation } from './conversationStore.js';
 import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLogout, verifyAccessToken, previewCredentials, listOnlineUsers } from './authStore.js';
 import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
-import { registryToFlatIndex, buildScopeCodes } from './registryIngest.js';
+import { registryToFlatIndex } from './registryIngest.js';
 import { getCacheDirSafe } from './runRegistry.js';
 import { isConfigured as odConfigured, listAccounts, syncAll } from './onedriveSync.js';
 import { handleWebhook, seedTokensFromNeon, pushTokensToNeon, ensureSubscriptions, WEBHOOK_PATH } from './onedriveWebhook.js';
@@ -20,7 +20,7 @@ import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
-import { seedAccessModel, buildOrgSnapshot, resolveAccess, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships } from './access/index.js';
+import { seedAccessModel, buildOrgSnapshot, resolveAccess, resolveViewerScope, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships } from './access/index.js';
 import { mountAdminRoutes } from './adminRoutes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -200,6 +200,19 @@ function resolveViewer(req) {
   return { role: 'Employee', employeeId: 0 };
 }
 
+// Resolve the authorized scope for a viewer via the CANONICAL resolver.
+// Org snapshot = current registry (Excel/OneDrive truth) overlaid with admin
+// relationships; profile = admin-assigned accessProfile (fallback legacy role).
+// Returns resolveAccess result: { scopeCodes (null|Set), profileCode, viewerCode,
+// allowed, ... }. This single boundary feeds retrieval/SQL/vector/cache.
+function resolveScopeForViewer(viewer) {
+  return resolveViewerScope(viewer, {
+    employees: getActiveEmployees(),
+    relationships: getAccessRelationships(),
+    profiles: getProfilesMap(),
+  });
+}
+
 // requireAdmin: requires JWT auth AND admin authorization. Use AFTER requireAuth.
 // Source of truth is the access profile (GLOBAL_ADMIN has isAdmin=true), NOT the
 // request body and NOT the legacy role string alone. The legacy CEO role and the
@@ -331,7 +344,10 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     const convId = conversationId || 'conv-' + Date.now();
     addMessage(convId, 'user', query);
 
-    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, convId);
+    // Canonical authorized scope (single boundary) — flows into keyword, vector
+    // (pre-retrieval), and SQL (scoped table) paths inside chatHandler.
+    const scope = resolveScopeForViewer(viewer);
+    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope }, convId);
 
     // Stable id shared by the direct chat response AND latestPipeline so the
     // debug page can deduplicate history (live polling must not double-record).
@@ -498,7 +514,7 @@ app.get('/api/registry/status', requireAuth, (req, res) => {
 app.get('/api/registry/employees', requireAuth, (req, res) => {
   const viewer = resolveViewer(req);
   const employees = getActiveEmployees();
-  const scope = buildScopeCodes(viewer, employees);
+  const scope = resolveScopeForViewer(viewer).scopeCodes;
   const visible = scope ? employees.filter(e => scope.has(e.code)) : employees;
   res.json({ viewer: { role: viewer.role, employeeId: viewer.employeeId }, count: visible.length, employees: visible.map(empSummary) });
 });
@@ -508,7 +524,7 @@ app.get('/api/registry/employees/:code', requireAuth, (req, res) => {
   const employees = getActiveEmployees();
   const emp = getEmployee(req.params.code);
   if (!emp || emp.status !== 'active') return res.status(404).json({ error: 'Employee not found' });
-  const scope = buildScopeCodes(viewer, employees);
+  const scope = resolveScopeForViewer(viewer).scopeCodes;
   if (scope && !scope.has(emp.code)) return res.status(403).json({ error: 'Forbidden: outside your scope' });
 
   const privileged = viewer.role === 'CEO' || viewer.role === 'HR';
@@ -555,8 +571,7 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
     const { query, k = 5, sheet = null, mode = 'vector', hyde = false, rerank = false } = req.body || {};
     if (!query) return res.status(400).json({ error: 'query is required' });
     const viewer = resolveViewer(req);
-    const employees = getActiveEmployees();
-    const scope = buildScopeCodes(viewer, employees);
+    const scope = resolveScopeForViewer(viewer).scopeCodes;
     const allowSensitive = viewer.role === 'CEO' || viewer.role === 'HR';
     const kk = Math.min(Number(k) || 5, 20);
 
@@ -592,7 +607,7 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
       const { hybridFuse } = await import('./hybridSearch.js');
       const sheetMentions = req._sheetMentions || null;
       const maxShare = Number(process.env.RAG_SHEET_MAX_SHARE || 4);
-      payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk, sheetMentions, maxSharePerSheet: maxShare });
+      payload = hybridFuse(query, flatIndex, searchIndex, vectorResults, { k: kk, sheetMentions, maxSharePerSheet: maxShare, scopeCodes: scope });
     } else {
       payload = { mode: hydeText ? 'vector+hyde' : 'vector', available: true, results: vectorResults };
     }

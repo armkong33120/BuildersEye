@@ -24,7 +24,9 @@ export async function generateAndRunSQL(userQuery, ctx = {}) {
   // Deny-by-default: unknown viewer → SELF_ONLY ('Employee'), never CEO.
   const viewerRole = ctx?.viewerRole || 'Employee';
   const scopeCodes = ctx?.scopeCodes || null;
-  const isScoped = scopeCodes instanceof Set && scopeCodes.size > 0;
+  // Deny-by-default: an EMPTY Set (NONE) is a scoped table with ZERO rows — it must
+  // NOT fall through to the full table. Only null/undefined (ALL) means "no scope".
+  const isScoped = scopeCodes instanceof Set;
 
   if (isScoped) {
     const fullRows = alasql.tables.employee_data?.data || [];

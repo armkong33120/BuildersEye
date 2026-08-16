@@ -210,7 +210,9 @@ export function search(query, { flatIndex, searchIndex }, parsedIntent = null, s
   // RBAC scope filter (analytics/filter path): ถ้า scopeCodes เป็น Set → จำกัด flatIndex
   // ให้เห็นเฉพาะคนใน scope ก่อนคำนวณ min/max/filter (เหมือน scoped table ใน SQL path)
   // เพื่อให้ ANALYTICS_MIN/MAX และ filterEmployees ทำงานในขอบเขตเดียวกับ keyword path
-  const scopedFlatIndex = (scopeCodes instanceof Set && scopeCodes.size > 0)
+  // Deny-by-default: an EMPTY Set (NONE) must yield an EMPTY scoped index — NOT the
+  // full index. Only null/undefined (ALL) means "no restriction".
+  const scopedFlatIndex = (scopeCodes instanceof Set)
     ? flatIndex.filter(r => scopeCodes.has(r.employeeCode))
     : flatIndex;
 

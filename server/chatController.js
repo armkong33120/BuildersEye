@@ -13,6 +13,8 @@ import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 import { detectSheetMentions } from './sheetAliases.js';
 import { detectSqlAnalyticsIntent, isQualitativeQuery } from './sqlRouting.js';
+import { buildOrgSnapshot, resolveScopeCodes } from './access/scopeResolver.js';
+import { profileForLegacyRole } from './access/compatAdapter.js';
 
 // ── Pipeline latency tracker (p50/p95) ──
 const pipelineLatencies = [];
@@ -29,7 +31,7 @@ export function getPipelineLatencyStats() {
   return { p50, p95, samples: sorted.length };
 }
 
-export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph }, conversationId = '') {
+export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope = null }, conversationId = '') {
   const startTime = Date.now();
   // Deny-by-default: unknown viewer resolves to SELF_ONLY ('Employee'), never CEO.
   const viewerRole = viewer?.role || 'Employee';
@@ -167,7 +169,10 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   // RBAC: scope สำหรับ keyword/analytics path (searchIndex ใช้กรอง ANALYTICS_MIN/MAX/filter)
   // — scopeCodes เดียวกับ SQL path เพื่อให้ทุก path มีขอบเขตเท่ากัน; viewerRole สำหรับ template redaction
-  const analyticsScopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
+  // Canonical authorized scope (single boundary). scope.scopeCodes is null (ALL)
+  // or a Set<employeeCode> (SUBTREE/SELF/NONE). Falls back to the legacy
+  // buildScopeCodesForRole only when no canonical scope was passed (back-compat).
+  const analyticsScopeCodes = scope?.scopeCodes ?? buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
   mark('scope', analyticsScopeCodes ? `scoped(${analyticsScopeCodes.size} codes)` : 'unrestricted');
   const sr = search(resolvedQuery, { flatIndex, searchIndex }, parsedIntent, analyticsScopeCodes, viewerRole);
   mark('kw', `${sr.results.length} hits`);
@@ -237,7 +242,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   if (shouldRouteSql) {
     // RBAC: ส่ง viewer scope เข้า SQL path (Layer 1+2) — generateAndRunSQL สร้าง scoped table
     // scopeCodes: null=CEO/HR เห็นทั้งหมด | Set<code>=Employee/Manager (จาก identityGraph subtree)
-    const scopeCodes = buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
+    const scopeCodes = scope?.scopeCodes ?? buildScopeCodesForRole(viewerRole, viewerPk, identityGraph);
     try { sqlRes = await generateAndRunSQL(query, { viewerRole, viewerPk, scopeCodes }); } 
     catch (e) { sqlRes = { error: e.message }; }
     mark('sqle', sqlRes.error ? 'error: ' + sqlRes.error : `rows=${(sqlRes.data || []).length}`);
@@ -496,30 +501,22 @@ export function buildRetrievalEvidence(finalResults, sources = [], limit = 10) {
     .filter(Boolean);
 }
 
-// ── RBAC scope helper (SQL path) ──
-// คืน Set ของ employee codes ที่ viewer มองเห็น (หรือ null = เห็นทั้งหมด CEO/HR)
-// ใช้ identityGraph subtreePks/directReportPks (เดียวกับ resolveScope ใน keyword path)
-// เพื่อให้ SQL path มีขอบเขตเท่ากัน keyword path เป๊ะ
+// ── RBAC scope helper (SQL path) — @deprecated ──
+// Kept as a backward-compatible fallback for callers that do not pass a canonical
+// scope. It now DELEGATES to the canonical resolver (buildOrgSnapshot +
+// resolveScopeCodes) instead of re-walking subtreePks/directReportPks, so the
+// three divergent implementations collapse to one boundary.
 export function buildScopeCodesForRole(viewerRole, viewerPk, identityGraph) {
-  if (viewerRole === 'CEO' || viewerRole === 'HR') return null;
-  if (!identityGraph?.identities) return new Set();
-  const me = identityGraph.identities.find(e => e.pk === Number(viewerPk));
-  if (!me?.code) return new Set();
-  if (viewerRole === 'Employee') return new Set([me.code]);
-  if (viewerRole === 'Manager') {
-    const visible = new Set([me.code]);
-    // subtreePks = ลูกน้องทุกชั้น (รวมตัวผู้จัดการเองในบางกรณี) — รวมทุก pk ที่ scope เห็น
-    for (const pk of me.subtreePks || []) {
-      const sub = identityGraph.identities.find(e => e.pk === Number(pk));
-      if (sub?.code) visible.add(sub.code);
-    }
-    for (const pk of me.directReportPks || []) {
-      const sub = identityGraph.identities.find(e => e.pk === Number(pk));
-      if (sub?.code) visible.add(sub.code);
-    }
-    return visible;
-  }
-  return new Set();
+  const employees = (identityGraph?.identities || []).map((i) => ({
+    code: i.code,
+    pk: i.pk,
+    managerCode: i.managerCode,
+    status: 'active',
+  }));
+  const snapshot = buildOrgSnapshot(employees);
+  const viewer = employees.find((e) => e.pk === Number(viewerPk));
+  const profileCode = profileForLegacyRole(viewerRole);
+  return resolveScopeCodes(profileCode, viewer?.code, snapshot).scopeCodes;
 }
 
 // ── SQL result evidence (Layer 3, SQL path) ─────────────────────────────────

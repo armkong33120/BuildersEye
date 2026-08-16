@@ -143,6 +143,19 @@ async function main() {
     previewEmp.records.every((r) => r.content === '' && ['visible', 'redacted', 'blocked'].includes(r.status)),
     JSON.stringify(previewEmp.records.slice(0, 2)));
 
+  // Engine-level permission-awareness (privileged-exemption regression):
+  // GLOBAL_ADMIN/HR_PRIVILEGED must be ALLOWED compensation + sensitive fields
+  // even though the seeded compensation DENY policy has subjectId=null.
+  const adminPreview = acc.adminService.previewAsUser(adminActor, { employeeCode: 'EMP001' }, org);
+  assert('CEO preview compensation field is ALLOWED', adminPreview.markers.find((m) => m.field === 'Base_Salary')?.status === 'allowed',
+    JSON.stringify(adminPreview.markers));
+  const adminSubj = { profileCode: 'GLOBAL_ADMIN', employeeCode: 'EMP001', accessProfile: acc.getProfile('GLOBAL_ADMIN') };
+  const engAdminComp = acc.evaluatePolicies(adminSubj, { sheet: 'Salary_History', field: 'Base_Salary' }, acc.getPolicies());
+  assert('engine ALLOWS compensation for GLOBAL_ADMIN (permission-aware)', engAdminComp.effect === 'allow', `effect=${engAdminComp.effect}`);
+  const mgrSubj = { profileCode: 'TEAM_MANAGER', employeeCode: 'EMP002', accessProfile: acc.getProfile('TEAM_MANAGER') };
+  const engMgrComp = acc.evaluatePolicies(mgrSubj, { sheet: 'Salary_History', field: 'Base_Salary' }, acc.getPolicies());
+  assert('engine DENIES compensation for TEAM_MANAGER', engMgrComp.effect === 'deny', `effect=${engMgrComp.effect}`);
+
   // Manager preview — scope must remain SUBTREE, never elevated to ALL/CEO scope
   const previewMgr = acc.adminService.previewAsUser(adminActor, { employeeCode: 'EMP002' }, org);
   assert('manager preview scope is SUBTREE', previewMgr.scope === 'SUBTREE');

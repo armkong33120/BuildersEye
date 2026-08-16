@@ -50,7 +50,20 @@ function subjectMatches(policy, subject) {
   if (policy.subjectType === 'employee') {
     return policy.subjectId === subject.employeeCode;
   }
-  if (policy.subjectId == null) return true; // applies to all profiles
+  if (policy.subjectId == null) {
+    // All-profiles policy — BUT privileged exemption: a null-subject DENY that
+    // targets compensation or sensitive fields does not apply to a profile whose
+    // permissions explicitly grant that capability. (The seeded compensation
+    // DENY is 'applies to all NON-privileged profiles'; without this guard a
+    // GLOBAL_ADMIN would be denied compensation — a permission preview mismatch.)
+    const perms = subject.accessProfile?.permissions;
+    if (perms && policy.effect === POLICY_EFFECTS.DENY) {
+      const res = String(policy.resourceName || '');
+      if (isCompensationField(res) && perms.canSeeCompensation) return false;
+      if (/sensitive|weakness|retention|succession/i.test(res) && perms.canSeeSensitive) return false;
+    }
+    return true; // applies to all profiles
+  }
   return policy.subjectId === subject.profileCode;
 }
 
@@ -68,10 +81,20 @@ export function findMatchingPolicies(subject, resource, policies = []) {
 // Evaluate policies for a (subject, resource) pair.
 // Deny-over-allow: any matching DENY beats an ALLOW regardless of priority.
 // Deny-by-default: no matching ALLOW → deny (for access decisions).
+// Profile-permission aware: when NO policy matches, an accessProfile's explicit
+// permissions act as an implicit ALLOW for the category it grants
+// (canSeeCompensation / canSeeSensitive). Without an accessProfile on the
+// subject (legacy callers), behavior is unchanged (strict deny-by-default).
 export function evaluatePolicies(subject, resource, policies = []) {
   const matches = findMatchingPolicies(subject, resource, policies);
 
   if (matches.length === 0) {
+    const perms = subject.accessProfile?.permissions;
+    const comp = isCompensationField(resource.field || '', resource.sheet || '');
+    const sensitive = isSensitiveResource(resource);
+    if (perms && ((comp && perms.canSeeCompensation) || (sensitive && perms.canSeeSensitive))) {
+      return { effect: POLICY_EFFECTS.ALLOW, matchedPolicyIds: [] };
+    }
     return { effect: POLICY_EFFECTS.DENY, matchedPolicyIds: [] };
   }
 
@@ -116,10 +139,23 @@ export function applyFieldRedactionPolicy(record, access, policies = []) {
 // ── Compensation detection (legacy parity) ───────────────────────────────────
 const COMPENSATION_TERMS = /salary|compensation|bonus|incentive|ค่าจ้าง|เงินเดือน|โบนัส|ค่าตอบแทน/i;
 
+// Sensitive personal fields (mirrors legacy SENSITIVE_FIELDS in server/policy.js).
+const SENSITIVE_FIELDS_BY_SHEET = {
+  'Employee_Profile': ['mainWeakness', 'retentionRisk', 'successionPotential'],
+};
+
 export function isCompensationField(fieldName, sheetName) {
   const f = String(fieldName || '');
   const s = String(sheetName || '');
   return COMPENSATION_TERMS.test(f) || COMPENSATION_TERMS.test(s);
+}
+
+export function isSensitiveResource(resource) {
+  const sheet = normalizeResourceName(resource?.sheet);
+  const field = normalizeResourceName(resource?.field);
+  const list = SENSITIVE_FIELDS_BY_SHEET[sheet] || [];
+  if (list.some((f) => normalizeResourceName(f) === field)) return true;
+  return /sensitive|weakness|retention|succession/i.test(field);
 }
 
 export function canSeeCompensation(access) {

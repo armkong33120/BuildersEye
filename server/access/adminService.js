@@ -32,7 +32,7 @@ import {
   getPolicyVersion,
 } from './accessStore.js';
 import { buildOrgSnapshot, resolveAccess } from './scopeResolver.js';
-import { evaluatePolicies } from './policyEngine.js';
+import { evaluatePolicies, isCompensationField, isSensitiveResource } from './policyEngine.js';
 import { POLICY_EFFECTS } from './accessModel.js';
 import { recordAudit, listAudit, findPreviousSnapshot } from './auditStore.js';
 
@@ -285,7 +285,7 @@ export function previewAsUser(actor, { employeeCode, viewerCode } = {}, org = {}
 
   // Representative resource evaluation → allowed / redacted / blocked markers.
   const policies = getPolicies();
-  const subject = { profileCode, employeeCode: code };
+  const subject = { profileCode, employeeCode: code, accessProfile: access.accessProfile };
   const fieldVisibility = access.accessProfile?.fieldVisibility || {};
   const representativeResources = [
     { sheet: 'Employee_Profile', field: 'department' },
@@ -298,10 +298,19 @@ export function previewAsUser(actor, { employeeCode, viewerCode } = {}, org = {}
   const markers = representativeResources.map((r) => {
     const hidden = (fieldVisibility[r.sheet] || []).includes(r.field);
     const dec = evaluatePolicies(subject, r, policies);
+    // Distinguish a MATCHED deny/redact from deny-by-default: with no matching
+    // policy the engine returns DENY with empty matchedPolicyIds, which must NOT
+    // be rendered as 'blocked' for a profile that is explicitly permitted.
+    const matchedDeny = dec.effect === POLICY_EFFECTS.DENY && dec.matchedPolicyIds.length > 0;
+    const matchedRedact = dec.effect === POLICY_EFFECTS.REDACT;
     let status;
-    if (dec.effect === POLICY_EFFECTS.DENY) status = 'blocked';
-    else if (dec.effect === POLICY_EFFECTS.REDACT || hidden) status = 'redacted';
-    else status = 'allowed';
+    if (matchedDeny) status = 'blocked';
+    else if (matchedRedact || hidden) status = 'redacted';
+    else if (isCompensationField(r.field, r.sheet) && !access.accessProfile?.permissions?.canSeeCompensation) {
+      status = 'blocked'; // compensation permitted only for privileged profiles
+    } else if (isSensitiveResource(r) && !access.accessProfile?.permissions?.canSeeSensitive) {
+      status = 'blocked'; // sensitive personal fields require canSeeSensitive
+    } else status = 'allowed';
     return { sheet: r.sheet, field: r.field, status, matchedPolicyIds: dec.matchedPolicyIds };
   });
 

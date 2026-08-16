@@ -19,7 +19,8 @@
     "verify:security": "node scripts/verify_security.mjs",
     "test:debug-page": "node scripts/test_debug_page.mjs",
     "benchmark": "node benchmark/runner.mjs",
-    "benchmark:generate": "node benchmark/dataset/generate.mjs"
+    "benchmark:generate": "node benchmark/dataset/generate.mjs",
+    "benchmark:dynamic": "node benchmark/dynamic-org.mjs"
   },
   "dependencies": {
     "lucide": "^0.468.0",

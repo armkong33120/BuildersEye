@@ -1,8 +1,9 @@
-# PERSISTENCE.md — Access-Model Persistence Review (Phase 5 / P2, production-hardening)
+# PERSISTENCE.md — Access-Model Persistence Review (Phase 5 / P2, final-hardening 0.4.0)
 
 Status: **VERIFIED IN CODE** (file-backed behavior) · **SAFE** (single-instance:
-atomic rename + advisory write lock) · **BLOCKED** (multi-instance production
-readiness — no cross-host lock; Neon write-through not implemented)
+atomic rename + advisory write lock, `scripts/test_persistence_restart.mjs` 14/14) ·
+**BLOCKED** (multi-instance production readiness — no cross-host lock; Neon
+write-through not implemented) · Change record: `CHG-production-hardening-final`
 
 ## 1. What is persisted, and where
 
@@ -90,7 +91,8 @@ A Neon write-through adapter should:
 
 ## 6. Restart-behavior tests
 
-`scripts/test_persistence_restart.mjs` (wired into `npm test`) proves:
+`scripts/test_persistence_restart.mjs` (wired into `npm test`, **14/14** at the
+0.4.0 final-hardening tip) proves:
 - profiles / policies / employees / relationships / source links survive a full
   process restart (fresh `node` child, same `ACCESS_DATA_DIR`);
 - `policy_version` survives restart (durable cache-invalidation baseline);

@@ -1,11 +1,27 @@
-# Rollback Plan — BuildersEye org-access redesign + production hardening
+# Rollback Plan — BuildersEye org-access redesign + production hardening + final hardening
 
-Changes: `CHG-org-access-redesign` (core) and `CHG-production-hardening` (isolation/preview/benchmark/persistence review) — safe rollback paths.
+Changes: `CHG-org-access-redesign` (core), `CHG-production-hardening` (isolation/preview/benchmark/persistence review) and `CHG-production-hardening-final` (write-path org integrity, canonical authorization, persistence P2, preview contract) — safe rollback paths.
 
 ## Backup points
 - **Org-redesign backup:** `codex/backup-before-org-access-redesign-20260816-1050` (baseline `1a2c345`).
 - **Production-hardening backup:** `codex/backup-before-production-hardening-20260816-1208` (baseline `07d613a`, tip of org-redesign branch).
+- **Final-hardening backup:** `codex/backup-before-final-hardening-20260816-2121` (baseline `54a1038`, tip of production-hardening branch).
 - All work is on task branches; **no push to main**, **no production deploy**.
+
+## How to roll back final hardening (keep 0.3.0 + redesign)
+1. **Restore branch (simplest, full revert to pre-final-hardening tree):**
+   ```
+   git checkout codex/backup-before-final-hardening-20260816-2121
+   ```
+   This restores the exact production-hardening tree (baseline `54a1038`) with all org-integrity/canonical-authorization/persistence-P2/preview-contract changes removed.
+2. **Revert the final-hardening commits on top of current code (keeps later work):**
+   ```
+   git revert --no-commit 3f7795c 27cc3de b9a8760 2589a9e 5a3601c 6cd986c <final-docs-commit>
+   git commit -m "revert(CHG-production-hardening-final): roll back org integrity + canonical authz + persistence P2 + preview contract"
+   ```
+   Commit hashes: `3f7795c` (write-path org integrity M2), `27cc3de` (canonical authorization Phase 3), `b9a8760` (M1 admin check / L2 / L4), `2589a9e` (persistence P2 atomic writes + advisory lock), `5a3601c` (static preview contract), `6cd986c` (benchmark write-path org-integrity section), plus the final docs commit.
+3. **Behavior note when reverting:** reverting `3f7795c` re-enables the legacy behavior where the resolver collapses duplicate employee codes last-wins and breaks cycles silently instead of rejecting the write; reverting `2589a9e` returns access-store writes to non-locked/non-atomic JSON writes (single-writer-only again). Verify with the suites below.
+4. **Data rollback for final hardening:** rejected writes are audited (`action:'rejected'`) but never persisted, so no data migration is required for org integrity. The advisory lock/atomic rename only changed how files are written, not their format. Roll back `server/.data/access/` from backup only if policy/profiles changed.
 
 ## How to roll back (production-hardening first, keep redesign)
 1. **Restore branch (simplest, full revert to pre-hardening tree):**
@@ -26,8 +42,10 @@ Changes: `CHG-org-access-redesign` (core) and `CHG-production-hardening` (isolat
 3. Restore `server/.data/access/` and `server/.data/registry/` from backup; remove any migrated JSON.
 
 ## Verification after rollback
-- `npm test` green (10 passed / 0 failed on the hardening branch; 8/0 on the pre-hardening backup).
+- `npm test` green (12 passed / 0 failed with a live backend on the final-hardening branch; 10/0 on the 0.3.0 branch; 8/0 on the pre-hardening backup).
 - `npm run verify:security` → 34/34.
+- `npm run benchmark:dynamic` → 75/75, leakage 0% (final-hardening tip).
+- `node scripts/test_org_integrity.mjs` → 32/32 (final-hardening tip); `test_canonical_policy.mjs` → 25/25; `test_admin_preview_contract.mjs` → 48/48; `test_persistence_restart.mjs` → 14/14.
 - Backend boots and seeds (boot log `[access] Model seeded: ...`).
 - `git log` shows the backup branch tip.
 

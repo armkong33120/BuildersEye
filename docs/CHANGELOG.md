@@ -1,5 +1,30 @@
 # Changelog — BuildersEye
 
+## [0.4.0] — 2026-08-16 — Final Hardening (write-path org integrity + canonical authorization + persistence P2 + preview contract)
+Change: `CHG-production-hardening-final` · Branch: `codex/final-hardening-20260816` (baseline `54a1038`, backup `codex/backup-before-final-hardening-20260816-2121`)
+
+### Added
+- Write-path org integrity (`server/access/orgIntegrity.js`): every employee/relationship write validates the WHOLE org before persisting. Duplicate employeeCode → `409`, self-manager → `400`, hierarchy cycles (A→B→A, A→B→C→A) → `409`, missing non-null manager → `400`; valid single-root and multi-root orgs preserved; rejected writes are audited (`action:'rejected'`, safe category detail) and leave the store byte-identical (no partial write). `buildOrgSnapshot` honors explicit root relationships (move-to-root actually takes effect).
+- Canonical authorization bridge (Phase 3): `canonicalQueryPolicy` + `applyFieldRedactionPolicy` threaded into chat; legacy `policy.js` reduced to a delegating deprecated shim; legacy-shim parity suite now proves query-policy parity and zero redaction divergences.
+- Hardening fixes: M1 profile-authoritative admin check (legacy fallback only pre-seed), L2 `conversationId` length cap/hash, L4 webhook `clientState` must be present and equal.
+- Persistence P2: atomic JSON writes (temp file + `fs.renameSync`) + advisory write lock (`withAccessWriteLock`, ~5s timeout, stale-lock break) across all access-store mutation helpers; audit line-atomicity documented.
+- Static `/api/admin/preview` contract regression suite (48 asserts, no credentials/browser needed) + canonical policy suite (25) + org-integrity suite (32).
+- Benchmark write-path org-integrity section: duplicate-code/cycle/self-manager/missing-manager rejections, valid single/multi-root, valid move persists, rejected writes leave store unchanged.
+
+### Changed (behavior)
+- Admin writes that would create duplicate employee codes or cyclic/missing-manager hierarchies are now REJECTED (previously the resolver collapsed duplicates last-wins and broke cycles silently). Read path stays crash-safe on legacy bad data.
+- `adminService.setManager(actor, employeeCode, null)` now records an explicit root relationship (move-to-root actually takes effect; multi-root preserved).
+
+### Verified (real numbers, 2026-08-16)
+- `npm test`: **12 passed / 0 failed / 11 skipped** with a live local backend (all 11 skipped are auth-gated — require `TEST_USERNAME`/`TEST_PASSWORD`; Invalid Login ran live 5/5). Without a live backend, Invalid Login is also skipped: 11 passed / 12 skipped.
+- `verify:security`: **34/34**. `npm run build`: **OK**.
+- `benchmark:dynamic`: **75/75** (58 original + 17 write-path org-integrity), leakage **0%**, all metrics 100%.
+- `test_org_integrity` 32/32 · `test_canonical_policy` 25/25 · `test_legacy_shim_parity` 38/38 · `test_isolation_security` 46/46 · `test_persistence_restart` 14/14 · `test_admin_preview_contract` 48/48 · live backend invalid-login 5/5.
+
+### Deferred / NOT RUN (honest)
+- Browser E2E (Playwright) NOT run — no MCP + no `TEST_ACCOUNT_PASSWORD`; auth-gated live suites NOT run (no `TEST_USERNAME`/`TEST_PASSWORD`). **Production-readiness verdict: READY WITH LIMITATIONS.**
+- Multi-instance access-model persistence remains **BLOCKED** (filesystem-local advisory lock; Neon write-through for the access model NOT implemented — see `docs/PERSISTENCE.md`).
+
 ## [0.3.0] — 2026-08-16 — Production Hardening (isolation + preview + benchmark + persistence review)
 Change: `CHG-production-hardening` · Branch: `codex/production-hardening-20260816` (baseline `07d613a`, backup `codex/backup-before-production-hardening-20260816-1208`)
 

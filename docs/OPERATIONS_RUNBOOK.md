@@ -8,7 +8,7 @@ Status flags: **[VERIFIED IN CODE]** · **[MANUAL OP CHECK]** · **[PROPOSED FUT
 - Backend: `cd server && node index.js` (or `npm run dev:all` for frontend+backend).
 - Frontend: `npm run dev` (Vite, port 5174).
 - Re-index only via protected operation: `npm run index:hr` (server-side, admin authz). Do not re-index arbitrarily.
-- Tests: `npm test`, `npm run verify:security`, `npm run benchmark`, `npm run benchmark:dynamic`.
+- Tests: `npm test`, `npm run verify:security`, `npm run benchmark`, `npm run benchmark:dynamic`, and the deterministic suites: `node scripts/test_org_integrity.mjs`, `node scripts/test_canonical_policy.mjs`, `node scripts/test_legacy_shim_parity.mjs`, `node scripts/test_isolation_security.mjs`, `node scripts/test_persistence_restart.mjs`, `node scripts/test_admin_preview_contract.mjs`.
 - Backend refuses to boot without `JWT_SECRET` (and webhook validation requires `WEBHOOK_CLIENT_STATE`) — deny-by-default. **[VERIFIED IN CODE — observed in backend boot]**
 
 ## Health and readiness checks
@@ -16,10 +16,14 @@ Status flags: **[VERIFIED IN CODE]** · **[MANUAL OP CHECK]** · **[PROPOSED FUT
 - `GET /api/registry/status` exposes `vectors.stale` (boolean). Use it to detect stale index. **[VERIFIED IN CODE]**
 - Security: `npm run verify:security` → 34/34. **[VERIFIED]**
 - Live scope check: `node scripts/verify_rag_scope.mjs` (requires running backend + `TEST_ACCOUNT_PASSWORD`). **[MANUAL OP CHECK — not run here, auth not configured]**
-- Isolation regression: `node scripts/test_isolation_security.mjs` → 38/38. **[VERIFIED]**
-- Restart durability: `node scripts/test_persistence_restart.mjs` → 9/9. **[VERIFIED]**
-- Legacy shim parity: `node scripts/test_legacy_shim_parity.mjs` → 10/10 (2 documented divergences). **[VERIFIED]**
-- Dynamic org benchmark: `npm run benchmark:dynamic` → 58/58, leakage 0%. **[VERIFIED]**
+- Isolation regression: `node scripts/test_isolation_security.mjs` → 46/46 (incl. M1/L2/L4 hardening cases). **[VERIFIED]**
+- Restart durability + persistence lock: `node scripts/test_persistence_restart.mjs` → 14/14 (atomic rename, advisory write lock serialization, no stale `.tmp`/`.lock`). **[VERIFIED]**
+- Legacy shim parity: `node scripts/test_legacy_shim_parity.mjs` → 38/38 (query-policy parity, zero redaction divergences). **[VERIFIED]**
+- Write-path org integrity: `node scripts/test_org_integrity.mjs` → 32/32 (duplicate employeeCode 409, self-manager 400, cycles 409, missing manager 400, no partial writes). **[VERIFIED]**
+- Canonical policy: `node scripts/test_canonical_policy.mjs` → 25/25 (canonicalQueryPolicy + applyFieldRedactionPolicy in chat). **[VERIFIED]**
+- Admin preview contract: `node scripts/test_admin_preview_contract.mjs` → 48/48 (static; no creds/browser needed). **[VERIFIED]**
+- Persistence lock hygiene (manual): after any write, confirm no `.lock` dir remains and no `.tmp-*` files linger under `server/.data/access/`; stale ones are cleaned at startup. **[MANUAL OP CHECK]**
+- Dynamic org benchmark: `npm run benchmark:dynamic` → 75/75, leakage 0% (58 read-path + 17 write-path org-integrity assertions). **[VERIFIED]**
 - Backend auth smoke: with a generated `JWT_SECRET`, `/api/health` OK; `/api/admin/*`, `/api/conversations`, `/api/debug/pipeline` all 401 without a token. **[VERIFIED]**
 
 ## Important operational events and safe actions
@@ -32,6 +36,16 @@ Status flags: **[VERIFIED IN CODE]** · **[MANUAL OP CHECK]** · **[PROPOSED FUT
 | OneDrive/Excel sync failure | Keep last-known-good index; expose `syncStatus=failed`; retry via protected re-index | If repeated |
 | Stale index (`vectors.stale=true`) | Run protected re-index | If persists |
 | Duplicate employee / cyclic manager | Validate in admin console; do not auto-fix | Yes |
+| Duplicate employeeCode write rejected (409) | Write-path `orgIntegrity.js` rejects + audits `action:'rejected'`; store unchanged — no manual action | If persistent |
+| Hierarchy cycle / self-manager write rejected (400/409) | Write-path rejects + audits; org unchanged — validate manager choice in admin console | If persistent |
+| `POST /api/admin/preview` 401/403 | Expect from `requireAdmin`; audit actor; no data returned | Yes (security) |
+| Preview contract mismatch | Run `node scripts/test_admin_preview_contract.mjs` (48/48); fix contract or UI | Yes if mismatch |
+| Canonical policy bridge failure | Run `node scripts/test_canonical_policy.mjs` (25/25); block release on failure | Yes (security) |
+| Legacy shim divergence | Run `node scripts/test_legacy_shim_parity.mjs` (38/38); migrate off deprecated shim | Yes if divergence |
+| Auth-gated suite failed/skipped | Requires `TEST_USERNAME`/`TEST_PASSWORD`; without them report SKIPPED, never PASSED | If failed while creds present |
+| Concurrent admin write conflict | Advisory lock serializes same-host writers; check audit/relationships for last-writer-wins | If cross-host: BLOCKED (see PERSISTENCE.md) |
+| Persistence lock timeout / stale `.lock` | Retry; stale-lock auto-break via mtime at startup; no torn files (atomic rename) | If repeated |
+| Benchmark regression (leakage > 0, accuracy < 100%, integrity assertion failed) | Block release; investigate scopeResolver / orgIntegrity.js | Yes (release gate) |
 | SQL failure / fallback activation | Review sqlRouting; SQL blocks non-SELECT | Yes if data impact |
 | Vector empty/spike | Check scoped retrieval; confirm scope is passed pre-query | Yes if empty |
 | Cache mismatch | Bump policy_version (auditStore) to invalidate | If persists |

@@ -1,30 +1,35 @@
-# Rollback Plan — BuildersEye org-access redesign
+# Rollback Plan — BuildersEye org-access redesign + production hardening
 
-Change: `CHG-org-access-redesign` — safe rollback path.
+Changes: `CHG-org-access-redesign` (core) and `CHG-production-hardening` (isolation/preview/benchmark/persistence review) — safe rollback paths.
 
 ## Backup points
-- **Backup branch:** `codex/backup-before-org-access-redesign-20260816-1050` (points at baseline `1a2c345`).
-- All work is on task branch `codex/org-access-redesign-20260816`; **no push to main**, **no production deploy**.
+- **Org-redesign backup:** `codex/backup-before-org-access-redesign-20260816-1050` (baseline `1a2c345`).
+- **Production-hardening backup:** `codex/backup-before-production-hardening-20260816-1208` (baseline `07d613a`, tip of org-redesign branch).
+- All work is on task branches; **no push to main**, **no production deploy**.
 
-## How to roll back
-1. **Restore branch (simplest, full revert):**
+## How to roll back (production-hardening first, keep redesign)
+1. **Restore branch (simplest, full revert to pre-hardening tree):**
    ```
-   git checkout codex/backup-before-org-access-redesign-20260816-1050
+   git checkout codex/backup-before-production-hardening-20260816-1208
    ```
-   This restores the exact pre-change tree.
-2. **Revert the change commits on top of current code (keeps later work):**
+   This restores the exact org-redesign tree (baseline `07d613a`) with all isolation/preview/benchmark changes removed.
+2. **Revert the hardening commits on top of current code (keeps later work):**
    ```
-   git revert --no-commit 3a3bee9 6727f50 44c0a63 23d2c7b 18933ad 34d959f edc81d5 7d66b25
-   git commit -m "revert(CHG-org-access-redesign): roll back org/access redesign"
+   git revert --no-commit f8b6e43 f1aad77 29899d2 <final-docs-commit>
+   git commit -m "revert(CHG-production-hardening): roll back isolation/preview/benchmark changes"
    ```
-   (List all change commit hashes; see the change record for the full set.)
-3. **Data/data-flow rollback:** restore `server/.data/access/` and `server/.data/registry/` from backup; remove `data_source_links` and any migrated JSON. If Neon tables were later added, drop new tables (not yet wired). **[VERIFIED IN CODE — no Neon write-through for new tables]**
+3. **Data rollback for hardening:** conversation ownership was added to existing conversations on first write; roll back `server/.data/access/` from backup if policy/profiles changed. No Neon tables were added by this change (see `docs/PERSISTENCE.md`).
+
+## How to roll back the org-access redesign entirely
+1. `git checkout codex/backup-before-org-access-redesign-20260816-1050` (exact pre-redesign tree).
+2. Or `git revert --no-commit` the org-redesign commits listed in `CHG-org-access-redesign.md`, keeping hardening commits on top if desired.
+3. Restore `server/.data/access/` and `server/.data/registry/` from backup; remove any migrated JSON.
 
 ## Verification after rollback
-- `npm test` green.
+- `npm test` green (10 passed / 0 failed on the hardening branch; 8/0 on the pre-hardening backup).
 - `npm run verify:security` → 34/34.
-- Backend boots and seeds the legacy model (`role` from `roleForIdentity`, 150 employees).
-- `git log` shows `1a2c345` as the tip of the backup branch.
+- Backend boots and seeds (boot log `[access] Model seeded: ...`).
+- `git log` shows the backup branch tip.
 
 ## Security note
 No secrets were committed; rollback does not require touching `.env`/`.env.local`.

@@ -15,7 +15,7 @@ import express from 'express';
 import * as adminService from './access/adminService.js';
 import { readAccess } from './access/adminService.js';
 
-export function mountAdminRoutes(app, { requireAuth, requireAdmin }) {
+export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = {} }) {
   const router = express.Router();
   router.use(requireAuth, requireAdmin);
 
@@ -42,6 +42,28 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin }) {
     res.json(readAccess.audit({ limit, entity }));
   });
   router.get('/policy-version', (req, res) => res.json({ version: readAccess.policyVersion() }));
+
+  // ── Admin "Preview As User" (M3) ───────────────────────────────────────────
+  // Body: { employeeCode }. Evaluates the SELECTED user's accessProfile + scope
+  // via the canonical policy engine. The response is explicitly marked preview
+  // mode (isPreview:true), never uses the requesting admin/CEO's scope, and is
+  // audited. Route is admin-only (router.use(requireAuth, requireAdmin)).
+  router.post('/preview', (req, res) => {
+    try {
+      const { employeeCode } = req.body || {};
+      const org = {
+        employees: dataSource.getActiveEmployees ? dataSource.getActiveEmployees() : [],
+        relationships: dataSource.getAccessRelationships ? dataSource.getAccessRelationships() : [],
+        profiles: dataSource.getProfilesMap ? dataSource.getProfilesMap() : undefined,
+      };
+      const result = adminService.previewAsUser(actor(req), { employeeCode }, org);
+      // Trail of the preview has already been committed to the audit log by the
+      // service. Return the evaluated result (never the admin's own scope).
+      res.json(result);
+    } catch (e) {
+      res.status(e.status || 500).json({ error: e.message });
+    }
+  });
 
   // ── Write (POST/PUT/DELETE) ────────────────────────────────────────────────
   router.put('/profiles/:code', (req, res) => {

@@ -20,7 +20,7 @@ import { embedOne } from './localEmbedder.js';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
-import { seedAccessModel, buildOrgSnapshot, resolveAccess, resolveViewerScope, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships } from './access/index.js';
+import { seedAccessModel, buildOrgSnapshot, resolveAccess, resolveViewerScope, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships, getPolicyVersion } from './access/index.js';
 import { mountAdminRoutes } from './adminRoutes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -262,8 +262,18 @@ function requireAdmin(req, res, next) {
 }
 
 // Admin-only configuration API (read + write separated). Mounted under
-// /api/admin/* with requireAuth + requireAdmin enforced on every route.
-mountAdminRoutes(app, { requireAuth, requireAdmin });
+// /api/admin/* with requireAuth + requireAdmin enforced on every route. The
+// dataSource provides org data so the "Preview As User" endpoint evaluates the
+// selected user's scope against the real registry snapshot.
+mountAdminRoutes(app, {
+  requireAuth,
+  requireAdmin,
+  dataSource: {
+    getActiveEmployees,
+    getAccessRelationships,
+    getProfilesMap,
+  },
+});
 
 app.get('/api/health', (req, res) => {
   const uniqueFiles = new Set(flatIndex.filter(r => r.sheetName === 'Employee_Profile').map(r => r.fileName));
@@ -342,7 +352,10 @@ app.get('/api/preview/credentials', requireAuth, (req, res) => {
 });
 
 // Latest chat pipeline result — consumed by the debug neural-network page.
-let latestPipeline = null;
+// H1 isolation: keyed by authenticated userId (JWT sub) + invalidation version,
+// so a user can only ever read/write their OWN last chat pipeline. A pipeline
+// from another user is unreachable by changing an id.
+const latestPipelineByUser = new Map(); // userId -> { ...pipeline, policyVersion }
 
 app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   try {
@@ -362,9 +375,10 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       name: req.authUser.name || '',
     } : null;
 
-    // Save user message to conversation history
+    // Save user message to conversation history. Owner is the JWT user id (H2);
+    // a body-supplied conversationId owned by another user throws 403 here.
     const convId = conversationId || 'conv-' + Date.now();
-    addMessage(convId, 'user', query);
+    addMessage(convId, 'user', query, req.authUser.id);
 
     // Canonical authorized scope (single boundary) — flows into keyword, vector
     // (pre-retrieval), and SQL (scoped table) paths inside chatHandler.
@@ -375,45 +389,50 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     // debug page can deduplicate history (live polling must not double-record).
     const pipelineId = 'pl-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
 
-    // Store for debug page (pipeline inspector)
-    latestPipeline = {
-      id: pipelineId,
-      query: result.query,
-      answer: result.answer,
-      chunks: (result.results || []).slice(0, 5).map((r) => ({
-        s: normalizeScore(r.score != null ? r.score : (r.matchedRecords && r.matchedRecords[0] ? 0.5 : 0)),
-        t: (r.matchedRecords && r.matchedRecords[0] && r.matchedRecords[0].content) || (r.employeeId ? 'EMP' + String(r.employeeId).padStart(3, '0') : ''),
-      })),
-      sources: (result.sources || []).slice(0, 5),
-      matchedEmployeePks: result.matchedEmployeePks || [],
-      matchedDepartments: result.matchedDepartments || [],
-      responseTimeMs: result.responseTimeMs || 0,
-      at: Date.now(),
-      trace: result.trace || [],
-      llmUsed: !!result.llmUsed,
-      sqlUsed: !!result.sqlUsed,
-      sqlDetected: !!result.sqlDetected,
-      sqlAttempted: !!result.sqlAttempted,
-      sqlSucceeded: !!result.sqlSucceeded,
-      fallbackRoute: result.fallbackRoute || null,
-      answerSource: result.answerSource || 'template',
-      route: result.route || 'template',
-      provider: result.provider || null,
-      model: result.model || null,
-      executedNodes: result.executedNodes || 0,
-      uniqueExecutedNodes: result.uniqueExecutedNodes || 0,
-      executedEntries: result.executedEntries || 0,
-      totalNodes: result.totalNodes || 0,
-      retrievalEvidence: result.retrievalEvidence || [],
-      sqlEvidence: result.sqlEvidence || null,
-      matchersUsed: result.matchersUsed || [],
-      cached: !!result.cached,
-      viewer: viewerInfo,
-    };
+    // Serve the assistant pipeline ONLY to its own owner. The entry also records
+    // the policy version at write time so stale perms are never served (M4): if
+    // the policy changed since this query, drop the stale entry.
+    latestPipelineByUser.set(req.authUser.id, {
+      ...({
+        id: pipelineId,
+        query: result.query,
+        answer: result.answer,
+        chunks: (result.results || []).slice(0, 5).map((r) => ({
+          s: normalizeScore(r.score != null ? r.score : (r.matchedRecords && r.matchedRecords[0] ? 0.5 : 0)),
+          t: (r.matchedRecords && r.matchedRecords[0] && r.matchedRecords[0].content) || (r.employeeId ? 'EMP' + String(r.employeeId).padStart(3, '0') : ''),
+        })),
+        sources: (result.sources || []).slice(0, 5),
+        matchedEmployeePks: result.matchedEmployeePks || [],
+        matchedDepartments: result.matchedDepartments || [],
+        responseTimeMs: result.responseTimeMs || 0,
+        at: Date.now(),
+        trace: result.trace || [],
+        llmUsed: !!result.llmUsed,
+        sqlUsed: !!result.sqlUsed,
+        sqlDetected: !!result.sqlDetected,
+        sqlAttempted: !!result.sqlAttempted,
+        sqlSucceeded: !!result.sqlSucceeded,
+        fallbackRoute: result.fallbackRoute || null,
+        answerSource: result.answerSource || 'template',
+        route: result.route || 'template',
+        provider: result.provider || null,
+        model: result.model || null,
+        executedNodes: result.executedNodes || 0,
+        uniqueExecutedNodes: result.uniqueExecutedNodes || 0,
+        executedEntries: result.executedEntries || 0,
+        totalNodes: result.totalNodes || 0,
+        retrievalEvidence: result.retrievalEvidence || [],
+        sqlEvidence: result.sqlEvidence || null,
+        matchersUsed: result.matchersUsed || [],
+        cached: !!result.cached,
+        viewer: viewerInfo,
+      }),
+      policyVersion: getPolicyVersion(),
+    });
 
     // Save assistant response
     if (result.answer) {
-      addMessage(convId, 'assistant', result.answer);
+      addMessage(convId, 'assistant', result.answer, req.authUser.id);
     }
 
     // Include conversationId + identity in the direct response
@@ -426,22 +445,38 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     res.json(result);
   } catch (e) {
     console.error('[chat] Error:', e.message);
-    res.status(500).json({ error: 'Internal server error' });
+    // Respect route-level errors (e.g. 403 conversation-ownership) while never
+    // leaking internal error details for unexpected/internal failures.
+    res.status(e.status || 500).json({ error: e.status ? e.message : 'Internal server error' });
   }
 });
 
-// Debug pipeline inspector — returns the latest chat retrieval data.
-// SECURITY: requires valid JWT auth (was previously unauthenticated).
+// Debug pipeline inspector — returns the latest chat retrieval data for the
+// AUTHENTICATED user ONLY (H1). SECURITY: requires valid JWT auth.
 app.get('/api/debug/pipeline', requireAuth, (req, res) => {
-  if (!latestPipeline) return res.status(404).json({ error: 'No pipeline data yet' });
-  res.json(latestPipeline);
+  const entry = latestPipelineByUser.get(req.authUser.id);
+  if (!entry) return res.status(404).json({ error: 'No pipeline data yet' });
+  // M4: if the policy version changed since this pipeline was produced, it is
+  // stale (may reflect old permissions). Drop and refuse to serve it.
+  if (entry.policyVersion !== getPolicyVersion()) {
+    latestPipelineByUser.delete(req.authUser.id);
+    return res.status(404).json({ error: 'No pipeline data yet' });
+  }
+  const { policyVersion, ...pipeline } = entry;
+  res.json(pipeline);
 });
 
 // Debug online users — who is currently logged in (active sessions).
-// SECURITY: requires valid JWT auth (was previously unauthenticated).
+// M1 isolation: this no longer exposes ALL active users to any authenticated
+// user. Admins may see the full list; non-admin users only see themselves.
 app.get('/api/debug/online', requireAuth, async (req, res) => {
   const users = await listOnlineUsers();
-  res.json({ count: users.length, users });
+  if (isAdminAuthorized(req.authUser)) {
+    res.json({ count: users.length, users });
+  } else {
+    const self = users.filter((u) => u.username === req.authUser.username);
+    res.json({ count: self.length, users: self });
+  }
 });
 
 // Debug latency stats — p50/p95 pipeline + LLM latencies
@@ -456,20 +491,25 @@ app.get('/api/debug/latency', requireAuth, (req, res) => {
   });
 });
 
-// --- Conversation history ---
+// --- Conversation history (H2 isolation: owner = JWT user id) ---
+// Get only conversations owned by the authenticated user.
 app.get('/api/conversations', requireAuth, (req, res) => {
-  res.json(listConversations());
+  res.json(listConversations(req.authUser.id));
 });
 
+// Return a conversation ONLY if it belongs to the requester. A conversation
+// owned by another user is indistinguishable from a missing one (404).
 app.get('/api/conversations/:id', requireAuth, (req, res) => {
-  const convo = getConversation(req.params.id);
+  const convo = getConversation(req.params.id, req.authUser.id);
   if (!convo) return res.status(404).json({ error: 'Conversation not found' });
   res.json(convo);
 });
 
+// Delete a conversation only if it belongs to the requester.
 app.delete('/api/conversations/:id', requireAuth, (req, res) => {
-  const ok = deleteConversation(req.params.id);
-  res.json({ success: ok });
+  const ok = deleteConversation(req.params.id, req.authUser.id);
+  if (!ok) return res.status(404).json({ error: 'Conversation not found' });
+  res.json({ success: true });
 });
 
 // ===================== OneDrive Realtime Webhook (Microsoft Graph Change Notification) =====================
@@ -516,6 +556,10 @@ function empSummary(e) {
 app.get('/api/registry/status', requireAuth, (req, res) => {
   const employees = getActiveEmployees();
   const schema = getSchema();
+  // M2: the connected OneDrive account identity (accounts list) is only exposed
+  // to admins. Non-admin authenticated users get a configured flag only — never
+  // the account metadata (userPrincipalName / account identity).
+  const isAdmin = isAdminAuthorized(req.authUser);
   res.json({
     dataSource,
     indexReady,
@@ -526,8 +570,8 @@ app.get('/api/registry/status', requireAuth, (req, res) => {
     schemaUpdatedAt: schema.updatedAt || null,
     onedrive: {
       configured: odConfigured(),
-      accounts: odConfigured() ? listAccounts() : [],
-      lastSync: readLastSync(),
+      accounts: isAdmin ? (odConfigured() ? listAccounts() : []) : [],
+      lastSync: isAdmin ? readLastSync() : null,
     },
     vectors: { built: vectorsExist(), meta: getVectorMeta(), stale: isVectorIndexStale() },
   });
@@ -546,16 +590,20 @@ app.get('/api/registry/employees/:code', requireAuth, (req, res) => {
   const employees = getActiveEmployees();
   const emp = getEmployee(req.params.code);
   if (!emp || emp.status !== 'active') return res.status(404).json({ error: 'Employee not found' });
-  const scope = resolveScopeForViewer(viewer).scopeCodes;
+  // L1: sensitive-redaction decision comes from the canonical access profile
+  // (GLOBAL_ADMIN/HR_PRIVILEGED → canSeeSensitive), not the legacy role string,
+  // so authorization authority stays consistent with the policy engine.
+  const access = resolveScopeForViewer(viewer);
+  const scope = access.scopeCodes;
   if (scope && !scope.has(emp.code)) return res.status(403).json({ error: 'Forbidden: outside your scope' });
 
-  const privileged = viewer.role === 'CEO' || viewer.role === 'HR';
+  const privileged = !!access.accessProfile?.permissions?.canSeeSensitive;
   const schema = getSchema();
   const sheets = {};
   for (const [sn, sd] of Object.entries(emp.sheets || {})) {
     const sensitive = schema.sheets?.[sn]?.sensitivity === 'sensitive';
     sheets[sn] = (sensitive && !privileged)
-      ? { redacted: true, reason: 'sensitive sheet — CEO/HR only', rowCount: (sd.records || []).length }
+      ? { redacted: true, reason: 'sensitive sheet — access profile lacks permission', rowCount: (sd.records || []).length }
       : sd;
   }
   res.json({ ...empSummary(emp), email: emp.email, managerName: emp.managerName, profileHeaders: emp.profileHeaders, sheets });
@@ -593,8 +641,11 @@ app.post('/api/search/semantic', requireAuth, async (req, res) => {
     const { query, k = 5, sheet = null, mode = 'vector', hyde = false, rerank = false } = req.body || {};
     if (!query) return res.status(400).json({ error: 'query is required' });
     const viewer = resolveViewer(req);
-    const scope = resolveScopeForViewer(viewer).scopeCodes;
-    const allowSensitive = viewer.role === 'CEO' || viewer.role === 'HR';
+    const access = resolveScopeForViewer(viewer);
+    const scope = access.scopeCodes;
+    // L1: allowSensitive derives from the canonical access profile permission,
+    // not the legacy role string, so the vector gate matches the policy engine.
+    const allowSensitive = !!access.accessProfile?.permissions?.canSeeSensitive;
     const kk = Math.min(Number(k) || 5, 20);
 
     // --- HyDE (optional): ขยายคำถามเป็นคำตอบจำลองก่อน embed ---

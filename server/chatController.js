@@ -92,7 +92,9 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   mark('sql', isQualitativeQuery(query) ? 'none: qualitative' : (needsSqlAnalytics ? 'analytics' : 'none'));
 
   // Pronoun resolution (LOOP 13C — deterministic)
-  const pronounResult = resolvePronouns(query, conversationId);
+  // Partitioned by viewer identity (viewerPk) so a shared/fabricated
+  // conversationId of another user cannot leak history into resolution (H3).
+  const pronounResult = resolvePronouns(query, viewerPk, conversationId);
   const resolvedQuery = pronounResult.resolved ? pronounResult.query : query;
   mark('pron', pronounResult.resolved ? 'resolved' : 'none');
 
@@ -105,8 +107,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
     const cached = cacheGet(ck);
     mark('cache', cached ? 'hit' : 'miss');
     if (cached) {
-      addMessage(conversationId, 'user', query);
-      addMessage(conversationId, 'assistant', cached.answer);
+      addMessage(viewerPk, conversationId, 'user', query);
+      addMessage(viewerPk, conversationId, 'assistant', cached.answer);
       mark('mem', 'cached answer saved to memory');
       // Cache hit must NOT present as LLM generation — the answer was reused,
       // so clear llm/sql flags and relabel source + route. Trace stops at 'mem'
@@ -145,8 +147,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   // Check for clarification request
   if (parsedIntent && parsedIntent.isClarification) {
-    addMessage(conversationId, 'user', query);
-    addMessage(conversationId, 'assistant', parsedIntent.clarificationMessage || 'Please clarify your query.');
+    addMessage(viewerPk, conversationId, 'user', query);
+    addMessage(viewerPk, conversationId, 'assistant', parsedIntent.clarificationMessage || 'Please clarify your query.');
     return {
       query, answer: parsedIntent.clarificationMessage || 'Please clarify your query.',
       suggestedOptions: parsedIntent.suggestedOptions || [],
@@ -404,8 +406,8 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   }
 
   // Save to conversation memory
-  addMessage(conversationId, 'user', query);
-  addMessage(conversationId, 'assistant', finalAnswer);
+  addMessage(viewerPk, conversationId, 'user', query);
+  addMessage(viewerPk, conversationId, 'assistant', finalAnswer);
 
   const route = sqlUsed ? 'sql' : (usedVector ? 'vector' : (llmUsed ? 'keyword' : 'template'));
 

@@ -27,9 +27,13 @@ import {
   getEmployees, saveEmployees,
   getRelationships, saveRelationships,
   getProfile,
+  getProfilesMap,
   bumpPolicyVersion,
   getPolicyVersion,
 } from './accessStore.js';
+import { buildOrgSnapshot, resolveAccess } from './scopeResolver.js';
+import { evaluatePolicies } from './policyEngine.js';
+import { POLICY_EFFECTS } from './accessModel.js';
 import { recordAudit, listAudit, findPreviousSnapshot } from './auditStore.js';
 
 // ── Read (no audit) ──────────────────────────────────────────────────────────
@@ -241,4 +245,118 @@ export function rollback(actor, entity, entityId) {
     return applyAndAudit(actor, 'source_link', 'rollback', entityId, cur, links[idx]);
   }
   const e = new Error('Rollback not supported for entity ' + entity); e.status = 400; throw e;
+}
+// ── Admin "Preview As User" (M3) ─────────────────────────────────────────────
+// Evaluates what a SELECTED user would see using the SAME canonical policy
+// engine + scope resolver. It NEVER evaluates as the requesting admin/CEO — the
+// subject is always the selected user's own identity + access profile, so the
+// admin previewing an employee cannot see data outside that employee's scope.
+//
+// `org` is injected by the route layer (registry active employees + access store
+// relationships/profiles) so preview scope mirrors the real org snapshot.
+// Returns explicit allowed/redacted/blocked field markers, marks the response as
+// preview mode (isPreview:true), and records an audit event. Actor comes from
+// the JWT (never the body).
+export function previewAsUser(actor, { employeeCode, viewerCode } = {}, org = {}) {
+  // `viewerCode` is accepted as an alias for `employeeCode` (older UI payloads).
+  // A client-supplied `profileCode` is NEVER honored: the preview subject's
+  // identity (code + assigned access profile) always comes from the server-side
+  // org data, so an admin cannot fabricate an arbitrary profile/employee combo.
+  const code = employeeKey(employeeCode || viewerCode);
+  if (!code) { const e = new Error('employeeCode is required'); e.status = 400; throw e; }
+
+  const employees = org.employees || getEmployees();
+  const relationships = org.relationships || getRelationships();
+  const snapshot = buildOrgSnapshot(employees, relationships);
+
+  const emp = (Array.isArray(employees) ? employees : [])
+    .find((e) => employeeKey(e.code ?? e.employeeCode) === code);
+  if (!emp || String(emp.status ?? 'active').toLowerCase() === 'removed') {
+    const e = new Error('Employee not found'); e.status = 404; throw e;
+  }
+
+  const profiles = org.profiles || getProfilesMap();
+  const profileByCode = org.profileByCode
+    || new Map(getEmployees().map((e) => [employeeKey(e.employeeCode), e.accessProfile]));
+  const profileCode = profileByCode.get(code) || ACCESS_PROFILE_CODES.SELF_ONLY;
+
+  // Canonical resolution for the SELECTED user's identity — not the actor's.
+  const access = resolveAccess({ employeeCode: code, profileCode }, snapshot, profiles);
+
+  // Representative resource evaluation → allowed / redacted / blocked markers.
+  const policies = getPolicies();
+  const subject = { profileCode, employeeCode: code };
+  const fieldVisibility = access.accessProfile?.fieldVisibility || {};
+  const representativeResources = [
+    { sheet: 'Employee_Profile', field: 'department' },
+    { sheet: 'Employee_Profile', field: 'mainWeakness' },
+    { sheet: 'Employee_Profile', field: 'retentionRisk' },
+    { sheet: 'Salary_History', field: 'Base_Salary' },
+    { sheet: 'Salary_History', field: 'Bonus_Months' },
+    { sheet: 'Warning_Disciplinary_History', field: 'severity' },
+  ];
+  const markers = representativeResources.map((r) => {
+    const hidden = (fieldVisibility[r.sheet] || []).includes(r.field);
+    const dec = evaluatePolicies(subject, r, policies);
+    let status;
+    if (dec.effect === POLICY_EFFECTS.DENY) status = 'blocked';
+    else if (dec.effect === POLICY_EFFECTS.REDACT || hidden) status = 'redacted';
+    else status = 'allowed';
+    return { sheet: r.sheet, field: r.field, status, matchedPolicyIds: dec.matchedPolicyIds };
+  });
+
+  const policyVersion = getPolicyVersion();
+  recordAudit(actor, { entity: 'preview', action: 'preview_as_user', entityId: code }, {
+    previous: null,
+    next: { profileCode, scope: access.scope, viewerCode: access.viewerCode },
+    policyVersion,
+  });
+
+  const scopeCodes = access.scopeCodes;
+  const scopeSize = scopeCodes === null
+    ? (Array.isArray(employees) ? employees.filter((e) => String(e.status ?? 'active').toLowerCase() !== 'removed').length : 0)
+    : (scopeCodes ? scopeCodes.size : 0);
+
+  // UI-compatible shapes: `viewer` + `records`. Records carry field STATUS ONLY —
+  // never real values — so a preview can never render data outside the selected
+  // user's scope. content is intentionally omitted/empty for every record.
+  const viewer = {
+    employeeCode: code,
+    name: emp.name || null,
+    profileCode,
+    scope: access.scope,
+  };
+  const records = markers.map((m) => ({
+    sheetName: m.sheet,
+    fieldName: m.field,
+    status: m.status === 'blocked' ? 'blocked' : (m.status === 'redacted' ? 'redacted' : 'visible'),
+    content: '',
+    reason: m.status === 'blocked'
+      ? 'Denied by permission policy'
+      : (m.status === 'redacted' ? 'Field hidden by access profile field-visibility' : 'Allowed by profile + policy'),
+  }));
+
+  return {
+    isPreview: true,
+    previewUser: {
+      employeeCode: code,
+      name: emp.name || null,
+      profileCode,
+    },
+    viewer,
+    records,
+    viewerCode: access.viewerCode,
+    accessProfile: access.accessProfile ? {
+      profileCode: access.accessProfile.profileCode,
+      label: access.accessProfile.label || null,
+      permissions: access.accessProfile.permissions || {},
+      fieldVisibility,
+    } : null,
+    scope: access.scope,
+    scopeSize,
+    scopeCodesPreview: scopeCodes === null ? null : [...scopeCodes].slice(0, 50),
+    isPreviewAll: scopeCodes === null,
+    markers,
+    policyVersion,
+  };
 }

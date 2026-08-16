@@ -135,6 +135,7 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .badge.redact { color: var(--amber); border-color: rgba(223, 172, 51, 0.4); background: rgba(223, 172, 51, 0.1); }
 .badge.neutral { color: var(--muted); }
 .badge.profile { color: var(--blue); border-color: rgba(63, 122, 201, 0.4); background: rgba(63, 122, 201, 0.1); }
+.badge.preview { color: #d8b4fe; border-color: rgba(192, 132, 252, 0.45); background: rgba(147, 51, 234, 0.16); font-weight: 700; letter-spacing: 0.4px; }
 .badge.active { color: var(--green); }
 .badge.deactivated { color: var(--coral); }
 

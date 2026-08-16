@@ -20,7 +20,7 @@ const TEST_SUITES = [
   { name: 'Vector Staleness',     file: 'test_vector_staleness.mjs',     requiresAuth: false },
   { name: 'Admin Service',        file: 'test_admin_service.mjs',        requiresAuth: false },
   { name: 'Admin API',            file: 'test_admin_api.mjs',            requiresAuth: false },
-  { name: 'Invalid Login',        file: 'test_api_invalid_login.mjs',    requiresAuth: false },
+  { name: 'Invalid Login',        file: 'test_api_invalid_login.mjs',    requiresAuth: false, requiresBackend: true },
   { name: 'Blocked Queries',      file: 'test_api_blocked_query.mjs',    requiresAuth: true },
   { name: 'Debug Auth',           file: 'test_api_debug_auth.mjs',       requiresAuth: true },
   { name: 'Session Refresh',      file: 'test_api_session_refresh.mjs',  requiresAuth: true },
@@ -31,11 +31,24 @@ const TEST_SUITES = [
   { name: 'SQL Metadata + Evidence', file: 'test_sql_metadata_evidence.mjs', requiresAuth: true },
   { name: 'SQL Evidence + History',  file: 'test_sql_evidence_history.mjs', requiresAuth: true },
   { name: 'Debug Inspector',      file: 'test_debug_inspector.mjs',     requiresAuth: false },
+  { name: 'Isolation Security',   file: 'test_isolation_security.mjs', requiresAuth: false },
+  { name: 'Isolation API (live)', file: 'test_isolation_api.mjs',      requiresAuth: true },
   { name: 'RBAC Matrix',          file: 'test_api_rbac_matrix.mjs',      requiresAuth: true },
 ];
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
 const HAS_AUTH = !!(process.env.TEST_USERNAME && process.env.TEST_PASSWORD);
+
+// A suite that needs a live backend (e.g. HTTP-only tests) but is not gated by
+// auth still requires the server to be reachable. Probe once up front so these
+// suites are SKIPPED (not failed) when no backend is running — a deterministic
+// result either way instead of a batch of network-error failures.
+async function backendReachable() {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/health`, { signal: AbortSignal.timeout(3000) });
+    return res.ok;
+  } catch { return false; }
+}
 
 const results = [];
 
@@ -81,10 +94,16 @@ async function main() {
   console.log('');
 
   let totalPassed = 0, totalFailed = 0, totalSkipped = 0;
+  const backendUp = await backendReachable();
 
   for (const suite of TEST_SUITES) {
     if (suite.requiresAuth && !HAS_AUTH) {
       console.log(`⏭️  ${suite.name} — SKIPPED (no auth configured)`);
+      totalSkipped++;
+      continue;
+    }
+    if (suite.requiresBackend && !backendUp) {
+      console.log(`⏭️  ${suite.name} — SKIPPED (no live backend at ${BACKEND_URL})`);
       totalSkipped++;
       continue;
     }

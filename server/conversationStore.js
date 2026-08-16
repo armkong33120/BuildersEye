@@ -18,13 +18,28 @@ function convoPath(id) {
   return path.join(DATA_DIR, `${safe}.json`);
 }
 
-export function listConversations() {
+// Conversation ownership (H2 isolation):
+// Every conversation stores an `owner` userId. All reads/writes/deletes are
+// scoped by that owner. Owner identity comes from the JWT (`req.authUser.id`),
+// never from the request body. A caller cannot read, append to, or delete a
+// conversation owned by another user just by supplying its id.
+
+function readRaw(id) {
+  try {
+    const raw = fs.readFileSync(convoPath(id), 'utf-8');
+    return JSON.parse(raw);
+  } catch { return null; }
+}
+
+export function listConversations(userId) {
   try {
     const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.json'));
     const convos = files.map(f => {
       try {
         const raw = fs.readFileSync(path.join(DATA_DIR, f), 'utf-8');
         const c = JSON.parse(raw);
+        // Only the owner may list a conversation.
+        if (c.owner != null && String(c.owner) !== String(userId)) return null;
         return { id: c.id, title: c.title, messageCount: (c.messages || []).length, createdAt: c.createdAt, updatedAt: c.updatedAt };
       } catch { return null; }
     }).filter(Boolean);
@@ -34,18 +49,29 @@ export function listConversations() {
   } catch { return []; }
 }
 
-export function getConversation(id) {
-  try {
-    const raw = fs.readFileSync(convoPath(id), 'utf-8');
-    return JSON.parse(raw);
-  } catch { return null; }
+// Returns the conversation ONLY if it belongs to `userId`. A conversation owned
+// by another user is indistinguishable from a missing one (returns null).
+export function getConversation(id, userId) {
+  const convo = readRaw(id);
+  if (!convo) return null;
+  if (convo.owner != null && String(convo.owner) !== String(userId)) return null;
+  return convo;
 }
 
-export function saveConversation(id, title, messages) {
+export function saveConversation(id, title, messages, userId) {
   const now = new Date().toISOString();
-  const existing = getConversation(id);
+  const existing = readRaw(id);
+  // Ownership is immutable: a conversation created by A can never be re-saved
+  // under B's identity.
+  const owner = existing?.owner ?? userId;
+  if (existing && existing.owner != null && String(existing.owner) !== String(userId)) {
+    const err = new Error('Forbidden: conversation belongs to another user');
+    err.status = 403; throw err;
+  }
+  if (owner == null) return null; // must have an owner
   const convo = {
     id,
+    owner,
     title: title || (existing?.title || 'New Chat'),
     createdAt: existing?.createdAt || now,
     updatedAt: now,
@@ -55,8 +81,16 @@ export function saveConversation(id, title, messages) {
   return convo;
 }
 
-export function addMessage(id, role, text, title) {
-  const convo = getConversation(id) || { id, title: title || 'New Chat', createdAt: new Date().toISOString(), messages: [] };
+// Append a message to `id` as `userId`. Throws 403 if the conversation exists
+// and is owned by someone else (body-supplied id of another user is rejected).
+// If the conversation does not exist yet, creates it owned by `userId`.
+export function addMessage(id, role, text, title, userId) {
+  const existing = readRaw(id);
+  if (existing && existing.owner != null && String(existing.owner) !== String(userId)) {
+    const err = new Error('Forbidden: conversation belongs to another user');
+    err.status = 403; throw err;
+  }
+  const convo = existing || { id, owner: userId, title: title || 'New Chat', createdAt: new Date().toISOString(), messages: [] };
   convo.messages.push({
     role,
     text,
@@ -66,11 +100,16 @@ export function addMessage(id, role, text, title) {
   if (convo.title === 'New Chat' && role === 'user' && text) {
     convo.title = text.slice(0, 60) + (text.length > 60 ? '…' : '');
   }
-  return saveConversation(id, convo.title, convo.messages);
+  return saveConversation(id, convo.title, convo.messages, userId);
 }
 
-export function deleteConversation(id) {
+// Delete `id` ONLY if it belongs to `userId`. Returns false (no deletion) for a
+// conversation owned by another user or a missing one.
+export function deleteConversation(id, userId) {
   try {
+    const convo = readRaw(id);
+    if (!convo) return false;
+    if (convo.owner != null && String(convo.owner) !== String(userId)) return false;
     fs.unlinkSync(convoPath(id));
     return true;
   } catch { return false; }

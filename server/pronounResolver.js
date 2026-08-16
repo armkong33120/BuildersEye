@@ -19,11 +19,13 @@ function extractEmployeeRef(text) {
   return null;
 }
 
-export function resolvePronouns(query, conversationId) {
+export function resolvePronouns(query, userId, conversationId) {
   const hasPronouns = PRONOUN_PATTERNS.test(query);
   const isFollowUp = FOLLOW_UP_PATTERNS.test(query);
   if (!hasPronouns && !isFollowUp) return { resolved: false, query };
-  const history = getHistory(conversationId);
+  // Partition history by userId so a shared/fabricated conversationId of
+  // another user cannot inject their history (H3 isolation).
+  const history = getHistory(userId, conversationId);
   if (history.length === 0) return { resolved: false, query };
   let lastAssistantMsg = null;
   for (let i = history.length - 1; i >= 0; i--) {

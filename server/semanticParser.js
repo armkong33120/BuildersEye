@@ -13,8 +13,10 @@ export async function parseIntentSemantically(query, viewerContext, flatIndex, c
   const viewerId = viewerContext?.employeeId || 0;
   // Deny-by-default: unknown viewer → SELF_ONLY ('Employee'), never CEO.
   const viewerRole = viewerContext?.role || 'Employee';
-  
-  const history = getHistory(conversationId);
+
+  // Partition history by the authenticated viewer id (H3 isolation) so a
+  // conversationId reused across users cannot leak another user's history.
+  const history = getHistory(viewerId, conversationId);
   const historyStr = history.length > 0
     ? history.map(m => m.role + ': ' + m.content).join('\n')
     : '(empty)';

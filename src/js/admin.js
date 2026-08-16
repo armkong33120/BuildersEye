@@ -935,45 +935,54 @@ function renderPreview() {
   toolbar.innerHTML =
     '<label class="field"><span>Viewer (employee)</span><select id="pvViewer">' +
     employeeOptions('', { includeEmpty: false }) + '</select></label>' +
-    '<label class="field"><span>Profile override (optional)</span><select id="pvProfile">' +
-    '<option value="">— use employee’s assigned profile —</option>' +
-    state.profiles.map((p) => '<option value="' + escapeHtml(p.profileCode) + '">' + escapeHtml(p.profileCode) + ' — ' + escapeHtml(p.label || '') + '</option>').join('') +
-    '</select></label>' +
-    '<button class="btn btn-primary" id="pvRunBtn" type="button">Preview</button>';
+    '<button class="btn btn-primary" id="pvRunBtn" type="button">Preview</button>' +
+    '<span style="font-size:12px;color:var(--muted)">Preview always evaluates the employee’s server-side assigned profile — no override.</span>';
 
   el('pvRunBtn').addEventListener('click', () => {
-    runPreview(el('pvViewer').value, el('pvProfile').value);
+    runPreview(el('pvViewer').value);
   });
 
-  body.innerHTML = '<div class="state-box">Select a viewer and click “Preview”. This calls the backend policy engine (same engine as real requests).</div>';
+  body.innerHTML = '<div class="state-box">Select a viewer and click “Preview”. This calls the backend policy engine (same engine as real requests). The preview is evaluated against the selected employee’s own access profile and scope — never the admin’s.</div>';
 }
 
-async function runPreview(viewerCode, profileCode) {
+// Sequence token: if a newer preview is started while an older one is still in
+// flight, the stale response is discarded — the UI can never render a previous
+// viewer’s result.
+let previewSeq = 0;
+
+async function runPreview(viewerCode) {
   const body = el('previewBody');
   if (!body) return;
+  const seq = ++previewSeq;
   body.innerHTML = '<div class="state-box"><span class="spinner"></span><br/>Evaluating policy…</div>';
   const r = await apiJson(RAG_BACKEND + '/api/admin/preview', {
     method: 'POST',
-    body: JSON.stringify({ viewerCode, profileCode: profileCode || null }),
+    body: JSON.stringify({ employeeCode: viewerCode }),
   });
+  if (seq !== previewSeq) return; // a newer preview superseded this one
   if (!r.ok) {
     body.innerHTML = '<div class="state-box error">Preview failed: ' + escapeHtml(r.error || ('HTTP ' + r.status)) +
-      '<br/><span style="font-size:12px">(The /api/admin/preview endpoint is provided by backend-security.)</span></div>';
+      '<br/><span style="font-size:12px">(Preview requires an authenticated admin session.)</span></div>';
     return;
   }
   const data = r.data || {};
   const viewer = data.viewer || {};
   const records = data.records || [];
+  const profileCode = viewer.profileCode || (data.previewUser && data.previewUser.profileCode) || '—';
+  const policyVersion = data.policyVersion != null ? data.policyVersion : '—';
 
   let html = '<div class="preview-summary">' +
-    '<strong>Viewer:</strong> ' + escapeHtml(viewer.employeeCode || viewerCode) +
-    ' · profile <span class="badge profile">' + escapeHtml(viewer.profileCode || profileCode || '—') + '</span>' +
+    (data.isPreview ? '<span class="badge preview">PREVIEW MODE</span> ' : '') +
+    '<strong>Viewer:</strong> ' + escapeHtml(viewer.employeeCode || '—') +
+    (viewer.name ? ' — ' + escapeHtml(viewer.name) : '') +
+    ' · profile <span class="badge profile">' + escapeHtml(profileCode) + '</span>' +
     ' · scope <span class="badge neutral">' + escapeHtml(viewer.scope || data.scope || '—') + '</span>' +
-    ' · records ' + records.length +
+    ' · policyVersion <span class="badge neutral">' + escapeHtml(String(policyVersion)) + '</span>' +
+    ' · ' + records.length + ' fields evaluated' +
     '</div>';
 
   if (!records.length) {
-    html += '<div class="state-box">No records returned for this viewer.</div>';
+    html += '<div class="state-box">No fields evaluated for this viewer.</div>';
   } else {
     for (const rec of records) {
       const status = String(rec.status || rec.effect || 'visible').toLowerCase();
@@ -983,9 +992,7 @@ async function runPreview(viewerCode, profileCode) {
         '<div class="rec-head">' +
         '<span class="badge ' + cls + '">' + label + '</span>' +
         '<span style="color:var(--muted)">' + escapeHtml(rec.sheetName || rec.sheet || '') + ' · ' + escapeHtml(rec.fieldName || rec.field || '') + '</span>' +
-        '<span style="color:var(--muted)">' + escapeHtml(rec.source || rec.fileName || '') + '</span>' +
         '</div>' +
-        '<div class="rec-content">' + escapeHtml(rec.content ?? rec.value ?? '') + '</div>' +
         (rec.reason ? '<div style="font-size:11px;color:var(--muted)">reason: ' + escapeHtml(rec.reason) + '</div>' : '') +
         '</div>';
     }

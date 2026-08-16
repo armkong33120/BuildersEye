@@ -307,7 +307,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       const allowSensitive = viewerRole === 'CEO' || viewerRole === 'HR';
       const qv = await embedOne(resolvedQuery, { isQuery: true });
       mark('emb', 'query embedded');
-      const out = await searchVectors(qv, { k: 15, scopeCodes: null, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
+      // Vector retrieval receives the authorized scope PRE-retrieval (not just
+      // post-filter). scopeCodes is null for CEO/HR (full) or a Set of visible
+      // employee codes for Employee/Manager. The post-filter below remains as
+      // defense-in-depth.
+      const out = await searchVectors(qv, { k: 15, scopeCodes: analyticsScopeCodes, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
       mark('vec', `${(out.results || []).length} hits`);
       usedVector = true;
       const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));

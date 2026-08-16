@@ -8,9 +8,12 @@
 // Shims audited:
 //   1. server/policy.js:resolveScope            → delegates to canonical legacyResolveScope
 //   2. server/access/scopeResolver.js:legacyResolveScope → canonical shim itself
-//   3. server/policy.js:applyFieldRedaction      → legacy role-based redaction (still used by
-//                                                  chatController keyword + SQL paths)
-//   4. server/policy.js:checkQueryPolicy         → query-intent gate (no canonical equivalent yet)
+//   3. server/policy.js:applyFieldRedaction      → delegates to canonical applyFieldRedactionPolicy.
+//                                                  Chat uses the canonical engine directly; the two
+//                                                  formerly documented divergences (HR-on-others
+//                                                  sensitive, Manager-self sensitive) are RESOLVED.
+//   4. server/policy.js:checkQueryPolicy         → delegates to canonicalQueryPolicy (canonical
+//                                                  query gate used by the chat pipeline).
 //   5. server/chatController.js resolveScope duplicate gate → delegates to canonical (L2)
 //
 // Parity matrix: for every (role→profile, viewer, target) in a 5-node org, and
@@ -78,27 +81,16 @@ assert(`scope shim parity (${scopeOk}/${scopeChecks})`, scopeOk === scopeChecks)
 console.log('\n── 2. applyFieldRedaction (policy.js) ≡ applyFieldRedactionPolicy ──');
 const FIELDS = ['name', 'mainWeakness', 'retentionRisk', 'Base_Salary', 'Bonus_Months'];
 const SHEETS = ['Employee_Profile', 'Salary_History'];
-// DOCUMENTED intentional divergences (over-restriction, not leaks):
-//   A) legacy chat redacts sensitive Employee_Profile fields for the HR role,
-//      while the canonical profile permission (HR_PRIVILEGED.canSeeSensitive=true)
-//      and the admin preview allow them.
-//   B) legacy applyFieldRedaction exempts self (viewerPk===targetPk) from redaction,
-//      so a Manager sees their OWN mainWeakness/retentionRisk; the canonical engine
-//      applies the TEAM_MANAGER REDACT policy regardless of self (profile
-//      fieldVisibility is per-profile, not per-target). Canonical behavior is the
-//      intended design; legacy self-exemption is stale.
-// Chat keeps legacy behavior until a verified migration — this test proves there
-// are NO OTHER divergences.
-const EXPECTED_DIVERGENT = new Set();
-for (const v of org) for (const t of org) {
-  for (const f of ['mainWeakness', 'retentionRisk']) {
-    // HR × non-self: legacy redacts, canonical allows (canSeeSensitive:true).
-    // (HR-self is NOT divergent — legacy self-exemption and canonical both allow.)
-    if (v.code !== t.code) EXPECTED_DIVERGENT.add(`HR/${v.code}→${t.code} Employee_Profile.${f}`);
-    // Manager-self: legacy self-exemption allows, canonical REDACT policy applies.
-    if (v.code === t.code) EXPECTED_DIVERGENT.add(`Manager/${v.code}→${t.code} Employee_Profile.${f}`);
-  }
-}
+// The two formerly documented divergences are RESOLVED: policy.js now delegates
+// to the canonical engine (and the chat pipeline calls the canonical engine
+// directly), so over the reachable decision space legacy === canonical with
+// ZERO divergences:
+//   A) HR-on-others sensitive fields: legacy redacted them; canonical allows
+//      (HR_PRIVILEGED.canSeeSensitive=true). Chat now behaves canonically.
+//   B) Manager-self sensitive fields: legacy self-exemption allowed them;
+//      canonical applies the TEAM_MANAGER REDACT policy regardless of self.
+//      Chat now behaves canonically (Manager's own sensitive fields redacted).
+const EXPECTED_DIVERGENT = new Set(); // empty — full parity by delegation
 
 let redactChecks = 0, redactOk = 0;
 const actualDivergent = new Set();
@@ -135,20 +127,64 @@ assert(`all divergences are exactly the documented set (${actualDivergent.size}/
   actualDivergent.size === EXPECTED_DIVERGENT.size
   && [...actualDivergent].every((d) => EXPECTED_DIVERGENT.has(d)),
   `unexpected: ${[...actualDivergent].filter((d) => !EXPECTED_DIVERGENT.has(d)).join('; ').slice(0, 300)}`);
-console.log('  KNOWN INTENTIONAL DIVERGENCES (A) legacy redacts Employee_Profile sensitive fields');
-console.log('  for HR on OTHERS (canonical profile canSeeSensitive allows); (B) legacy self-exemption');
-console.log('  lets a Manager see their OWN sensitive fields (canonical REDACT policy applies).');
-console.log('  Chat migration to the canonical engine is DEFERRED (needs live E2E).');
+console.log('  Both formerly documented redaction divergences (HR-on-others sensitive,');
+console.log('  Manager-self sensitive) are RESOLVED: chat uses the canonical engine and the');
+console.log('  legacy shim delegates to it — no divergences remain on the reachable space.');
 
 
-// ═══ 3. checkQueryPolicy — no canonical equivalent yet (documented, not parity) ═
-console.log('\n── 3. checkQueryPolicy (query-intent gate) ──');
-assert('Employee compensation query blocked', legacy.checkQueryPolicy('เงินเดือนเท่าไหร่', 'Employee').status === 'Blocked');
-assert('Manager individual compensation blocked', legacy.checkQueryPolicy('EMP003 เงินเดือน', 'Manager').status === 'Blocked');
-assert('Manager team aggregate allowed', legacy.checkQueryPolicy('ทีมฉันเงินเดือนเฉลี่ย', 'Manager').status === 'Allowed');
-assert('CEO never blocked by query policy', legacy.checkQueryPolicy('เงินเดือน', 'CEO').status === 'Allowed');
-console.log('  NOTE: checkQueryPolicy has no canonical engine equivalent — migrating it requires a');
-console.log('  query-intent→policy bridge. Documented as DEFERRED (test-gated migration).');
+// ═══ 3. checkQueryPolicy ≡ canonicalQueryPolicy (query-intent gate parity) ════
+console.log('\n── 3. checkQueryPolicy (policy.js) ≡ canonicalQueryPolicy ──');
+const { canonicalQueryPolicy } = await import('../server/access/policyEngine.js');
+
+// Query-intent matrix: role × query category. The canonical gate must produce
+// EXACTLY the legacy status for the four seeded profiles, and the concrete
+// expectations pin the canonical gate's own behavior (not just delegation).
+const QUERY_CATEGORIES = [
+  ['salary', 'เงินเดือนเท่าไหร่'],
+  ['bonus', 'โบนัสของ EMP003 เท่าไหร่'],
+  ['warning', 'ประวัติการตักเตือนของ EMP003'],
+  ['personal', 'EMP003 เบอร์โทรศัพท์คืออะไร'],
+  ['general', 'EMP002 คือใคร'],
+  ['team-aggregate', 'ทีมฉันเงินเดือนเฉลี่ยเท่าไหร่'],
+  ['company-wide', 'เงินเดือนเฉลี่ยทั้งบริษัทเท่าไหร่'],
+];
+const EXPECTED_QUERY_STATUS = {
+  CEO: { salary: 'Allowed', bonus: 'Allowed', warning: 'Allowed', personal: 'Allowed', general: 'Allowed', 'team-aggregate': 'Allowed', 'company-wide': 'Allowed' },
+  HR: { salary: 'Allowed', bonus: 'Allowed', warning: 'Allowed', personal: 'Allowed', general: 'Allowed', 'team-aggregate': 'Allowed', 'company-wide': 'Allowed' },
+  Manager: { salary: 'Blocked', bonus: 'Blocked', warning: 'Allowed', personal: 'Allowed', general: 'Allowed', 'team-aggregate': 'Allowed', 'company-wide': 'Blocked' },
+  Employee: { salary: 'Blocked', bonus: 'Blocked', warning: 'Allowed', personal: 'Allowed', general: 'Allowed', 'team-aggregate': 'Blocked', 'company-wide': 'Blocked' },
+};
+
+let queryChecks = 0, queryOk = 0;
+for (const role of Object.keys(ROLE_TO_PROFILE)) {
+  const accessForRole = {
+    profileCode: ROLE_TO_PROFILE[role],
+    accessProfile: profilesMap.get(ROLE_TO_PROFILE[role]),
+    scope: undefined,
+  };
+  for (const [category, query] of QUERY_CATEGORIES) {
+    const legacyStatus = legacy.checkQueryPolicy(query, role).status;
+    const canonicalStatus = canonicalQueryPolicy(query, accessForRole).status;
+    queryChecks++;
+    // 1) canonical ≡ legacy for the same subject (the migration contract).
+    if (legacyStatus === canonicalStatus) queryOk++;
+    // 2) concrete expected behavior — pins the canonical gate itself.
+    assert(`${role} × ${category}: canonical=${canonicalStatus} (expected ${EXPECTED_QUERY_STATUS[role][category]})`,
+      canonicalStatus === EXPECTED_QUERY_STATUS[role][category], `got ${canonicalStatus}`);
+  }
+}
+assert(`query-policy shim parity (${queryOk}/${queryChecks})`, queryOk === queryChecks);
+
+// Deny-by-default hardening: an UNKNOWN profile is blocked on compensation
+// queries by the canonical gate (legacy allowed unknown roles — documented).
+const unknownAccess = { profileCode: 'BOGUS', accessProfile: null, scope: undefined };
+assert('canonical deny-by-default blocks unknown profile compensation query',
+  canonicalQueryPolicy('เงินเดือน', unknownAccess).status === 'Blocked');
+assert('canonical blocked reason carries no employee data',
+  canonicalQueryPolicy('โบนัสของ EMP001 เท่าไหร่', { profileCode: 'SELF_ONLY', accessProfile: null }).reason
+  === 'Query blocked by governance policy.');
+assert('canonical blocked decision lists matched policy ids',
+  Array.isArray(canonicalQueryPolicy('เงินเดือน', { profileCode: 'SELF_ONLY', accessProfile: null }).matchedPolicyIds));
 
 // ═══ 4. Canonical legacyResolveScope is the single canonical-backed shim ═══════
 console.log('\n── 4. legacyResolveScope consistency ──');

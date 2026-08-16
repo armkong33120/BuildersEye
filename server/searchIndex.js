@@ -1,6 +1,6 @@
 import { parseIntent, hasAnalyticsIntent } from './intentParser.js';
 import { analyticsMin, analyticsMax, filterEmployees } from './analyticsEngine.js';
-import { VIEWER_ROLES } from './policy.js';
+import { VIEWER_ROLES } from './access/policyEngine.js';
 
 // 7 matchers + merge/rank + answer builder
 function tokenize(text) {

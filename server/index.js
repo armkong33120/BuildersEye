@@ -382,8 +382,8 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
 
     // Canonical authorized scope (single boundary) — flows into keyword, vector
     // (pre-retrieval), and SQL (scoped table) paths inside chatHandler.
-    const scope = resolveScopeForViewer(viewer);
-    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope }, convId);
+    const access = resolveScopeForViewer(viewer);
+    const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope: access, access }, convId);
 
     // Stable id shared by the direct chat response AND latestPipeline so the
     // debug page can deduplicate history (live polling must not double-record).

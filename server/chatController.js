@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { search } from './searchIndex.js';
-import { checkQueryPolicy, resolveScope, applyFieldRedaction } from './policy.js';
+import { canonicalQueryPolicy, applyFieldRedactionPolicy } from './access/policyEngine.js';
+import { getPolicies } from './access/accessStore.js';
 import { anonymize, deAnonymize, buildContext } from './anonymizer.js';
 import { parseIntentSemantically } from './semanticParser.js';
 import { parseIntent } from './intentParser.js';
@@ -13,7 +14,7 @@ import { generateAndRunSQL, isDBReady } from './sqlEngine.js';
 import { cacheKeyFor, cacheGet, cacheSet } from './responseCache.js';
 import { detectSheetMentions } from './sheetAliases.js';
 import { detectSqlAnalyticsIntent, isQualitativeQuery } from './sqlRouting.js';
-import { buildOrgSnapshot, resolveScopeCodes } from './access/scopeResolver.js';
+import { buildOrgSnapshot, resolveScopeCodes, legacyResolveScope } from './access/scopeResolver.js';
 import { profileForLegacyRole } from './access/compatAdapter.js';
 
 // ── Pipeline latency tracker (p50/p95) ──
@@ -31,11 +32,35 @@ export function getPipelineLatencyStats() {
   return { p50, p95, samples: sorted.length };
 }
 
-export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope = null }, conversationId = '') {
+// Canonical per-target scope gate (defense-in-depth). Uses the threaded
+// canonical scopeCodes when available (null = ALL, Set = SUBTREE/SELF/NONE);
+// falls back to the legacy shim ONLY for direct callers that never pass a
+// canonical scope (back-compat). Never widens access.
+function isTargetInScope(pk, accessCtx, viewerRole, viewerPk, identityGraph) {
+  if (accessCtx?.scopeCodes) {
+    const emp = (identityGraph?.identities || []).find((i) => Number(i.pk) === Number(pk));
+    const code = emp?.code || emp?.employeeCode;
+    return code ? accessCtx.scopeCodes.has(code) : false;
+  }
+  if (accessCtx?.scopeCodes === null) return true; // ALL
+  return legacyResolveScope(viewerRole, viewerPk, pk, identityGraph);
+}
+
+export async function chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope = null, access = null } = {}, conversationId = '') {
   const startTime = Date.now();
   // Deny-by-default: unknown viewer resolves to SELF_ONLY ('Employee'), never CEO.
   const viewerRole = viewer?.role || 'Employee';
   const viewerPk = viewer?.employeeId || 0;
+  // Canonical access context (threaded from index.js via resolveScopeForViewer).
+  // `scope` IS the resolveAccess result; `access` is the explicit canonical
+  // channel. Both carry { profileCode, accessProfile, scope, scopeCodes }.
+  // Fallback derives the profile from the legacy role ONLY for direct callers
+  // that never passed a canonical context.
+  const accessCtx = access || scope
+    || { profileCode: profileForLegacyRole(viewerRole), accessProfile: null, scope: undefined, viewerCode: null };
+  // Live policy set: fetch per request so admin policy edits take effect
+  // immediately (cache invalidation rides on policyVersion elsewhere).
+  const policies = getPolicies();
   const llmInfo = getProviderInfo();
   const TOTAL_PIPELINE_NODES = 19; // matches the 19-node visualization on the debug page
   const executedNodeCount = (t) => new Set((t || []).map((e) => e.node)).size;
@@ -68,7 +93,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   };
   mark('q', 'query received');
 
-  const qp = checkQueryPolicy(query, viewerRole);
+  const qp = canonicalQueryPolicy(query, accessCtx);
   mark('pol', qp.status === 'Blocked' ? 'Blocked' : 'Allowed');
   if (qp.status === 'Blocked') {
     // Blocked query stops at policy: trace ends at 'pol', no LLM/search nodes.
@@ -190,12 +215,12 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
 
   for (const entry of sr.results) {
     const pk = entry.employeeId;
-    if (!resolveScope(viewerRole, viewerPk, pk, identityGraph)) { blockedCount++; continue; }
+    if (!isTargetInScope(pk, accessCtx, viewerRole, viewerPk, identityGraph)) { blockedCount++; continue; }
     matchedPks.push(pk);
     const dept = entry.matchedRecords?.[0]?.department;
     if (dept) matchedDepts.add(dept);
     const filtered = entry.matchedRecords.map(r => {
-      const redacted = applyFieldRedaction(r, viewerRole, viewerPk, pk);
+      const redacted = applyFieldRedactionPolicy(r, accessCtx, policies);
       if (redacted.redacted) redactedCount++;
       return redacted;
     }).filter(r => r.content !== '[Redacted — Scope]');
@@ -268,7 +293,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
         if (scopeCodes && row.employeeCode && !scopeCodes.has(row.employeeCode)) return null;
         // field redaction (เหมือน keyword path) — Manager/Employee
         if (row.sheetName && row.fieldName) {
-          const red = applyFieldRedaction({ ...row }, viewerRole, viewerPk, row.employeeId);
+          const red = applyFieldRedactionPolicy({ ...row }, accessCtx, policies);
           if (red.redacted) { redactedCount++; row.content = red.content; }
         }
         return row;
@@ -321,7 +346,7 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       const out = await searchVectors(qv, { k: 15, scopeCodes: analyticsScopeCodes, allowSensitive, whoBias: /ใคร|คนไหน|บุคคล/.test(query), sheetMentions, sheetBoost, coverage: sheetCoverage });
       mark('vec', `${(out.results || []).length} hits`);
       usedVector = true;
-      const vectorHits = (out.results || []).filter(h => resolveScope(viewerRole, viewerPk, h.meta?.pk, identityGraph));
+      const vectorHits = (out.results || []).filter(h => isTargetInScope(h.meta?.pk, accessCtx, viewerRole, viewerPk, identityGraph));
       if (vectorHits.length > 0) {
         // Extract employee PKs from vector hits for graph highlighting
         for (const hit of vectorHits) {

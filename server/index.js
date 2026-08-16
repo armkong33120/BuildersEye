@@ -237,17 +237,22 @@ function resolveScopeForViewer(viewer) {
 
 // requireAdmin: requires JWT auth AND admin authorization. Use AFTER requireAuth.
 // Source of truth is the access profile (GLOBAL_ADMIN has isAdmin=true), NOT the
-// request body and NOT the legacy role string alone. The legacy CEO role and the
-// seeded isAdmin flag remain as backward-compatible fallbacks.
+// request body and NOT the legacy role string alone.
 function isAdminAuthorized(authUser) {
   if (!authUser) return false;
-  // 1) Normalized source of truth: access profile permission.
-  const accessEmp = getAccessEmployees().find((e) => e.employeeId === Number(authUser.employeeId));
-  if (accessEmp?.accessProfile) {
-    const profile = getProfilesMap().get(accessEmp.accessProfile);
-    if (profile?.permissions?.isAdmin === true) return true;
+  // Once the access model is seeded, the access profile permission is
+  // AUTHORITATIVE: a profile-based admin revocation (e.g. GLOBAL_ADMIN →
+  // SELF_ONLY) takes effect even if the legacy role string still says CEO, and
+  // an unknown user (no access record) is denied by default.
+  const accessModelSeeded = getAccessEmployees().length > 0;
+  if (accessModelSeeded) {
+    const accessEmp = getAccessEmployees().find((e) => e.employeeId === Number(authUser.employeeId));
+    if (!accessEmp) return false; // seeded model, unknown user → deny-by-default
+    const profile = accessEmp.accessProfile ? getProfilesMap().get(accessEmp.accessProfile) : null;
+    return profile?.permissions?.isAdmin === true;
   }
-  // 2) Backward-compatible fallbacks.
+  // Legacy role fallback ONLY while the access model is not seeded yet
+  // (pre-migration deployments / startup window before seedAccessModel runs).
   return authUser.role === 'CEO' || authUser.isAdmin === true;
 }
 

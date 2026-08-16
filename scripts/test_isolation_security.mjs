@@ -172,6 +172,49 @@ async function main() {
   assert('preview audit recorded in audit log', audits.length >= 1);
   assert('preview audit actor comes from JWT (not body)', audits[0].actor.username === 'ceo');
 
+  // ── 5. L2: conversation filename length cap ──────────────────────────────
+  console.log('── 5. Conversation path length cap (L2) ──');
+  const longId = 'A'.repeat(5000) + '-x';
+  assert('10k-char conversation id saves without ENAMETOOLONG', !!convStore.addMessage(longId, 'user', 'long id test', null, 7));
+  assert('oversized id readable back (deterministic hashed path)', convStore.getConversation(longId, 7) !== null);
+  assert('oversized id deletable', convStore.deleteConversation(longId, 7) === true);
+  // Path-traversal chars are stripped; an id that sanitizes to empty hashes safely
+  // and never escapes DATA_DIR.
+  const weirdId = '../../..//..';
+  assert('path-traversal id does not escape (sanitized + hashed)',
+    !!convStore.addMessage(weirdId, 'user', 'x', null, 7) && convStore.getConversation(weirdId, 7) !== null);
+  convStore.deleteConversation(weirdId, 7);
+
+  // ── 6. L4: webhook clientState validation ────────────────────────────────
+  console.log('── 6. Webhook clientState validation (L4) ──');
+  process.env.WEBHOOK_CLIENT_STATE = 'test-secret-isolation';
+  const webhook = await import('../server/onedriveWebhook.js');
+  const mkRes = () => ({ status: () => ({ send: () => {} }) });
+  const withNotify = (arr) => ({ onNotify: (v) => { arr.push(...v); return Promise.resolve(); } });
+  let notified = [];
+
+  // Absence of clientState previously PASSED the check — now it must be dropped.
+  await webhook.handleWebhook({ query: {}, body: { value: [{ id: 'n1' }] } }, mkRes(), withNotify(notified));
+  await new Promise((r) => setImmediate(r));
+  assert('notification WITHOUT clientState does not trigger sync', notified.length === 0, `notified=${notified.length}`);
+
+  notified = [];
+  await webhook.handleWebhook({ query: {}, body: { value: [{ id: 'n2', clientState: 'attacker-value' }] } }, mkRes(), withNotify(notified));
+  await new Promise((r) => setImmediate(r));
+  assert('notification with WRONG clientState does not trigger sync', notified.length === 0);
+
+  notified = [];
+  await webhook.handleWebhook({ query: {}, body: { value: [{ id: 'n3', clientState: 'test-secret-isolation' }] } }, mkRes(), withNotify(notified));
+  await new Promise((r) => setImmediate(r));
+  assert('notification with CORRECT clientState triggers sync', notified.length === 1 && notified[0].id === 'n3', `notified=${JSON.stringify(notified)}`);
+
+  notified = [];
+  await webhook.handleWebhook({ query: {}, body: { value: [{ id: 'bad', clientState: 'x' }, { id: 'good', clientState: 'test-secret-isolation' }] } }, mkRes(), withNotify(notified));
+  await new Promise((r) => setImmediate(r));
+  assert('mixed batch processes ONLY the valid notification', notified.length === 1 && notified[0].id === 'good', `notified=${JSON.stringify(notified)}`);
+
+  // ── cleanup ───────────────────────────────────────────────────────────────
+
   // ── cleanup ───────────────────────────────────────────────────────────────
   fs.rmSync(TMP, { recursive: true, force: true });
 

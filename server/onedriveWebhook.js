@@ -120,8 +120,15 @@ export async function handleWebhook(req, res, { onNotify } = {}) {
   const notifications = req.body?.value || [];
   if (notifications.length) {
     res.status(202).send('Accepted');
-    // ตรวจ clientState (กันปลอม)
-    const valid = notifications.filter(n => !n.clientState || n.clientState === WEBHOOK_SECRET);
+    // L4: clientState MUST be present AND equal to WEBHOOK_SECRET on real
+    // notifications (absence previously passed the check). Notifications with
+    // a missing/mismatched clientState are dropped and never trigger a sync —
+    // an attacker cannot forge a webhook without the secret.
+    const valid = notifications.filter((n) => n.clientState != null && n.clientState === WEBHOOK_SECRET);
+    const invalid = notifications.length - valid.length;
+    if (invalid > 0) {
+      console.warn(`[webhook] dropped ${invalid} notification(s) with missing/mismatched clientState`);
+    }
     if (valid.length && onNotify) {
       setImmediate(() => {
         onNotify(valid)

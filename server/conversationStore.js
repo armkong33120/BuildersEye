@@ -2,6 +2,7 @@
 // No database needed — works on Render free tier (512MB)
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -12,9 +13,18 @@ if (!fs.existsSync(DATA_DIR)) {
   fs.mkdirSync(DATA_DIR, { recursive: true });
 }
 
+// L2: conversation IDs are attacker-controlled. A 10k-char id would produce a
+// 10k-char filename → ENAMETOOLONG (500) or filesystem abuse. Sanitize, then
+// hash any id that is empty or longer than 128 chars into a fixed-length
+// deterministic name (same id → same file, so ownership/read/write still work).
+const MAX_CONVO_ID_LEN = 128;
 function convoPath(id) {
   // Sanitize ID to prevent path traversal
-  const safe = String(id).replace(/[^a-zA-Z0-9_-]/g, '');
+  const raw = String(id);
+  let safe = raw.replace(/[^a-zA-Z0-9_-]/g, '');
+  if (!safe || safe.length > MAX_CONVO_ID_LEN) {
+    safe = 'c-' + crypto.createHash('sha256').update(raw).digest('hex').slice(0, 64);
+  }
   return path.join(DATA_DIR, `${safe}.json`);
 }
 

@@ -36,10 +36,15 @@ function resourceMatches(policy, resource) {
     return source === target || source.includes(target);
   }
   if (policy.resourceType === RESOURCE_TYPES.FIELD) {
+    // Exact sheet.field match (e.g. 'Employee_Profile.mainWeakness').
     if (sheet && field && `${sheet}.${field}` === target) return true;
-    if (field && (field === target || field.includes(target))) return true;
-    if (field && target && (field.includes(target) || target.includes(field))) return true;
-    if (sheet && target && sheet.includes(target)) return true;
+    // Exact field-name match (e.g. policy resourceName = 'mainWeakness').
+    if (field && field === target) return true;
+    // Category prefix inside the field (e.g. policy 'salary' matches Base_Salary)
+    // — but NEVER a substring of the policy that bleeds across sheets
+    // (target.includes(field) was an over-match: 'Employee_Profile.mainWeakness'
+    // matched any sheet's mainWeakness field).
+    if (field && target && field.includes(target) && target.length > 2) return true;
     return false;
   }
   return false;

@@ -165,8 +165,15 @@ async function startup() {
   }
   // Seed the normalized access model (profiles/policies/employees) from the
   // identity graph. Idempotent; derives accessProfile from legacy role.
+  // When ACCESS_DB_ADAPTER=neon, schema + cache are preloaded first.
   try {
-    const accessSeed = seedAccessModel({ identityGraph });
+    if (process.env.ACCESS_DB_ADAPTER === 'neon' && process.env.DATABASE_URL) {
+      const { initAccessNeonSchema, preloadAccessCache } = await import('./access/accessStoreNeon.js');
+      await initAccessNeonSchema();
+      await preloadAccessCache();
+      console.log('[access] Neon schema initialized, cache preloaded');
+    }
+    const accessSeed = await seedAccessModel({ identityGraph });
     console.log(`[access] Model seeded: ${accessSeed.profiles} profiles, ${accessSeed.policies} policies, ${accessSeed.employees} employees`);
   } catch (e) {
     console.warn('[access] seedAccessModel failed:', e.message);

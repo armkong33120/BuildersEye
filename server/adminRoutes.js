@@ -36,10 +36,10 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
   router.get('/source-links', (req, res) => res.json(readAccess.sourceLinks()));
   router.get('/employees', (req, res) => res.json(readAccess.employees()));
   router.get('/relationships', (req, res) => res.json(readAccess.relationships()));
-  router.get('/audit', (req, res) => {
+  router.get('/audit', async (req, res) => {
     const limit = Math.min(Number(req.query.limit) || 100, 1000);
     const entity = req.query.entity || null;
-    res.json(readAccess.audit({ limit, entity }));
+    res.json(await readAccess.audit({ limit, entity }));
   });
   router.get('/policy-version', (req, res) => res.json({ version: readAccess.policyVersion() }));
 
@@ -66,60 +66,60 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
   });
 
   // ── Write (POST/PUT/DELETE) ────────────────────────────────────────────────
-  router.put('/profiles/:code', (req, res) => {
+  router.put('/profiles/:code', async (req, res) => {
     try {
-      res.json(adminService.updateProfile(actor(req), req.params.code, req.body || {}));
+      res.json(await adminService.updateProfile(actor(req), req.params.code, req.body || {}));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
-  router.post('/policies', (req, res) => {
+  router.post('/policies', async (req, res) => {
     try {
-      res.json(adminService.createPolicy(actor(req), req.body || {}));
+      res.json(await adminService.createPolicy(actor(req), req.body || {}));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
-  router.put('/policies/:id', (req, res) => {
+  router.put('/policies/:id', async (req, res) => {
     try {
-      res.json(adminService.updatePolicy(actor(req), req.params.id, req.body || {}));
+      res.json(await adminService.updatePolicy(actor(req), req.params.id, req.body || {}));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
-  router.delete('/policies/:id', (req, res) => {
+  router.delete('/policies/:id', async (req, res) => {
     try {
-      res.json(adminService.deletePolicy(actor(req), req.params.id));
-    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
-  });
-
-  router.post('/source-links', (req, res) => {
-    try {
-      res.json(adminService.createSourceLink(actor(req), req.body || {}));
-    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
-  });
-  router.put('/source-links/:id', (req, res) => {
-    try {
-      res.json(adminService.updateSourceLink(actor(req), req.params.id, req.body || {}));
-    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
-  });
-  router.delete('/source-links/:id', (req, res) => {
-    try {
-      res.json(adminService.deleteSourceLink(actor(req), req.params.id));
+      res.json(await adminService.deletePolicy(actor(req), req.params.id));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
-  router.put('/employees/:code/profile', (req, res) => {
+  router.post('/source-links', async (req, res) => {
     try {
-      res.json(adminService.assignProfile(actor(req), req.params.code, req.body?.profileCode));
+      res.json(await adminService.createSourceLink(actor(req), req.body || {}));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+  router.put('/source-links/:id', async (req, res) => {
+    try {
+      res.json(await adminService.updateSourceLink(actor(req), req.params.id, req.body || {}));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+  router.delete('/source-links/:id', async (req, res) => {
+    try {
+      res.json(await adminService.deleteSourceLink(actor(req), req.params.id));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
-  router.put('/relationships/:code/manager', (req, res) => {
+  router.put('/employees/:code/profile', async (req, res) => {
     try {
-      res.json(adminService.setManager(actor(req), req.params.code, req.body?.managerCode));
+      res.json(await adminService.assignProfile(actor(req), req.params.code, req.body?.profileCode));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
-  router.post('/rollback', (req, res) => {
+  router.put('/relationships/:code/manager', async (req, res) => {
+    try {
+      res.json(await adminService.setManager(actor(req), req.params.code, req.body?.managerCode));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+
+  router.post('/rollback', async (req, res) => {
     try {
       const { entity, entityId } = req.body || {};
-      res.json(adminService.rollback(actor(req), entity, entityId));
+      res.json(await adminService.rollback(actor(req), entity, entityId));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 

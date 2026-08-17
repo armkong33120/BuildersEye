@@ -37,6 +37,12 @@ import { assertNoDuplicateEmployeeCodes, assertAcyclicManagerGraph, assertManage
 import { POLICY_EFFECTS } from './accessModel.js';
 import { recordAudit, listAudit, findPreviousSnapshot } from './auditStore.js';
 
+// Conditionally import Neon audit adapter
+let _neonAudit = null;
+if (process.env.ACCESS_DB_ADAPTER === 'neon' && process.env.DATABASE_URL) {
+  _neonAudit = await import('./accessStoreNeon.js');
+}
+
 // ── Read (no audit) ──────────────────────────────────────────────────────────
 export const readAccess = {
   profiles: () => getProfiles(),
@@ -45,32 +51,37 @@ export const readAccess = {
   sourceLinks: () => getSourceLinks(),
   employees: () => getEmployees(),
   relationships: () => getRelationships(),
-  audit: (opts) => listAudit(opts),
+  audit: async (opts) => _neonAudit ? await _neonAudit.listAuditNeon(opts) : listAudit(opts),
   policyVersion: () => getPolicyVersion(),
 };
 
 // ── Write helpers ────────────────────────────────────────────────────────────
-function applyAndAudit(actor, entity, action, entityId, previous, next) {
-  const policyVersion = bumpPolicyVersion();
-  recordAudit(actor, { entity, action, entityId }, { previous, next, policyVersion });
+async function applyAndAudit(actor, entity, action, entityId, previous, next) {
+  const policyVersion = await bumpPolicyVersion();
+  const event = recordAudit(actor, { entity, action, entityId }, { previous, next, policyVersion });
+  if (_neonAudit) await _neonAudit.recordAuditNeon(event);
   return { ok: true, policyVersion };
 }
 
-// Record a REJECTED write (org-integrity violation). The audit detail is a safe
-// category string — it never contains employee data, record content, or query
-// text. A rejected write records no snapshot and does NOT bump the policy
-// version (no config change happened).
-function recordRejected(actor, entity, entityId, err) {
+// Record a REJECTED write (org-integrity violation).
+async function recordRejected(actor, entity, entityId, err) {
   const msg = String(err?.message || '');
   let detail = 'org integrity violation';
   if (/duplicate employeeCode/i.test(msg)) detail = 'duplicate employeeCode';
   else if (/self-manager|hierarchy cycle/i.test(msg)) detail = 'hierarchy cycle';
   else if (/manager .* does not exist/i.test(msg)) detail = 'missing manager';
-  recordAudit(actor, { entity, action: 'rejected', entityId, detail }, { previous: null, next: null });
+  const event = recordAudit(actor, { entity, action: 'rejected', entityId, detail }, { previous: null, next: null });
+  if (_neonAudit) await _neonAudit.recordAuditNeon(event);
+}
+
+// Also conditionally use Neon findPreviousSnapshot (for rollback)
+async function _findPrevSnapshot(entity, entityId) {
+  if (_neonAudit) return _neonAudit.findPreviousSnapshotNeon(entity, entityId);
+  return findPreviousSnapshot(entity, entityId);
 }
 
 // ── Profile updates ──────────────────────────────────────────────────────────
-export function updateProfile(actor, profileCode, patch) {
+export async function updateProfile(actor, profileCode, patch) {
   const profiles = getProfiles();
   const idx = profiles.findIndex((p) => p.profileCode === profileCode);
   if (idx === -1) { const e = new Error('Profile not found'); e.status = 404; throw e; }
@@ -87,12 +98,12 @@ export function updateProfile(actor, profileCode, patch) {
   if (errs.length) { const e = new Error('Invalid profile: ' + errs.join('; ')); e.status = 400; throw e; }
 
   profiles[idx] = next;
-  saveProfiles(profiles);
+  await saveProfiles(profiles);
   return applyAndAudit(actor, 'profile', 'update', profileCode, previous, next);
 }
 
 // ── Policy CRUD ──────────────────────────────────────────────────────────────
-export function createPolicy(actor, policy) {
+export async function createPolicy(actor, policy) {
   const policies = getPolicies();
   const next = {
     ...policy,
@@ -103,11 +114,11 @@ export function createPolicy(actor, policy) {
   const errs = validatePolicy(next);
   if (errs.length) { const e = new Error('Invalid policy: ' + errs.join('; ')); e.status = 400; throw e; }
   policies.push(next);
-  savePolicies(policies);
+  await   savePolicies(policies);
   return applyAndAudit(actor, 'policy', 'create', next.policyId, null, next);
 }
 
-export function updatePolicy(actor, policyId, patch) {
+export async function updatePolicy(actor, policyId, patch) {
   const policies = getPolicies();
   const idx = policies.findIndex((p) => p.policyId === policyId);
   if (idx === -1) { const e = new Error('Policy not found'); e.status = 404; throw e; }
@@ -116,21 +127,21 @@ export function updatePolicy(actor, policyId, patch) {
   const errs = validatePolicy(next);
   if (errs.length) { const e = new Error('Invalid policy: ' + errs.join('; ')); e.status = 400; throw e; }
   policies[idx] = next;
-  savePolicies(policies);
+  await   savePolicies(policies);
   return applyAndAudit(actor, 'policy', 'update', policyId, previous, next);
 }
 
-export function deletePolicy(actor, policyId) {
+export async function deletePolicy(actor, policyId) {
   const policies = getPolicies();
   const idx = policies.findIndex((p) => p.policyId === policyId);
   if (idx === -1) { const e = new Error('Policy not found'); e.status = 404; throw e; }
   const [previous] = policies.splice(idx, 1);
-  savePolicies(policies);
+  await   savePolicies(policies);
   return applyAndAudit(actor, 'policy', 'delete', policyId, previous, null);
 }
 
 // ── Source link CRUD (with duplicate-ownership prevention) ───────────────────
-export function createSourceLink(actor, link) {
+export async function createSourceLink(actor, link) {
   const links = getSourceLinks();
   const errs = validateSourceLink(link);
   if (errs.length) { const e = new Error('Invalid link: ' + errs.join('; ')); e.status = 400; throw e; }
@@ -159,11 +170,11 @@ export function createSourceLink(actor, link) {
     createdAt: nowIso(),
   };
   links.push(next);
-  saveSourceLinks(links);
+  await   saveSourceLinks(links);
   return applyAndAudit(actor, 'source_link', 'create', next.linkId, null, next);
 }
 
-export function updateSourceLink(actor, linkId, patch) {
+export async function updateSourceLink(actor, linkId, patch) {
   const links = getSourceLinks();
   const idx = links.findIndex((l) => l.linkId === linkId);
   if (idx === -1) { const e = new Error('Link not found'); e.status = 404; throw e; }
@@ -172,21 +183,21 @@ export function updateSourceLink(actor, linkId, patch) {
   const errs = validateSourceLink(next);
   if (errs.length) { const e = new Error('Invalid link: ' + errs.join('; ')); e.status = 400; throw e; }
   links[idx] = next;
-  saveSourceLinks(links);
+  await   saveSourceLinks(links);
   return applyAndAudit(actor, 'source_link', 'update', linkId, previous, next);
 }
 
-export function deleteSourceLink(actor, linkId) {
+export async function deleteSourceLink(actor, linkId) {
   const links = getSourceLinks();
   const idx = links.findIndex((l) => l.linkId === linkId);
   if (idx === -1) { const e = new Error('Link not found'); e.status = 404; throw e; }
   const [previous] = links.splice(idx, 1);
-  saveSourceLinks(links);
+  await   saveSourceLinks(links);
   return applyAndAudit(actor, 'source_link', 'delete', linkId, previous, null);
 }
 
 // ── Employee profile assignment ──────────────────────────────────────────────
-export function assignProfile(actor, employeeCode, profileCode) {
+export async function assignProfile(actor, employeeCode, profileCode) {
   if (!Object.values(ACCESS_PROFILE_CODES).includes(profileCode)) {
     const e = new Error('Invalid profileCode'); e.status = 400; throw e;
   }
@@ -206,17 +217,17 @@ export function assignProfile(actor, employeeCode, profileCode) {
     assertAcyclicManagerGraph(candidate, getRelationships());
     assertManagerExists(candidate, getRelationships());
   } catch (e) {
-    recordRejected(actor, 'employee', key, e);
+    await recordRejected(actor, 'employee', key, e);
     throw e;
   }
 
   employees[idx] = next;
-  saveEmployees(employees);
+  await   saveEmployees(employees);
   return applyAndAudit(actor, 'employee', 'assign_profile', key, previous, next);
 }
 
 // ── Organization relationships (move employee / change manager) ──────────────
-export function setManager(actor, employeeCode, managerCode) {
+export async function setManager(actor, employeeCode, managerCode) {
   const employees = getEmployees();
   const relationships = getRelationships();
   const child = employeeKey(employeeCode);
@@ -249,7 +260,7 @@ export function setManager(actor, employeeCode, managerCode) {
     assertAcyclicManagerGraph(employees, candidateRels);
     assertManagerExists(employees, candidateRels);
   } catch (e) {
-    recordRejected(actor, 'relationship', child, e);
+    await recordRejected(actor, 'relationship', child, e);
     throw e;
   }
 
@@ -258,13 +269,13 @@ export function setManager(actor, employeeCode, managerCode) {
   } else {
     relationships.push(next);
   }
-  saveRelationships(relationships);
+  await   saveRelationships(relationships);
   return applyAndAudit(actor, 'relationship', 'set_manager', child, previous, next);
 }
 
 // ── Rollback ─────────────────────────────────────────────────────────────────
-export function rollback(actor, entity, entityId) {
-  const previous = findPreviousSnapshot(entity, entityId);
+export async function rollback(actor, entity, entityId) {
+  const previous = await _findPrevSnapshot(entity, entityId);
   if (previous == null) { const e = new Error('No previous snapshot to roll back to'); e.status = 404; throw e; }
 
   if (entity === 'profile') {
@@ -273,7 +284,7 @@ export function rollback(actor, entity, entityId) {
     if (idx === -1) { const e = new Error('Profile not found'); e.status = 404; throw e; }
     const cur = profiles[idx];
     profiles[idx] = { ...previous, version: nextVersion(cur.version), updatedAt: nowIso() };
-    saveProfiles(profiles);
+    await saveProfiles(profiles);
     return applyAndAudit(actor, 'profile', 'rollback', entityId, cur, profiles[idx]);
   }
   if (entity === 'policy') {
@@ -282,7 +293,7 @@ export function rollback(actor, entity, entityId) {
     if (idx === -1) { const e = new Error('Policy not found'); e.status = 404; throw e; }
     const cur = policies[idx];
     policies[idx] = { ...previous, version: nextVersion(cur.version), updatedAt: nowIso() };
-    savePolicies(policies);
+    await savePolicies(policies);
     return applyAndAudit(actor, 'policy', 'rollback', entityId, cur, policies[idx]);
   }
   if (entity === 'source_link') {
@@ -291,7 +302,7 @@ export function rollback(actor, entity, entityId) {
     if (idx === -1) { const e = new Error('Link not found'); e.status = 404; throw e; }
     const cur = links[idx];
     links[idx] = { ...previous, version: nextVersion(cur.version), updatedAt: nowIso() };
-    saveSourceLinks(links);
+    await saveSourceLinks(links);
     return applyAndAudit(actor, 'source_link', 'rollback', entityId, cur, links[idx]);
   }
   const e = new Error('Rollback not supported for entity ' + entity); e.status = 400; throw e;

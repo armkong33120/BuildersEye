@@ -145,75 +145,73 @@ function writeJson(name, obj) {
 }
 
 // ── Profiles ─────────────────────────────────────────────────────────────────
-export function getProfiles() {
+function _getProfiles() {
   return readJson(FILES.profiles, []);
 }
 
 export function getProfilesMap() {
   const map = new Map();
-  for (const p of getProfiles()) map.set(p.profileCode, p);
+  for (const p of _getProfiles()) map.set(p.profileCode, p);
   return map;
 }
 
 export function getProfile(code) {
-  return getProfiles().find((p) => p.profileCode === code) || null;
+  return _getProfiles().find((p) => p.profileCode === code) || null;
 }
 
-export function saveProfiles(profiles) {
+function _saveProfiles(profiles) {
   return withAccessWriteLock(() => writeJson(FILES.profiles, profiles));
 }
 
 // ── Policies ─────────────────────────────────────────────────────────────────
-export function getPolicies() {
+function _getPolicies() {
   return readJson(FILES.policies, []);
 }
 
-export function savePolicies(policies) {
+function _savePolicies(policies) {
   return withAccessWriteLock(() => writeJson(FILES.policies, policies));
 }
 
 // ── Source links ─────────────────────────────────────────────────────────────
-export function getSourceLinks() {
+function _getSourceLinks() {
   return readJson(FILES.sourceLinks, []);
 }
 
-export function saveSourceLinks(links) {
+function _saveSourceLinks(links) {
   return withAccessWriteLock(() => writeJson(FILES.sourceLinks, links));
 }
 
 // ── Employees (normalized) ───────────────────────────────────────────────────
-export function getEmployees() {
+function _getEmployees() {
   return readJson(FILES.employees, []);
 }
 
-export function saveEmployees(employees) {
+function _saveEmployees(employees) {
   return withAccessWriteLock(() => writeJson(FILES.employees, employees));
 }
 
 export function getEmployeeByCode(code) {
   const key = employeeKey(code);
-  return getEmployees().find((e) => employeeKey(e.employeeCode) === key) || null;
+  return _getEmployees().find((e) => employeeKey(e.employeeCode) === key) || null;
 }
 
 // ── Relationships ────────────────────────────────────────────────────────────
-export function getRelationships() {
+function _getRelationships() {
   return readJson(FILES.relationships, []);
 }
 
-export function saveRelationships(relationships) {
+function _saveRelationships(relationships) {
   return withAccessWriteLock(() => writeJson(FILES.relationships, relationships));
 }
 
 // ── Policy version (for cache keys) ──────────────────────────────────────────
-export function getPolicyVersion() {
+function _getPolicyVersion() {
   return readJson('policy_version.json', { version: 1 }).version;
 }
 
-export function bumpPolicyVersion() {
-  // The read-modify-write of policy_version.json runs INSIDE the advisory lock
-  // so concurrent bumps serialize instead of both reading the same version.
+function _bumpPolicyVersion() {
   return withAccessWriteLock(() => {
-    const cur = getPolicyVersion();
+    const cur = _getPolicyVersion();
     writeJson('policy_version.json', { version: cur + 1, updatedAt: new Date().toISOString() });
     return cur + 1;
   });
@@ -226,22 +224,22 @@ export function getDataDir() { return DATA_DIR; }
 // Idempotent: seeds profiles + policies once, then derives normalized employee
 // records from a legacy identity graph (or registry employees) by mapping the
 // legacy role → access profile code. Never overwrites existing admin edits.
-export function seedAccessModel({ identityGraph, employees } = {}) {
-  let profiles = getProfiles();
+function _seedAccessModel({ identityGraph, employees } = {}) {
+  let profiles = _getProfiles();
   if (!profiles.length) {
     profiles = SEED_PROFILES.map((p) => ({ ...p }));
-    saveProfiles(profiles);
+    _saveProfiles(profiles);
   }
 
-  let policies = getPolicies();
+  let policies = _getPolicies();
   if (!policies.length) {
     policies = SEED_POLICIES.map((p) => ({ ...p }));
-    savePolicies(policies);
+    _savePolicies(policies);
   }
 
   const identities = identityGraph?.identities || employees || [];
   if (identities.length) {
-    const existing = getEmployees();
+    const existing = _getEmployees();
     const existingByCode = new Map(existing.map((e) => [employeeKey(e.employeeCode), e]));
     const normalized = identities
       .filter((i) => i && (i.code || i.employeeCode))
@@ -262,10 +260,10 @@ export function seedAccessModel({ identityGraph, employees } = {}) {
           version: existingByCode.get(code)?.version ?? 1,
         };
       });
-    saveEmployees(normalized);
+    _saveEmployees(normalized);
   }
 
-  return { profiles: profiles.length, policies: policies.length, employees: getEmployees().length };
+  return { profiles: profiles.length, policies: policies.length, employees: _getEmployees().length };
 }
 
 // Derive a legacy role from an identity (mirrors authStore.roleForIdentity but
@@ -278,3 +276,31 @@ function deriveLegacyRoleFromIdentity(identity) {
   if (jt.includes('chief') || jt.includes('manager') || jt.includes('director') || jt.includes('secretary') || jt.includes('head of')) return 'Manager';
   return 'Employee';
 }
+// ── ACCESS_DB_ADAPTER switch ─────────────────────────────────────────────────
+// When ACCESS_DB_ADAPTER=neon AND DATABASE_URL is set, the write functions
+// (save*, bumpPolicyVersion, seedAccessModel) delegate to the async Neon adapter.
+// The read functions (get*) delegate to the in-memory-cached Neon adapter (sync).
+// JSON adapter stays fully intact and is the default when ACCESS_DB_ADAPTER is
+// unset or anything other than 'neon'.
+const _ADAPTER = process.env.ACCESS_DB_ADAPTER;
+let _neon = null;
+if (_ADAPTER === 'neon' && process.env.DATABASE_URL) {
+  // Top-level dynamic import — async, but Node blocks until resolved.
+  _neon = await import('./accessStoreNeon.js');
+}
+
+export async function saveProfiles(p) { if (_neon) return _neon.saveProfilesNeon(p); return _saveProfiles(p); }
+export async function savePolicies(p) { if (_neon) return _neon.savePoliciesNeon(p); return _savePolicies(p); }
+export async function saveSourceLinks(l) { if (_neon) return _neon.saveSourceLinksNeon(l); return _saveSourceLinks(l); }
+export async function saveEmployees(e) { if (_neon) return _neon.saveEmployeesNeon(e); return _saveEmployees(e); }
+export async function saveRelationships(r) { if (_neon) return _neon.saveRelationshipsNeon(r); return _saveRelationships(r); }
+export async function bumpPolicyVersion() { if (_neon) return _neon.bumpPolicyVersionNeon(); return _bumpPolicyVersion(); }
+export async function seedAccessModel(opts) { if (_neon) return _neon.seedAccessModelNeon(opts); return _seedAccessModel(opts); }
+
+// Reads — if neon, use cached values; else use JSON files (sync)
+export function getProfiles() { return _neon ? _neon.getProfilesNeon() : _getProfiles(); }
+export function getPolicies() { return _neon ? _neon.getPoliciesNeon() : _getPolicies(); }
+export function getSourceLinks() { return _neon ? _neon.getSourceLinksNeon() : _getSourceLinks(); }
+export function getEmployees() { return _neon ? _neon.getEmployeesNeon() : _getEmployees(); }
+export function getRelationships() { return _neon ? _neon.getRelationshipsNeon() : _getRelationships(); }
+export function getPolicyVersion() { return _neon ? _neon.getPolicyVersionNeon() : _getPolicyVersion(); }

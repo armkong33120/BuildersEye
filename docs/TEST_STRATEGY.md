@@ -14,8 +14,10 @@ Status flags: **[VERIFIED IN CODE]** (actually run green) · **[NOT RUN]** (not 
 
 ## Result (2026-08-18, neon-access-persistence 0.6.0)
 - **Neon adapter** `scripts/test_access_neon_adapter.mjs`: **13/13** — schema (idempotent), preload, seed (idempotent), write/read profiles, policy-version atomicity, version column, save policy, audit CRUD. Runs against live Neon; requires `DATABASE_URL` + `ACCESS_DB_ADAPTER=neon`.
-- **JSON regression** (unchanged, default adapter): persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, git diff --check clean.
+- **JSON regression** (unchanged, default adapter): persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, org integrity 32/32, admin service 20/20, canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, benchmark:dynamic 75/75, git diff --check clean.
 - **Multi-instance persistence**: **IMPLEMENTED** — `ACCESS_DB_ADAPTER=neon` activates write-through cache + optimistic concurrency + audit write-through. JSON adapter unchanged and remains the default.
+- **Regression found & fixed:** async conversion initially broke direct-caller tests (`test_org_integrity`, `test_admin_service`) and `benchmark/dynamic-org` (calls to async `adminService.setManager`/`assignProfile`/`accStore.save*` lacked `await`). Resolved by adding `await` — all suites restored (org-integrity 32/32, admin_service 20/20, benchmark 75/75). These were regressions, not known gaps.
+- **Latency (Neon-access backend, 30s timeout, 0 timeouts/0 errors):** login p50=19052ms/p95=19590ms (Neon `auth_sessions` round-trip); admin API p50=2ms/p95=8ms; policy read p50=2ms/p95=2ms. Access adapter adds no read penalty; login ~19s is Neon session latency (auth-gated suites need timeout > 19s, e.g. 60s).
 
 ## Result (2026-08-17, final-live-gate 0.5.0) — live local backend, file-backed sessions
 - `npm test`: **23 passed / 2 failed / 0 skipped (25 total)** — all suites executed (auth configured).

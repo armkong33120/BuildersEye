@@ -34,6 +34,12 @@ not confirmed in this headless harness; (c) Neon-backed session latency here
 exceeds test timeouts (environmental). No critical security test fails; no
 deployment made; `main` not pushed. Intended for single-instance demo/staging only.
 
+## Verified test results (0.6.0 — Neon access persistence)
+- **Neon adapter** (`scripts/test_access_neon_adapter.mjs`): **13/13** (schema, preload, seed, write/read profiles, policy-version atomicity, version column, save policy, audit CRUD).
+- **JSON regression (default adapter):** persistence restart 14/14 · org integrity 32/32 · admin service 20/20 · isolation security 46/46 · admin preview contract 48/48 · canonical policy 25/25 · legacy shim parity 38/38 · verify:security 34/34 · build OK · benchmark:dynamic 75/75 · git diff --check clean.
+- **Regression found & fixed:** async conversion initially broke direct-caller tests + benchmark (missing `await`); resolved — org-integrity 32/32, admin_service 20/20, benchmark 75/75.
+- **Latency (Neon-access backend, 30s timeout, 0 timeouts/0 errors):** login p50=19052ms/p95=19590ms (Neon `auth_sessions`); admin API p50=2ms/p95=8ms; policy read p50=2ms/p95=2ms.
+
 ## Verified test results (0.5.0)
 - `npm test`: 23 passed / 2 failed / 0 skipped (25 total). Failures: Cache Hit (flake under burst; 5/5 isolated), SQL Fallback (brittle trace-label assertion; 5/6 isolated, behavior correct).
 - `verify:security`: 34/34 · `npm run build`: OK · `npm run benchmark:dynamic`: 75/75 leakage 0% · `git diff --check`: clean.

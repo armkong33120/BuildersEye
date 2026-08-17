@@ -90,7 +90,7 @@ saveEmployees([
 ]);
 const dupBefore = storeState();
 let dupStore = null;
-try { adminService.assignProfile(admin, 'EMP002', ACCESS_PROFILE_CODES.SELF_ONLY); } catch (e) { dupStore = e; }
+try { await adminService.assignProfile(admin, 'EMP002', ACCESS_PROFILE_CODES.SELF_ONLY); } catch (e) { dupStore = e; }
 assert('admin write on duplicate-laden store rejected (409)', dupStore && dupStore.status === 409, dupStore?.message);
 assert('duplicate rejection left store untouched (no partial write)', storeState() === dupBefore);
 const dupAudit = lastRejected('employee');
@@ -123,7 +123,7 @@ saveEmployees([
 
 let missingMgr = null;
 const mmBefore = storeState();
-try { adminService.setManager(admin, 'EMP003', 'NOPE'); } catch (e) { missingMgr = e; }
+try { await adminService.setManager(admin, 'EMP003', 'NOPE'); } catch (e) { missingMgr = e; }
 assert('missing manager (non-null, unresolvable) rejected (400)', missingMgr && missingMgr.status === 400, missingMgr?.message);
 assert('missing-manager rejection left store untouched', storeState() === mmBefore);
 const mmAudit = lastRejected('relationship');
@@ -146,7 +146,7 @@ assert('duplicate update rejected (409, normalized keys)', dupUpdate && dupUpdat
 
 let selfMgrSvc = null;
 const smBefore = storeState();
-try { adminService.setManager(admin, 'EMP003', 'EMP003'); } catch (e) { selfMgrSvc = e; }
+try { await adminService.setManager(admin, 'EMP003', 'EMP003'); } catch (e) { selfMgrSvc = e; }
 assert('self-manager A→A via setManager rejected (400)', selfMgrSvc && selfMgrSvc.status === 400, selfMgrSvc?.message);
 assert('self-manager rejection left store untouched', storeState() === smBefore);
 const smAudit = lastRejected('relationship');
@@ -156,7 +156,7 @@ assert('self-manager rejection audited with detail "hierarchy cycle"', smAudit &
 // A→B→A: EMP002 already reports to EMP001; make EMP001 report to EMP002.
 let cycSvc = null;
 const cycBefore = storeState();
-try { adminService.setManager(admin, 'EMP001', 'EMP002'); } catch (e) { cycSvc = e; }
+try { await adminService.setManager(admin, 'EMP001', 'EMP002'); } catch (e) { cycSvc = e; }
 assert('indirect cycle A→B→A via setManager rejected (409)', cycSvc && cycSvc.status === 409, cycSvc?.message);
 assert('cycle rejection left store untouched', storeState() === cycBefore);
 
@@ -170,13 +170,13 @@ let multiRoot = null;
 try { assertOrgIntegrity([{ code: 'R1' }, { code: 'R2' }, { code: 'E1', managerCode: 'R1' }, { code: 'E2', managerCode: 'R2' }]); } catch (e) { multiRoot = e; }
 assert('valid multi-root org passes integrity (roots preserved)', !multiRoot, multiRoot?.message);
 
-const move = adminService.setManager(admin, 'EMP003', 'EMP001');
+const move = await adminService.setManager(admin, 'EMP003', 'EMP001');
 assert('moving EMP003 to valid manager EMP001 succeeds', move.ok);
 assert('relationship EMP003→EMP001 saved', getRelationships().some((r) => r.employeeCode === 'EMP003' && r.managerCode === 'EMP001'));
 assert('EMP003 still has exactly one active edge (versioned, not duplicated)',
   getRelationships().filter((r) => r.employeeCode === 'EMP003').length === 1);
 
-const toRoot = adminService.setManager(admin, 'EMP004', null);
+const toRoot = await adminService.setManager(admin, 'EMP004', null);
 assert('moving EMP004 to root (null manager) succeeds — multi-root preserved', toRoot.ok);
 assert('root edge stored as null managerCode', getRelationships().some((r) => r.employeeCode === 'EMP004' && r.managerCode == null));
 const roots = buildOrgSnapshot(getEmployees(), getRelationships()).roots;

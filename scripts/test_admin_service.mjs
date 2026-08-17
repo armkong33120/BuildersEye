@@ -47,7 +47,7 @@ assert('CEO → GLOBAL_ADMIN', getEmployees().find(e => e.employeeCode === 'EMP0
 // ── Policy version bump ──────────────────────────────────────────────────────
 console.log('── Policy version ──');
 const v0 = getPolicyVersion();
-adminService.updateProfile(admin, ACCESS_PROFILE_CODES.TEAM_MANAGER, { label: 'Team Manager v2' });
+await adminService.updateProfile(admin, ACCESS_PROFILE_CODES.TEAM_MANAGER, { label: 'Team Manager v2' });
 const v1 = getPolicyVersion();
 assert('write bumps policy version', v1 > v0, `v0=${v0} v1=${v1}`);
 
@@ -60,50 +60,50 @@ const audit = listAudit({ limit: 10 });
 
 // ── Policy CRUD ──────────────────────────────────────────────────────────────
 console.log('── Policy CRUD ──');
-adminService.createPolicy(admin, {
+await adminService.createPolicy(admin, {
   subjectType: 'profile', subjectId: ACCESS_PROFILE_CODES.SELF_ONLY,
   resourceType: 'field', resourceName: 'Salary_History.Base_Salary',
   effect: 'deny', priority: 90,
 });
 const newPol = getPolicies().find(p => p.resourceName === 'Salary_History.Base_Salary');
 assert('new policy present', !!newPol);
-const upd = adminService.updatePolicy(admin, newPol.policyId, { priority: 95 });
+const upd = await adminService.updatePolicy(admin, newPol.policyId, { priority: 95 });
 assert('policy updated', upd.ok);
 assert('policy priority updated', getPolicies().find(p => p.policyId === newPol.policyId).priority === 95);
-const del = adminService.deletePolicy(admin, newPol.policyId);
+const del = await adminService.deletePolicy(admin, newPol.policyId);
 assert('policy deleted', del.ok && !getPolicies().some(p => p.policyId === newPol.policyId));
 
 // ── Source link duplicate-ownership prevention ────────────────────────────────
 console.log('── Source link duplicate ownership ──');
-adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP001' });
+await adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP001' });
 let dupErr = null;
-try { adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP002' }); }
+try { await adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP002' }); }
 catch (e) { dupErr = e; }
 assert('duplicate ownership rejected (409)', dupErr && dupErr.status === 409, dupErr?.message);
-const shared = adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP002', shared: true });
+const shared = await adminService.createSourceLink(admin, { sourceId: 'onedrive/EMP001.xlsx', employeeCode: 'EMP002', shared: true });
 assert('shared source allowed', shared.ok);
 
 // ── Assign profile ───────────────────────────────────────────────────────────
 console.log('── Assign profile ──');
-adminService.assignProfile(admin, 'EMP003', ACCESS_PROFILE_CODES.TEAM_MANAGER);
+await adminService.assignProfile(admin, 'EMP003', ACCESS_PROFILE_CODES.TEAM_MANAGER);
 assert('employee profile reassigned', getEmployees().find(e => e.employeeCode === 'EMP003')?.accessProfile === ACCESS_PROFILE_CODES.TEAM_MANAGER);
 let badProfile = null;
-try { adminService.assignProfile(admin, 'EMP003', 'BOGUS'); } catch (e) { badProfile = e; }
+try { await adminService.assignProfile(admin, 'EMP003', 'BOGUS'); } catch (e) { badProfile = e; }
 assert('invalid profile rejected (400)', badProfile && badProfile.status === 400);
 
 // ── Set manager (move employee) ──────────────────────────────────────────────
 console.log('── Set manager ──');
-adminService.setManager(admin, 'EMP003', 'EMP001');
+await adminService.setManager(admin, 'EMP003', 'EMP001');
 assert('relationship created', getRelationships().some(r => r.employeeCode === 'EMP003' && r.managerCode === 'EMP001'));
-adminService.setManager(admin, 'EMP003', 'EMP002');
+await adminService.setManager(admin, 'EMP003', 'EMP002');
 const rels = getRelationships().filter(r => r.employeeCode === 'EMP003');
 assert('relationship versioned on change', rels.length === 1 && rels[0].managerCode === 'EMP002' && rels[0].version >= 2);
 
 // ── Rollback ─────────────────────────────────────────────────────────────────
 console.log('── Rollback ──');
 const beforeRollback = getProfiles().find(p => p.profileCode === ACCESS_PROFILE_CODES.TEAM_MANAGER).label;
-adminService.updateProfile(admin, ACCESS_PROFILE_CODES.TEAM_MANAGER, { label: 'CHANGED' });
-const rb = adminService.rollback(admin, 'profile', ACCESS_PROFILE_CODES.TEAM_MANAGER);
+await adminService.updateProfile(admin, ACCESS_PROFILE_CODES.TEAM_MANAGER, { label: 'CHANGED' });
+const rb = await adminService.rollback(admin, 'profile', ACCESS_PROFILE_CODES.TEAM_MANAGER);
 assert('rollback ok', rb.ok);
 const afterRollback = getProfiles().find(p => p.profileCode === ACCESS_PROFILE_CODES.TEAM_MANAGER).label;
 assert('rollback restored previous label', afterRollback === beforeRollback, `before=${beforeRollback} after=${afterRollback}`);

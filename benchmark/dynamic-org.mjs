@@ -34,8 +34,8 @@ const adminService = await import('../server/access/adminService.js');
 const rcache = await import('../server/responseCache.js');
 const chatMem = await import('../server/chatMemory.js');
 
-accStore.saveProfiles(SEED_PROFILES);
-accStore.savePolicies(SEED_POLICIES);
+await accStore.saveProfiles(SEED_PROFILES);
+await accStore.savePolicies(SEED_POLICIES);
 const profilesMap = accStore.getProfilesMap();
 
 // ── Fixtures ─────────────────────────────────────────────────────────────────
@@ -345,7 +345,7 @@ if (rcache.cacheGet(vBefore)?.answer === 'old') metrics.cacheOpsCorrect++;
 // (evaluatePolicies is deny-by-default, so a policy-change is measured by the
 // matched-policy set, not the final effect.)
 const beforeMatches = findMatchingPolicies(subjectManager, { sheet: 'Employee_Profile', field: 'department' }, accStore.getPolicies());
-accStore.savePolicies([
+await accStore.savePolicies([
   ...accStore.getPolicies(),
   { policyId: 'pol_dept_deny_mgr', subjectType: 'profile', subjectId: 'TEAM_MANAGER',
     resourceType: 'field', resourceName: 'Employee_Profile.department',
@@ -450,35 +450,35 @@ assert('valid multi-root org passes integrity (roots preserved)', !multiRootErr,
 // Seed the store with the fixture, then exercise setManager. A rejected write must
 // leave the store byte-identical (no partial write); a valid move must persist.
 const adminActor = { username: 'bench-admin', employeeId: 1, role: 'CEO' };
-accStore.saveEmployees(makeOrg().employees);
-accStore.saveRelationships([]);
+await accStore.saveEmployees(makeOrg().employees);
+await accStore.saveRelationships([]);
 const storeState = () => JSON.stringify({ employees: accStore.getEmployees(), relationships: accStore.getRelationships() });
 
-const moveRes = adminService.setManager(adminActor, 'L-02', 'M-06');
+const moveRes = await adminService.setManager(adminActor, 'L-02', 'M-06');
 assert('move to valid manager succeeds', moveRes.ok);
 assert('relationship L-02→M-06 persisted',
   accStore.getRelationships().some((r) => r.employeeCode === 'L-02' && r.managerCode === 'M-06'));
 
 const smBefore = storeState();
 let smSvc = null;
-try { adminService.setManager(adminActor, 'J-01', 'J-01'); } catch (e) { smSvc = e; }
+try { await adminService.setManager(adminActor, 'J-01', 'J-01'); } catch (e) { smSvc = e; }
 assert('self-manager A→A via setManager rejected (400)', smSvc && smSvc.status === 400, smSvc?.message);
 assert('self-manager rejection left store unchanged (no partial write)', storeState() === smBefore);
 
 const cycBefore = storeState();
 let cycSvc = null;
 // CL-01 already reports to CEO-01; making CEO-01 report to CL-01 closes a cycle.
-try { adminService.setManager(adminActor, 'CEO-01', 'CL-01'); } catch (e) { cycSvc = e; }
+try { await adminService.setManager(adminActor, 'CEO-01', 'CL-01'); } catch (e) { cycSvc = e; }
 assert('indirect cycle A→B→A via setManager rejected (409)', cycSvc && cycSvc.status === 409, cycSvc?.message);
 assert('cycle rejection left store unchanged (no partial write)', storeState() === cycBefore);
 
 const mmBefore = storeState();
 let mmSvc = null;
-try { adminService.setManager(adminActor, 'J-02', 'GHOST'); } catch (e) { mmSvc = e; }
+try { await adminService.setManager(adminActor, 'J-02', 'GHOST'); } catch (e) { mmSvc = e; }
 assert('missing manager via setManager rejected (400)', mmSvc && mmSvc.status === 400, mmSvc?.message);
 assert('missing-manager rejection left store unchanged (no partial write)', storeState() === mmBefore);
 
-const rootMove = adminService.setManager(adminActor, 'J-03', null);
+const rootMove = await adminService.setManager(adminActor, 'J-03', null);
 assert('move to root (null manager) succeeds — multi-root preserved', rootMove.ok);
 const finalSnapshot = buildOrgSnapshot(accStore.getEmployees(), accStore.getRelationships());
 assert('org snapshot reflects valid moves (multi-root intact)',

@@ -141,8 +141,8 @@ Neon/Postgres adapter. Key facts:
   (schema init, preload, seed, write/read profiles, policy-version atomicity,
   version column, save policy, audit CRUD, findPreviousSnapshot).
 - **JSON regression:** persistence restart 14/14, isolation security 46/46, admin
-  preview contract 48/48, org integrity 26/32 (6 KNOWN GAPS unchanged), canonical
-  policy 25/25, legacy shim parity 38/38, security 34/34, build OK.
+  preview contract 48/48, org integrity 32/32, canonical policy 25/25, legacy
+  shim parity 38/38, security 34/34, build OK, benchmark:dynamic 75/75.
 - **Status: VERIFIED — single-instance JSON SAFE; multi-instance Neon IMPLEMENTED
   and tested 13/13.** The JSON adapter is unchanged and remains the default; the
   Neon adapter is opt-in via `ACCESS_DB_ADAPTER=neon` + `DATABASE_URL`.

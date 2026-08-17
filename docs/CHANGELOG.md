@@ -18,8 +18,25 @@ Change: `CHG-neon-access-persistence` · Branch: `codex/neon-access-persistence-
 - `server/.env.example` — documented `ACCESS_DB_ADAPTER`.
 
 ### Verified
-- **JSON regression:** persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, org integrity 26/32 (6 KNOWN GAPS unchanged), canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, benchmark 70/75 (5 KNOWN GAPS org-integrity write-path), git diff --check clean.
+- **JSON regression:** persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, org integrity 32/32, canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, benchmark:dynamic 75/75, git diff --check clean.
 - **Neon adapter:** schema init (idempotent), preload, seed (idempotent), write/read profiles, policy-version atomicity, version column, save policy, audit CRUD — **13/13**.
+
+### Regression discovered & fixed (async conversion)
+- Converting `adminService` writes to `async` initially broke the direct-caller tests
+  (`test_org_integrity`, `test_admin_service`) and `benchmark/dynamic-org`: they called
+  `adminService.setManager`/`assignProfile`/`accStore.save*` without `await`, so rejected
+  writes surfaced as rejected Promises (not caught by `try/catch`) and successful writes
+  returned Promises. Added `await` to all 3 files — **org-integrity 32/32, admin_service
+  20/20, benchmark:dynamic 75/75** restored. These were regressions, not "known gaps".
+
+### Latency (measured on Neon-access backend, 30s timeout, 0 timeouts / 0 errors)
+- **Login** p50=19052ms p95=19590ms (~19 s — Neon `auth_sessions` round-trip; the environmental
+  bottleneck, matches 0.5.0's ~15 s documentation).
+- **Admin API** p50=2ms p95=8ms; **Policy read** p50=2ms p95=2ms — the Neon access
+  adapter's in-memory cache keeps reads sub-10ms despite multi-instance persistence.
+- Conclusion: the access adapter adds no read-latency penalty; the ~19 s login is Neon
+  session latency, not access persistence. Auth-gated suites need a timeout > 19 s
+  (e.g. 60 s).
 
 ### Production-readiness verdict
 **READY** for multi-instance deployment when `ACCESS_DB_ADAPTER=neon` is configured.

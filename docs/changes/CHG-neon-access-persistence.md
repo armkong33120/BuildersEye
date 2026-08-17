@@ -70,12 +70,25 @@ Policy version `UPDATE ... RETURNING version` is atomic (single SQL statement,
   write/read profiles, policy-version atomicity, version column, save policy,
   audit CRUD, findPreviousSnapshot).
 - **JSON regression:** persistence restart 14/14, isolation security 46/46,
-  admin preview contract 48/48, canonical policy 25/25, legacy shim parity
-  38/38, verify:security 34/34, build OK, git diff --check clean.
+  admin preview contract 48/48, org integrity 32/32, admin service 20/20,
+  canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34,
+  build OK, benchmark:dynamic 75/75, git diff --check clean.
+- **Regression found & fixed:** async conversion of `adminService`/`accStore`
+  writes initially broke direct-caller tests and the benchmark (missing `await`
+  on `setManager`/`assignProfile`/`save*`), surfacing rejected writes as uncaught
+  Promise rejections and successful writes as Promises. Added `await` to
+  `test_org_integrity.mjs`, `test_admin_service.mjs`, `benchmark/dynamic-org.mjs` —
+  all restored. These were regressions, not "known gaps"; the write-path
+  org-integrity rejections (duplicate 409 / self-manager 400 / cycle 409 / missing
+  manager 400 / no partial write) all pass.
+- **Latency (Neon-access backend, 30s timeout, 0 timeouts / 0 errors):**
+  login p50=19052ms/p95=19590ms (~19 s Neon `auth_sessions` round-trip);
+  admin API p50=2ms/p95=8ms; policy read p50=2ms/p95=2ms. The access adapter
+  adds no read-latency penalty; the ~19 s is Neon session latency.
 - **NOT RUN / DEFERRED:** live auth-gated suites against a Neon-backed backend
-  (environmental — Neon session latency ~15 s/round-trip in this env exceeds
-  test timeouts; suites run green against file-backed sessions as verified in
-  0.5.0).
+  (each login is ~19 s Neon session latency; suites with multiple logins exceed
+  default timeouts unless raised to > 19 s per call, e.g. 60 s — documented, not
+  a defect). Suites run green against file-backed sessions (verified in 0.5.0).
 
 ### Rollback instructions
 1. Set `ACCESS_DB_ADAPTER=json` in `server/.env`, restart.

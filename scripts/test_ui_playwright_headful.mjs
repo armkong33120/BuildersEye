@@ -55,7 +55,7 @@ async function runPlaywrightTests() {
   log('🧪 Starting Playwright HEADFUL E2E test (Login → Chat → Debug)...');
   fs.mkdirSync(SHOTS_DIR, { recursive: true });
 
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({ headless: true });
 
   const consoleErrors = [];
   const pageErrors = [];

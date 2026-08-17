@@ -152,15 +152,3 @@ async function main() {
 }
 
 main().catch((e) => { console.error('Test harness error:', e.message); process.exit(1); });
-  const pipeA = await get('/api/debug/pipeline', tokenA);
-  assert('A can read own debug pipeline after chat', pipeA.status === 200, `status=${pipeA.status}`);
-
-  // ── 3. A writes to an OWN conversation and manages it ────────────────────
-  console.log('\n── 3. Conversation ownership (A self) ──');
-  const convId = 'iso-w-' + Date.now();
-  const chatR = await post('/api/chat', tokenA, { query: 'วิศวกรคนไหนทำดีที่สุด', conversationId: convId });
-  assert('A can write to own new conversation', chatR.status === 200, `status=${chatR.status}`);
-  const getA = await get('/api/conversations/' + convId, tokenA);
-  assert('A can read own conversation', getA.status === 200);
-  const delA = await del('/api/conversations/' + convId, tokenA);
-  assert('A can delete own conversation', delA.status === 200);

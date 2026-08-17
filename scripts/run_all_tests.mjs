@@ -42,6 +42,40 @@ const TEST_SUITES = [
 ];
 
 const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+// Auto-derive test credentials from server/.env when ENABLE_TEST_CREDS=true
+// (in test mode all users share TEST_ACCOUNT_PASSWORD). This lets the auth-gated
+// suites run without the operator manually exporting TEST_USERNAME/PASSWORD
+// etc. Values are read from disk but NEVER printed here.
+{
+  const envPath = path.join(__dirname, '..', 'server', '.env');
+  try {
+    const raw = fs.readFileSync(envPath, 'utf-8');
+    const kv = {};
+    for (const line of raw.split('\n')) {
+      const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)\s*$/);
+      if (m) kv[m[1]] = m[2].replace(/\r$/, '');
+    }
+    const testPassword = kv.TEST_ACCOUNT_PASSWORD;
+    if (kv.ENABLE_TEST_CREDS === 'true' && testPassword) {
+      process.env.TEST_USERNAME   = process.env.TEST_USERNAME   || 'ceo';
+      process.env.TEST_PASSWORD   = process.env.TEST_PASSWORD   || testPassword;
+      // NOTE: defaults must be real accounts in THIS identity graph. 'hr-manager' /
+      // 'emp001' do not exist here; real HR=emp135, Manager=emp002, Employee=emp012.
+      process.env.TEST_USERNAME2  = process.env.TEST_USERNAME2  || 'emp002';
+      process.env.TEST_PASSWORD2  = process.env.TEST_PASSWORD2  || testPassword;
+      process.env.TEST_MANAGER_USERNAME = process.env.TEST_MANAGER_USERNAME || 'emp002';
+      process.env.TEST_MANAGER_PASSWORD = process.env.TEST_MANAGER_PASSWORD || testPassword;
+      process.env.TEST_CEO_USERNAME     = process.env.TEST_CEO_USERNAME     || 'ceo';
+      process.env.TEST_CEO_PASSWORD     = process.env.TEST_CEO_PASSWORD     || testPassword;
+      process.env.TEST_EMP_USERNAME     = process.env.TEST_EMP_USERNAME     || 'emp012';
+      process.env.TEST_EMP_PASSWORD     = process.env.TEST_EMP_PASSWORD     || testPassword;
+      process.env.TEST_ADMIN_USERNAME   = process.env.TEST_ADMIN_USERNAME   || 'ceo';
+      process.env.TEST_ACCOUNT_PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || testPassword;
+    }
+  } catch { /* server/.env not present — caller must export credentials manually */ }
+}
+
+
 const HAS_AUTH = !!(process.env.TEST_USERNAME && process.env.TEST_PASSWORD);
 
 // A suite that needs a live backend (e.g. HTTP-only tests) but is not gated by

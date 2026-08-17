@@ -174,7 +174,7 @@ function publicUser(u) {
 
 async function issueTokens(user) {
   const accessToken = jwt.sign(
-    { sub: user.id, username: user.username, role: user.role, employeeId: user.employeeId, name: user.name },
+    { sub: user.id, username: user.username, role: user.role, employeeId: user.employeeId, name: user.name, jti: crypto.randomBytes(6).toString('hex') },
     JWT_SECRET,
     { expiresIn: ACCESS_TTL }
   );

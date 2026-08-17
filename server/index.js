@@ -382,8 +382,10 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
 
     // Save user message to conversation history. Owner is the JWT user id (H2);
     // a body-supplied conversationId owned by another user throws 403 here.
+    // conversationStore.addMessage signature is (id, role, text, title, userId) —
+    // the 5th arg is the owner; earlier calls wrongly passed the owner as `title`.
     const convId = conversationId || 'conv-' + Date.now();
-    addMessage(convId, 'user', query, req.authUser.id);
+    addMessage(convId, 'user', query, undefined, req.authUser.id);
 
     // Canonical authorized scope (single boundary) — flows into keyword, vector
     // (pre-retrieval), and SQL (scoped table) paths inside chatHandler.
@@ -435,9 +437,9 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
       policyVersion: getPolicyVersion(),
     });
 
-    // Save assistant response
+    // Save assistant response (owner = JWT user id, 5th arg of addMessage)
     if (result.answer) {
-      addMessage(convId, 'assistant', result.answer, req.authUser.id);
+      addMessage(convId, 'assistant', result.answer, undefined, req.authUser.id);
     }
 
     // Include conversationId + identity in the direct response

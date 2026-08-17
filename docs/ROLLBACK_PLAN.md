@@ -3,11 +3,18 @@
 Changes: `CHG-org-access-redesign` (core), `CHG-production-hardening` (isolation/preview/benchmark/persistence review) and `CHG-production-hardening-final` (write-path org integrity, canonical authorization, persistence P2, preview contract) — safe rollback paths.
 
 ## Backup points
-- **Live-gate backup:** `codex/backup-before-final-live-gate-20260817-1733` (baseline `a7df4cb`, tip of final-hardening branch). Task branch: `codex/final-live-gate-20260817` (fix commit `1d0d567`).
+- **Live-gate backup:** `codex/backup-before-final-live-gate-20260817-1733`
+- **Neon-access-persistence backup:** `codex/backup-before-neon-access-persistence-20260818-0156` (baseline `56f9776`, tip of final-live-gate). Task branch: `codex/neon-access-persistence-20260818` (commit `409cf52`).
 - **Org-redesign backup:** `codex/backup-before-org-access-redesign-20260816-1050` (baseline `1a2c345`).
 - **Production-hardening backup:** `codex/backup-before-production-hardening-20260816-1208` (baseline `07d613a`, tip of org-redesign branch).
 - **Final-hardening backup:** `codex/backup-before-final-hardening-20260816-2121` (baseline `54a1038`, tip of production-hardening branch).
 - All work is on task branches; **no push to main**, **no production deploy**.
+
+## How to roll back Neon access persistence (return to JSON-only)
+1. **Switch adapter:** set `ACCESS_DB_ADAPTER=json` (or unset it) in `server/.env`. Restart the backend — it will use JSON files with no Neon access calls.
+2. **Restore JSON from Neon:** run `ACCESS_DB_ADAPTER=neon node scripts/rollback-neon-access-to-json.mjs`. This reads all Neon access tables and writes them to `server/.data/access/*.json`.
+3. **Full git revert:** `git checkout codex/backup-before-neon-access-persistence-20260818-0156` or `git revert --no-commit 409cf52`.
+4. **Data safety:** the JSON files are not deleted by the Neon adapter; they remain as the authoritative source in JSON mode. Neon tables are separately namespaced (`access_*`) and do not conflict with existing RAG tables (`employees`, `chunks`, etc.).
 
 ## How to roll back the final-live-gate (keep 0.4.0 final hardening)
 1. **Restore branch (full revert to pre-live-gate tree):**

@@ -12,6 +12,11 @@ Status flags: **[VERIFIED IN CODE]** (actually run green) · **[NOT RUN]** (not 
 - `npm test` now probes backend health first: HTTP-only suites are SKIPPED (not failed) when no server is running.
 - `npm test` now also auto-derives test credentials from `server/.env` when `ENABLE_TEST_CREDS=true` (all users share `TEST_ACCOUNT_PASSWORD`) so the auth-gated suites run. Correct real usernames for THIS identity graph: CEO=`ceo`, Manager=`emp002`, Employee=`emp012`, HR=`emp135` (`hr-manager`/`emp001` do not exist here).
 
+## Result (2026-08-18, neon-access-persistence 0.6.0)
+- **Neon adapter** `scripts/test_access_neon_adapter.mjs`: **13/13** — schema (idempotent), preload, seed (idempotent), write/read profiles, policy-version atomicity, version column, save policy, audit CRUD. Runs against live Neon; requires `DATABASE_URL` + `ACCESS_DB_ADAPTER=neon`.
+- **JSON regression** (unchanged, default adapter): persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, git diff --check clean.
+- **Multi-instance persistence**: **IMPLEMENTED** — `ACCESS_DB_ADAPTER=neon` activates write-through cache + optimistic concurrency + audit write-through. JSON adapter unchanged and remains the default.
+
 ## Result (2026-08-17, final-live-gate 0.5.0) — live local backend, file-backed sessions
 - `npm test`: **23 passed / 2 failed / 0 skipped (25 total)** — all suites executed (auth configured).
   - **Cache Hit FAILED** in the aggregate = **flake**: the first LLM call takes ~26 s and clustered logins trip the 5/min login rate limit. Passes **5/5 isolated** on a fresh window.

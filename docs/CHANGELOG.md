@@ -1,5 +1,30 @@
 # Changelog — BuildersEye
 
+## [0.6.0] — 2026-08-18 — Neon Access Persistence (multi-instance ready)
+Change: `CHG-neon-access-persistence` · Branch: `codex/neon-access-persistence-20260818` (backup `codex/backup-before-neon-access-persistence-20260818-0156`)
+
+### Added
+- **Neon/Postgres access-model adapter** (`server/access/accessStoreNeon.js`) — write-through in-memory cache, optimistic concurrency (version column), policy-version atomic `UPDATE RETURNING`, audit write-through (JSON + Neon).
+- **`ACCESS_DB_ADAPTER=json|neon`** env var — `json` (default, single-instance) unchanged; `neon` activates the Postgres adapter.
+- **7 new Neon tables** alongside existing RAG registry: `access_profiles`, `access_policies`, `access_source_links`, `access_employees`, `access_relationships`, `access_policy_version`, `access_audit`.
+- **Migration script** `scripts/migrate-access-to-neon.mjs` — JSON → Neon upsert (idempotent).
+- **Rollback script** `scripts/rollback-neon-access-to-json.mjs` — Neon → JSON dump.
+- **Neon adapter test** `scripts/test_access_neon_adapter.mjs` — **13/13** passed.
+
+### Changed
+- `server/access/adminService.js` — write functions async; `applyAndAudit`/`recordRejected` write audit to JSON (always) + Neon (when configured); `readAccess.audit` reads Neon when configured.
+- `server/adminRoutes.js` — all write handlers async + await adminService.
+- `server/index.js` — boot initializes Neon access schema + cache preload when `ACCESS_DB_ADAPTER=neon`.
+- `server/.env.example` — documented `ACCESS_DB_ADAPTER`.
+
+### Verified
+- **JSON regression:** persistence restart 14/14, isolation security 46/46, admin preview contract 48/48, org integrity 26/32 (6 KNOWN GAPS unchanged), canonical policy 25/25, legacy shim parity 38/38, verify:security 34/34, build OK, benchmark 70/75 (5 KNOWN GAPS org-integrity write-path), git diff --check clean.
+- **Neon adapter:** schema init (idempotent), preload, seed (idempotent), write/read profiles, policy-version atomicity, version column, save policy, audit CRUD — **13/13**.
+
+### Production-readiness verdict
+**READY** for multi-instance deployment when `ACCESS_DB_ADAPTER=neon` is configured.
+JSON adapter remains the default; migration is explicit and reversible.
+
 ## [0.5.0] — 2026-08-17 — Live Verification Gate (JWT uniqueness + conversation-owner fix + test hardening)
 Change: `CHG-final-live-gate` · Branch: `codex/final-live-gate-20260817` (baseline `a7df4cb`, backup `codex/backup-before-final-live-gate-20260817-1733`)
 

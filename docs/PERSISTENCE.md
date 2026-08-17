@@ -116,15 +116,33 @@ A Neon write-through adapter should:
 - `audit.jsonl` uses line-atomic append (verified for typical event sizes); it
   is not journaled/checksummed, and a torn final line after an OS crash is
   possible in theory (a line that was being written when the machine lost power).
-## Update (2026-08-17, CHG-final-live-gate 0.5.0)
-Re-verified against a live local backend with file-backed sessions
-(`scripts/test_persistence_restart.mjs` still **14/14**). The access model remains
-**JSON-file authoritative**, single-instance **SAFE**, multi-instance across hosts
-**BLOCKED**. This change did **not** implement Neon access-model write-through
-(per scope — do not invent infrastructure); the `ACCESS_DB_ADAPTER=json|neon`
-design in §5 remains the proposed path to multi-instance readiness. Auth sessions
-(`server/.data/auth/sessions.json` local, or Neon `auth_sessions` when
-`DATABASE_URL` is set) are a separate store from the access model; this change only
-touched `/api/chat` conversation persistence (→ `server/.data/conversations/*.json`,
-now actually written with an owner) and added a `jti` claim to JWTs — nothing here
-changes access-model storage.
+## Update (2026-08-18, CHG-neon-access-persistence 0.6.0)
+**Multi-instance access-model persistence is now IMPLEMENTED** via an optional
+Neon/Postgres adapter. Key facts:
+
+- **`ACCESS_DB_ADAPTER=json`** (default) — single-instance file-backed, unchanged.
+- **`ACCESS_DB_ADAPTER=neon`** — multi-instance Postgres-backed with write-through
+  in-memory cache. Neon tables: `access_profiles`, `access_policies`,
+  `access_source_links`, `access_employees`, `access_relationships`,
+  `access_policy_version`, `access_audit`.
+- **Optimistic concurrency:** every row carries a `version` column. Writes that
+  pass a stale version return `{ conflict: true, currentVersion }` without
+  mutating data.
+- **Policy version atomicity:** `UPDATE access_policy_version SET version=version+1
+  RETURNING version` — a single atomic SQL statement (no read-then-write gap).
+- **Audit write-through:** JSON audit is always written (line-atomic append, local
+  durability). When `ACCESS_DB_ADAPTER=neon`, a copy is also inserted into
+  `access_audit` (shared state for multi-instance query / rollback).
+- **Migration:** `scripts/migrate-access-to-neon.mjs` reads JSON files, creates
+  DDL, upserts all records. Idempotent (safe to re-run).
+- **Rollback:** `scripts/rollback-neon-access-to-json.mjs` reads Neon rows and
+  writes JSON files.
+- **Neon adapter test:** `scripts/test_access_neon_adapter.mjs` — 13/13 passed
+  (schema init, preload, seed, write/read profiles, policy-version atomicity,
+  version column, save policy, audit CRUD, findPreviousSnapshot).
+- **JSON regression:** persistence restart 14/14, isolation security 46/46, admin
+  preview contract 48/48, org integrity 26/32 (6 KNOWN GAPS unchanged), canonical
+  policy 25/25, legacy shim parity 38/38, security 34/34, build OK.
+- **Status: VERIFIED — single-instance JSON SAFE; multi-instance Neon IMPLEMENTED
+  and tested 13/13.** The JSON adapter is unchanged and remains the default; the
+  Neon adapter is opt-in via `ACCESS_DB_ADAPTER=neon` + `DATABASE_URL`.

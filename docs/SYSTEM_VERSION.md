@@ -4,18 +4,18 @@
 |---|---|
 | System | BuildersEye (`mail-onedrive-org-graph`) |
 | Package name | `builders-eye` |
-| Latest release version | `0.5.0` (live verification gate: JWT uniqueness + conversation-owner fix + test hardening) |
-| Prior release | `0.4.0` (final hardening: write-path org integrity + canonical authorization + persistence P2 + preview contract) |
-| Task branch | `codex/final-live-gate-20260817` |
-| Backup branch | `codex/backup-before-final-live-gate-20260817-1733` |
-| Baseline commit | `a7df4cb` |
-| Change records | `docs/changes/CHG-final-live-gate.md`, `docs/changes/CHG-production-hardening-final.md`, `docs/changes/CHG-production-hardening.md`, `docs/changes/CHG-org-access-redesign.md` |
+| Latest release version | `0.6.0` (Neon access persistence: multi-instance ready) |
+| Prior release | `0.5.0` (live verification gate) |
+| Task branch | `codex/neon-access-persistence-20260818` |
+| Backup branch | `codex/backup-before-neon-access-persistence-20260818-0156` |
+| Baseline commit | `56f9776` |
+| Change records | `docs/changes/CHG-neon-access-persistence.md`, `docs/changes/CHG-final-live-gate.md`, `docs/changes/CHG-production-hardening-final.md`, ... |
 
 ## Component status
 - Backend core (domain model, authz, admin API, cross-user isolation): **[VERIFIED IN CODE]**
 - Write-path org integrity (`orgIntegrity.js`: duplicate code 409 / self-manager 400 / cycles 409 / missing manager 400 / no partial writes): **[VERIFIED IN CODE]** (32-case suite + 17 benchmark assertions)
 - Canonical authorization bridge (Phase 3, `canonicalQueryPolicy` + `applyFieldRedactionPolicy` in chat): **[VERIFIED IN CODE]** (25-case canonical policy suite; parity 38/38, zero redaction divergences)
-- Persistence (atomic rename + advisory write lock, single instance): **[VERIFIED IN CODE]** (14/14) — single-instance **SAFE**; multi-instance across hosts **BLOCKED** (see `docs/PERSISTENCE.md`)
+- Persistence (atomic rename + advisory write lock, single instance): **[VERIFIED IN CODE]** (14/14) — single-instance **SAFE**; multi-instance **IMPLEMENTED** via `ACCESS_DB_ADAPTER=neon` (tested 13/13, write-through cache + optimistic concurrency + audit write-through)
 - Admin Preview As User contract (static, no credentials/browser needed): **[VERIFIED IN CODE]** (48/48)
 - Dynamic org benchmark: **[VERIFIED IN CODE]** (75/75, leakage 0%)
 - RAG/data integration (scope → ingest/index/SQL/vector/cache): **[VERIFIED IN CODE]**

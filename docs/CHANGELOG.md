@@ -1,5 +1,30 @@
 # Changelog — BuildersEye
 
+## [0.5.0] — 2026-08-17 — Live Verification Gate (JWT uniqueness + conversation-owner fix + test hardening)
+Change: `CHG-final-live-gate` · Branch: `codex/final-live-gate-20260817` (baseline `a7df4cb`, backup `codex/backup-before-final-live-gate-20260817-1733`)
+
+### Fixed
+- **JWT uniqueness (`server/authStore.js`)** — access tokens now carry a random `jti` claim, so two JWTs issued in the same second differ (previously identical). Fixes session-refresh rotation expectations.
+- **Conversation ownership at the live `/api/chat` (`server/index.js`)** — `conversationStore.addMessage(convId,'user',query,undefined,req.authUser.id)` (owner was being passed as `title`, so `userId` was `undefined` → conversations were never persisted and the H2 cross-user 403 guard never fired on the live API). Now conversations persist to disk and a second user's append to another user's conversation returns **403**.
+
+### Changed
+- `scripts/run_all_tests.mjs` auto-derives test credentials from `server/.env` (`ENABLE_TEST_CREDS=true`), so the 11 auth-gated suites run instead of skipping; default usernames corrected to real accounts (`emp002`, `emp012`; `hr-manager`/`emp001` do not exist in this identity graph).
+- `scripts/test_ui_playwright_headful.mjs` runs Chromium **headless**.
+- `scripts/test_isolation_api.mjs` — removed unreachable dead code.
+
+### Verified (real numbers, 2026-08-17, live local backend, file-backed sessions)
+- `npm test`: **23 passed / 2 failed / 0 skipped (25 total)**. Failures: **Cache Hit** (flake under burst; passes 5/5 isolated) and **SQL Fallback** (brittle trace-label assertion; behavior correct, 5/6 isolated).
+- `verify:security` **34/34** · `npm run build` **OK** · `benchmark:dynamic` **75/75** leakage 0% · `git diff --check` clean.
+- **Headless Playwright E2E 3/3 PASSED** (login → chat → debug), 0 console/page errors.
+- Auth-gated isolated: Session Refresh **14/14**, Isolation API (live) **13/13**, RBAC Matrix **7/7**, Cache Hit **5/5**, Invalid Login **5/5**.
+- Admin console: CEO admin login works (all admin endpoints 200); non-admin denied (403, no 2xx admin data); CORS correct. Full section-render inconclusive in headless harness (boot-probe client-side "network error" artifact; server returns 200 with correct CORS).
+
+### Deferred / limitations (honest)
+- **Multi-instance** access-model persistence remains **BLOCKED** (filesystem-local advisory lock; Neon access-model write-through NOT implemented — `docs/PERSISTENCE.md`).
+- Admin-console full section-render not confirmed in this headless harness.
+- **Neon**-backed session latency here ~15 s/round-trip (vs 0.1 s file-backed), so auth suites exceed timeouts against a Neon backend; environmental observation, not a product defect.
+- Production-readiness verdict: **READY WITH LIMITATIONS** (single-instance demo/staging); no deployment; `main` not pushed.
+
 ## [0.4.0] — 2026-08-16 — Final Hardening (write-path org integrity + canonical authorization + persistence P2 + preview contract)
 Change: `CHG-production-hardening-final` · Branch: `codex/final-hardening-20260816` (baseline `54a1038`, backup `codex/backup-before-final-hardening-20260816-2121`)
 

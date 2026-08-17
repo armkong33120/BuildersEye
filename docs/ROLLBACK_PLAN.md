@@ -3,10 +3,33 @@
 Changes: `CHG-org-access-redesign` (core), `CHG-production-hardening` (isolation/preview/benchmark/persistence review) and `CHG-production-hardening-final` (write-path org integrity, canonical authorization, persistence P2, preview contract) — safe rollback paths.
 
 ## Backup points
+- **Live-gate backup:** `codex/backup-before-final-live-gate-20260817-1733` (baseline `a7df4cb`, tip of final-hardening branch). Task branch: `codex/final-live-gate-20260817` (fix commit `1d0d567`).
 - **Org-redesign backup:** `codex/backup-before-org-access-redesign-20260816-1050` (baseline `1a2c345`).
 - **Production-hardening backup:** `codex/backup-before-production-hardening-20260816-1208` (baseline `07d613a`, tip of org-redesign branch).
 - **Final-hardening backup:** `codex/backup-before-final-hardening-20260816-2121` (baseline `54a1038`, tip of production-hardening branch).
 - All work is on task branches; **no push to main**, **no production deploy**.
+
+## How to roll back the final-live-gate (keep 0.4.0 final hardening)
+1. **Restore branch (full revert to pre-live-gate tree):**
+   ```
+   git checkout codex/backup-before-final-live-gate-20260817-1733
+   ```
+   This restores the exact final-hardening tree (baseline `a7df4cb`).
+2. **Revert the live-gate commit on top of current (keeps later work):**
+   ```
+   git revert --no-commit 1d0d567
+   git commit -m "revert(CHG-final-live-gate): roll back jti + conversation-owner + test-hardening"
+   ```
+3. **Behavior note when reverting:** reverting restores the pre-fix `/api/chat`,
+   where conversations were **not** persisted (owner passed as `title`, `userId`
+   undefined) and the H2 cross-user 403 guard did **not** fire on the live API;
+   access tokens issued in the same second were identical. Verify with
+   `test_api_session_refresh.mjs` and `test_isolation_api.mjs` (they will fail as
+   documented in `CHG-final-live-gate.md`).
+4. **Data rollback:** the fix only affects conversation persistence (added
+   `owner` rows under `server/.data/conversations/`) and JWT claims. No access-model
+   files change format. Roll back `server/.data/conversations/` from backup only if
+   needed.
 
 ## How to roll back final hardening (keep 0.3.0 + redesign)
 1. **Restore branch (simplest, full revert to pre-final-hardening tree):**

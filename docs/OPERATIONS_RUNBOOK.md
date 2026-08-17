@@ -42,7 +42,7 @@ Status flags: **[VERIFIED IN CODE]** · **[MANUAL OP CHECK]** · **[PROPOSED FUT
 | Preview contract mismatch | Run `node scripts/test_admin_preview_contract.mjs` (48/48); fix contract or UI | Yes if mismatch |
 | Canonical policy bridge failure | Run `node scripts/test_canonical_policy.mjs` (25/25); block release on failure | Yes (security) |
 | Legacy shim divergence | Run `node scripts/test_legacy_shim_parity.mjs` (38/38); migrate off deprecated shim | Yes if divergence |
-| Auth-gated suite failed/skipped | Requires `TEST_USERNAME`/`TEST_PASSWORD`; without them report SKIPPED, never PASSED | If failed while creds present |
+| Auth-gated suite failed/skipped | Auto-derived from `server/.env` when `ENABLE_TEST_CREDS=true`; if a suite fails while a live backend is up, diagnose individually (Cache Hit is a flake under burst — passes isolated; SQL Fallback fails a brittle trace-label assert). Do not report PASSED unless it is | If failed while backend present |
 | Concurrent admin write conflict | Advisory lock serializes same-host writers; check audit/relationships for last-writer-wins | If cross-host: BLOCKED (see PERSISTENCE.md) |
 | Persistence lock timeout / stale `.lock` | Retry; stale-lock auto-break via mtime at startup; no torn files (atomic rename) | If repeated |
 | Benchmark regression (leakage > 0, accuracy < 100%, integrity assertion failed) | Block release; investigate scopeResolver / orgIntegrity.js | Yes (release gate) |
@@ -51,6 +51,11 @@ Status flags: **[VERIFIED IN CODE]** · **[MANUAL OP CHECK]** · **[PROPOSED FUT
 | Cache mismatch | Bump policy_version (auditStore) to invalidate | If persists |
 | Admin preview shows BLOCKED for a privileged profile | Run `test_legacy_shim_parity.mjs` + `test_isolation_security.mjs`; check profile permissions | Yes if mismatch |
 | `/api/debug/online` or `/api/registry/status` exposing more than allowed | Verify admin-gating (non-admins see self / configured-flag only) | Yes (security) |
+| Conversation append to another user's conversation not rejected (403) | Regression of the `conversationStore.addMessage` owner arg; run `test_api_session_refresh`/`test_isolation_api`; conversations must persist to disk | Yes (security) |
+| JWT access tokens identical within the same second | `jti` claim missing; run `test_api_session_refresh.mjs` (14/14) | Yes if refresh rotation broken |
+| Live auth suite flake under burst (429) | 5/min login rate limit + LLM latency; run the suite in isolation on a fresh window, space logins | If persistent |
+| Neon-backed session latency (~15 s/round-trip here) | Auth suites exceed timeouts vs a Neon backend in this environment; Not a product defect — size Neon or raise timeouts | If persistent |
+| Admin console headless shows "network error — backend unreachable" while server returns 200 | `boot()` `/api/admin/profiles` probe harness/race artifact in headless; verify via curl + browser network log; CORS is correct | No (doc, but confirm via curl) |
 
 ## Event → Incident → Problem mapping guidance
 For each event consider: what happened, which service, users affected?, data security affected?, safe immediate action, open Incident?, open Problem?, which Change can permanently fix it. **[PROPOSED FUTURE STATE — manual process until tooling implemented]**

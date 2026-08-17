@@ -116,3 +116,15 @@ A Neon write-through adapter should:
 - `audit.jsonl` uses line-atomic append (verified for typical event sizes); it
   is not journaled/checksummed, and a torn final line after an OS crash is
   possible in theory (a line that was being written when the machine lost power).
+## Update (2026-08-17, CHG-final-live-gate 0.5.0)
+Re-verified against a live local backend with file-backed sessions
+(`scripts/test_persistence_restart.mjs` still **14/14**). The access model remains
+**JSON-file authoritative**, single-instance **SAFE**, multi-instance across hosts
+**BLOCKED**. This change did **not** implement Neon access-model write-through
+(per scope — do not invent infrastructure); the `ACCESS_DB_ADAPTER=json|neon`
+design in §5 remains the proposed path to multi-instance readiness. Auth sessions
+(`server/.data/auth/sessions.json` local, or Neon `auth_sessions` when
+`DATABASE_URL` is set) are a separate store from the access model; this change only
+touched `/api/chat` conversation persistence (→ `server/.data/conversations/*.json`,
+now actually written with an owner) and added a `jti` claim to JWTs — nothing here
+changes access-model storage.

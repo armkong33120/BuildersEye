@@ -113,3 +113,8 @@ Always report:
 5. Remaining risks or blockers.
 6. Whether external deployment is still required.
 7. Current branch, backup branch, task branch, checkpoint commit, and pushed remote status.
+
+## Incident and Knowledge Management
+
+- **Incident Log:** When resolving a bug, outage, or regression, you MUST document the symptom, root cause, resolution, and lessons learned in `INCIDENT_LOG.md`.
+- **Pre-flight Check:** Before modifying authentication, authorization, or core logic, briefly check `INCIDENT_LOG.md` to ensure your planned changes do not violate past lessons or recreate known bugs.

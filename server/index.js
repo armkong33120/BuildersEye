@@ -21,6 +21,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import { seedAccessModel, buildOrgSnapshot, resolveAccess, resolveViewerScope, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships, getPolicyVersion } from './access/index.js';
+import { logAuditActivity, getAuditLogs } from './auditStore.js';
 import { mountAdminRoutes } from './adminRoutes.js';
 import { injectMockOrg } from './mockDataGenerator.js';
 
@@ -381,6 +382,14 @@ app.get('/api/preview/credentials', requireAuth, (req, res) => {
 // from another user is unreachable by changing an id.
 const latestPipelineByUser = new Map(); // userId -> { ...pipeline, policyVersion }
 
+app.get('/api/audit/logs', requireAuth, async (req, res) => {
+  if (req.authUser?.role !== 'CEO' && req.authUser?.role !== 'Admin') {
+    return res.status(403).json({ error: 'Forbidden. Audit logs are restricted to CEO/Admin.' });
+  }
+  const logs = await getAuditLogs();
+  res.json({ logs });
+});
+
 app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
   try {
     const { conversationId } = req.body || {};
@@ -410,6 +419,17 @@ app.post('/api/chat', requireAuth, requireReady, async (req, res) => {
     // (pre-retrieval), and SQL (scoped table) paths inside chatHandler.
     const access = resolveScopeForViewer(viewer);
     const result = await chatHandler(query, viewer, { flatIndex, searchIndex, identityGraph, scope: access, access }, convId);
+
+    // Audit logging
+    logAuditActivity({
+      username: viewerInfo?.username || 'unknown',
+      role: viewerInfo?.role || 'unknown',
+      query: query,
+      status: result?.policy?.status || 'Unknown',
+      answerLength: result?.answer?.length || 0,
+      route: result?.route || 'unknown',
+      ip: req.ip || req.connection.remoteAddress
+    }).catch(err => console.error('[audit] Log failed', err.message));
 
     // Stable id shared by the direct chat response AND latestPipeline so the
     // debug page can deduplicate history (live polling must not double-record).

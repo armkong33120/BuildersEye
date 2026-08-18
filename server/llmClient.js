@@ -128,6 +128,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         "7. If the context is an analytics summary (maximum/minimum KPI), rephrase it into a natural sentence (e.g., 'คนที่ได้ KPI สูงสุดคือ...')",
         "8. Never dump raw data — always write like a helpful human assistant",
         "9. Answer ONLY what was asked. For simple identity questions (e.g. 'X คือใคร', 'who is X'), give identity basics only (name, job title, department, role). Do NOT add KPI scores, compensation, bonuses, warnings, attendance or other unrelated facts unless the user explicitly asked for them.",
+        "10. You must cite your sources at the end of your answer by referencing the employee ID or name you used, e.g., [อ้างอิง: EMP001]. If answering about multiple people, cite them accordingly.",
       ].join("\n");
 
   const userPrompt = "Context:\n" + anonymizedContext + "\n\nQuestion: " + query;

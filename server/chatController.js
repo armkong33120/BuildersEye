@@ -447,8 +447,23 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
   const retrievalEvidence = sqlUsed ? [] : buildRetrievalEvidence(finalResults, sources, 10);
   const sqlEvidence = sqlUsed ? buildSqlEvidence(sqlRes, sqlSafeData) : null;
 
+  // Build citations from sources
+  const citations = sources.slice(0, 10).map((s, i) => {
+    // Generate a mock OneDrive URL if needed, or point to local path for now
+    const url = s.fileName?.includes('.pdf') 
+      ? `https://onedrive.live.com/view.aspx?resid=MOCK_ID&file=${s.fileName}`
+      : `https://onedrive.live.com/view.aspx?resid=MOCK_ID&file=${s.fileName}`;
+    return {
+      id: i + 1,
+      filename: s.fileName,
+      sheet: s.sheetName,
+      url: url
+    };
+  });
+
   const result = {
     query, answer: finalAnswer,
+    citations,
     suggestedOptions,
     matchedEmployeePks: matchedPks,
     matchedDepartments: [...matchedDepts],

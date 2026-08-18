@@ -421,6 +421,11 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
     hour12: false,
   }).format(new Date());
 
+  // Parse citations in text e.g. [อ้างอิง: EMP001]
+  var formattedText = escapeHtml(text).replace(/\[อ้างอิง:\s*(EMP\d+)\]/g, function(match, empCode) {
+    return '<a href="#" class="citation-badge" data-emp="' + empCode + '" onclick="event.preventDefault(); highlightGraphByCode(\\'' + empCode + '\\')">' + match + '</a>';
+  });
+
   var policyHtml = '';
   if (extras.policy && extras.policy.status) {
     var status = extras.policy.status;
@@ -550,7 +555,7 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
       '<div class="message-avatar">' + (role === 'user' ? 'YOU' : 'BE') + '</div>' +
       '<span class="message-sender">' + escapeHtml(label) + '</span>' +
     '</div>' +
-    '<p>' + escapeHtml(text) + '</p>' + metaHtml + sourceHtml + matchedEmpHtml + neuralTraceHtml +
+    '<p>' + formattedText + '</p>' + metaHtml + sourceHtml + matchedEmpHtml + neuralTraceHtml +
     '<div class="message-footer">' +
       '<span class="message-time">' + escapeHtml(time) + '</span>' +
       (extras.responseTimeMs !== undefined ? '<span class="response-time">⚡ ' + extras.responseTimeMs + 'ms</span>' : '') +

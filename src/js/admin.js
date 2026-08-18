@@ -253,7 +253,7 @@ function switchSection(name) {
 async function loadAll() {
   await Promise.all([
     loadEmployees(), loadRelationships(), loadProfiles(), loadPolicies(),
-    loadSourceLinks(), loadAudit(), loadPolicyVersion(),
+    loadSourceLinks(), loadAudit(), loadChatAudit(), loadPolicyVersion(),
   ]);
   // Render the default section (org) and any already-visited section.
   switchSection('org');
@@ -290,6 +290,12 @@ async function loadAudit(entity) {
   if (r.ok) state.audit = r.data || [];
   return r;
 }
+
+async function loadChatAudit() {
+  const r = await apiJson(RAG_BACKEND + '/api/audit/logs');
+  if (r.ok) state.chatAudit = r.data?.logs || [];
+  return r;
+}
 async function loadPolicyVersion() {
   const r = await apiJson(RAG_BACKEND + '/api/admin/policy-version');
   if (r.ok) {
@@ -307,6 +313,7 @@ function loadSection(name) {
   else if (name === 'matrix') renderMatrix();
   else if (name === 'preview') renderPreview();
   else if (name === 'audit') renderAudit();
+  else if (name === 'chat-audit') loadChatAudit().then(renderChatAudit);
 }
 
 // ── Org snapshot helpers (mirror scopeResolver.buildOrgSnapshot semantics) ─────
@@ -1086,6 +1093,34 @@ function diffSummary(prev, next) {
   ).join(' · ') + (changed.length > 6 ? ' …' : '');
 }
 
+function renderChatAudit() {
+  const wrap = el('chatAuditTableWrap');
+  if (!wrap) return;
+  if (!state.chatAudit || !state.chatAudit.length) {
+    wrap.innerHTML = '<div class="state-box">No AI chat audit events recorded yet.</div>';
+    return;
+  }
+  const rows = state.chatAudit.map((e) => {
+    return '<tr>' +
+      '<td>' + escapeHtml(e.username || '—') + '<br/><span style="color:var(--muted)">' + escapeHtml(e.role || '') + '</span></td>' +
+      '<td>' + escapeHtml(e.query || '') + '</td>' +
+      '<td>' + fmtTime(e.timestamp) + '</td>' +
+      '<td>' + escapeHtml(e.status || '') + '</td>' +
+      '<td>' + (e.answer_length || 0) + '</td>' +
+      '</tr>';
+  }).join('');
+  wrap.innerHTML =
+    '<table class="data-table"><thead><tr>' +
+    '<th>Employee</th>' +
+    '<th>Query</th>' +
+    '<th>Timestamp</th>' +
+    '<th>Status</th>' +
+    '<th>Answer Length</th>' +
+    '</tr></thead><tbody>' +
+    rows +
+    '</tbody></table>';
+}
+
 function renderAudit() {
   const wrap = el('auditTableWrap');
   if (!wrap) return;
@@ -1193,6 +1228,13 @@ function wireEvents() {
   // Sources section buttons
   el('srcAddBtn').addEventListener('click', linkSource);
   el('srcReindexBtn').addEventListener('click', reindex);
+
+  // Chat Audit section
+  if (el('refreshChatAuditBtn')) {
+    el('refreshChatAuditBtn').addEventListener('click', () => {
+      loadChatAudit().then(renderChatAudit);
+    });
+  }
 
   // Matrix section button
   el('polAddBtn').addEventListener('click', addPolicy);

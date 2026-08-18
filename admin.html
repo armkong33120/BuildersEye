@@ -30,8 +30,11 @@
           <button class="admin-nav-item" data-section="preview" type="button">
             <span class="nav-icon">👁️</span><span>Preview As User</span>
           </button>
+          <button class="admin-nav-item" data-section="chat-audit" type="button">
+            <span class="nav-icon">📝</span><span>AI Audit Trails</span>
+          </button>
           <button class="admin-nav-item" data-section="audit" type="button">
-            <span class="nav-icon">📜</span><span>Audit &amp; History</span>
+            <span class="nav-icon">📜</span><span>Version History</span>
           </button>
         </nav>
 
@@ -126,6 +129,20 @@
             </div>
             <div id="previewToolbar" class="preview-toolbar"></div>
             <div id="previewBody" class="preview-body"></div>
+          </section>
+
+          <!-- Section: AI Chat Audit Trails -->
+          <section class="admin-section" id="section-chat-audit" data-section-panel="chat-audit">
+            <div class="section-head">
+              <h2>AI Chat Audit Trails</h2>
+              <div class="section-actions">
+                <button id="refreshChatAuditBtn" class="btn btn-outline" type="button">Refresh Logs</button>
+              </div>
+            </div>
+            <div class="section-hint">
+              Immutable logs for AI queries to ensure compliance and prevent data leakage.
+            </div>
+            <div id="chatAuditTableWrap" class="table-wrap"></div>
           </section>
 
           <!-- Section: Audit & Version History -->

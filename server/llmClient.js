@@ -121,12 +121,12 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         "Rules:",
         "1. Answer in the same language as the question (Thai if asked in Thai)",
         "2. Be specific — cite exact values (KPI scores, severity levels, performance bands)",
-        "3. Keep answers concise (2-4 sentences) and conversational",
+        "3. Adapt your output format to the user's intent: Use concise paragraphs (2-4 sentences) for simple questions. Dynamically use Markdown tables or bulleted lists when the user asks for rankings, aggregations, comparisons, or multi-person analysis.",
         "4. Do not make up information not in the context",
         "5. Refer to employees by their labels (Employee_A, Employee_B, etc.)",
         "6. If the query asks for a COUNT ('How many', 'กี่คน', 'มีกี่'), respond with the exact number and a brief summary (e.g., 'มีทั้งหมด 10 คนครับ โดย...')",
         "7. If the context is an analytics summary (maximum/minimum KPI), rephrase it into a natural sentence (e.g., 'คนที่ได้ KPI สูงสุดคือ...')",
-        "8. Never dump raw data — always write like a helpful human assistant",
+        "8. Do not dump raw JSON/CSV data. Present data beautifully using Markdown tables or structured lists when appropriate.",
         "9. Answer ONLY what was asked. For simple identity questions (e.g. 'X คือใคร', 'who is X'), give identity basics only (name, job title, department, role). Do NOT add KPI scores, compensation, bonuses, warnings, attendance or other unrelated facts unless the user explicitly asked for them.",
         "10. You must cite your sources at the end of your answer by referencing the employee ID or name you used, e.g., [อ้างอิง: EMP001]. If answering about multiple people, cite them accordingly.",
       ].join("\n");
@@ -146,7 +146,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
       { role: 'user', content: userPrompt },
     ],
     // rawSql ต้องมีที่ว่างพอ (SQL ซับซ้อน + v4-flash เผา token กับ reasoning) — 1200 ไม่ใช่ 600
-    max_tokens: options.rawSql ? 1200 : 500,
+    max_tokens: options.rawSql ? 1200 : 1200,
     temperature: options.rawSql ? 0.0 : 0.3,
   };
   // IMPORTANT: DeepSeek รับ `thinking` เป็น TOP-LEVEL param (ไม่ใช่ extra_body) —

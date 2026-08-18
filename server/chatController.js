@@ -318,7 +318,11 @@ export async function chatHandler(query, viewer, { flatIndex, searchIndex, ident
       const contextData = `SQL Query used: ${sqlRes.sql}\nResult Data: ${JSON.stringify(safeData)}`;
       mark('ctx', 'sql context ready');
       mark('llm', 'sql answer generation');
-      const finalLLMAnswer = await generateAnswer(query, "Here is the raw data you must format into a natural Thai answer:\n" + contextData);
+      let formatInstruction = "Here is the raw data you must format into a natural Thai answer:\n";
+      if (Array.isArray(safeData) && safeData.length >= 3) {
+        formatInstruction = "The raw data contains multiple records. You MUST format this data as a beautiful Markdown table, followed by a brief natural Thai summary:\n";
+      }
+      const finalLLMAnswer = await generateAnswer(query, formatInstruction + contextData);
       if (finalLLMAnswer) {
         answer = finalLLMAnswer;
         llmUsed = true;

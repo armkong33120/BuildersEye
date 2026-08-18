@@ -9,3 +9,4 @@
 | 2026-08-18 15:03 | แก้ไขสคริปต์เทสต์ E2E ให้ชี้ไปที่ Local Backend `?backend=...` | Testing (scripts/test_ui_...) | Antigravity AI |
 | 2026-08-18 15:15 | จัดทำระบบ Log ตามหลัก ITIL (Incident, Problem, Change) | Docs / Knowledge Base | Antigravity AI |
 
+| 2026-08-18 15:21 | แก้ไข `RAG_BACKEND` ให้ชี้ไปที่ลิงก์ของ Microsoft Azure | Frontend (src/main.js) | Antigravity AI |

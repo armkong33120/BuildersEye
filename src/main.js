@@ -13,7 +13,7 @@ var previewRole = 'CEO'; // ค่าเริ่มต้นให้ "เห�
 // RAG backend integration — ประกาศก่อน bootAuth() (รันที่ top-level) เพื่อเลี่ยง TDZ
 const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
 // Backend URL priority: ?backend= query param > VITE_RAG_BACKEND env > localhost default
-const RAG_BACKEND = (urlParams && urlParams.get('backend')) || 'https://builderseye-backend.onrender.com';
+const RAG_BACKEND = (urlParams && urlParams.get('backend')) || 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
 
 
 const canvas = document.querySelector('#scene');

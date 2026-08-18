@@ -1,5 +1,4 @@
-# Render Blueprint — BuildersEye RAG backend
-# Deploy via: https://render.com (New → Blueprint) or link this repo
+# Render Blueprint — BuildersEye RAG backend & frontend
 services:
   - type: web
     name: builderseye-backend
@@ -10,28 +9,35 @@ services:
     startCommand: node index.js
     healthCheckPath: /api/health
     envVars:
+      - key: DATABASE_URL
+        sync: false
       - key: LLM_API_KEY
-        sync: false   # set manually in Render dashboard (DeepSeek API key — never commit real key)
+        sync: false
       - key: LLM_BASE_URL
-        value: https://api.deepseek.com    # ← PRIMARY: DeepSeek API (use this for production)
-        # For local GPU (Colab Ollama), override in Render Dashboard manually:
-        #   LLM_BASE_URL = https://<tunnel>.trycloudflare.com/v1
-        #   LLM_MODEL = qwen2.5:7b
+        value: https://api.deepseek.com
       - key: LLM_MODEL
         value: deepseek-chat
       - key: LLM_SKIP
         value: "false"
-      - key: HR_DATA_DIR
-        value: /opt/render/project/src/src/data/hr_onedrive_demo
       - key: CORS_ORIGINS
-        value: http://localhost:5174,http://localhost:5173,https://builders-eye.vercel.app
+        value: http://localhost:5174,https://builders-eye.vercel.app,https://builderseye-frontend.onrender.com
       - key: VECTOR_INDEX_DISABLED
-        value: "true"   # Render free tier = 512MB RAM; disable memory-heavy vector index
+        value: "true"
       - key: JWT_SECRET
-        sync: false     # REQUIRED for JWT auth (M1). Set manually in Render dashboard — never commit.
+        sync: false
       - key: ACCESS_TOKEN_TTL
-        value: "30m"    # JWT access token lifetime
+        value: "30m"
       - key: ENABLE_TEST_CREDS
-        value: "true"   # ⚠️ SECURITY FLAG (finding #10): ships known shared test password in prod.
-                        # M4: expose /api/preview/credentials for the demo preview page.
-                        # MUST be set to "false" in real production — all users share one known password.
+        value: "true"
+      - key: TEST_ACCOUNT_PASSWORD
+        sync: false
+
+  - type: web
+    name: builderseye-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://builderseye-backend.onrender.com

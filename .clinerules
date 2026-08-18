@@ -114,7 +114,14 @@ Always report:
 6. Whether external deployment is still required.
 7. Current branch, backup branch, task branch, checkpoint commit, and pushed remote status.
 
-## Incident and Knowledge Management
+## STRICT ITIL LOGGING RULE (MANDATORY LOOP)
+คุณ (AI) ต้องปฏิบัติตาม **"กฎเหล็ก"** นี้ทุกครั้งเมื่อมีการแก้ไขระบบ แก้บั๊ก หรือแก้ไขเหตุขัดข้องเสร็จสิ้น เพื่อไม่ให้ลืมอัปเดตหรือทำพลาดแบบเดิมซ้ำ (Continuous Loop)
+เมื่อทำงานใดๆ เสร็จ คุณ **ต้องอัปเดตตาราง** ในไฟล์ต่อไปนี้เสมอ:
 
-- **Incident Log:** When resolving a bug, outage, or regression, you MUST document the symptom, root cause, resolution, and lessons learned in `INCIDENT_LOG.md`.
-- **Pre-flight Check:** Before modifying authentication, authorization, or core logic, briefly check `INCIDENT_LOG.md` to ensure your planned changes do not violate past lessons or recreate known bugs.
+1. **`INCIDENT_LOG.md`**: บันทึกเหตุการณ์ที่ทำให้ระบบใช้งานไม่ได้ และวิธีการแก้ไขเฉพาะหน้าเพื่อให้ระบบกลับมาใช้งานได้ไวที่สุด (Workaround/Quick Fix)
+2. **`PROBLEM_LOG.md`**: บันทึกว่าปัญหาเกิดตอนไหน, เกิดจากสาเหตุอะไร (Root Cause), ใครเป็นคนทำ (Who), และวิธีป้องกันไม่ให้เกิดซ้ำ
+3. **`CHANGE_LOG.md`**: บันทึกการเปลี่ยนแปลงทุกครั้ง ว่าแก้โค้ดหรือระบบส่วนไหนไปบ้าง และใครเป็นผู้ทำ
+
+**ข้อควรระวัง:** 
+- ห้ามจบงานหรือปิด Task จนกว่าไฟล์ทั้ง 3 จะถูกอัปเดตและ Commit เรียบร้อยแล้ว
+- ทั้ง 3 ไฟล์ต้องอยู่ในรูปแบบ **ตาราง (Table)** ตามที่โครงสร้างไฟล์ระบุไว้เสมอ

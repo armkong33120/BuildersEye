@@ -6,7 +6,7 @@ services:
     rootDir: server
     plan: free
     buildCommand: npm install
-    startCommand: node index.js
+    startCommand: node --max-old-space-size=400 index.js
     healthCheckPath: /api/health
     envVars:
       - key: DATABASE_URL

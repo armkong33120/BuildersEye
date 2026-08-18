@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node index.js",
+    "start": "node --max-old-space-size=400 index.js",
     "dev": "node --watch index.js",
-    "index:hr": "node index.js --reindex",
+    "index:hr": "node --max-old-space-size=400 index.js --reindex",
     "test": "node test_e2e.js",
     "sync:onedrive": "node sync-onedrive.js",
     "connect:onedrive": "node connect-onedrive.js",

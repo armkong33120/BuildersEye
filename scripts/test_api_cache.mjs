@@ -6,7 +6,7 @@
 // Requires: BACKEND_URL, TEST_USERNAME, TEST_PASSWORD (env vars)
 // LLM key is required for cache to be active (cache is bypassed when LLM is off)
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 const TEST_USERNAME = process.env.TEST_USERNAME || '';
 const TEST_PASSWORD = process.env.TEST_PASSWORD || '';
 
@@ -31,7 +31,7 @@ async function post(path, token, body) {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(60000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     const elapsed = Date.now() - t0;
     const data = await res.json().catch(() => ({}));

@@ -22,6 +22,7 @@ import path from 'path';
 import fs from 'fs';
 import { seedAccessModel, buildOrgSnapshot, resolveAccess, resolveViewerScope, getProfilesMap, getEmployees as getAccessEmployees, getRelationships as getAccessRelationships, getPolicyVersion } from './access/index.js';
 import { mountAdminRoutes } from './adminRoutes.js';
+import { injectMockOrg } from './mockDataGenerator.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5199;
@@ -285,6 +286,17 @@ mountAdminRoutes(app, {
     getAccessRelationships,
     getProfilesMap,
   },
+});
+
+app.post('/api/admin/scale-test', requireAuth, requireAdmin, async (req, res) => {
+  try {
+    const config = req.body || { coo: 1, manager: 1, lead: 3, junior: 9 };
+    const injectedCount = await injectMockOrg(config);
+    const r = reloadData('scale-test');
+    res.json({ success: true, injected: injectedCount, reload: r });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
 app.get('/api/health', (req, res) => {
@@ -567,7 +579,7 @@ function empSummary(e) {
   };
 }
 
-app.get('/api/registry/status', requireAuth, (req, res) => {
+app.get('/api/registry/status', requireAuth, async (req, res) => {
   const employees = getActiveEmployees();
   const schema = getSchema();
   // M2: the connected OneDrive account identity (accounts list) is only exposed
@@ -584,7 +596,7 @@ app.get('/api/registry/status', requireAuth, (req, res) => {
     schemaUpdatedAt: schema.updatedAt || null,
     onedrive: {
       configured: odConfigured(),
-      accounts: isAdmin ? (odConfigured() ? listAccounts() : []) : [],
+      accounts: isAdmin ? (odConfigured() ? await listAccounts() : []) : [],
       lastSync: isAdmin ? readLastSync() : null,
     },
     vectors: { built: vectorsExist(), meta: getVectorMeta(), stale: isVectorIndexStale() },

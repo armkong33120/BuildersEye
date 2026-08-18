@@ -90,6 +90,39 @@ Policy version `UPDATE ... RETURNING version` is atomic (single SQL statement,
   default timeouts unless raised to > 19 s per call, e.g. 60 s — documented, not
   a defect). Suites run green against file-backed sessions (verified in 0.5.0).
 
+## Verification addendum (0.6.1 — final gate, RESOLVED the deferred item above)
+
+### Added
+- **`scripts/test_helpers.mjs`** — shared `BACKEND_URL` + `TEST_HTTP_TIMEOUT_MS`
+  (default 30000, override via env). 12 auth-gated test scripts now import it
+  instead of hardcoding `AbortSignal.timeout(...)`. Test-only; no production,
+  JWT, Neon query or application timeout changed.
+
+### Verified against Neon backend (`ACCESS_DB_ADAPTER=neon`, `TEST_HTTP_TIMEOUT_MS=60000`)
+- **Auth-gated suites — ALL PASS (0 timeouts, 0 errors, 0 skipped):** Blocked
+  Queries, Debug Auth, Session Refresh, Vector Query, SQL Query, Cache Hit,
+  SQL Fallback, SQL Metadata+Evidence, SQL Evidence+History, Isolation API (live),
+  RBAC Matrix. Invalid Login PASS.
+- **Neon adapter** `scripts/test_access_neon_adapter.mjs`: **13/13**.
+- **Regression unit suites (default JSON adapter):** org integrity 32/32, admin
+  service 20/20, admin preview contract 48/48, isolation security 46/46, canonical
+  policy 25/25, legacy shim parity 38/38, persistence restart 14/14 (1 transient
+  flake on a single early run, then 3 consecutive clean runs). verify:security
+  34/34, build OK, benchmark:dynamic 75/75 (0% leakage), git diff --check clean.
+
+### Latency (measured, root-caused)
+- **login p50=17707 ms / p95=18029 ms**; authenticated API p50=2 ms / p95=7 ms;
+  admin API + policy read sub-10 ms.
+- **Root cause of ~18 s login — confirmed by direct Neon timing, NOT environmental:**
+  every login rewrites ALL `auth_sessions` (`server/authStore.js` →
+  `neonSaveSessions`): `DELETE` all + sequential per-session `INSERT`. Measured
+  ~87 ms per INSERT (60 sequential = 5219 ms); with 215 accumulated sessions that
+  is ~18 s. Cold connect = 834 ms, warm SELECT = ~70 ms → connection establishment,
+  cold pool, startup, retry and test harness are all ruled out. This O(n) session
+  write is independent of the access adapter and was left unchanged (verification
+  task). Recommended future optimization: multi-row upsert / batch insert / delta
+  persistence of sessions.
+
 ### Rollback instructions
 1. Set `ACCESS_DB_ADAPTER=json` in `server/.env`, restart.
 2. Run `scripts/rollback-neon-access-to-json.mjs` to dump Neon → JSON.
@@ -97,7 +130,11 @@ Policy version `UPDATE ... RETURNING version` is atomic (single SQL statement,
    for full git revert.
 
 ### Production-readiness verdict
-**READY** for multi-instance deployment when `ACCESS_DB_ADAPTER=neon` is
-configured. JSON adapter unchanged and remains the default. Migration is
-explicit and reversible. No production configuration was changed; no deployment
-was made; `main` was not pushed.
+**READY WITH LIMITATIONS.** All required authenticated suites pass against Neon
+with no timeouts/errors/leakage; Neon access persistence (adapter 13/13) and
+multi-instance write-through are verified in code. Limitation: **login latency
+~18 s** — a measured, explained O(n) `auth_sessions` rewrite (recommended batch-upsert
+optimization), an accepted operational limitation for demo/staging. The regression
+unit suites must be run under the default JSON adapter. No production configuration
+was changed; no deployment was made; `main` was not pushed.
+

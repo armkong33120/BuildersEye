@@ -1,5 +1,19 @@
 # Changelog — BuildersEye
 
+## [0.6.1] — 2026-08-18 — Neon Authenticated Verification (final gate)
+Change: `CHG-neon-access-persistence` (verification addendum) · Branch: `codex/neon-access-persistence-20260818` (backup `codex/backup-before-neon-verify-20260818`)
+
+### Added
+- **Test-only configurable HTTP timeout** — `scripts/test_helpers.mjs` exports `BACKEND_URL` + `TEST_HTTP_TIMEOUT_MS` (default 30000, override via env). All 12 auth-gated test scripts now import it instead of hardcoding `AbortSignal.timeout(...)`. Test-only; no production/JWT/Neon/application timeout changed.
+
+### Verified against Neon backend (ACCESS_DB_ADAPTER=neon, TEST_HTTP_TIMEOUT_MS=60000)
+- **Auth-gated suites ALL PASS (0 timeouts, 0 errors):** Blocked Queries, Debug Auth, Session Refresh, Vector Query, SQL Query, Cache Hit, SQL Fallback, SQL Metadata+Evidence, SQL Evidence+History, Isolation API (live), RBAC Matrix + Invalid Login. None skipped.
+- **Neon adapter** 13/13. **Regression suites (JSON adapter):** org integrity 32/32, admin service 20/20, admin preview 48/48, isolation security 46/46, canonical policy 25/25, legacy shim parity 38/38, persistence restart 14/14 (1 transient flake, then 3× clean). verify:security 34/34, build OK, benchmark:dynamic 75/75 (0% leakage), git diff --check clean.
+- **Latency:** login p50=17707ms / p95=18029ms; authed API p50=2ms / p95=7ms; admin/policy reads sub-10ms. Root cause of ~18s login = O(n) `auth_sessions` rewrite on every login (DELETE all + sequential per-session INSERT, ~87ms each × 215 sessions ≈ 18s) in `server/authStore.js` — not the access adapter, not an environmental mystery. Left unchanged (verification task).
+
+### Production-readiness verdict
+**READY WITH LIMITATIONS.** All required authenticated suites pass against Neon with no timeouts/errors/leakage; login latency (~18s) is a measured, explained operational limitation (O(n) session write) recommended for a future batch-upsert optimization. No deployment; `main` not pushed.
+
 ## [0.6.0] — 2026-08-18 — Neon Access Persistence (multi-instance ready)
 Change: `CHG-neon-access-persistence` · Branch: `codex/neon-access-persistence-20260818` (backup `codex/backup-before-neon-access-persistence-20260818-0156`)
 

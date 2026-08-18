@@ -459,6 +459,8 @@ function renderOrgNode(code, depth) {
   html += '<div class="org-node-actions">';
   html += '<button class="btn btn-ghost" data-action="change-manager" data-code="' + escapeHtml(code) + '" type="button">Change manager</button>';
   html += '<button class="btn btn-ghost" data-action="move-dept" data-code="' + escapeHtml(code) + '" type="button">Move dept</button>';
+  html += '<button class="btn btn-ghost" data-action="change-profile" data-code="' + escapeHtml(code) + '" type="button">Change access</button>';
+  html += '<button class="btn btn-ghost" data-action="set-overrides" data-code="' + escapeHtml(code) + '" type="button">Set overrides</button>';
   html += active
     ? '<button class="btn btn-danger" data-action="deactivate" data-code="' + escapeHtml(code) + '" type="button">Deactivate</button>'
     : '<button class="btn btn-ghost" data-action="activate" data-code="' + escapeHtml(code) + '" type="button">Activate</button>';
@@ -602,6 +604,69 @@ async function addEmployee() {
       await refreshOrg();
       return true;
     },
+  });
+}
+
+async function changeProfile(code) {
+  const emp = orgSnapshot.byCode.get(code);
+  const currentProfile = emp?.accessProfile || 'SELF_ONLY';
+  
+  openModal({
+    title: 'Change Access Profile — ' + code,
+    submitLabel: 'Save changes',
+    body: 
+      '<label class="field"><span>Employee</span><input value="' + escapeHtml(code) + ' — ' + escapeHtml(emp?.name || '') + '" disabled /></label>' +
+      '<label class="field"><span>Access Profile</span><select name="profileCode">' +
+        state.profiles.map(p => '<option value="' + escapeHtml(p.profileCode) + '"' + (p.profileCode === currentProfile ? ' selected' : '') + '>' + escapeHtml(p.profileCode) + ' — ' + escapeHtml(p.label || '') + '</option>').join('') +
+      '</select></label>' +
+      '<div class="section-hint" style="margin:0">Changing this will immediately update the user\'s role and admin privileges.</div>',
+    onSubmit: async (values, errEl) => {
+      const r = await apiJson(RAG_BACKEND + '/api/admin/employees/' + encodeURIComponent(code) + '/profile', {
+        method: 'PUT',
+        body: JSON.stringify({ profileCode: values.profileCode })
+      });
+      if (!r.ok) { errEl.textContent = r.error || 'Failed'; return false; }
+      await refreshOrg();
+      return true;
+    }
+  });
+}
+
+async function setOverrides(code) {
+  const emp = orgSnapshot.byCode.get(code);
+  
+  openModal({
+    title: 'Visibility Override — ' + code,
+    submitLabel: 'Apply override',
+    body: 
+      '<label class="field"><span>Employee</span><input value="' + escapeHtml(code) + ' — ' + escapeHtml(emp?.name || '') + '" disabled /></label>' +
+      '<label class="field"><span>Resource Type</span><select name="resourceType">' +
+        RESOURCE_TYPES.map(t => '<option value="' + t + '">' + t + '</option>').join('') + 
+      '</select></label>' +
+      '<label class="field"><span>Resource Name</span><input name="resourceName" placeholder="e.g. compensation / file.xlsx" required /></label>' +
+      '<label class="field"><span>Effect</span><select name="effect">' + 
+        EFFECTS.map(e => '<option value="' + e + '">' + e + '</option>').join('') + 
+      '</select></label>' +
+      '<label class="field"><span>Priority (number)</span><input name="priority" type="number" value="100" /></label>' +
+      '<div class="section-hint" style="margin:0">This creates a specific policy bound to this employee. Check the Permission Matrix tab to manage or delete it.</div>',
+    onSubmit: async (values, errEl) => {
+      if (!values.resourceName) { errEl.textContent = 'Resource name is required'; return false; }
+      const r = await apiJson(RAG_BACKEND + '/api/admin/policies', {
+        method: 'POST',
+        body: JSON.stringify({
+          subjectType: 'employee',
+          subjectId: code,
+          resourceType: values.resourceType,
+          resourceName: values.resourceName,
+          effect: values.effect,
+          priority: Number(values.priority) || 100,
+          note: 'CEO manual override'
+        })
+      });
+      if (!r.ok) { errEl.textContent = r.error || 'Failed'; return false; }
+      alert('Override applied successfully. View in Permission Matrix to manage.');
+      return true;
+    }
   });
 }
 
@@ -1095,6 +1160,8 @@ function handleAction(target) {
     case 'toggle': toggleOrgNode(code); break;
     case 'change-manager': changeManager(code); break;
     case 'move-dept': moveDept(code); break;
+    case 'change-profile': changeProfile(code); break;
+    case 'set-overrides': setOverrides(code); break;
     case 'deactivate': setEmployeeStatus(code, 'deactivated'); break;
     case 'activate': setEmployeeStatus(code, 'active'); break;
     case 'src-toggle': toggleSource(id); break;
@@ -1145,6 +1212,40 @@ function wireEvents() {
     e.preventDefault();
     doLogin(el('adminLoginUsername').value, el('adminLoginPassword').value);
   });
+
+  // Scale test form
+  const scaleTestForm = el('scaleTestForm');
+  if (scaleTestForm) {
+    scaleTestForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = scaleTestForm.querySelector('button');
+      btn.disabled = true;
+      const resEl = el('scaleTestResult');
+      resEl.textContent = 'Generating...';
+      resEl.style.color = '#666';
+      try {
+        const config = {
+          coo: parseInt(el('stCoo').value) || 1,
+          manager: parseInt(el('stManager').value) || 1,
+          lead: parseInt(el('stLead').value) || 3,
+          junior: parseInt(el('stJunior').value) || 9
+        };
+        const r = await apiJson(RAG_BACKEND + '/api/admin/scale-test', {
+          method: 'POST',
+          body: JSON.stringify(config)
+        });
+        if (!r.ok) throw new Error(r.error || 'Failed');
+        resEl.textContent = `Generated ${r.data.injected} mocks successfully. Reloaded: ${r.data.reload.records} records.`;
+        resEl.style.color = 'green';
+        await refreshOrg();
+      } catch(err) {
+        resEl.textContent = `Error: ${err.message}`;
+        resEl.style.color = 'red';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

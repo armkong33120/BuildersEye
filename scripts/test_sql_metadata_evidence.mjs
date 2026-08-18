@@ -12,7 +12,7 @@
 // Usage: node scripts/test_sql_metadata_evidence.mjs
 // Env:   BACKEND_URL TEST_USERNAME TEST_PASSWORD
 
-const BACKEND = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL as BACKEND, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 const TEST_USERNAME = process.env.TEST_USERNAME || '';
 const TEST_PASSWORD = process.env.TEST_PASSWORD || '';
 
@@ -26,7 +26,7 @@ const sk = (name, reason) => { skipped++; console.log(`  ⏭️  ${name} — ${r
 const EVIDENCE_KEYS = ['source', 'sheet', 'field', 'employeeId', 'score', 'snippet'];
 
 async function fj(url, opts = {}) {
-  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }, signal: opts.signal || AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS) });
   const t = await r.text(); let d; try { d = JSON.parse(t); } catch { d = null; }
   return { s: r.status, d, t };
 }

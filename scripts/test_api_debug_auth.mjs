@@ -13,7 +13,7 @@
 // Usage: node scripts/test_api_debug_auth.mjs
 // Requires: BACKEND_URL, TEST_USERNAME, TEST_PASSWORD (env vars)
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 const TEST_USERNAME = process.env.TEST_USERNAME || '';
 const TEST_PASSWORD = process.env.TEST_PASSWORD || '';
 
@@ -33,7 +33,7 @@ async function get(path, token) {
     const res = await fetch(BACKEND_URL + path, {
       method: 'GET',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, data: await res.json().catch(() => ({})) };
   } catch (e) {
@@ -72,7 +72,7 @@ async function main() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: TEST_USERNAME, password: TEST_PASSWORD }),
-    signal: AbortSignal.timeout(15000),
+    signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
   });
   if (loginRes.status !== 200) {
     console.log(`  ⚠️  Login failed: ${loginRes.status}`);

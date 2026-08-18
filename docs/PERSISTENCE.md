@@ -1,9 +1,25 @@
-# PERSISTENCE.md — Access-Model Persistence Review (Phase 5 / P2, final-hardening 0.4.0)
+# PERSISTENCE.md — Access-Model Persistence Review (Phase 5 / P2, final-hardening 0.4.0 → 0.6.1)
 
 Status: **VERIFIED IN CODE** (file-backed behavior) · **SAFE** (single-instance:
 atomic rename + advisory write lock, `scripts/test_persistence_restart.mjs` 14/14) ·
-**BLOCKED** (multi-instance production readiness — no cross-host lock; Neon
-write-through not implemented) · Change record: `CHG-production-hardening-final`
+**MULTI-INSTANCE IMPLEMENTED & VERIFIED** (Neon adapter `scripts/test_access_neon_adapter.mjs`
+13/13; write-through cache + optimistic concurrency + audit write-through via
+`ACCESS_DB_ADAPTER=neon`) · Change records: `CHG-neon-access-persistence` (0.6.0),
+verification addendum (0.6.1)
+
+## 0. Verification status (0.6.1, final gate)
+- **Neon access-model adapter verified 13/13** against live Neon: schema (idempotent),
+  preload, seed (idempotent), write/read profiles, policy-version atomicity, version
+  column, save policy, audit CRUD.
+- **All 11 auth-gated HTTP suites PASS** against the Neon-backed backend (0 timeouts,
+  0 errors): Blocked Queries, Debug Auth, Session Refresh, Vector Query, SQL Query,
+  Cache Hit, SQL Fallback, SQL Metadata+Evidence, SQL Evidence+History, Isolation API,
+  RBAC Matrix. Invalid Login PASS.
+- **Note on login latency (NOT the access adapter):** the ~18 s login is caused by the
+  `auth_sessions` rewrite in `server/authStore.js` (DELETE all + sequential per-session
+  INSERT, ~87 ms each × 215 sessions ≈ 18 s). The Neon access adapter adds **no read
+  penalty**: admin/policy reads are sub-10 ms via the in-memory cache. See
+  `docs/OPERATIONS_RUNBOOK.md` for the recommended (future) batch-upsert optimization.
 
 ## 1. What is persisted, and where
 

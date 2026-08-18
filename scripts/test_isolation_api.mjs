@@ -7,7 +7,7 @@
 // Cases needing a second account/admin are skipped gracefully when env vars are absent.
 // Usage: node scripts/test_isolation_api.mjs
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 const A_USER = process.env.TEST_USERNAME || '';
 const A_PASS = process.env.TEST_PASSWORD || '';
 const B_USER = process.env.TEST_USERNAME2 || '';
@@ -29,7 +29,7 @@ async function post(path, token, body) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: JSON.stringify(body || {}),
-      signal: AbortSignal.timeout(60000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, data: await res.json().catch(() => ({})) };
   } catch (e) { return { status: 0, data: { error: e.message } }; }
@@ -39,7 +39,7 @@ async function get(path, token) {
     const res = await fetch(BACKEND_URL + path, {
       method: 'GET',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, data: await res.json().catch(() => ({})) };
   } catch (e) { return { status: 0, data: { error: e.message } }; }
@@ -49,7 +49,7 @@ async function del(path, token) {
     const res = await fetch(BACKEND_URL + path, {
       method: 'DELETE',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, data: await res.json().catch(() => ({})) };
   } catch (e) { return { status: 0, data: { error: e.message } }; }

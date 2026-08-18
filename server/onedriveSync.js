@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { PublicClientApplication } from '@azure/msal-node';
 import { isSourceEnabled } from './access/sourceLinks.js';
+import { getPool, isNeonEnabled } from './neonStore.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STORE_DIR = path.join(__dirname, '.data', 'onedrive');
@@ -20,12 +21,37 @@ const CLIENT_ID = process.env.AZURE_CLIENT_ID;
 const TENANT_ID = process.env.AZURE_TENANT_ID || 'common';
 const SCOPES = ['Files.Read', 'offline_access', 'User.Read'];
 
-function loadState() {
-  try { return JSON.parse(fs.readFileSync(STATE_FILE, 'utf-8')); }
-  catch { return { accounts: [] }; }
+async function getKV(key) {
+  if (isNeonEnabled()) {
+    try {
+      const res = await getPool().query('SELECT value FROM registry_meta WHERE key = $1', [key]);
+      if (res.rows.length > 0) return res.rows[0].value;
+    } catch (e) {
+      // ignore if table not initialized
+    }
+    return null;
+  }
+  const f = path.join(STORE_DIR, `${key}.json`);
+  try { return JSON.parse(fs.readFileSync(f, 'utf-8')); } catch { return null; }
 }
-function saveState(state) {
-  fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf-8');
+
+async function setKV(key, value) {
+  if (isNeonEnabled()) {
+    try {
+      await getPool().query('INSERT INTO registry_meta (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = $2, updated_at = now()', [key, JSON.stringify(value)]);
+    } catch (e) { console.error('setKV error', e); }
+    return;
+  }
+  const f = path.join(STORE_DIR, `${key}.json`);
+  fs.writeFileSync(f, JSON.stringify(value, null, 2), 'utf-8');
+}
+
+async function loadState() {
+  const val = await getKV('onedrive_state');
+  return val || { accounts: [] };
+}
+async function saveState(state) {
+  await setKV('onedrive_state', state);
 }
 
 function createPCA() {
@@ -37,13 +63,14 @@ function createPCA() {
     cache: {
       cachePlugin: {
         beforeCacheAccess: async (ctx) => {
-          if (fs.existsSync(MSAL_CACHE_FILE)) {
-            ctx.tokenCache.deserialize(fs.readFileSync(MSAL_CACHE_FILE, 'utf-8'));
+          const val = await getKV('onedrive_msal_cache');
+          if (val) {
+            ctx.tokenCache.deserialize(typeof val === 'string' ? val : JSON.stringify(val));
           }
         },
         afterCacheAccess: async (ctx) => {
           if (ctx.cacheHasChanged) {
-            fs.writeFileSync(MSAL_CACHE_FILE, ctx.tokenCache.serialize(), 'utf-8');
+            await setKV('onedrive_msal_cache', ctx.tokenCache.serialize());
           }
         },
       },
@@ -53,8 +80,9 @@ function createPCA() {
 
 export function isConfigured() { return Boolean(CLIENT_ID); }
 
-export function listAccounts() {
-  return loadState().accounts.map(a => ({
+export async function listAccounts() {
+  const state = await loadState();
+  return state.accounts.map(a => ({
     label: a.label, username: a.username, folders: a.folders, connectedAt: a.connectedAt,
   }));
 }
@@ -67,7 +95,7 @@ export async function connectAccount(label, folders, onMessage) {
     scopes: SCOPES,
     deviceCodeCallback: (resp) => onMessage(resp.message),
   });
-  const state = loadState();
+  const state = await loadState();
   state.accounts = state.accounts.filter(a => a.label !== label);
   state.accounts.push({
     label,
@@ -77,7 +105,7 @@ export async function connectAccount(label, folders, onMessage) {
     deltaLinks: {},
     connectedAt: new Date().toISOString(),
   });
-  saveState(state);
+  await saveState(state);
   return { username: result.account.username, folders };
 }
 
@@ -149,7 +177,7 @@ async function syncFolder(account, folderName, log) {
 // sync ทุกบัญชี × ทุกโฟลเดอร์
 export async function syncAll(log = console.log) {
   if (!isConfigured()) throw new Error('AZURE_CLIENT_ID not configured');
-  const state = loadState();
+  const state = await loadState();
   if (state.accounts.length === 0) throw new Error('no OneDrive accounts connected — run connect-onedrive.js first');
 
   const results = [];
@@ -164,7 +192,7 @@ export async function syncAll(log = console.log) {
       }
     }
   }
-  saveState(state);
+  await saveState(state);
   const files = fs.readdirSync(CACHE_DIR).filter(f => /\.xlsx$/i.test(f));
   return { results, cacheFileCount: files.length, cacheDir: CACHE_DIR, syncedAt: new Date().toISOString() };
 }

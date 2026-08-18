@@ -22,41 +22,18 @@ async function poolQuery(text, params = []) {
   return getPool().query(text, params);
 }
 
-// cloud boot: ไม่มี token local → เอามาจาก Neon (อุปนิสัย: privacy = มีเฉพาะใน DB ของเรา + Azure)
+// cloud boot logic removed since onedriveSync.js handles DB reading directly now
 export async function seedTokensFromNeon(log = console.log) {
-  if (!process.env.DATABASE_URL) return { seeded: false };
-  if (!fs.existsSync(OD_DIR)) fs.mkdirSync(OD_DIR, { recursive: true });
-  let changed = false;
-  if (!fs.existsSync(MSAL_FILE)) {
-    const r = await poolQuery(`SELECT value FROM onedrive_tokens WHERE key='msal'`);
-    if (r.rows.length) { fs.writeFileSync(MSAL_FILE, r.rows[0].value); changed = true; }
-  }
-  if (!fs.existsSync(STATE_FILE)) {
-    const r = await poolQuery(`SELECT value FROM onedrive_tokens WHERE key='state'`);
-    if (r.rows.length) { fs.writeFileSync(STATE_FILE, r.rows[0].value); changed = true; }
-  }
-  if (changed) log('[webhook] tokens seeded from Neon');
-  return { seeded: changed };
+  return { seeded: false };
 }
-
-// หลัง sync (token อาจ refresh) → เก็บกลับขึ้น Neon
 export async function pushTokensToNeon(log = console.log) {
-  if (!process.env.DATABASE_URL) return;
-  try {
-    const msal = fs.existsSync(MSAL_FILE) ? fs.readFileSync(MSAL_FILE, 'utf-8') : null;
-    const state = fs.existsSync(STATE_FILE) ? fs.readFileSync(STATE_FILE, 'utf-8') : null;
-    if (msal) await poolQuery(`INSERT INTO onedrive_tokens (key,value) VALUES ('msal',$1) ON CONFLICT (key) DO UPDATE SET value=EXCLUDED.value, updated_at=now()`, [msal]);
-    if (state) await poolQuery(`INSERT INTO onedrive_tokens (key,value) VALUES ('state',$1) ON CONFLICT (key) DO UPDATE SET value=EXCLUDED.value, updated_at=now()`, [state]);
-  } catch (e) {
-    log('[webhook] pushTokens failed:', e.message);
-  }
+  return;
 }
 
 // ----- สร้าง/ต่ออายุ subscription ต่อบัญชี -----
 async function getAccountTokens() {
-  const { listAccounts } = await import('./onedriveSync.js');
-  const { getAccessToken } = await import('./onedriveTokens.js');
-  const accounts = listAccounts();
+  const { listAccounts, getAccessToken } = await import('./onedriveSync.js');
+  const accounts = await listAccounts();
   const out = [];
   for (const a of accounts) {
     try { out.push({ ...a, token: await getAccessToken(a.homeAccountId) }); }

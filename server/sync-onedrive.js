@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { syncAll, listAccounts, getCacheDir } from './onedriveSync.js';
 
 console.log('🔄 OneDrive Sync เริ่ม...');
-console.log('บัญชีที่จะ sync:', JSON.stringify(listAccounts(), null, 2));
+console.log('บัญชีที่จะ sync:', JSON.stringify(await listAccounts(), null, 2));
 console.log('━'.repeat(50));
 
 const start = Date.now();

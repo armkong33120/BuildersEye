@@ -8,9 +8,23 @@
 //
 // Skips gracefully if credentials not provided.
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
-const TEST_USERNAME = process.env.TEST_USERNAME || '';
-const TEST_PASSWORD = process.env.TEST_PASSWORD || '';
+import fs from 'fs';
+import path from 'path';
+
+function getTestPassword() {
+  if (process.env.TEST_ACCOUNT_PASSWORD) return process.env.TEST_ACCOUNT_PASSWORD;
+  if (process.env.TEST_PASSWORD) return process.env.TEST_PASSWORD;
+  try {
+    const envFile = fs.readFileSync(path.join(process.cwd(), 'server', '.env'), 'utf-8');
+    const match = envFile.match(/^TEST_ACCOUNT_PASSWORD=(.*)$/m);
+    if (match) return match[1].trim();
+  } catch (e) {}
+  return '';
+}
+
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
+const TEST_USERNAME = process.env.TEST_USERNAME || 'ceo';
+const TEST_PASSWORD = getTestPassword();
 
 const tests = [];
 let passed = 0, failed = 0, skipped = 0;
@@ -35,7 +49,7 @@ async function apiFetch(path, token, options = {}) {
       method: options.method || 'GET',
       headers,
       body: options.body ? JSON.stringify(options.body) : undefined,
-      signal: AbortSignal.timeout(options.timeout || 30000),
+      signal: AbortSignal.timeout(options.timeout || TEST_HTTP_TIMEOUT_MS),
     });
     const data = await res.json().catch(() => ({}));
     return { status: res.status, data };
@@ -49,7 +63,10 @@ async function login(username, password) {
     method: 'POST',
     body: { username, password },
   });
-  if (status !== 200) return null;
+  if (status !== 200) {
+    console.log(`[DEBUG] Login failed for ${username}: status=${status} error=${data.error}`);
+    return null;
+  }
   return data.accessToken;
 }
 
@@ -57,7 +74,7 @@ async function chat(token, query) {
   const { status, data } = await apiFetch('/api/chat', token, {
     method: 'POST',
     body: { query },
-    timeout: 60000,
+    timeout: Math.max(TEST_HTTP_TIMEOUT_MS, 60000),
   });
   return { status, data };
 }

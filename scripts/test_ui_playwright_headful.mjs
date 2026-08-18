@@ -11,12 +11,25 @@ import { chromium } from 'playwright';
 import fs from 'fs';
 import path from 'path';
 
+// Parse server/.env manually or use dotenv if available
+function getTestPassword() {
+  if (process.env.TEST_ACCOUNT_PASSWORD) return process.env.TEST_ACCOUNT_PASSWORD;
+  try {
+    const envFile = fs.readFileSync(path.join(process.cwd(), 'server', '.env'), 'utf-8');
+    const match = envFile.match(/^TEST_ACCOUNT_PASSWORD=(.*)$/m);
+    if (match) return match[1].trim();
+  } catch (e) {
+    // ignore
+  }
+  return '[REDACTED]';
+}
+
 const SHOTS_DIR = '/tmp/e2e-shots';
 const APP_URL = 'http://localhost:5174/app.html';
 const DEBUG_URL = 'http://localhost:5174/debug_neural_network_diagram.html';
 const CHAT_QUERY = 'CEO คือใคร';
 const USERNAME = 'ceo';
-const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '[REDACTED]';
+const PASSWORD = getTestPassword();
 
 const steps = [
   { id: 'login', title: 'A — App Login', passed: false, detail: 'not run' },

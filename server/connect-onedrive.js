@@ -13,7 +13,7 @@ if (!isConfigured()) {
 if (!label || folders.length === 0) {
   console.log('ใช้: node connect-onedrive.js <label> <folder1> [folder2...]');
   console.log('ตัวอย่าง: node connect-onedrive.js account-a BuildersEye_Account_A');
-  console.log('\nบัญชีที่เชื่อมแล้ว:', JSON.stringify(listAccounts(), null, 2));
+  console.log('\nบัญชีที่เชื่อมแล้ว:', JSON.stringify(await listAccounts(), null, 2));
   process.exit(0);
 }
 

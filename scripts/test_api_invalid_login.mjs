@@ -8,7 +8,7 @@
 // Usage: node scripts/test_api_invalid_login.mjs
 // Requires backend running at BACKEND_URL (default http://localhost:5199)
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 
 const tests = [];
 let passed = 0, failed = 0;
@@ -26,7 +26,7 @@ async function post(path, body) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, body: await res.json().catch(() => ({})) };
   } catch (e) {

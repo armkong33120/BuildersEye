@@ -66,6 +66,20 @@
               C-Level / Manager / Lead / Junior / Staff relationships. Change manager, move department,
               add or deactivate employees. Cycle and invalid-manager errors are surfaced from the backend.
             </div>
+            
+            <div class="scale-test-panel" style="margin: 16px 0; padding: 16px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
+              <h3 style="margin-top: 0;">Dynamic Org Scale Test</h3>
+              <p style="margin-bottom: 12px; font-size: 0.9em; color: #666;">Generate a mock organization structure for layout and RBAC testing.</p>
+              <form id="scaleTestForm" style="display: flex; gap: 12px; align-items: flex-end;">
+                <label style="display:flex; flex-direction:column; font-size:12px;"><span>COO</span><input type="number" id="stCoo" value="1" min="0" style="width: 60px; padding:4px;"></label>
+                <label style="display:flex; flex-direction:column; font-size:12px;"><span>Manager</span><input type="number" id="stManager" value="1" min="0" style="width: 60px; padding:4px;"></label>
+                <label style="display:flex; flex-direction:column; font-size:12px;"><span>Lead</span><input type="number" id="stLead" value="3" min="0" style="width: 60px; padding:4px;"></label>
+                <label style="display:flex; flex-direction:column; font-size:12px;"><span>Junior</span><input type="number" id="stJunior" value="9" min="0" style="width: 60px; padding:4px;"></label>
+                <button type="submit" class="btn btn-primary" style="padding: 6px 12px;">Generate</button>
+              </form>
+              <div id="scaleTestResult" style="margin-top: 12px; font-size: 0.9em; font-weight: bold; color: green;"></div>
+            </div>
+
             <div id="orgTree" class="org-tree"></div>
           </section>
 

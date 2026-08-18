@@ -10,7 +10,7 @@
 // Usage: node scripts/test_api_sql_fallback.mjs
 // Requires: BACKEND_URL, TEST_USERNAME, TEST_PASSWORD (env vars)
 
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5199';
+import { BACKEND_URL, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 const TEST_USERNAME = process.env.TEST_USERNAME || '';
 const TEST_PASSWORD = process.env.TEST_PASSWORD || '';
 
@@ -34,7 +34,7 @@ async function post(path, token, body) {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(60000),
+      signal: AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS),
     });
     return { status: res.status, data: await res.json().catch(() => ({})) };
   } catch (e) {
@@ -85,18 +85,42 @@ async function main() {
   assert('Answer contains Thai text', isThai,
     `answer preview: ${answer.slice(0, 150)}`);
 
-  // 5. Trace should show sql error fallback to keyword
+  // 5. Validate the SQL lifecycle from authoritative response metadata.
   const traceNodes = (data.trace || []).map(t => `${t.node}:${t.note}`);
   console.log(`     Trace: ${traceNodes.join(' | ')}`);
 
-  const hasFallback = traceNodes.some(n => n.includes('fallback') || n.includes('keyword'));
-  // If the query is misrouted to SQL, we expect the fallback trace
-  // If it's correctly NOT routed to SQL, that's also fine
-  const sqlAttempted = traceNodes.some(n => n.startsWith('sqle'));
-  if (sqlAttempted) {
-    assert('SQL attempted → has fallback to keyword', hasFallback, `trace: ${traceNodes.join(' | ')}`);
+  assert('SQL metadata fields are present',
+    typeof data.sqlDetected === 'boolean' &&
+    typeof data.sqlAttempted === 'boolean' &&
+    typeof data.sqlSucceeded === 'boolean' &&
+    (data.fallbackRoute === null || typeof data.fallbackRoute === 'string'),
+    `sqlDetected=${data.sqlDetected} sqlAttempted=${data.sqlAttempted} ` +
+    `sqlSucceeded=${data.sqlSucceeded} fallbackRoute=${data.fallbackRoute}`);
+
+  if (data.cached) {
+    assert('Cache hit → valid cache metadata',
+      data.route === 'cache' && data.answerSource === 'cache' && data.fallbackRoute === null,
+      `route=${data.route} answerSource=${data.answerSource}`);
+  } else if (data.sqlAttempted && data.sqlSucceeded) {
+    // SQL can succeed with zero rows; that is not a failure fallback.
+    assert('SQL success → no fallback route', data.route === 'sql' && data.fallbackRoute === null,
+      `route=${data.route} fallbackRoute=${data.fallbackRoute}`);
+    assert('SQL success → SQL answer source', data.answerSource === 'sql-analytics',
+      `answerSource=${data.answerSource}`);
+    assert('SQL evidence reports zero rows when result is empty',
+      data.sqlEvidence && data.sqlEvidence.status !== 'unavailable' && data.sqlEvidence.rowCount === 0,
+      `sqlEvidence=${JSON.stringify(data.sqlEvidence)}`);
+  } else if (data.sqlAttempted) {
+    // SQL error/blocked generation must fall back to a non-SQL answer route.
+    assert('SQL failure → meaningful fallback route',
+      ['keyword', 'vector', 'template'].includes(data.route) &&
+      data.route === data.fallbackRoute &&
+      data.answerSource !== 'sql-analytics',
+      `route=${data.route} fallbackRoute=${data.fallbackRoute} answerSource=${data.answerSource}`);
   } else {
-    assert('SQL not needed → direct keyword', true, 'query handled by keyword path');
+    assert('SQL not attempted → direct keyword/vector route',
+      ['keyword', 'vector', 'template'].includes(data.route) && data.fallbackRoute === null,
+      `route=${data.route} fallbackRoute=${data.fallbackRoute}`);
   }
 
   // 6. answerSource should be a meaningful pipeline source (LLM is no longer

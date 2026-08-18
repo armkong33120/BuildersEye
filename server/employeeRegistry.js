@@ -210,7 +210,7 @@ export function buildRegistry(cacheDir, { force = false } = {}) {
 
   // ---- 2) คนออก: ไฟล์หาย → tombstone (เก็บ metadata ไว้ ลบข้อมูลดิบเพื่อ privacy) ----
   for (const [code, emp] of Object.entries(employees)) {
-    if (!seenCodes.has(code) && emp.status !== 'removed') {
+    if (!seenCodes.has(code) && emp.status !== 'removed' && !code.startsWith('MOCK_')) {
       emp.status = 'removed';
       emp.removedAt = now;
       emp.sheets = {};

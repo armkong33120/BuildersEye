@@ -21,10 +21,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { BACKEND_URL as BACKEND, TEST_HTTP_TIMEOUT_MS } from './test_helpers.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-const BACKEND = process.env.BACKEND_URL || 'http://localhost:5199';
 
 let passed = 0, failed = 0, skipped = 0;
 const assert = (name, cond, detail) => { if (cond) { passed++; console.log(`  ✅ ${name}`); } else { failed++; console.log(`  ❌ ${name} — ${detail}`); } };
@@ -32,7 +32,7 @@ const sk = (name, reason) => { skipped++; console.log(`  ⏭️  ${name} — ${r
 const read = (p) => { try { return fs.readFileSync(p, 'utf-8'); } catch { return ''; } };
 
 async function fj(url, opts = {}) {
-  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }, signal: opts.signal || AbortSignal.timeout(TEST_HTTP_TIMEOUT_MS) });
   const t = await r.text(); let d; try { d = JSON.parse(t); } catch { d = null; }
   return { s: r.status, d, t };
 }

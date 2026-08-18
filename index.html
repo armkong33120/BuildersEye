@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BuildersEye — Org-Graph Intelligence Showcase</title>
     <link rel="stylesheet" href="/src/styles/showcase.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+      .logs-container { max-width: 1000px; margin: 2rem auto; background: var(--bg-glass-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
+      .log-tab-buttons { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
+      .log-tab-btn { background: none; border: 1px solid var(--accent-teal); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+      .log-tab-btn.active, .log-tab-btn:hover { background: var(--accent-teal); color: #fff; }
+      .log-content table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+      .log-content th, .log-content td { border: 1px solid var(--border-color); padding: 0.75rem; text-align: left; }
+      .log-content th { background: rgba(255,255,255,0.05); color: var(--accent-teal); }
+      .log-content h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
+      .log-content blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; color: var(--text-secondary); margin-bottom: 1rem; font-style: italic; }
+    </style>
+
     <link rel="stylesheet" href="/src/styles/tour.css" />
   </head>
   <body>
@@ -574,6 +587,24 @@
           <p class="cold-start-note">
             ☁️ Backend รันบน <strong>Azure Container Apps</strong> — ช่วง 08:00–21:00 น. มี Keep-Warm Job ปลุกไว้อัตโนมัติ (ตอบทันที) · นอกเวลานั้นครั้งแรกอาจรอ 10-30 วิ ระบบจะปลุกและลองใหม่อัตโนมัติให้ ไม่ต้องกดซ้ำ
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: ITIL System Logs -->
+    <section class="section" id="itil-logs">
+      <div class="container">
+        <h2 class="text-center">System Logs & Updates (ITIL)</h2>
+        <p class="text-center">ประวัติการอัปเดตระบบ การแก้ไขปัญหา และการจัดการระบบตามหลัก ITIL</p>
+        <div class="logs-container">
+          <div class="log-tab-buttons">
+            <button class="log-tab-btn active" data-target="change-log">CHANGE_LOG</button>
+            <button class="log-tab-btn" data-target="incident-log">INCIDENT_LOG</button>
+            <button class="log-tab-btn" data-target="problem-log">PROBLEM_LOG</button>
+          </div>
+          <div class="log-content active" id="change-log"></div>
+          <div class="log-content" id="incident-log" style="display:none;"></div>
+          <div class="log-content" id="problem-log" style="display:none;"></div>
         </div>
       </div>
     </section>

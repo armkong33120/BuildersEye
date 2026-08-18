@@ -1,3 +1,7 @@
+import incidentLogRaw from "../../INCIDENT_LOG.md?raw";
+import problemLogRaw from "../../PROBLEM_LOG.md?raw";
+import changeLogRaw from "../../CHANGE_LOG.md?raw";
+
 /* ==========================================================================
    BUILDERSEYE SHOWCASE INTERACTIVE LOGIC
    ========================================================================== */
@@ -7,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initCopyCredentials();
   initMockRoleSelector();
   checkBackendHealth();
+  initITILLogs();
+
 });
 
 /**
@@ -175,3 +181,43 @@ function initMockRoleSelector() {
   });
 }
 
+
+/**
+ * ITIL System Logs Loader
+ */
+function initITILLogs() {
+  const changeContent = document.getElementById('change-log');
+  const incidentContent = document.getElementById('incident-log');
+  const problemContent = document.getElementById('problem-log');
+
+  if (!changeContent) return; // fail-safe if not on the page
+
+  // Parse Markdown via marked (loaded via CDN in index.html)
+  if (window.marked) {
+    changeContent.innerHTML = window.marked.parse(changeLogRaw || '');
+    incidentContent.innerHTML = window.marked.parse(incidentLogRaw || '');
+    problemContent.innerHTML = window.marked.parse(problemLogRaw || '');
+  } else {
+    changeContent.innerText = "Markdown parser not loaded.";
+  }
+
+  // Tab switching logic
+  const buttons = document.querySelectorAll('.log-tab-btn');
+  const contents = document.querySelectorAll('.log-content');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active from all
+      buttons.forEach(b => b.classList.remove('active'));
+      contents.forEach(c => { c.style.display = 'none'; c.classList.remove('active'); });
+
+      // Add active to clicked
+      btn.classList.add('active');
+      const target = document.getElementById(btn.getAttribute('data-target'));
+      if (target) {
+        target.style.display = 'block';
+        target.classList.add('active');
+      }
+    });
+  });
+}

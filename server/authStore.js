@@ -259,15 +259,22 @@ export function verifyAccessToken(token) {
 }
 
 // --- Preview credentials (M4, only when enabled) ---
-// SECURITY: never reveal real passwords. Returns role/identity info only.
+// SECURITY: กลับมาเฉพาะเมื่อ ENABLE_TEST_CREDS=true + TEST_ACCOUNT_PASSWORD ถูกตั้งไว้
+// (demo mode). คืน password ร่วม (TEST_ACCOUNT_PASSWORD) เพื่อให้หน้า login โชว์บัญชีทดสอบ
+// และผู้ชม portfolio ลงชื่อเข้าใช้ได้จริง. เมื่อปิด ENABLE_TEST_CREDS คืน null (ปิดช่องทาง enumeration).
 export function previewCredentials() {
   if (process.env.ENABLE_TEST_CREDS !== 'true') return null;
-  return listUsers().map((u) => ({
+  const testPassword = process.env.TEST_ACCOUNT_PASSWORD || '';
+  const demoUsers = listUsers().map((u) => ({
     username: u.username,
     role: u.role,
     name: u.name,
     jobTitle: u.jobTitle,
   }));
+  // The shared test password powers auto-login on the demo login page. Only
+  // present in demo mode; the gating (all accounts use the same known password)
+  // is already validated at seed time (useKnownPassword).
+  return { enabled: true, password: testPassword, users: demoUsers };
 }
 
 // --- Online users (currently logged in / active sessions) ---

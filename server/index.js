@@ -368,9 +368,13 @@ app.get('/api/auth/me', requireAuth, (req, res) => {
   res.json(req.authUser);
 });
 
-// Preview credentials (M4) — enabled only when ENABLE_TEST_CREDS=true
-// SECURITY: requires valid JWT auth (prevents unauthenticated user enumeration).
-app.get('/api/preview/credentials', requireAuth, (req, res) => {
+// Preview credentials (M4) — demo/test mode leaf. Enabled ONLY when
+// ENABLE_TEST_CREDS=true (and TEST_ACCOUNT_PASSWORD is set), verified inside
+// previewCredentials(). เปิดให้เข้าถึงได้โดยไม่ต้อง login เพราะจุดประสงค์ของหน้า
+// demo คือโชว์บัญชีทดสอบบนหน้า login ให้ผู้ชม portfolio เข้าระบบได้ (M4).
+// SECURITY: เมื่อปิด ENABLE_TEST_CREDS=false ฟังก์ชันจะคืน null → 403 (ปิด enumeration).
+// (เดิมใส่ requireAuth ทำให้ "ต้อง login ถึงจะดูเครดิตทดสอบ" = chicken-and-egg — login ไม่ได้เลย)
+app.get('/api/preview/credentials', (req, res) => {
   const creds = previewCredentials();
   if (!creds) return res.status(403).json({ error: 'Preview credentials disabled' });
   res.json(creds);

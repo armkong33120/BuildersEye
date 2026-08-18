@@ -1021,25 +1021,30 @@ async function loadTestCreds() {
     var res = await fetch(RAG_BACKEND + '/api/preview/credentials', { signal: AbortSignal.timeout(8000) });
     if (!res.ok) return;
     var creds = await res.json();
-    if (!Array.isArray(creds) || creds.length === 0) return;
+    // Backend (demo mode) returns { enabled, password, users:[...] } in test mode;
+    // supports legacy array shape too.
+    var users = Array.isArray(creds) ? creds : (creds && Array.isArray(creds.users) ? creds.users : []);
+    var sharedPassword = (creds && typeof creds === 'object' && !Array.isArray(creds)) ? (creds.password || '') : '';
+    if (users.length === 0) return;
     panel.classList.remove('is-hidden');
     var list = document.getElementById('testCredsList');
     if (!list) return;
     list.innerHTML = '';
-    creds.forEach(function(c) {
+    users.forEach(function(c) {
+      var pw = sharedPassword || c.password || '';
       var row = document.createElement('button');
       row.type = 'button';
       row.className = 'test-cred-item';
       row.innerHTML =
         '<span class="test-cred-role">' + escapeHtml(c.role) + '</span>' +
         '<span class="test-cred-name">' + escapeHtml(c.name || c.username) + '</span>' +
-        '<span class="test-cred-user">' + escapeHtml(c.username) + ' · ' + escapeHtml(c.password) + '</span>';
+        '<span class="test-cred-user">' + escapeHtml(c.username) + ' · ' + escapeHtml(pw) + '</span>';
       row.addEventListener('click', async function() {
         var un = document.getElementById('loginUsername');
-        var pw = document.getElementById('loginPassword');
+        var pwInput = document.getElementById('loginPassword');
         if (un) un.value = c.username;
-        if (pw) pw.value = c.password;
-        await doLogin(c.username, c.password);
+        if (pwInput) pwInput.value = pw;
+        await doLogin(c.username, pw);
       });
       list.appendChild(row);
     });

@@ -13,7 +13,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const RAG_BACKEND = urlParams.get('backend')
   || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
-  || 'http://localhost:5199';
+  || 'https://builderseye-backend.onrender.com';
 
 // ── Small utilities ───────────────────────────────────────────────────────────
 function escapeHtml(value) {

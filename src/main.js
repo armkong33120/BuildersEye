@@ -15,7 +15,7 @@ const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.loc
 // Backend URL priority: ?backend= query param > VITE_RAG_BACKEND env > localhost default
 const RAG_BACKEND = (urlParams && urlParams.get('backend'))
   || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
-  || 'http://localhost:5199';
+  || 'https://builderseye-backend.onrender.com';
 
 
 const canvas = document.querySelector('#scene');

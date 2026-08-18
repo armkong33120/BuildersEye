@@ -108,8 +108,7 @@ function fallbackCopyText(text, btn) {
  */
 async function checkBackendHealth() {
   const badge = document.getElementById('backend-status-badge');
-  const backend = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_RAG_BACKEND)
-    || 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
+  const RAG_BACKEND = (urlParams && urlParams.get('backend')) || 'https://builderseye-backend.onrender.com';
   const endpoint = backend.replace(/\/$/, '') + '/api/health';
 
   try {

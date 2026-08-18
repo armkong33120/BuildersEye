@@ -1,7 +1,29 @@
 const BACKEND = 'https://builderseye-backend.onrender.com';
 const PASSWORD = 'HhAjzrMkw0ODQfr_tH9k1Y81';
 
-async function testApi() {
+async function waitAndTest() {
+  console.log('Waiting for Render deploy to finish...');
+  while (true) {
+    const r = await fetch('https://api.render.com/v1/services/srv-d9p0e6ugekts73evnivg/deploys?limit=1', {
+      headers: { 'Authorization': 'Bearer rnd_36tKAkxuXVKNUvUu16OksYORawv5' }
+    });
+    const data = await r.json();
+    const status = data[0].deploy.status;
+    console.log('Deploy status:', status);
+    if (status === 'live') {
+      console.log('✅ Deploy is LIVE!');
+      break;
+    }
+    if (status === 'build_failed' || status === 'update_failed') {
+      console.error('❌ Deploy failed!', data);
+      return;
+    }
+    await new Promise(r => setTimeout(r, 10000));
+  }
+
+  // Add 10 seconds buffer for service to start accepting traffic
+  await new Promise(r => setTimeout(r, 10000));
+
   console.log('Logging in...');
   let res = await fetch(`${BACKEND}/api/auth/login`, {
     method: 'POST',
@@ -38,4 +60,4 @@ async function testApi() {
   
   console.log('✅ Injected audit logs directly via API.');
 }
-testApi();
+waitAndTest();

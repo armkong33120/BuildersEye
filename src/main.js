@@ -423,7 +423,7 @@ function appendChatMessage(role, label, text, sources = [], extras = {}) {
 
   // Parse citations in text e.g. [อ้างอิง: EMP001]
   var formattedText = escapeHtml(text).replace(/\[อ้างอิง:\s*(EMP\d+)\]/g, function(match, empCode) {
-    return '<a href="#" class="citation-badge" data-emp="' + empCode + '" onclick="event.preventDefault(); highlightGraphByCode(\\'' + empCode + '\\')">' + match + '</a>';
+    return `<a href="#" class="citation-badge" data-emp="${empCode}" onclick="event.preventDefault(); highlightGraphByCode('${empCode}')">${match}</a>`;
   });
 
   var policyHtml = '';

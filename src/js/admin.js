@@ -692,53 +692,99 @@ async function refreshOrg() {
   renderOrg();
 }
 
-// ── Section 2: Employee Data Sources ──────────────────────────────────────────
+// ── Section 2: Employee Data Sources (department-grouped, 1:many) ─────────────
+function sourceLinksFor(code) {
+  const c = String(code || '').trim().toUpperCase();
+  return state.sourceLinks.filter((l) => String(l.employeeCode || '').trim().toUpperCase() === c);
+}
+
 function renderSources() {
   const wrap = el('srcTableWrap');
   if (!wrap) return;
-  if (!state.sourceLinks.length) {
-    wrap.innerHTML = '<div class="state-box">No data source links yet. Use “+ Link Source”.</div>';
+  // Group active employees by Department/Team.
+  const byDept = new Map();
+  for (const e of state.employees) {
+    if (!isActive(e)) continue;
+    const dept = String(e.department || '').trim() || 'Unassigned';
+    if (!byDept.has(dept)) byDept.set(dept, []);
+    byDept.get(dept).push(e);
+  }
+
+  if (!state.sourceLinks.length && !byDept.size) {
+    wrap.innerHTML = '<div class="state-box">No employees or data source links yet. Use “+ Link Source” or “+ Add New Member”.</div>';
     return;
   }
-  const empName = (code) => {
-    const c = String(code || '').trim().toUpperCase();
-    const e = state.employees.find((x) => String(x.employeeCode || '').trim().toUpperCase() === c);
-    return e ? (e.name + ' (' + c + ')') : c;
-  };
-  let rows = state.sourceLinks.map((l) => {
-    const enabled = l.enabled !== false;
-    const syncStatus = l.syncStatus || l.sync_state || '—';
-    const lastSync = l.lastSyncedAt || l.lastSync || l.last_synced_at || null;
-    const fileName = l.fileName || l.file_name || l.sourceId || '—';
-    return '<tr>' +
-      '<td>' + escapeHtml(empName(l.employeeCode)) + '</td>' +
-      '<td>' + escapeHtml(fileName) + '</td>' +
-      '<td><code>' + escapeHtml(l.sourceId) + '</code></td>' +
-      '<td>' + escapeHtml(l.provider || 'onedrive') + '</td>' +
-      '<td>' + escapeHtml(syncStatus) + '</td>' +
-      '<td>' + fmtTime(lastSync) + '</td>' +
-      '<td>' + (enabled
-        ? '<span class="badge active">enabled</span>'
-        : '<span class="badge deactivated">disabled</span>') + '</td>' +
-      '<td>' + (l.shared ? '<span class="badge profile">shared</span>' : '<span class="badge neutral">exclusive</span>') + '</td>' +
-      '<td style="white-space:nowrap">' +
-      '<button class="btn btn-ghost" data-action="src-toggle" data-id="' + escapeHtml(l.linkId) + '" type="button">' + (enabled ? 'Disable' : 'Enable') + '</button> ' +
-      '<button class="btn btn-danger" data-action="src-delete" data-id="' + escapeHtml(l.linkId) + '" type="button">Delete</button>' +
-      '</td></tr>';
-  }).join('');
-  wrap.innerHTML =
-    '<table class="data-table"><thead><tr>' +
-    '<th>Employee</th><th>File name</th><th>Source ID</th><th>Provider</th>' +
-    '<th>Sync status</th><th>Last sync</th><th>Enabled</th><th>Ownership</th><th>Actions</th>' +
-    '</tr></thead><tbody>' + rows + '</tbody></table>';
+
+  const deptOrder = [...byDept.keys()].sort((a, b) => a.localeCompare(b));
+  let html = '';
+  if (!deptOrder.length) {
+    html += '<div class="state-box">No active employees loaded — add one below.</div>' + emptySlotHtml('');
+  } else {
+    for (const dept of deptOrder) {
+      const members = byDept.get(dept);
+      html += '<div class="src-dept-group">';
+      html += '<div class="src-dept-head"><span class="src-dept-name">' + escapeHtml(dept) + '</span>' +
+        '<span class="src-dept-count">' + members.length + ' member' + (members.length === 1 ? '' : 's') + '</span></div>';
+      for (const emp of members) html += renderEmployeeCard(emp);
+      html += emptySlotHtml(dept); // Empty slot at the bottom of every department group.
+      html += '</div>';
+    }
+  }
+  wrap.innerHTML = html;
 }
 
-async function linkSource() {
+function renderEmployeeCard(emp) {
+  const code = String(emp.employeeCode || '').trim().toUpperCase();
+  const links = sourceLinksFor(code);
+  let files = '';
+  if (!links.length) {
+    files = '<div class="src-no-files">No linked files.</div>';
+  } else {
+    files = links.map((l) => {
+      const enabled = l.enabled !== false;
+      const syncStatus = l.syncStatus || l.sync_state || '—';
+      const fileName = l.fileName || l.file_name || l.sourceId || '—';
+      return '<div class="src-file-row">' +
+        '<span class="src-file-name">' + escapeHtml(fileName) + '</span>' +
+        '<code class="src-file-id">' + escapeHtml(l.sourceId || '') + '</code>' +
+        '<span class="badge ' + (String(syncStatus).toLowerCase() === 'success' ? 'active' : 'neutral') + '">' + escapeHtml(syncStatus) + '</span>' +
+        '<span class="badge ' + (enabled ? 'active' : 'deactivated') + '">' + (enabled ? 'enabled' : 'disabled') + '</span>' +
+        '<span class="src-file-actions">' +
+        '<button class="btn btn-ghost" data-action="src-toggle" data-id="' + escapeHtml(l.linkId) + '" type="button">' + (enabled ? 'Disable' : 'Enable') + '</button> ' +
+        '<button class="btn btn-danger" data-action="src-delete" data-id="' + escapeHtml(l.linkId) + '" type="button">Delete</button>' +
+        '</span>' +
+        '</div>';
+    }).join('');
+  }
+  return '<div class="src-emp-card">' +
+    '<div class="src-emp-head">' +
+    '<strong>' + escapeHtml(emp.name || '') + '</strong> ' +
+    '<span class="badge neutral">' + escapeHtml(code) + '</span>' +
+    '<span class="src-file-count">' + links.length + ' file' + (links.length === 1 ? '' : 's') + '</span>' +
+    '<button class="btn btn-ghost" data-action="src-link-file" data-code="' + escapeHtml(code) + '" type="button">+ Link File</button>' +
+    '</div>' +
+    '<div class="src-file-list">' + files + '</div>' +
+    '</div>';
+}
+
+function emptySlotHtml(dept) {
+  return '<div class="src-empty-slot" data-dept="' + escapeHtml(dept || '') + '">' +
+    '<span class="src-empty-label">Empty slot — add a new member:</span>' +
+    '<input class="src-slot-code" placeholder="Code, e.g. EMP150" />' +
+    '<input class="src-slot-name" placeholder="Name" />' +
+    '<input class="src-slot-title" placeholder="Job title" />' +
+    '<input class="src-slot-dept" placeholder="Department" value="' + escapeHtml(dept || '') + '" />' +
+    '<button class="btn btn-primary" data-action="src-add-member" type="button">+ Add New Member</button>' +
+    '</div>';
+}
+
+async function linkSource(selectedCode) {
+  const sel = selectedCode ? String(selectedCode).trim().toUpperCase() : '';
   openModal({
-    title: 'Link data source',
+    title: sel ? ('Link data source — ' + sel) : 'Link data source',
     submitLabel: 'Link source',
     body:
-      '<label class="field"><span>Employee</span><select name="employeeCode">' + employeeOptions('', { includeEmpty: false }) + '</select></label>' +
+      '<label class="field"><span>Employee</span><select name="employeeCode">' + employeeOptions(sel, { includeEmpty: false }) + '</select></label>' +
       '<label class="field"><span>Source ID (file ID / drive ID)</span><input name="sourceId" placeholder="e.g. 01ABCDEF…" /></label>' +
       '<label class="field"><span>File name</span><input name="fileName" placeholder="EMP001.xlsx" /></label>' +
       '<label class="field"><span>Provider</span><select name="provider"><option value="onedrive">OneDrive</option><option value="excel">Excel upload</option></select></label>' +
@@ -763,6 +809,22 @@ async function linkSource() {
   });
 }
 
+async function addMemberFromSlot(slot) {
+  if (!slot) return;
+  const q = (cls) => { const v = slot.querySelector(cls)?.value || ''; return v.trim(); };
+  const code = q('.src-slot-code');
+  const name = q('.src-slot-name');
+  const jobTitle = q('.src-slot-title');
+  const department = q('.src-slot-dept') || slot.dataset.dept || '';
+  if (!code || !name) { alert('Employee code and name are required to add a member.'); return; }
+  const r = await apiJson(RAG_BACKEND + '/api/admin/employees', {
+    method: 'POST',
+    body: JSON.stringify({ employeeCode: code, name, jobTitle, department }),
+  });
+  if (!r.ok) { alert('Add member failed: ' + (r.error || 'error')); return; }
+  await refreshSources();
+}
+
 async function toggleSource(linkId) {
   const link = state.sourceLinks.find((l) => l.linkId === linkId);
   if (!link) return;
@@ -784,17 +846,22 @@ async function deleteSource(linkId) {
 }
 
 async function reindex() {
-  if (!confirm('Re-index is a protected, admin-only operation. It rebuilds the search index and vectors. Continue?')) return;
+  if (!confirm('Re-index is a protected, admin-only operation. It rebuilds the registry, search index, vectors, and regenerates the 3D org graph. Continue?')) return;
   const btn = el('srcReindexBtn');
-  if (btn) btn.disabled = true;
-  const r = await apiJson(RAG_BACKEND + '/api/admin/reindex', { method: 'POST', body: JSON.stringify({}) });
-  if (btn) btn.disabled = false;
-  if (!r.ok) {
-    alert('Re-index failed: ' + (r.error || 'error'));
-    return;
+  const original = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = '⟳ Re-indexing…'; }
+  try {
+    const r = await apiJson(RAG_BACKEND + '/api/admin/reindex', { method: 'POST', body: JSON.stringify({}) });
+    if (!r.ok) {
+      alert('Re-index failed: ' + (r.error || 'error'));
+      return;
+    }
+    const d = r.data || {};
+    alert('Re-index complete: ' + (d.records ?? '?') + ' records, ' + (d.employees ?? '?') + ' employees, graph v' + (d.graphVersion ?? '?') + '.');
+    await refreshSources();
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = original; }
   }
-  alert('Re-index complete.');
-  await refreshSources();
 }
 
 async function refreshSources() {
@@ -1199,6 +1266,8 @@ function handleAction(target) {
     case 'activate': setEmployeeStatus(code, 'active'); break;
     case 'src-toggle': toggleSource(id); break;
     case 'src-delete': deleteSource(id); break;
+    case 'src-link-file': linkSource(code); break;
+    case 'src-add-member': addMemberFromSlot(target.closest('.src-empty-slot')); break;
     case 'pol-effect': setPolicyEffect(id, effect); break;
     case 'pol-delete': deletePolicy(id); break;
     case 'rollback': rollback(entity, id); break;

@@ -217,3 +217,27 @@ table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .preview-hint { font-size: 11px; color: var(--muted); text-align: center; margin-top: 14px; }
 
 .is-hidden { display: none !important; }
+
+/* ── Data Sources: department-grouped (1:many) ─────────────────── */
+.src-dept-group { margin-bottom: 22px; }
+.src-dept-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: rgba(178,222,238,0.06); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 8px 8px 0 0; }
+.src-dept-name { font-weight: 700; font-size: 15px; }
+.src-dept-count { font-size: 12px; color: var(--muted); }
+.src-emp-card { border: 1px solid var(--line); border-top: none; padding: 12px 12px 8px; background: var(--panel-solid); }
+.src-emp-card + .src-emp-card { border-top: 1px solid var(--line); }
+.src-emp-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.src-emp-head strong { font-size: 14px; }
+.src-file-count { font-size: 12px; color: var(--muted); flex: 1; }
+.src-file-list { margin: 8px 0 4px 14px; display: flex; flex-direction: column; gap: 6px; }
+.src-file-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 8px; background: rgba(0,0,0,0.12); border-radius: 6px; }
+.src-file-name { font-weight: 600; font-size: 13px; }
+.src-file-id { font-size: 11px; color: var(--muted); }
+.src-file-actions { margin-left: auto; white-space: nowrap; }
+.src-no-files { font-size: 12px; color: var(--muted); margin-left: 14px; font-style: italic; }
+.src-empty-slot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border: 1px dashed var(--line); border-top: none; border-radius: 0 0 8px 8px; background: rgba(0,0,0,0.08); }
+.src-empty-label { font-size: 12px; color: var(--muted); width: 100%; }
+.src-empty-slot input { padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; background: rgba(0,0,0,0.2); color: var(--text); font-size: 13px; min-width: 120px; }
+.src-slot-code { width: 130px; }
+.src-slot-name { flex: 1; min-width: 140px; }
+.src-slot-title { flex: 1; min-width: 140px; }
+.src-slot-dept { width: 150px; }

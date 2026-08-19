@@ -49,35 +49,45 @@ export function registryToFlatIndex(employees) {
     const employeeId = emp.pk || 0;
     const confidentiality = CONFIDENTIALITY_MAP[emp.department] || 'Tier 3 — Standard';
 
-    for (const [sheetName, sheetData] of Object.entries(emp.sheets || {})) {
-      const recordType = recordTypeFor(sheetName);
-      (sheetData.records || []).forEach((rowObj, rowIdx) => {
-        for (const [fieldName, value] of Object.entries(rowObj)) {
-          const content = String(value ?? '').trim();
-          if (!fieldName || content === '') continue;
-          const entry = {
-            employeeId,
-            employeeCode: emp.code,
-            employeeName: emp.name,
-            department: emp.department,
-            sheetName,
-            rowNumber: rowIdx + 1,
-            fieldName,
-            content,
-            confidentialityLevel: confidentiality,
-            fileName: emp.fileName,
-            filePath: '',
-            sourceId: emp.fileName,
-            recordType,
-          };
-          flatIndex.push(entry);
-          const idx = flatIndex.length - 1;
-          for (const token of tokenize(content)) {
-            if (!searchIndex.has(token)) searchIndex.set(token, []);
-            searchIndex.get(token).push(idx);
+    // 1:many — ingest EVERY source file owned by this employee. `emp.files` is
+    // the authoritative array; we fall back to a single merged-sheet view for
+    // records built before the multi-file model (backward compatible).
+    const fileList = (emp.files && emp.files.length)
+      ? emp.files
+      : [{ fileName: emp.fileName || '', sheets: emp.sheets || {} }];
+
+    for (const file of fileList) {
+      const fileLabel = file.fileName || emp.fileName || '';
+      for (const [sheetName, sheetData] of Object.entries(file.sheets || {})) {
+        const recordType = recordTypeFor(sheetName);
+        (sheetData.records || []).forEach((rowObj, rowIdx) => {
+          for (const [fieldName, value] of Object.entries(rowObj)) {
+            const content = String(value ?? '').trim();
+            if (!fieldName || content === '') continue;
+            const entry = {
+              employeeId,
+              employeeCode: emp.code,
+              employeeName: emp.name,
+              department: emp.department,
+              sheetName,
+              rowNumber: rowIdx + 1,
+              fieldName,
+              content,
+              confidentialityLevel: confidentiality,
+              fileName: fileLabel,
+              filePath: '',
+              sourceId: fileLabel,
+              recordType,
+            };
+            flatIndex.push(entry);
+            const idx = flatIndex.length - 1;
+            for (const token of tokenize(content)) {
+              if (!searchIndex.has(token)) searchIndex.set(token, []);
+              searchIndex.get(token).push(idx);
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 

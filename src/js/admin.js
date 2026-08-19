@@ -11,7 +11,7 @@
 
 // ── Backend URL (same resolution as src/main.js) ──────────────────────────────
 const urlParams = new URLSearchParams(window.location.search);
-const RAG_BACKEND = (urlParams && urlParams.get('backend')) || 'https://builderseye-backend.onrender.com';
+const RAG_BACKEND = (urlParams && urlParams.get('backend')) || 'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
 
 // ── Small utilities ───────────────────────────────────────────────────────────
 function escapeHtml(value) {

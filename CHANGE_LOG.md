@@ -11,3 +11,4 @@
 
 | 2026-08-18 15:21 | แก้ไข `RAG_BACKEND` ให้ชี้ไปที่ลิงก์ของ Microsoft Azure | Frontend (src/main.js) | Antigravity AI |
 | 2026-08-19 11:34 | ปรับหน้า Admin "Data Sources" จัดกลุ่มตาม Department รองรับ 1:many (พนักงาน ↔ หลายไฟล์) + เพิ่ม API สร้าง/แก้พนักงาน + Re-index แบบ runtime + sync กราฟ 3D แบบเรียลไทม์ | Backend (adminRoutes.js, access/adminService.js, employeeRegistry.js, registryIngest.js, chunker.js, index.js) / Frontend (src/js/admin.js, src/main.js, src/styles/admin.css) | Antigravity AI |
+| 2026-08-19 12:31 | แก้บั๊ก Login: เปลี่ยนค่า default `RAG_BACKEND` ใน `src/main.js:16` จาก Azure เก่า (`builderseye-backend.wittybush...azurecontainerapps.io`) ไปเป็น Render (`builderseye-backend.onrender.com`) ซึ่งเป็น backend ที่ deploy ล่าสุด (รหัสทดสอบคนละตัวกันทำให้ Login ไม่ได้) + รองรับ `VITE_RAG_BACKEND`/`VITE_API_BASE_URL` | Frontend (src/main.js) | Antigravity AI |

@@ -12,11 +12,12 @@ var previewRole = 'CEO'; // ค่าเริ่มต้นให้ "เห�
 
 // RAG backend integration — ประกาศก่อน bootAuth() (รันที่ top-level) เพื่อเลี่ยง TDZ
 const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-// Backend URL priority: ?backend= query param > VITE_RAG_BACKEND / VITE_API_BASE_URL env > Render default
+// Backend URL priority: ?backend= query param > VITE_RAG_BACKEND / VITE_API_BASE_URL env > Azure default
+// (Azure Container Apps = production backend ที่จ่ายค่าแพ็กเกจ — Render เป็นเพียง staging/detour)
 const RAG_BACKEND =
   (urlParams && urlParams.get('backend')) ||
   (typeof import.meta !== 'undefined' && (import.meta.env.VITE_RAG_BACKEND || import.meta.env.VITE_API_BASE_URL)) ||
-  'https://builderseye-backend.onrender.com';
+  'https://builderseye-backend.wittybush-d59275bd.southeastasia.azurecontainerapps.io';
 
 
 const canvas = document.querySelector('#scene');

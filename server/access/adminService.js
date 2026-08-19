@@ -273,6 +273,84 @@ export async function setManager(actor, employeeCode, managerCode) {
   return applyAndAudit(actor, 'relationship', 'set_manager', child, previous, next);
 }
 
+// ── Employee CRUD (create / update) ──────────────────────────────────────────
+export async function createEmployee(actor, body = {}) {
+  const code = employeeKey(body.employeeCode);
+  if (!code) { const e = new Error('employeeCode is required'); e.status = 400; throw e; }
+  if (!body.name) { const e = new Error('name is required'); e.status = 400; throw e; }
+  const employees = getEmployees();
+  if (employees.some((e) => employeeKey(e.employeeCode) === code)) {
+    const err = new Error('Employee ' + code + ' already exists');
+    err.status = 409; throw err;
+  }
+  const profileCode = body.accessProfile || 'SELF_ONLY';
+  if (!Object.values(ACCESS_PROFILE_CODES).includes(profileCode)) {
+    const e = new Error('Invalid accessProfile'); e.status = 400; throw e;
+  }
+  const next = {
+    employeeCode: code,
+    employeeId: body.employeeId ?? null,
+    name: body.name,
+    department: body.department || '',
+    jobTitle: body.jobTitle || '',
+    managerCode: body.managerCode || '',
+    email: body.email || '',
+    status: 'active',
+    accessProfile: profileCode,
+    version: 1,
+    createdAt: nowIso(),
+  };
+  const candidate = employees.concat([next]);
+  try {
+    assertNoDuplicateEmployeeCodes(candidate);
+    assertAcyclicManagerGraph(candidate, getRelationships());
+    assertManagerExists(candidate, getRelationships());
+  } catch (e) {
+    await recordRejected(actor, 'employee', code, e);
+    throw e;
+  }
+  await saveEmployees(candidate);
+  // Manager edge is added (validated) after the employee exists.
+  if (next.managerCode) await setManager(actor, code, next.managerCode);
+  return applyAndAudit(actor, 'employee', 'create', code, null, next);
+}
+
+export async function updateEmployee(actor, employeeCode, patch = {}) {
+  const key = employeeKey(employeeCode);
+  const employees = getEmployees();
+  const idx = employees.findIndex((e) => employeeKey(e.employeeCode) === key);
+  if (idx === -1) { const e = new Error('Employee not found'); e.status = 404; throw e; }
+  const previous = employees[idx];
+
+  const allowed = {};
+  for (const f of ['name', 'department', 'jobTitle', 'status', 'email', 'employeeId']) {
+    if (patch[f] !== undefined) allowed[f] = patch[f];
+  }
+  if (patch.accessProfile !== undefined) {
+    if (!Object.values(ACCESS_PROFILE_CODES).includes(patch.accessProfile)) {
+      const e = new Error('Invalid accessProfile'); e.status = 400; throw e;
+    }
+    allowed.accessProfile = patch.accessProfile;
+  }
+  const next = { ...previous, ...allowed, version: nextVersion(previous.version), updatedAt: nowIso() };
+
+  // Write-path org integrity: validate the WHOLE org with this change applied.
+  const candidate = employees.slice(); candidate[idx] = next;
+  try {
+    assertNoDuplicateEmployeeCodes(candidate);
+    assertAcyclicManagerGraph(candidate, getRelationships());
+    assertManagerExists(candidate, getRelationships());
+  } catch (e) {
+    await recordRejected(actor, 'employee', key, e);
+    throw e;
+  }
+
+  employees[idx] = next;
+  await saveEmployees(employees);
+  if (patch.managerCode) await setManager(actor, key, patch.managerCode);
+  return applyAndAudit(actor, 'employee', 'update', key, previous, next);
+}
+
 // ── Rollback ─────────────────────────────────────────────────────────────────
 export async function rollback(actor, entity, entityId) {
   const previous = await _findPrevSnapshot(entity, entityId);

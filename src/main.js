@@ -116,6 +116,8 @@ const selectable = [];
 const nodeObjects = new Map();
 const lineObjects = [];
 const flowDotObjects = [];
+const haloObjects = [];
+let lastGraphVersion = null; // mtime of identity-graph.json on the backend
 
 setupIcons();
 buildIndexes();
@@ -123,6 +125,7 @@ buildUi();
 buildScene();
 selectPerson(graph.ceoPk, false);
 animate();
+startGraphSyncPoll();
 
   var resetButton = document.querySelector('#resetChat');
   if (resetButton) {
@@ -1746,6 +1749,90 @@ function buildScene() {
   renderer.domElement.addEventListener('pointerdown', onPointerDown);
 }
 
+// ── Live 3D graph sync (seamless re-index refresh, no hard reload) ───────────
+// The backend re-index regenerates identity-graph.json and bumps its version.
+// This page polls /api/graph/version and, when it changes, re-fetches the graph
+// and rebuilds the Three.js nodes/links in place — every connected viewer stays
+// in sync without refreshing.
+function clearIdentityLayer() {
+  for (const mesh of nodeObjects.values()) scene.remove(mesh);
+  nodeObjects.clear();
+  selectable.length = 0;
+  for (const line of lineObjects) scene.remove(line);
+  lineObjects.length = 0;
+  for (const dot of flowDotObjects) scene.remove(dot);
+  flowDotObjects.length = 0;
+  for (const halo of haloObjects) scene.remove(halo);
+  haloObjects.length = 0;
+}
+
+async function fetchGraphJson() {
+  const res = await fetch(RAG_BACKEND + '/api/graph', { cache: 'no-store' });
+  if (!res.ok) return null;
+  return res.json();
+}
+
+async function refreshGraphScene() {
+  const next = await fetchGraphJson();
+  if (!next || !Array.isArray(next.identities)) return { ok: false, note: 'graph fetch failed — keeping current scene' };
+
+  // Mutate the module-level graph object in place so every render/read path
+  // (which closes over `graph`) sees the new data with zero re-imports.
+  graph.identities = next.identities;
+  graph.departments = next.departments || [];
+  graph.reportingLinks = next.reportingLinks || [];
+  graph.stats = next.stats || {};
+  graph.ceoPk = next.ceoPk ?? graph.ceoPk;
+
+  // Rebuild derived indexes/layout for the new set.
+  employeesByPk.clear();
+  graph.identities.forEach((identity) => employeesByPk.set(identity.pk, identity));
+  departmentsByName.clear();
+  graph.departments.forEach((department) => departmentsByName.set(department.name, department));
+  graphNeighborsByPk.clear();
+  positionSlotsByPk.clear();
+  buildIndexes();
+
+  // Guard filter state against identities that left the org.
+  if (state.department !== 'ALL' && !departmentsByName.has(state.department)) state.department = 'ALL';
+  if (state.selectedPk == null || !employeesByPk.has(state.selectedPk)) state.selectedPk = graph.ceoPk;
+
+  // Drop old nodes/links and re-add with the new geometry.
+  clearIdentityLayer();
+  addIdentityNodes();
+  addReportingLines();
+
+  // Refresh the UI chrome (metrics, selects, legend).
+  buildUi();
+  selectPerson(state.selectedPk, false);
+  updateVisibility();
+
+  return { ok: true, count: graph.identities.length };
+}
+
+async function pollGraphVersion() {
+  try {
+    const res = await fetch(RAG_BACKEND + '/api/graph/version', { cache: 'no-store' });
+    if (!res.ok) return;
+    const d = await res.json();
+    const version = d.version;
+    if (version === null || version === undefined) return;
+    if (lastGraphVersion !== null && version !== lastGraphVersion) {
+      const r = await refreshGraphScene();
+      if (r && r.ok) console.log('[graph] live-refreshed to v' + version + ' (' + r.count + ' nodes)');
+    }
+    lastGraphVersion = version;
+  } catch (e) {
+    /* backend not reachable yet — retry on next tick, keep current scene */
+  }
+}
+
+function startGraphSyncPoll() {
+  pollGraphVersion().then(() => {
+    setInterval(pollGraphVersion, 8000);
+  });
+}
+
 function addLights() {
   scene.add(new THREE.AmbientLight('#ffffff', 1.7));
   const key = new THREE.DirectionalLight('#ffffff', 2.4);
@@ -1897,6 +1984,7 @@ function addIdentityNodes() {
       );
       halo.position.copy(mesh.position);
       scene.add(halo);
+      haloObjects.push(halo);
     }
   });
 }

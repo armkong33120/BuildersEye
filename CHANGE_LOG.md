@@ -10,3 +10,4 @@
 | 2026-08-18 15:15 | จัดทำระบบ Log ตามหลัก ITIL (Incident, Problem, Change) | Docs / Knowledge Base | Antigravity AI |
 
 | 2026-08-18 15:21 | แก้ไข `RAG_BACKEND` ให้ชี้ไปที่ลิงก์ของ Microsoft Azure | Frontend (src/main.js) | Antigravity AI |
+| 2026-08-19 11:34 | ปรับหน้า Admin "Data Sources" จัดกลุ่มตาม Department รองรับ 1:many (พนักงาน ↔ หลายไฟล์) + เพิ่ม API สร้าง/แก้พนักงาน + Re-index แบบ runtime + sync กราฟ 3D แบบเรียลไทม์ | Backend (adminRoutes.js, access/adminService.js, employeeRegistry.js, registryIngest.js, chunker.js, index.js) / Frontend (src/js/admin.js, src/main.js, src/styles/admin.css) | Antigravity AI |

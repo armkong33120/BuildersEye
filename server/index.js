@@ -13,6 +13,7 @@ import { seedUsers, login as authLogin, refresh as authRefresh, logout as authLo
 import { buildRegistry, getActiveEmployees, getEmployee, getSchema } from './employeeRegistry.js';
 import { registryToFlatIndex } from './registryIngest.js';
 import { getCacheDirSafe } from './runRegistry.js';
+import { buildGraphFromRegistry } from './build-graph.js';
 import { isConfigured as odConfigured, listAccounts, syncAll } from './onedriveSync.js';
 import { handleWebhook, seedTokensFromNeon, pushTokensToNeon, ensureSubscriptions, WEBHOOK_PATH } from './onedriveWebhook.js';
 import { searchVectors, vectorsExist, getVectorMeta, isVectorIndexStale } from './vectorStore.js';
@@ -105,6 +106,56 @@ function reloadData(reason = 'manual') {
   }
 
   return { source: dataSource, records: flatIndex.length, employees: loaded.count };
+}
+
+// Graph version = mtime of identity-graph.json. Re-index regenerates the file,
+// so the version changes even for identical content — connected 3D views poll
+// this and seamlessly re-fetch without a hard refresh.
+const GRAPH_FILE = path.join(__dirname, '..', 'src', 'data', 'identity-graph.json');
+function graphVersionNow() {
+  try { return fs.statSync(GRAPH_FILE).mtimeMs; } catch { return 0; }
+}
+
+// Runtime re-index (POST /api/admin/reindex). Rebuilds the registry from the
+// OneDrive cache, hot-swaps the search index, kicks off an async vector rebuild,
+// regenerates identity-graph.json, and bumps the graph version so clients sync.
+async function runAdminReindex(actor) {
+  const start = Date.now();
+  const cacheDir = getCacheDirSafe();
+  const stats = buildRegistry(cacheDir, { force: true });
+  const employees = getActiveEmployees();
+  const { flatIndex: fi, searchIndex: si } = registryToFlatIndex(employees);
+  flatIndex = fi;
+  searchIndex = si;
+  dataSource = 'registry';
+  initDatabase(flatIndex);
+
+  // Rebuild vector index asynchronously (embedding is slow; skipped when the
+  // embedder is unavailable on this host — retrieval still enforces scope).
+  try {
+    if (!vectorRebuildInFlight && process.env.VECTOR_INDEX_DISABLED !== 'true') {
+      vectorRebuildInFlight = true;
+      import('./rebuildVectors.js')
+        .then(({ rebuildVectors }) => rebuildVectors({ log: (m) => console.log(m) }))
+        .then((r) => console.log(`[reindex] vectors rebuilt: ${r.total} chunks in ${r.ms}ms`))
+        .catch((e) => console.warn(`[reindex] vector rebuild skipped: ${e.message}`))
+        .finally(() => { vectorRebuildInFlight = false; });
+    }
+  } catch (e) {
+    console.warn('[reindex] vector rebuild setup failed:', e.message);
+  }
+
+  const graphStats = buildGraphFromRegistry();
+  const graphVersion = graphVersionNow();
+  console.log(`[reindex] by=${actor?.username || 'admin'} records=${flatIndex.length} employees=${employees.length} graph=${JSON.stringify(graphStats)} in ${Date.now() - start}ms`);
+  return {
+    ok: true,
+    records: flatIndex.length,
+    employees: employees.length,
+    graphVersion,
+    graphStats,
+    ms: Date.now() - start,
+  };
 }
 
 async function startup() {
@@ -287,6 +338,7 @@ mountAdminRoutes(app, {
     getAccessRelationships,
     getProfilesMap,
   },
+  reindex: runAdminReindex,
 });
 
 app.post('/api/admin/scale-test', requireAuth, requireAdmin, async (req, res) => {
@@ -662,6 +714,23 @@ app.get('/api/registry/employees/:code', requireAuth, (req, res) => {
 app.get('/api/registry/schema', requireAuth, (req, res) => {
   if (!requirePrivileged(req, res)) return;
   res.json(getSchema());
+});
+
+// 3D graph live-sync endpoints (public read — the 3D page on any device polls
+// /api/graph/version; when it changes after a re-index it re-fetches /api/graph
+// and rebuilds its scene in place, no hard refresh).
+app.get('/api/graph/version', (req, res) => {
+  res.json({ version: graphVersionNow(), updatedAt: graphVersionNow() || null });
+});
+app.get('/api/graph', (req, res) => {
+  try {
+    const raw = fs.readFileSync(GRAPH_FILE, 'utf-8');
+    const graph = JSON.parse(raw);
+    graph.version = graphVersionNow();
+    res.json(graph);
+  } catch (e) {
+    res.status(404).json({ error: 'identity-graph.json not found', detail: e.message });
+  }
 });
 
 // กด sync ด้วยมือ (CEO/HR): OneDrive delta sync → rebuild registry → hot-reload engines

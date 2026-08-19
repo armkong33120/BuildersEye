@@ -15,7 +15,7 @@ import express from 'express';
 import * as adminService from './access/adminService.js';
 import { readAccess } from './access/adminService.js';
 
-export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = {} }) {
+export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = {}, reindex = null }) {
   const router = express.Router();
   router.use(requireAuth, requireAdmin);
 
@@ -104,6 +104,17 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
+  router.post('/employees', async (req, res) => {
+    try {
+      res.json(await adminService.createEmployee(actor(req), req.body || {}));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+  router.put('/employees/:code', async (req, res) => {
+    try {
+      res.json(await adminService.updateEmployee(actor(req), req.params.code, req.body || {}));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+
   router.put('/employees/:code/profile', async (req, res) => {
     try {
       res.json(await adminService.assignProfile(actor(req), req.params.code, req.body?.profileCode));
@@ -120,6 +131,17 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
     try {
       const { entity, entityId } = req.body || {};
       res.json(await adminService.rollback(actor(req), entity, entityId));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+
+  // POST /api/admin/reindex — protected, admin-only. Rebuilds the registry +
+  // search/vector index + regenerates identity-graph.json, then bumps the graph
+  // version so connected 3D views re-fetch seamlessly (no hard refresh). The
+  // actual pipeline lives in index.js (passed in as `reindex`).
+  router.post('/reindex', async (req, res) => {
+    if (!reindex) { res.status(501).json({ error: 'Re-index is not configured on this server' }); return; }
+    try {
+      res.json(await reindex(actor(req)));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 

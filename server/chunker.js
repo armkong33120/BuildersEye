@@ -120,31 +120,40 @@ export function employeesToChunks(employees, schema) {
 
   for (const emp of employees) {
     if (emp.status !== 'active') continue;
-    for (const [sheetName, sheetData] of Object.entries(emp.sheets || {})) {
-      const sensitivity = schema?.sheets?.[sheetName]?.sensitivity || 'standard';
-      const records = sheetData.records || [];
+    // 1:many — ingest EVERY source file owned by this employee (backward
+    // compatible with pre-multi-file records that only had emp.sheets).
+    const fileList = (emp.files && emp.files.length)
+      ? emp.files
+      : [{ fileName: emp.fileName || '', sheets: emp.sheets || {} }];
 
-      records.forEach((rowObj, rowIdx) => {
-        // 1a. row chunk — bilingual template
-        const text = `${emp.name} | ${emp.department} | ${sheetName}${sheetLabel(sheetName)} | ${rowToText(sheetName, rowObj)}`;
-        chunks.push({
-          id: `${emp.code}/${sheetName}/${rowIdx}`,
-          text: truncate(text),
-          meta: { code: emp.code, pk: emp.pk, name: emp.name, department: emp.department, sheet: sheetName, sensitivity, rowIndex: rowIdx, kind: 'row' },
+    for (const file of fileList) {
+      const fileLabel = file.fileName || emp.fileName || 'default';
+      for (const [sheetName, sheetData] of Object.entries(file.sheets || {})) {
+        const sensitivity = schema?.sheets?.[sheetName]?.sensitivity || 'standard';
+        const records = sheetData.records || [];
+
+        records.forEach((rowObj, rowIdx) => {
+          // 1a. row chunk — bilingual template
+          const text = `${emp.name} | ${emp.department} | ${sheetName}${sheetLabel(sheetName)} | ${rowToText(sheetName, rowObj)}`;
+          chunks.push({
+            id: `${emp.code}/${fileLabel}/${sheetName}/${rowIdx}`,
+            text: truncate(text),
+            meta: { code: emp.code, pk: emp.pk, name: emp.name, department: emp.department, sheet: sheetName, sensitivity, rowIndex: rowIdx, kind: 'row', sourceFile: fileLabel },
+          });
         });
-      });
 
-      // 1b. summary chunk (1 ต่อคน) — สำหรับ numeric sheets
-      records.forEach((rowObj, rowIdx) => {
-        const s = makeSummaryChunk(emp, sheetName, rowObj, sensitivity, rowIdx);
-        if (s) chunks.push(s);
-      });
+        // 1b. summary chunk (1 ต่อคน) — สำหรับ numeric sheets
+        records.forEach((rowObj, rowIdx) => {
+          const s = makeSummaryChunk(emp, sheetName, rowObj, sensitivity, rowIdx);
+          if (s) chunks.push(s);
+        });
 
-      // เก็บ rows สำหรับ roll-up (planning ต่อแผนก)
-      if (rollupSheets.has(sheetName) && records.length > 0) {
-        const key = `${emp.department}|${sheetName}`;
-        if (!perDeptRows[key]) perDeptRows[key] = { dept: emp.department, sheet: sheetName, rows: [] };
-        for (const row of records) perDeptRows[key].rows.push({ ...row, _pk: emp.pk });
+        // เก็บ rows สำหรับ roll-up (planning ต่อแผนก)
+        if (rollupSheets.has(sheetName) && records.length > 0) {
+          const key = `${emp.department}|${sheetName}`;
+          if (!perDeptRows[key]) perDeptRows[key] = { dept: emp.department, sheet: sheetName, rows: [] };
+          for (const row of records) perDeptRows[key].rows.push({ ...row, _pk: emp.pk });
+        }
       }
     }
   }

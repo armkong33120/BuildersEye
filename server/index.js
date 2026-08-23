@@ -339,17 +339,8 @@ mountAdminRoutes(app, {
     getProfilesMap,
   },
   reindex: runAdminReindex,
-});
-
-app.post('/api/admin/scale-test', requireAuth, requireAdmin, async (req, res) => {
-  try {
-    const config = req.body || { coo: 1, manager: 1, lead: 3, junior: 9 };
-    const injectedCount = await injectMockOrg(config);
-    const r = reloadData('scale-test');
-    res.json({ success: true, injected: injectedCount, reload: r });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  reloadData,
+  injectMockOrg,
 });
 
 app.get('/api/health', (req, res) => {

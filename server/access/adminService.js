@@ -351,6 +351,31 @@ export async function updateEmployee(actor, employeeCode, patch = {}) {
   return applyAndAudit(actor, 'employee', 'update', key, previous, next);
 }
 
+// ── Hard delete (permanent) ──────────────────────────────────────────────────
+// PERMANENTLY removes an employee from the registry AND cascades the removal of
+// every relationship edge that references them (as subject OR as manager), so
+// no dangling manager references survive. This is destructive and is only
+// invoked from the admin-only DELETE route after a strict browser confirm().
+export async function deleteEmployee(actor, employeeCode) {
+  const key = employeeKey(employeeCode);
+  const employees = getEmployees();
+  const idx = employees.findIndex((e) => employeeKey(e.employeeCode) === key);
+  if (idx === -1) { const e = new Error('Employee not found'); e.status = 404; throw e; }
+  const [previous] = employees.splice(idx, 1);
+
+  // Cascade: drop any relationship where this employee is the subject OR the
+  // manager, preventing dangling manager refs in the remaining org.
+  const relationships = getRelationships();
+  const remainingRels = relationships.filter((r) =>
+    employeeKey(r.employeeCode) !== key && employeeKey(r.managerCode) !== key
+  );
+
+  await saveEmployees(employees);
+  if (remainingRels.length !== relationships.length) await saveRelationships(remainingRels);
+
+  return applyAndAudit(actor, 'employee', 'delete', key, previous, null);
+}
+
 // ── Rollback ─────────────────────────────────────────────────────────────────
 export async function rollback(actor, entity, entityId) {
   const previous = await _findPrevSnapshot(entity, entityId);

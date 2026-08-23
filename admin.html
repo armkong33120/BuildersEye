@@ -36,6 +36,9 @@
           <button class="admin-nav-item" data-section="audit" type="button">
             <span class="nav-icon">📜</span><span>Version History</span>
           </button>
+          <button class="admin-nav-item" data-section="system" type="button">
+            <span class="nav-icon">⚙️</span><span>System Settings</span>
+          </button>
         </nav>
 
         <div class="admin-sidebar-footer">
@@ -167,6 +170,35 @@
               Who / what / when changed, previous value, new value, policy version, and rollback.
             </div>
             <div id="auditTableWrap" class="table-wrap"></div>
+          </section>
+
+          <!-- Section: AI System Settings -->
+          <section class="admin-section" id="section-system" data-section-panel="system">
+            <div class="section-head">
+              <h2>AI System Settings</h2>
+              <div class="section-actions">
+                <button id="sysReloadBtn" class="btn btn-ghost" type="button">↻ Reload</button>
+                <button id="sysSaveBtn" class="btn btn-primary" type="button">Save Settings</button>
+              </div>
+            </div>
+            <div class="section-hint">
+              Runtime AI configuration persisted by the backend. Changes apply without a redeploy.
+            </div>
+            <form id="systemConfigForm" class="system-config-form" autocomplete="off">
+              <label class="system-field">
+                <span>LLM Model</span>
+                <input id="cfgLlmModel" type="text" placeholder="e.g. claude-sonnet-5" />
+              </label>
+              <label class="system-field">
+                <span>RAG Timeout (ms)</span>
+                <input id="cfgRagTimeoutMs" type="number" min="0" step="100" placeholder="e.g. 30000" />
+              </label>
+              <label class="system-field">
+                <span>System Prompt Override</span>
+                <textarea id="cfgSystemPromptOverride" rows="5" placeholder="Optional global system-prompt override…"></textarea>
+              </label>
+              <div id="systemConfigStatus" class="system-config-status" role="status"></div>
+            </form>
           </section>
         </div>
       </main>

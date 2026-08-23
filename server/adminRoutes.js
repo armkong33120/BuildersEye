@@ -14,8 +14,9 @@
 import express from 'express';
 import * as adminService from './access/adminService.js';
 import { readAccess } from './access/adminService.js';
+import { getConfig, saveConfig } from './aiConfig.js';
 
-export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = {}, reindex = null }) {
+export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = {}, reindex = null, reloadData = null, injectMockOrg = null }) {
   const router = express.Router();
   router.use(requireAuth, requireAdmin);
 
@@ -114,6 +115,11 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
       res.json(await adminService.updateEmployee(actor(req), req.params.code, req.body || {}));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
+  router.delete('/employees/:code', async (req, res) => {
+    try {
+      res.json(await adminService.deleteEmployee(actor(req), req.params.code));
+    } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
 
   router.put('/employees/:code/profile', async (req, res) => {
     try {
@@ -143,6 +149,33 @@ export function mountAdminRoutes(app, { requireAuth, requireAdmin, dataSource = 
     try {
       res.json(await reindex(actor(req)));
     } catch (e) { res.status(e.status || 500).json({ error: e.message }); }
+  });
+
+  // POST /api/admin/scale-test — protected, admin-only. Generates a mock org
+  // structure (COO/manager/lead/junior counts) for layout + RBAC testing, then
+  // hot-reloads the search/vector index so the new records are queryable.
+  // `reloadData` + `injectMockOrg` are injected from index.js (same pattern as
+  // `reindex`) so this route stays out of the monolithic server entrypoint.
+  router.post('/scale-test', async (req, res) => {
+    if (!reloadData || !injectMockOrg) {
+      res.status(501).json({ error: 'Scale-test is not configured on this server' }); return;
+    }
+    try {
+      const config = req.body || { coo: 1, manager: 1, lead: 3, junior: 9 };
+      const injectedCount = await injectMockOrg(config);
+      const r = reloadData('scale-test');
+      res.json({ success: true, injected: injectedCount, reload: r });
+    } catch (e) { res.status(500).json({ error: e.message }); }
+  });
+
+  // ── AI system settings (read + write persisted to server/.data/ai_config.json)
+  router.get('/system-config', (req, res) => {
+    try { res.json({ config: getConfig() }); }
+    catch (e) { res.status(500).json({ error: e.message }); }
+  });
+  router.post('/system-config', (req, res) => {
+    try { res.json({ config: saveConfig(req.body || {}) }); }
+    catch (e) { res.status(e.status || 500).json({ error: e.message }); }
   });
 
   app.use('/api/admin', router);

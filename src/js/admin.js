@@ -232,6 +232,7 @@ const SECTION_TITLES = {
   matrix: 'Permission Matrix',
   preview: 'Preview As User',
   audit: 'Audit & History',
+  system: 'System Settings',
 };
 
 function switchSection(name) {
@@ -312,6 +313,54 @@ function loadSection(name) {
   else if (name === 'preview') renderPreview();
   else if (name === 'audit') renderAudit();
   else if (name === 'chat-audit') loadChatAudit().then(renderChatAudit);
+  else if (name === 'system') loadSystemConfig();
+}
+
+// ── AI System Settings ───────────────────────────────────────────────────────
+async function loadSystemConfig() {
+  const status = el('systemConfigStatus');
+  if (status) status.textContent = 'Loading…';
+  try {
+    const r = await apiJson(RAG_BACKEND + '/api/admin/system-config');
+    if (!r.ok) {
+      if (status) { status.textContent = 'Failed to load config: ' + (r.error || 'error'); status.className = 'system-config-status error'; }
+      return;
+    }
+    const cfg = r.data && r.data.config ? r.data.config : {};
+    el('cfgLlmModel').value = cfg.llmModel || '';
+    el('cfgRagTimeoutMs').value = cfg.ragTimeoutMs != null ? cfg.ragTimeoutMs : '';
+    el('cfgSystemPromptOverride').value = cfg.systemPromptOverride || '';
+    if (status) { status.textContent = 'Loaded.'; status.className = 'system-config-status'; }
+  } catch (err) {
+    if (status) { status.textContent = 'Failed to load config: ' + (err.message || 'error'); status.className = 'system-config-status error'; }
+  }
+}
+
+async function saveSystemConfig() {
+  const status = el('systemConfigStatus');
+  const cfg = {
+    llmModel: el('cfgLlmModel').value,
+    ragTimeoutMs: el('cfgRagTimeoutMs').value,
+    systemPromptOverride: el('cfgSystemPromptOverride').value,
+  };
+  if (status) { status.textContent = 'Saving…'; status.className = 'system-config-status'; }
+  try {
+    const r = await apiJson(RAG_BACKEND + '/api/admin/system-config', {
+      method: 'POST',
+      body: JSON.stringify(cfg),
+    });
+    if (!r.ok) {
+      if (status) { status.textContent = 'Save failed: ' + (r.error || 'error'); status.className = 'system-config-status error'; }
+      return;
+    }
+    const saved = r.data && r.data.config ? r.data.config : {};
+    el('cfgLlmModel').value = saved.llmModel || '';
+    el('cfgRagTimeoutMs').value = saved.ragTimeoutMs != null ? saved.ragTimeoutMs : '';
+    el('cfgSystemPromptOverride').value = saved.systemPromptOverride || '';
+    if (status) { status.textContent = 'Settings saved.'; status.className = 'system-config-status ok'; }
+  } catch (err) {
+    if (status) { status.textContent = 'Save failed: ' + (err.message || 'error'); status.className = 'system-config-status error'; }
+  }
 }
 
 // ── Org snapshot helpers (mirror scopeResolver.buildOrgSnapshot semantics) ─────
@@ -469,6 +518,7 @@ function renderOrgNode(code, depth) {
   html += active
     ? '<button class="btn btn-danger" data-action="deactivate" data-code="' + escapeHtml(code) + '" type="button">Deactivate</button>'
     : '<button class="btn btn-ghost" data-action="activate" data-code="' + escapeHtml(code) + '" type="button">Activate</button>';
+  html += '<button class="btn btn-danger" data-action="delete" data-code="' + escapeHtml(code) + '" type="button" title="Permanently remove this employee">Delete (Permanent)</button>';
   html += '</div>';
   html += '</div>';
 
@@ -682,6 +732,27 @@ async function setEmployeeStatus(code, status) {
   });
   if (!r.ok) {
     alert('Failed to ' + status + ' ' + code + ': ' + (r.error || 'error'));
+    return;
+  }
+  await refreshOrg();
+}
+
+// Hard delete an employee (permanent) — strict browser confirm() before calling
+// the admin-only DELETE endpoint, then refresh the org tree on success.
+async function hardDeleteEmployee(code) {
+  const emp = orgSnapshot.byCode.get(code);
+  const name = emp && emp.name ? emp.name : code;
+  const ok = window.confirm(
+    'PERMANENTLY DELETE ' + name + ' (' + code + ')?\n\n' +
+    'This removes the employee from the registry and all related relationships permanently.\n' +
+    'This action CANNOT be undone. Continue?'
+  );
+  if (!ok) return;
+  const r = await apiJson(RAG_BACKEND + '/api/admin/employees/' + encodeURIComponent(code), {
+    method: 'DELETE',
+  });
+  if (!r.ok) {
+    alert('Failed to delete ' + code + ': ' + (r.error || 'error'));
     return;
   }
   await refreshOrg();
@@ -1264,6 +1335,7 @@ function handleAction(target) {
     case 'set-overrides': setOverrides(code); break;
     case 'deactivate': setEmployeeStatus(code, 'deactivated'); break;
     case 'activate': setEmployeeStatus(code, 'active'); break;
+    case 'delete': hardDeleteEmployee(code); break;
     case 'src-toggle': toggleSource(id); break;
     case 'src-delete': deleteSource(id); break;
     case 'src-link-file': linkSource(code); break;
@@ -1291,6 +1363,10 @@ function wireEvents() {
   el('orgAddBtn').addEventListener('click', addEmployee);
   el('orgExpandAllBtn').addEventListener('click', expandAll);
   el('orgCollapseAllBtn').addEventListener('click', collapseAll);
+
+  // System settings buttons
+  el('sysSaveBtn').addEventListener('click', saveSystemConfig);
+  el('sysReloadBtn').addEventListener('click', loadSystemConfig);
 
   // Sources section buttons
   el('srcAddBtn').addEventListener('click', linkSource);

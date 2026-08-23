@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import OpenAI from 'openai';
+import { getConfig } from './aiConfig.js';
 
 // LLM provider config — supports DeepSeek (default) or any OpenAI-compatible endpoint.
 //   LLM_BASE_URL   (default https://api.deepseek.com for DeepSeek)
@@ -72,14 +73,21 @@ export function getUsageStats() {
   };
 }
 
+let clientTimeout = LLM_TIMEOUT_MS;
 export function getClient() {
-  if (!client && API_KEY && API_KEY !== 'your_api_key_here') {
+  // Runtime timeout override from the "System Settings" page: rebuild the client
+  // only when the configured timeout changes, so the next query uses the new
+  // value immediately without a restart.
+  const timeout = getConfig().ragTimeoutMs || LLM_TIMEOUT_MS;
+  const ready = API_KEY && API_KEY !== 'your_api_key_here';
+  if (ready && (!client || clientTimeout !== timeout)) {
     client = new OpenAI({
       apiKey: API_KEY,
       baseURL: BASE_URL,
-      timeout: LLM_TIMEOUT_MS,
+      timeout,
       maxRetries: 0, // we handle retries ourselves for controlled backoff
     });
+    clientTimeout = timeout;
   }
   return client;
 }
@@ -103,13 +111,16 @@ export function getProviderInfo() {
     else if (/google|gemini|generativelanguage/i.test(host)) provider = 'gemini';
     else if (host) provider = host;
   } catch { provider = 'custom'; }
-  return { provider, model: MODEL, baseUrl: BASE_URL, available: isLLMAvailable() };
+  return { provider, model: getConfig().llmModel || MODEL, baseUrl: BASE_URL, available: isLLMAvailable() };
 }
 
 export async function generateAnswer(query, anonymizedContext, options = {}) {
   if (!isLLMAvailable()) return null;
 
-  const model = MODEL;
+  // Runtime overrides from the "System Settings" page (in-memory cache updated by
+  // saveConfig) — env remains authoritative until the CEO explicitly overrides.
+  const aiCfg = getConfig();
+  const model = aiCfg.llmModel || MODEL;
 
   // Two modes:
   //  - default (chat assistant): answer a question given context
@@ -131,6 +142,12 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
         "10. You must cite your sources at the end of your answer by referencing the employee ID or name you used, e.g., [อ้างอิง: EMP001]. If answering about multiple people, cite them accordingly.",
       ].join("\n");
 
+  // systemPromptOverride (from System Settings) is prepended only for the chat
+  // assistant — never for rawSql mode, which must stay a pure SQL generator.
+  const finalSystemPrompt = (aiCfg.systemPromptOverride && !options.rawSql)
+    ? aiCfg.systemPromptOverride + "\n\n" + systemPrompt
+    : systemPrompt;
+
   const userPrompt = "Context:\n" + anonymizedContext + "\n\nQuestion: " + query;
 
   // ประหยัด token: คอนฟิกผ่าน env (default เปลี่ยนจากค่าปกติ DeepSeek = thinking high)
@@ -142,7 +159,7 @@ export async function generateAnswer(query, anonymizedContext, options = {}) {
   const completionArgs = {
     model: model,
     messages: [
-      { role: 'system', content: systemPrompt },
+      { role: 'system', content: finalSystemPrompt },
       { role: 'user', content: userPrompt },
     ],
     // rawSql ต้องมีที่ว่างพอ (SQL ซับซ้อน + v4-flash เผา token กับ reasoning) — 1200 ไม่ใช่ 600

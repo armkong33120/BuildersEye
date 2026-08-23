@@ -642,8 +642,11 @@ async function loadCredentials(){
 
     if(r.status===403){ status.textContent='⚠ credentials disabled (ENABLE_TEST_CREDS=off on backend)'; sel.innerHTML='<option value="">— creds unavailable —</option>'; return; }
     if(!r.ok){ status.textContent='⚠ credentials error HTTP '+r.status; return; }
-    const arr=await r.json();
-    if(!Array.isArray(arr)||!arr.length){ status.textContent='⚠ no credentials returned'; return; }
+    const body=await r.json();
+    // /api/preview/credentials returns { enabled, password, users:[...] } (object),
+    // not a bare array — unwrap the users list (kept array-compatible for safety).
+    const arr=Array.isArray(body)?body:(body&&Array.isArray(body.users)?body.users:null);
+    if(!arr||!arr.length){ status.textContent='⚠ no credentials returned'; return; }
     arr.sort((a,b)=>a.username.localeCompare(b.username));
     sel.innerHTML=arr.map(u=>'<option value="'+escapeHtml(u.username)+'" data-role="'+escapeHtml(u.role||'')+'">'+
       escapeHtml(u.username)+' — '+escapeHtml(u.role||'')+' · '+escapeHtml(u.name||u.jobTitle||'')+'</option>').join('');

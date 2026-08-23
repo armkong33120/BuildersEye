@@ -361,6 +361,15 @@ export async function deleteEmployee(actor, employeeCode) {
   const employees = getEmployees();
   const idx = employees.findIndex((e) => employeeKey(e.employeeCode) === key);
   if (idx === -1) { const e = new Error('Employee not found'); e.status = 404; throw e; }
+
+  // CEO / Global Admin is permanently protected from deletion — even a rogue
+  // admin session or an automated test cannot remove the account.
+  const target = employees[idx];
+  if (target?.accessProfile === ACCESS_PROFILE_CODES.GLOBAL_ADMIN) {
+    const e = new Error('Cannot delete the CEO/Global Admin account');
+    e.status = 403; throw e;
+  }
+
   const [previous] = employees.splice(idx, 1);
 
   // Cascade: drop any relationship where this employee is the subject OR the

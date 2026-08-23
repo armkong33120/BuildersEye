@@ -81,6 +81,7 @@
 
 - Do not claim a test or deployment passed unless it was actually executed and passed.
 - Prefer deterministic tests that do not require an external LLM key.
+- NEVER run destructive tests (DELETE, DROP) against the default data directory. Always set a temporary ACCESS_DATA_DIR for smoke tests.
 - If an LLM-dependent test cannot run, mark it as skipped and explain why.
 - Verify changed JavaScript with syntax checks and run the narrowest relevant test first.
 - Check imports and the actual runtime path; do not test stale or unused modules as if they

@@ -16,9 +16,13 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONFIG_FILE = path.join(__dirname, '.data', 'ai_config.json');
 
+// Defaults are EMPTY so the real pipeline keeps reading from `process.env`
+// (LLM_MODEL / LLM_TIMEOUT_MS) until the CEO explicitly overrides a value on the
+// "System Settings" page. A non-empty llmModel / ragTimeoutMs here would
+// silently hijack the deployed env config on a fresh system.
 const DEFAULTS = {
-  llmModel: 'claude-sonnet-5',
-  ragTimeoutMs: 30000,
+  llmModel: '',
+  ragTimeoutMs: 0,
   systemPromptOverride: '',
 };
 

@@ -1,638 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BuildersEye — Org-Graph Intelligence Showcase</title>
-    <link rel="stylesheet" href="/src/styles/showcase.css" />
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <style>
-      .logs-container { max-width: 1000px; margin: 2rem auto; background: var(--bg-glass-card); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
-      .log-tab-buttons { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; }
-      .log-tab-btn { background: none; border: 1px solid var(--accent-teal); color: var(--text-secondary); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
-      .log-tab-btn.active, .log-tab-btn:hover { background: var(--accent-teal); color: #fff; }
-      .log-content table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
-      .log-content th, .log-content td { border: 1px solid var(--border-color); padding: 0.75rem; text-align: left; }
-      .log-content th { background: rgba(255,255,255,0.05); color: var(--accent-teal); }
-      .log-content h1 { font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); }
-      .log-content blockquote { border-left: 4px solid #f59e0b; padding-left: 1rem; color: var(--text-secondary); margin-bottom: 1rem; font-style: italic; }
-    </style>
-
-    <link rel="stylesheet" href="/src/styles/tour.css" />
-  </head>
-  <body>
-    <!-- SECTION 1: Navigation & Hero Section -->
-    <header class="navbar">
-      <div class="nav-container">
-        <a href="#hero" class="brand-logo">
-          <span class="logo-dot"></span>
-          <span class="logo-text">BuildersEye</span>
-        </a>
-        <nav class="nav-links">
-          <a href="#what-is-it">จุดเด่น</a>
-          <a href="#demo">สาธิต</a>
-          <a href="#architecture">สถาปัตยกรรม</a>
-          <a href="#tech-stack">Tech Stack</a>
-          <a href="#roadmap">Roadmap</a>
-          <a href="#try-it">ทดลองใช้</a>
-        </nav>
-        <div class="nav-actions">
-          <a href="/debug_neural_network_diagram.html" class="btn btn-outline-nav" title="ดูเส้นทางเดินคำถามผ่าน Neural Network Pipeline">🧠 Neural Trace</a>
-          <a href="/app.html" class="btn btn-primary-nav">เปิดแอป 3D 🚀</a>
-        </div>
-      </div>
-    </header>
-
-    <section id="hero" class="hero-section">
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">✨ 3D Org-Graph + Governance RAG AI</div>
-          <h1 class="hero-title">
-            ปลดล็อกศักยภาพ HR ด้วย <br />
-            <span class="gradient-text">Org-Graph Intelligence</span>
-          </h1>
-          <p class="hero-subtitle">
-            วิเคราะห์ข้อมูลพนักงาน 150 คน จากไฟล์ Excel บน OneDrive (sync รายวันอัตโนมัติ) ด้วย AI Chat ภาษาไทย บน 3D Visual Tree <br />
-            ปลอดภัยด้วย Role-Based Access Control (RBAC) + JWT Auth · รันบน Microsoft Azure
-          </p>
-
-          <div class="hero-buttons">
-            <a href="#try-it" class="btn btn-teal-glow">🚀 ทดลองใช้งาน (Live Demo)</a>
-            <a href="#architecture" class="btn btn-outline">📊 ดูสถาปัตยกรรมระบบ</a>
-          </div>
-
-          <div class="hero-stats-grid">
-            <div class="stat-card">
-              <span class="stat-num">150</span>
-              <span class="stat-label">Staff Nodes (3D Tree)</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-num">15.7K+</span>
-              <span class="stat-label">Vector Chunks (Thai Semantic)</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-num">4 Roles</span>
-              <span class="stat-label">RBAC Governance</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-num">3 Brains</span>
-              <span class="stat-label">Hybrid LLM Engine</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 2: What is it Section -->
-    <section id="what-is-it" class="section-padding">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Overview</span>
-          <h2>ระบบนี้คืออะไร? (What is BuildersEye)</h2>
-          <p>เครื่องมือวิเคราะห์ HR และโครงสร้างองค์กรยุคใหม่ รวม 3 เทคโนโลยีหลักเข้าด้วยกัน</p>
-        </div>
-
-        <div class="grid-3-col">
-          <div class="glass-card">
-            <div class="card-icon">🧠</div>
-            <h3>1. RAG เหนือ Org-Graph</h3>
-            <p>ค้นหาข้อมูลโปรไฟล์, KPI, defect, OKR จาก 150 ไฟล์พนักงาน + 10 เอกสารองค์กรบน OneDrive ผ่านภาษาธรรมชาติ (ไทย/อังกฤษ) ด้วย Hybrid Retrieval (Keyword + Vector RRF Fusion), LLM Rerank และ HyDE — 15,738 vector chunks จาก local embedding ภาษาไทย</p>
-          </div>
-          <div class="glass-card">
-            <div class="card-icon">🌐</div>
-            <h3>2. 3D Visualization Tree</h3>
-            <p>แสดงโครงสร้างองค์กร 150 คน เป็นพีระมิด 3D 4 ชั้น (CEO → C-Level → Manager → Staff) Node กระพริบทันทีเมื่อถูกอ้างอิงในคำตอบ AI</p>
-          </div>
-          <div class="glass-card">
-            <div class="card-icon">🛡️</div>
-            <h3>3. Role-Based Access (RBAC)</h3>
-            <p>ควบคุมสิทธิ์ข้อมูลเข้มงวด 4 ระดับ (CEO / HR / Manager / Employee) บล็อกคำถามข้ามสิทธิ์ เช่น พนักงานถามเงินเดือน CEO ในระดับ Governance Layer</p>
-          </div>
-        </div>
-
-        <!-- User Benefit Matrix Table -->
-        <div class="benefit-matrix-wrapper margin-top-lg">
-          <h3 class="table-title">ใครได้ประโยชน์จาก BuildersEye?</h3>
-          <div class="table-responsive">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>กลุ่มผู้ใช้งาน</th>
-                  <th>บทบาทหลัก</th>
-                  <th>สิ่งที่ได้รับจากระบบ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><span class="badge badge-ceo">CEO</span></td>
-                  <td>ผู้บริหารสูงสุด (Managing Director)</td>
-                  <td>เห็นภาพรวม KPI/OKR องค์กร, ความเสี่ยง Retention, วางแผน Succession Planning</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-hr">HR</span></td>
-                  <td>ฝ่ายทรัพยากรบุคคล (HR Manager)</td>
-                  <td>ค้นหาโปรไฟล์ 360°, ประวัติผลงาน/Defects, วางแผนอัตรากำลังคนรวดเร็ว 10x</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-manager">Manager</span></td>
-                  <td>ผู้จัดการทีม (IT/COO/CFO Manager)</td>
-                  <td>ติดตาม Project Backlog, ประเมินผลงานทีมในสายบังคับบัญชา (Subtree)</td>
-                </tr>
-                <tr>
-                  <td><span class="badge badge-employee">Employee</span></td>
-                  <td>พนักงานทั่วไป (Staff Member)</td>
-                  <td>ตรวจสอบ OKR/KPI ตัวเอง, ประวัติงาน และข้อควรปรับปรุงส่วนบุคคล</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3: Live Demo / Features Section -->
-    <section id="demo" class="section-padding bg-secondary-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Live Showcase</span>
-          <h2>ฟีเจอร์เด่นและสาธิตการทำงาน</h2>
-          <p>สัมผัสการทำงานของ 3D Org-Graph และระบบความปลอดภัย Governance ใน Mock UI</p>
-          <div class="margin-top-sm">
-            <button id="btn-start-tour" class="btn btn-teal-glow tour-start-btn">🎯 เริ่มต้นชม Tour Guide (Interactive Tour)</button>
-          </div>
-        </div>
-
-        <div class="mockup-ui-frame" data-tour-step="5">
-          <div class="mockup-header">
-            <div class="mockup-dots">
-              <span class="dot red"></span>
-              <span class="dot yellow"></span>
-              <span class="dot green"></span>
-            </div>
-            <div class="mockup-url">https://builders-eye.vercel.app (Interactive Demo)</div>
-            <button id="btn-start-tour-header" class="btn btn-sm btn-outline tour-start-btn-sm">🎯 Tour Guide</button>
-          </div>
-          <div class="mockup-body">
-            <!-- Step 1: Interactive Role Selector Bar -->
-            <div class="mock-role-selector" data-tour-step="1">
-              <span class="role-selector-label">เลือกบทบาททดสอบ (Role):</span>
-              <span class="mock-role-badge badge-ceo" data-role="ceo">CEO</span>
-              <span class="mock-role-badge badge-hr" data-role="hr">HR</span>
-              <span class="mock-role-badge badge-manager" data-role="manager">Manager</span>
-              <span class="mock-role-badge badge-employee active" data-role="emp144">Employee (emp144)</span>
-            </div>
-
-            <div class="mock-grid">
-              <div class="mock-3d-view" data-tour-step="3">
-                <div class="mock-canvas-placeholder">
-                  <div class="mock-node node-ceo pulse-node">CEO</div>
-                  <div class="mock-node node-mgr-1">IT Mgr</div>
-                  <div class="mock-node node-mgr-2">HR Mgr</div>
-                  <div class="mock-node node-emp-active pulse-node">Emp144</div>
-                  <div class="mock-laser-beam"></div>
-                </div>
-              </div>
-              <div class="mock-chat-view">
-                <div class="chat-header">💬 AI Chat Assistant (Role: Employee emp144)</div>
-                <div class="chat-messages">
-                  <div class="msg user" id="mock-user-msg" style="display: none;">เงินเดือน CEO เท่าไหร่?</div>
-                  <div class="msg bot blocked" id="mock-blocked-msg" data-tour-step="4">
-                    <span class="alert-icon">⚠️</span>
-                    <div>
-                      <strong>Query Blocked by Governance Policy:</strong><br />
-                      บทบาท Employee (emp144) ไม่มีสิทธิ์เข้าถึงข้อมูลเงินเดือนผู้บริหารระดับ CEO
-                    </div>
-                  </div>
-                </div>
-                <!-- Step 2: Simulated Chat Input Bar -->
-                <div class="mock-chat-input-wrapper" data-tour-step="2">
-                  <input type="text" class="mock-chat-input" id="mock-chat-input" placeholder="พิมพ์คำถามที่นี่..." readonly />
-                  <button class="mock-chat-send-btn" id="mock-chat-send-btn">ส่ง ↵</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4: Interactive System Architecture Section -->
-    <section id="architecture" class="section-padding">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Architecture</span>
-          <h2>สถาปัตยกรรมระบบ (System Flow & Brain Selector)</h2>
-          <p>แผนผังแสดงเส้นทางการประมวลผลข้อมูลจาก User Query สู่การกรอง RBAC และเลือกสมอง LLM</p>
-        </div>
-
-        <!-- 4.2 System Flow Inline SVG -->
-        <div class="svg-container">
-          <svg viewBox="0 0 1000 560" class="interactive-svg" id="system-flow-svg">
-            <defs>
-              <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#2dd4bf" />
-                <stop offset="100%" stop-color="#1f6feb" />
-              </linearGradient>
-              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
-            </defs>
-
-            <!-- Main Pipeline Nodes (Top Layer) -->
-            <!-- Node 1: User -->
-            <g class="svg-node" transform="translate(40, 100)">
-              <rect width="140" height="70" rx="12" fill="#161b22" stroke="#2dd4bf" stroke-width="2"/>
-              <text x="70" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">User Query</text>
-              <text x="70" y="52" text-anchor="middle" fill="#8b949e" font-size="12">ไทย / English</text>
-            </g>
-
-            <!-- Connector 1->2 -->
-            <path d="M 180 135 L 230 135" stroke="#2dd4bf" stroke-width="2" class="flow-line" />
-
-            <!-- Node 2: Frontend -->
-            <g class="svg-node" transform="translate(230, 100)">
-              <rect width="150" height="70" rx="12" fill="#161b22" stroke="#1f6feb" stroke-width="2"/>
-              <text x="75" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">Frontend</text>
-              <text x="75" y="52" text-anchor="middle" fill="#8b949e" font-size="12">Vercel / Vite</text>
-            </g>
-
-            <!-- Connector 2->3 -->
-            <path d="M 380 135 L 430 135" stroke="#1f6feb" stroke-width="2" class="flow-line" />
-
-            <!-- Node 3: Backend REST -->
-            <g class="svg-node" transform="translate(430, 100)">
-              <rect width="150" height="70" rx="12" fill="#161b22" stroke="#a78bfa" stroke-width="2"/>
-              <text x="75" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">Backend API</text>
-              <text x="75" y="52" text-anchor="middle" fill="#8b949e" font-size="12">Azure Container Apps / Express</text>
-            </g>
-
-            <!-- Connector 3->4 -->
-            <path d="M 580 135 L 630 135" stroke="#a78bfa" stroke-width="2" class="flow-line" />
-
-            <!-- Node 4: PII Masking -->
-            <g class="svg-node" transform="translate(630, 100)">
-              <rect width="150" height="70" rx="12" fill="#161b22" stroke="#f59e0b" stroke-width="2"/>
-              <text x="75" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">PII Fence 🛡️</text>
-              <text x="75" y="52" text-anchor="middle" fill="#8b949e" font-size="12">Anonymizer</text>
-            </g>
-
-            <!-- Connector 4->5 -->
-            <path d="M 780 135 L 830 135" stroke="#f59e0b" stroke-width="2" class="flow-line" />
-
-            <!-- Node 5: RBAC Gate -->
-            <g class="svg-node" transform="translate(830, 100)">
-              <rect width="130" height="70" rx="12" fill="#161b22" stroke="#34d399" stroke-width="2"/>
-              <text x="65" y="32" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="600">Policy Gate</text>
-              <text x="65" y="52" text-anchor="middle" fill="#8b949e" font-size="12">server/policy.js</text>
-            </g>
-
-            <!-- Connector down to Brain Router -->
-            <path d="M 895 170 L 895 260 L 500 260 L 500 300" stroke="#34d399" stroke-width="2" fill="none" class="flow-line" />
-
-            <!-- LLM Brain Router Box (Middle) -->
-            <g class="svg-node" transform="translate(350, 300)" filter="url(#glow)">
-              <rect width="300" height="60" rx="12" fill="url(#tealGrad)"/>
-              <text x="150" y="35" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="700">llmClient.js (Brain Router)</text>
-            </g>
-
-            <!-- Brain Pathways (3 Options) -->
-            <!-- Path to A -->
-            <path d="M 400 360 L 200 420" stroke="#2dd4bf" stroke-width="2" id="path-brain-a" class="brain-path active" />
-            <!-- Path to B -->
-            <path d="M 500 360 L 500 420" stroke="#38bdf8" stroke-width="2" id="path-brain-b" class="brain-path" />
-            <!-- Path to C -->
-            <path d="M 600 360 L 800 420" stroke="#a78bfa" stroke-width="2" id="path-brain-c" class="brain-path" />
-
-            <!-- Brain Nodes (Bottom Layer) -->
-            <!-- Brain A Card -->
-            <g class="brain-card-svg active" id="svg-brain-a" transform="translate(100, 420)">
-              <rect width="200" height="90" rx="12" fill="#161b22" stroke="#2dd4bf" stroke-width="2"/>
-              <text x="100" y="30" text-anchor="middle" fill="#2dd4bf" font-size="15" font-weight="700">[A] Frontier API</text>
-              <text x="100" y="52" text-anchor="middle" fill="#e6edf3" font-size="12">DeepSeek V3 / GPT-4o</text>
-              <text x="100" y="72" text-anchor="middle" fill="#8b949e" font-size="11">เสถียร / แม่นยำสูงสุด</text>
-            </g>
-
-            <!-- Brain B Card -->
-            <g class="brain-card-svg" id="svg-brain-b" transform="translate(400, 420)">
-              <rect width="200" height="90" rx="12" fill="#161b22" stroke="#38bdf8" stroke-width="1"/>
-              <text x="100" y="30" text-anchor="middle" fill="#38bdf8" font-size="15" font-weight="700">[B] Local LLM</text>
-              <text x="100" y="52" text-anchor="middle" fill="#e6edf3" font-size="12">Ollama Qwen2.5 / Typhoon</text>
-              <text x="100" y="72" text-anchor="middle" fill="#8b949e" font-size="11">ฟรี 100% / ข้อมูลลับเฉพาะ</text>
-            </g>
-
-            <!-- Brain C Card -->
-            <g class="brain-card-svg" id="svg-brain-c" transform="translate(700, 420)">
-              <rect width="200" height="90" rx="12" fill="#161b22" stroke="#a78bfa" stroke-width="1"/>
-              <text x="100" y="30" text-anchor="middle" fill="#a78bfa" font-size="15" font-weight="700">[C] Colab GPU</text>
-              <text x="100" y="52" text-anchor="middle" fill="#e6edf3" font-size="12">Ollama / vLLM บน T4</text>
-              <text x="100" y="72" text-anchor="middle" fill="#8b949e" font-size="11">เร็วแรง / ชั่วคราว</text>
-            </g>
-          </svg>
-        </div>
-
-        <!-- Interactive Brain Selector Control Buttons -->
-        <div class="brain-selector-controls margin-top-md">
-          <button class="btn-brain active" data-brain="a">🧠 Frontier API (DeepSeek)</button>
-          <button class="btn-brain" data-brain="b">🏠 Local LLM (Ollama)</button>
-          <button class="btn-brain" data-brain="c">⚡ Colab GPU (T4 vLLM)</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 5: Tech Stack Section -->
-    <section id="tech-stack" class="section-padding bg-secondary-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Tech Stack</span>
-          <h2>เทคโนโลยีที่ใช้ (Technology Architecture)</h2>
-          <p>คัดสรรเครื่องมือประสิทธิภาพสูง ตอบโจทย์ความเร็ว ความปลอดภัย และความคุ้มค่า</p>
-        </div>
-
-        <div class="grid-4-col">
-          <div class="glass-card tech-card">
-            <div class="tech-icon">🎨</div>
-            <h4>Frontend</h4>
-            <ul>
-              <li>Vite (Multi-page build)</li>
-              <li>Vanilla JS (ES Modules)</li>
-              <li>Three.js (3D Org Graph)</li>
-              <li>Modular Modern CSS3</li>
-            </ul>
-          </div>
-
-          <div class="glass-card tech-card">
-            <div class="tech-icon">⚙️</div>
-            <h4>Backend & Security</h4>
-            <ul>
-              <li>Node.js & Express REST API</li>
-              <li>JWT (jsonwebtoken + bcryptjs)</li>
-              <li>Policy Gate (4 Roles RBAC)</li>
-              <li>PII Anonymizer Engine</li>
-            </ul>
-          </div>
-
-          <div class="glass-card tech-card">
-            <div class="tech-icon">📊</div>
-            <h4>Data & RAG Engine</h4>
-            <ul>
-              <li>Employee Registry (Dynamic Schema — ไม่ hardcode คอลัมน์)</li>
-              <li>AlaSQL (In-Memory SQL) + Inverted Index</li>
-              <li>Vector Store: multilingual-e5-small (Local, ฟรี)</li>
-              <li>Hybrid Search (RRF) + LLM Rerank + HyDE</li>
-              <li>OneDrive Sync: Microsoft Graph Delta Query</li>
-            </ul>
-          </div>
-
-          <div class="glass-card tech-card">
-            <div class="tech-icon">🤖</div>
-            <h4>AI & Infrastructure (Azure)</h4>
-            <ul>
-              <li>DeepSeek V3 (OpenAI-compatible) / Ollama</li>
-              <li>Azure Container Apps (scale-to-zero) + Jobs</li>
-              <li>Azure Blob Storage (Vector/Model Store)</li>
-              <li>Application Insights (Observability)</li>
-              <li>GitHub Actions CI/CD → GHCR · Vercel (Frontend)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: Roadmap & Compounding Value Section -->
-    <section id="roadmap" class="section-padding">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Roadmap</span>
-          <h2>คุณค่าต่อยอด & Flywheel การพัฒนา</h2>
-          <p>ยกระดับประสิทธิภาพต่อเนื่องผ่านกลไก Self-Improvement Flywheel</p>
-        </div>
-
-        <!-- 4.1 Compounding Value Table -->
-        <div class="value-table-container margin-bottom-xl">
-          <h3 class="table-title">ตารางมูลค่าการพัฒนาต่อยอด (Compounding Value)</h3>
-          <div class="table-responsive">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>ระยะพัฒนา</th>
-                  <th>ฟีเจอร์ที่ได้</th>
-                  <th>มูลค่าต่อองค์กร</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
-                  <td>RAG + 3D Org Graph + Governance RBAC + <strong>Login จริง 150 บัญชี (JWT)</strong></td>
-                  <td><span class="highlight-badge">ค้นหาข้อมูลรวดเร็วขึ้น 10x</span></td>
-                </tr>
-                <tr>
-                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
-                  <td>OneDrive Daily Sync (Graph Delta Query) + Dynamic Employee Registry — คนเข้า/ออกอัปเดตอัตโนมัติ</td>
-                  <td>ข้อมูลอัปเดตเป็นปัจจุบันเสมอ ไม่ต้องแก้โค้ด</td>
-                </tr>
-                <tr>
-                  <td><strong>ปัจจุบัน (Live ✅)</strong></td>
-                  <td>Hybrid Search + Rerank + HyDE · Azure Container Apps + CI/CD + App Insights</td>
-                  <td>ค้นแม่นขึ้น (Recall@5 = 90%) · deploy อัตโนมัติ · observability ครบ</td>
-                </tr>
-                <tr>
-                  <td><strong>ระยะถัดไป</strong></td>
-                  <td>Realtime Webhook Sync (Graph Change Notification) + Neon Postgres (ถาวร)</td>
-                  <td>ไฟล์เปลี่ยนปุ๊บ ข้อมูลอัปเดตปั๊บ ไม่ต้องรอรอบ sync</td>
-                </tr>
-                <tr>
-                  <td><strong>+ Fine-tune (QLoRA)</strong></td>
-                  <td>เทรน Model เฉพาะบริบท HR ภาษาไทย (Self-Improvement Flywheel)</td>
-                  <td>ลดค่าใช้จ่าย API อย่างต่อเนื่อง — มี Eval Gate (Recall@k) คุมคุณภาพแล้ว</td>
-                </tr>
-                <tr>
-                  <td><strong>+ Analytics Dashboard</strong></td>
-                  <td>กราฟเทรนด์ OKR, Attrition & Succession Risk</td>
-                  <td>ตัดสินใจเชิงกลยุทธ์แม่นยำ</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- 4.3 Self-Improvement Flywheel Inline SVG -->
-        <div class="flywheel-wrapper">
-          <h3 class="text-center margin-bottom-md">Self-Improvement Flywheel (ยิ่งใช้ ยิ่งเก่ง ยิ่งถูก)</h3>
-          <div class="svg-container">
-            <svg viewBox="0 0 800 500" class="interactive-svg" id="flywheel-svg">
-              <defs>
-                <filter id="glow-teal">
-                  <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-              </defs>
-
-              <!-- Central Rotating Ring -->
-              <circle cx="400" cy="250" r="160" fill="none" stroke="#2dd4bf" stroke-width="3" stroke-dasharray="12, 12" class="flywheel-rotate" />
-              <circle cx="400" cy="250" r="150" fill="none" stroke="rgba(45, 212, 191, 0.15)" stroke-width="2" />
-
-              <!-- Center Hub -->
-              <g transform="translate(310, 210)" filter="url(#glow-teal)">
-                <rect width="180" height="80" rx="16" fill="#161b22" stroke="#2dd4bf" stroke-width="2"/>
-                <text x="90" y="35" text-anchor="middle" fill="#2dd4bf" font-size="14" font-weight="700">Flywheel Core</text>
-                <text x="90" y="55" text-anchor="middle" fill="#e6edf3" font-size="12">API Cost: 100% ➔ 15%</text>
-              </g>
-
-              <!-- Stage 1 (Top 0 deg) -->
-              <g transform="translate(320, 30)" class="flywheel-stage">
-                <rect width="160" height="60" rx="10" fill="#161b22" stroke="#38bdf8" stroke-width="2"/>
-                <text x="80" y="28" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">1. Real Queries</text>
-                <text x="80" y="46" text-anchor="middle" fill="#8b949e" font-size="11">ผู้ใช้ถามคำถามจริง</text>
-              </g>
-
-              <!-- Stage 2 (Right 72 deg) -->
-              <g transform="translate(560, 160)" class="flywheel-stage">
-                <rect width="160" height="60" rx="10" fill="#161b22" stroke="#a78bfa" stroke-width="2"/>
-                <text x="80" y="28" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">2. Hybrid Router</text>
-                <text x="80" y="46" text-anchor="middle" fill="#8b949e" font-size="11">Frontier + Local</text>
-              </g>
-
-              <!-- Stage 3 (Bottom-Right 144 deg) -->
-              <g transform="translate(480, 370)" class="flywheel-stage">
-                <rect width="160" height="60" rx="10" fill="#161b22" stroke="#f59e0b" stroke-width="2"/>
-                <text x="80" y="28" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">3. PII Masked Data</text>
-                <text x="80" y="46" text-anchor="middle" fill="#8b949e" font-size="11">เก็บ Query + Answer</text>
-              </g>
-
-              <!-- Stage 4 (Bottom-Left 216 deg) -->
-              <g transform="translate(160, 370)" class="flywheel-stage">
-                <rect width="160" height="60" rx="10" fill="#161b22" stroke="#34d399" stroke-width="2"/>
-                <text x="80" y="28" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">4. QLoRA Train</text>
-                <text x="80" y="46" text-anchor="middle" fill="#8b949e" font-size="11">Nightly Fine-Tuning</text>
-              </g>
-
-              <!-- Stage 5 (Left 288 deg) -->
-              <g transform="translate(80, 160)" class="flywheel-stage">
-                <rect width="160" height="60" rx="10" fill="#161b22" stroke="#2dd4bf" stroke-width="2"/>
-                <text x="80" y="28" text-anchor="middle" fill="#e6edf3" font-size="13" font-weight="600">5. API Cost Shift</text>
-                <text x="80" y="46" text-anchor="middle" fill="#8b949e" font-size="11">ลด API Frontier 85%</text>
-              </g>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 7: Try It / Test Accounts Panel -->
-    <section id="try-it" class="section-padding bg-secondary-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Test Accounts</span>
-          <h2>ทดลองใช้งานจริง (Try BuildersEye Live)</h2>
-          <p>เข้าใช้งานด้วยบัญชีตัวอย่างเพื่อสัมผัสการทำงานของ 3D Graph และ RBAC Policy Gate</p>
-        </div>
-
-        <!-- Role Accounts Cards Grid -->
-        <div class="grid-4-col margin-bottom-lg">
-          <div class="glass-card cred-card border-ceo">
-            <span class="badge badge-ceo">CEO</span>
-            <h4>Managing Director</h4>
-            <div class="cred-field"><span>Username:</span> <code>ceo</code></div>
-            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
-            <div class="cred-scope">🔍 สิทธิ์: ดูข้อมูลได้ทั้งหมด 100%</div>
-            <button class="btn-copy-cred" data-user="ceo" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
-          </div>
-
-          <div class="glass-card cred-card border-hr">
-            <span class="badge badge-hr">HR</span>
-            <h4>HR Manager</h4>
-            <div class="cred-field"><span>Username:</span> <code>hr-manager</code></div>
-            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
-            <div class="cred-scope">🔍 สิทธิ์: ดูประวัติ HR พนักงานทั้งหมด</div>
-            <button class="btn-copy-cred" data-user="hr-manager" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
-          </div>
-
-          <div class="glass-card cred-card border-manager">
-            <span class="badge badge-manager">Manager</span>
-            <h4>IT Manager</h4>
-            <div class="cred-field"><span>Username:</span> <code>it-manager</code></div>
-            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
-            <div class="cred-scope">🔍 สิทธิ์: ดูเฉพาะทีมในสายงาน (Subtree)</div>
-            <button class="btn-copy-cred" data-user="it-manager" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
-          </div>
-
-          <div class="glass-card cred-card border-employee">
-            <span class="badge badge-employee">Employee</span>
-            <h4>Staff Member</h4>
-            <div class="cred-field"><span>Username:</span> <code>emp144</code></div>
-            <div class="cred-field"><span>Password:</span> <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code></div>
-            <div class="cred-scope">🔍 สิทธิ์: ดูเฉพาะตัวเอง (Self Scope)</div>
-            <button class="btn-copy-cred" data-user="emp144" data-pass="[TEST_ACCOUNT_PASSWORD]">คัดลอกรหัส</button>
-          </div>
-        </div>
-
-        <!-- RBAC Challenge Box & Launch CTA -->
-        <div class="glass-card challenge-box text-center">
-          <div class="challenge-icon">💡</div>
-          <h3>ลองท้าทายระบบ RBAC Security!</h3>
-          <p class="challenge-desc">
-            1. กดเข้าแอปด้วยบัญชี Employee: <code>emp144</code> / <code>[Set via TEST_ACCOUNT_PASSWORD env var]</code> <br />
-            2. พิมพ์คำถามใน AI Chat: <strong>"เงินเดือน CEO เท่าไหร่?"</strong> <br />
-            3. ระบบจะแสดงข้อความ <strong>"Query blocked by governance policy"</strong> ทันที!
-          </p>
-          <div class="cta-launch-wrapper margin-top-md">
-            <a href="/app.html?preview=1" target="_blank" class="btn btn-launch-app">
-              🚀 เปิดใช้งานแอป 3D พร้อมแผงบัญชีทดสอบ (/app.html?preview=1)
-            </a>
-          </div>
-          <p class="cold-start-note">
-            ☁️ Backend รันบน <strong>Azure Container Apps</strong> — ช่วง 08:00–21:00 น. มี Keep-Warm Job ปลุกไว้อัตโนมัติ (ตอบทันที) · นอกเวลานั้นครั้งแรกอาจรอ 10-30 วิ ระบบจะปลุกและลองใหม่อัตโนมัติให้ ไม่ต้องกดซ้ำ
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION: ITIL System Logs -->
-    <section class="section" id="itil-logs">
-      <div class="container">
-        <h2 class="text-center">System Logs & Updates (ITIL)</h2>
-        <p class="text-center">ประวัติการอัปเดตระบบ การแก้ไขปัญหา และการจัดการระบบตามหลัก ITIL</p>
-        <div class="logs-container">
-          <div class="log-tab-buttons">
-            <button class="log-tab-btn active" data-target="change-log">CHANGE_LOG</button>
-            <button class="log-tab-btn" data-target="incident-log">INCIDENT_LOG</button>
-            <button class="log-tab-btn" data-target="problem-log">PROBLEM_LOG</button>
-          </div>
-          <div class="log-content active" id="change-log"></div>
-          <div class="log-content" id="incident-log" style="display:none;"></div>
-          <div class="log-content" id="problem-log" style="display:none;"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 8: Footer Section -->
-    <footer class="showcase-footer">
-      <div class="container footer-content">
-        <div class="footer-brand">
-          <h3>BuildersEye</h3>
-          <p>Org-Graph Intelligence Showcase Landing Page</p>
-          <span class="backend-status-badge" id="backend-status-badge">
-            <span class="status-dot green"></span> Backend Status: Online
-          </span>
-        </div>
-        <div class="footer-links">
-          <a href="#hero">หน้าแรก</a>
-          <a href="#what-is-it">จุดเด่น</a>
-          <a href="#architecture">สถาปัตยกรรม</a>
-          <a href="/app.html">เปิดแอป 3D</a>
-        </div>
-      </div>
-      <div class="footer-bottom text-center">
-        <p>© 2026 BuildersEye. Built with Vite, Three.js, Node.js, DeepSeek API &amp; Microsoft Azure (Container Apps · Blob Storage · App Insights · Entra ID · Graph API)</p>
-      </div>
-    </footer>
-
-    <!-- Interactive Script Modules -->
-    <script type="module" src="/src/js/showcase.js"></script>
-    <script type="module" src="/src/js/tour.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildersEye — Service Offline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      margin-bottom: 20px;
+    }
+    .details {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      color: #64748b;
+      text-align: left;
+      line-height: 1.5;
+    }
+    .details li {
+      margin-left: 18px;
+      margin-bottom: 6px;
+    }
+    .details li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🛑</div>
+    <div class="badge">OFFLINE / DECOMMISSIONED</div>
+    <h1>ระบบและ CDN ปิดให้บริการแล้ว</h1>
+    <p>
+      ระบบ BuildersEye พร้อมด้วย Cloud Infrastructure และ CDN ทั้งหมดได้ถูกระงับและปิดการทำงานเรียบร้อยแล้ว
+    </p>
+    <div class="details">
+      <ul>
+        <li>Azure Container Apps backend: Decommissioned</li>
+        <li>Cloud Compute & Keep-warm cron: Terminated ($0 Cost)</li>
+        <li>CDN & Online Endpoints: Offline</li>
+      </ul>
+    </div>
+  </div>
+</body>
 </html>

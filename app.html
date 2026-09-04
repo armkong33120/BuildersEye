@@ -1,222 +1,100 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mail OneDrive Org Graph</title>
-  </head>
-  <body>
-    <div id="app">
-      <main class="stage">
-        <canvas id="scene"></canvas>
-        <div id="labels"></div>
-      </main>
-
-      <header class="topbar" id="topbar">
-        <div class="brand">
-          <div class="brand-mark"></div>
-          <div>
-            <h1>Mail + OneDrive Org Graph</h1>
-            <p>3D identity network for reporting lines and personal workspace ownership</p>
-          </div>
-        </div>
-        <div class="top-actions">
-          <a
-            href="/admin.html"
-            class="icon-button admin-console-btn"
-            type="button"
-            title="⚙️ Admin Console — CEO configuration (org tree, data sources, permissions, preview, audit)"
-            aria-label="Open Admin Console"
-            style="display:inline-flex; align-items:center; justify-content:center;"
-          >⚙️</a>
-          <a
-            href="/debug_neural_network_diagram.html"
-            class="icon-button neural-trace-btn"
-            type="button"
-            title="🧠 Neural Trace — ดูเส้นทางเดินคำถามผ่าน Neural Network Pipeline"
-            aria-label="Open Neural Network Execution Tracer"
-            style="display:inline-flex; align-items:center; justify-content:center;"
-          >🧠</a>
-          <button
-            id="topSyncBtn"
-            class="icon-button sync-top-btn is-hidden"
-            type="button"
-            title="Sync OneDrive → rebuild registry → hot-reload (CEO/HR)"
-            aria-label="Sync OneDrive"
-          ></button>
-          <span id="topSyncStatus" class="sync-top-status is-hidden"></span>
-          <label class="select-field">
-            <span>Focus Person</span>
-            <select id="personSelect"></select>
-          </label>
-          <button id="focusCeo" class="icon-button" title="Focus CEO" aria-label="Focus CEO"></button>
-          <button id="resetCamera" class="icon-button" title="Reset camera" aria-label="Reset camera"></button>
-        </div>
-      </header>
-
-      <button
-        id="toggleTopbar"
-        class="topbar-toggle"
-        type="button"
-        aria-expanded="true"
-        title="Hide top bar"
-        aria-label="Hide top bar"
-      ></button>
-
-      <button
-        id="togglePanel"
-        class="panel-toggle"
-        type="button"
-        aria-expanded="true"
-        title="Hide panels"
-        aria-label="Hide panels"
-      ></button>
-
-      <aside class="side-panel" id="sidePanel">
-        <section class="metric-section collapsible-panel" data-panel="metrics">
-          <div class="collapse-header">
-            <span>Overview</span>
-            <button class="collapse-button" type="button" data-collapse="metrics" aria-expanded="true" aria-label="Collapse overview"></button>
-          </div>
-          <div class="metric-strip collapsible-body" id="metricStrip"></div>
-        </section>
-
-        <section class="registry-section collapsible-panel" data-panel="registry">
-          <div class="section-title collapse-header">
-            <span>Registry &amp; Sync</span>
-            <div class="section-actions">
-              <button id="refreshRegistryBtn" class="seg-button" type="button">Refresh</button>
-              <button class="collapse-button" type="button" data-collapse="registry" aria-expanded="true" aria-label="Collapse registry"></button>
-            </div>
-          </div>
-          <div class="collapsible-body">
-            <div id="registryStatus" class="registry-status">
-              <div class="registry-status-empty">—</div>
-            </div>
-            <div class="registry-actions">
-              <button
-                id="syncOnedriveBtn"
-                class="sync-btn"
-                type="button"
-                title="OneDrive delta sync → rebuild registry → hot-reload search engines (CEO/HR)"
-              >⟳ Sync OneDrive</button>
-            </div>
-            <div id="syncResult" class="sync-result is-hidden" role="status"></div>
-          </div>
-        </section>
-
-        <section class="control-section collapsible-panel" data-panel="scope">
-          <div class="section-title collapse-header">
-            <span>Graph Scope</span>
-            <div class="section-actions">
-              <button id="toggleLabels" class="seg-button" type="button">Key Labels</button>
-              <button class="collapse-button" type="button" data-collapse="scope" aria-expanded="true" aria-label="Collapse graph scope"></button>
-            </div>
-          </div>
-          <div class="collapsible-body">
-            <label class="select-field wide">
-              <span>Department</span>
-              <select id="departmentSelect"></select>
-            </label>
-            <label class="select-field wide">
-              <span>Line Visibility</span>
-              <select id="lineModeSelect">
-                <option value="all">All reporting lines</option>
-                <option value="chain">Selected chain only</option>
-                <option value="subtree">Selected subtree</option>
-              </select>
-            </label>
-            <div class="level-label-control">
-              <div class="control-label">Label Levels</div>
-              <div class="level-toggle-row" id="levelLabelToggles"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="legend-section collapsible-panel" data-panel="legend">
-          <div class="section-title collapse-header">
-            <span>Department Colors</span>
-            <button class="collapse-button" type="button" data-collapse="legend" aria-expanded="true" aria-label="Collapse department colors"></button>
-          </div>
-          <div class="department-legend collapsible-body" id="departmentLegend"></div>
-        </section>
-
-        <section class="detail-section collapsible-panel" data-panel="detail">
-          <div class="section-title collapse-header">
-            <span>Selected Account</span>
-            <button class="collapse-button" type="button" data-collapse="detail" aria-expanded="true" aria-label="Collapse selected account"></button>
-          </div>
-          <div class="detail-body collapsible-body" id="detailPanel">
-            <div class="empty-detail">Select a person</div>
-          </div>
-        </section>
-      </aside>
-
-      <section class="rag-chat" id="ragChat" aria-label="RAG assistant chat">
-        <div class="rag-chat-header">
-          <div>
-            <div class="rag-title">RAG Assistant</div>
-            <div class="rag-status">Org graph retrieval online</div>
-          </div>
-          <div class="chat-header-actions">
-            <button id="resetChat" class="chat-reset-button" type="button" title="New Chat" aria-label="New Chat"></button>
-            <button id="toggleChat" class="chat-toggle-button" type="button" aria-expanded="true" title="Collapse chat" aria-label="Collapse chat"></button>
-          </div>
-        </div>
-
-        <div class="rag-chat-body" id="chatMessages">
-          <article class="chat-message assistant">
-            <p>พบข้อมูล employee graph ทั้งหมด 150 accounts, 149 reporting lines และ 150 OneDrive sites. ถามคำถามเกี่ยวกับองค์กรได้เลยครับ</p>
-            <div class="message-footer"><span class="message-time">13:02</span></div>
-          </article>
-        </div>
-
-        <form class="rag-chat-form" id="chatForm">
-          <div class="chat-input-row">
-            <input id="chatInput" type="text" autocomplete="off" placeholder="Ask about the org graph…" />
-            <span class="chat-input-hint">⏎ Send</span>
-          </div>
-          <button id="sendChat" class="chat-send-button" type="submit" title="Send message" aria-label="Send message"></button>
-        </form>
-      </section>
-
-      <!-- Login overlay (shown when no valid session) -->
-      <div id="loginOverlay" class="login-overlay is-hidden" aria-hidden="true">
-        <div class="login-card">
-          <div class="login-brand">
-            <div class="brand-mark"></div>
-            <div>
-              <h1>BuildersEye</h1>
-              <p>BuildersEye 1.1 Org-Graph Intelligence — กรุณาเข้าสู่ระบบ</p>
-            </div>
-          </div>
-          <form id="loginForm" class="login-form" autocomplete="off">
-            <label class="login-field">
-              <span>Username</span>
-              <input id="loginUsername" type="text" autocomplete="username" placeholder="เช่น emp001 / ceo" />
-            </label>
-            <label class="login-field">
-              <span>Password</span>
-              <input id="loginPassword" type="password" autocomplete="current-password" placeholder="รหัสผ่าน" />
-            </label>
-            <div id="loginError" class="login-error" role="alert"></div>
-            <button id="loginSubmit" class="login-submit" type="submit">เข้าสู่ระบบ</button>
-          </form>
-
-          <div class="preview-divider"><span>หรือ</span></div>
-          <button id="previewModeBtn" class="preview-mode-btn" type="button">🧪 เข้าชมโหมดทดลอง — ไม่ต้อง Login</button>
-          <p class="preview-hint">เห็น UI ครบ + ทดสอบถามตอบได้ทันที แม้ backend กำลัง cold start</p>
-
-          <div id="testCredsPanel" class="test-creds is-hidden">
-            <div class="test-creds-title">🧪 ทดสอบระบบ (Preview) — เลือกตำแหน่ง</div>
-            <div id="testCredsList" class="test-creds-list"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Logged-in user chip (filled by JS) -->
-      <div id="userChip" class="user-chip is-hidden"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildersEye — Service Offline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      margin-bottom: 20px;
+    }
+    .details {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      color: #64748b;
+      text-align: left;
+      line-height: 1.5;
+    }
+    .details li {
+      margin-left: 18px;
+      margin-bottom: 6px;
+    }
+    .details li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🛑</div>
+    <div class="badge">OFFLINE / DECOMMISSIONED</div>
+    <h1>ระบบและ CDN ปิดให้บริการแล้ว</h1>
+    <p>
+      ระบบ BuildersEye พร้อมด้วย Cloud Infrastructure และ CDN ทั้งหมดได้ถูกระงับและปิดการทำงานเรียบร้อยแล้ว
+    </p>
+    <div class="details">
+      <ul>
+        <li>Azure Container Apps backend: Decommissioned</li>
+        <li>Cloud Compute & Keep-warm cron: Terminated ($0 Cost)</li>
+        <li>CDN & Online Endpoints: Offline</li>
+      </ul>
     </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+  </div>
+</body>
 </html>

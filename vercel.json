@@ -2,5 +2,20 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/((?!offline\\.html$).*)",
+      "destination": "/offline.html",
+      "permanent": false
+    }
+  ]
 }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildersEye — Service Offline</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      margin-bottom: 20px;
+    }
+    .details {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 13px;
+      color: #64748b;
+      text-align: left;
+      line-height: 1.5;
+    }
+    .details li {
+      margin-left: 18px;
+      margin-bottom: 6px;
+    }
+    .details li:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🛑</div>
+    <div class="badge">OFFLINE / DECOMMISSIONED</div>
+    <h1>ระบบและ CDN ปิดให้บริการแล้ว</h1>
+    <p>
+      ระบบ BuildersEye พร้อมด้วย Cloud Infrastructure และ CDN ทั้งหมดได้ถูกระงับและปิดการทำงานเรียบร้อยแล้ว
+    </p>
+    <div class="details">
+      <ul>
+        <li>Azure Container Apps backend: Decommissioned</li>
+        <li>Cloud Compute & Keep-warm cron: Terminated ($0 Cost)</li>
+        <li>CDN & Online Endpoints: Offline</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

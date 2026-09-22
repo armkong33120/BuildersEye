@@ -13,7 +13,7 @@ async function run() {
   
   await page.goto('https://builders-eye.vercel.app/app.html', { waitUntil: 'networkidle' });
   await page.fill('#loginUsername', 'ceo');
-  await page.fill('#loginPassword', 'HhAjzrMkw0ODQfr_tH9k1Y81');
+  await page.fill('#loginPassword', process.env.TEST_ACCOUNT_PASSWORD || '');
   await page.click('#loginSubmit', { force: true });
   await page.waitForTimeout(3000);
   

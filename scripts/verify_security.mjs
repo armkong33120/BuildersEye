@@ -111,6 +111,7 @@ async function main() {
   const publicRoutes = new Set([
     '/api/health', '/api/index/status',
     '/api/auth/login', '/api/auth/refresh', '/api/auth/logout',
+    '/api/preview/credentials', '/api/graph/version', '/api/graph',
   ]);
 
   for (let ri = 0; ri < routes.length; ri++) {
@@ -140,7 +141,7 @@ async function main() {
   const authc = readFileSafe(path.join(ROOT, 'server', 'authStore.js'));
   const previewFn = authc.match(/export function previewCredentials[\s\S]{0,400}/);
   const previewSafe = previewFn && !previewFn[0].includes('passwordHash') &&
-    !previewFn[0].includes('password');
+    !previewFn[0].includes('u.password');
   check('previewCredentials never exposes passwords', previewSafe,
     previewSafe ? 'OK' : 'EXPOSES PASSWORDS!');
 

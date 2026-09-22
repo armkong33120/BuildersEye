@@ -1,5 +1,5 @@
 const BACKEND = 'https://builderseye-backend.onrender.com';
-const PASSWORD = 'HhAjzrMkw0ODQfr_tH9k1Y81';
+const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '';
 
 async function testApi() {
   console.log('Logging in...');

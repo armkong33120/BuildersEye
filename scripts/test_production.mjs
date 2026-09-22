@@ -1,7 +1,7 @@
 import { chromium, devices } from 'playwright';
 
 const APP_URL = 'https://builders-eye.vercel.app/app.html';
-const PASSWORD = 'HhAjzrMkw0ODQfr_tH9k1Y81';
+const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '';
 
 async function testVercel() {
   console.log(`🚀 Starting Playwright test against Production: ${APP_URL}`);

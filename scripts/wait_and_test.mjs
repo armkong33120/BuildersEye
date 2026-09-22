@@ -1,11 +1,12 @@
 const BACKEND = 'https://builderseye-backend.onrender.com';
-const PASSWORD = 'HhAjzrMkw0ODQfr_tH9k1Y81';
+const PASSWORD = process.env.TEST_ACCOUNT_PASSWORD || '';
+const RENDER_API_KEY = process.env.RENDER_API_KEY || '';
 
 async function waitAndTest() {
   console.log('Waiting for Render deploy to finish...');
   while (true) {
     const r = await fetch('https://api.render.com/v1/services/srv-d9p0e6ugekts73evnivg/deploys?limit=1', {
-      headers: { 'Authorization': 'Bearer rnd_36tKAkxuXVKNUvUu16OksYORawv5' }
+      headers: { 'Authorization': `Bearer ${RENDER_API_KEY}` }
     });
     const data = await r.json();
     const status = data[0].deploy.status;

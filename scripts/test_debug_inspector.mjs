@@ -30,9 +30,13 @@ const sk = (name, reason) => { skipped++; console.log(`  ⏭️  ${name} — ${r
 const read = (p) => { try { return fs.readFileSync(p, 'utf-8'); } catch { return ''; } };
 
 async function fj(url, opts = {}) {
-  const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
-  const t = await r.text(); let d; try { d = JSON.parse(t); } catch { d = null; }
-  return { s: r.status, d, t };
+  try {
+    const r = await fetch(url, { ...opts, headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) } });
+    const t = await r.text(); let d; try { d = JSON.parse(t); } catch { d = null; }
+    return { s: r.status, d, t };
+  } catch (e) {
+    return { s: 0, d: null, t: '', error: e.message };
+  }
 }
 
 async function login(username, password) {
@@ -136,10 +140,12 @@ async function sectionUnauth() {
   console.log('\n── 6. Unauth debug APIs -> 401 ──');
   const eps = ['/api/debug/pipeline', '/api/debug/online', '/api/debug/latency', '/api/preview/credentials'];
   for (const ep of eps) {
-    try {
-      const r = await fj(`${BACKEND}${ep}`);
+    const r = await fj(`${BACKEND}${ep}`);
+    if (r.s === 0) {
+      sk(ep, `backend unreachable: ${r.error}`);
+    } else {
       assert(`${ep} -> 401`, r.s === 401, `got ${r.s}`);
-    } catch (e) { sk(`${ep}`, `backend unreachable: ${e.message}`); }
+    }
   }
 }
 
@@ -152,7 +158,7 @@ async function sectionAuthed() {
   if (!u || !pw) { sk('authed API tests', 'no TEST_USERNAME/TEST_PASSWORD'); return; }
 
   const lg = await login(u, pw);
-  if (lg.s !== 200) { sk('authed API tests', `login ${lg.s}`); return; }
+  if (lg.s !== 200) { sk('authed API tests', `login ${lg.s}${lg.error ? ' (' + lg.error + ')' : ''}`); return; }
   const token = lg.d.accessToken;
   const H = { Authorization: `Bearer ${token}` };
   console.log(`     logged in as ${lg.d.user?.username} (${lg.d.user?.role})`);

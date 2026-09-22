@@ -141,7 +141,7 @@ async function main() {
       totalSkipped++;
       continue;
     }
-    if (suite.requiresBackend && !backendUp) {
+    if ((suite.requiresBackend || suite.requiresAuth) && !backendUp) {
       console.log(`⏭️  ${suite.name} — SKIPPED (no live backend at ${BACKEND_URL})`);
       totalSkipped++;
       continue;

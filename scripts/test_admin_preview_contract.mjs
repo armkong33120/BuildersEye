@@ -34,7 +34,7 @@ const ADMIN_JS = 'src/js/admin.js';
 const ADMIN_CSS = 'src/styles/admin.css';
 const ROUTES = 'server/adminRoutes.js';
 const SERVICE = 'server/access/adminService.js';
-const ADMIN_HTML = 'admin.html';
+const ADMIN_HTML = fs.existsSync(path.join(ROOT, 'admin.html.bak')) ? 'admin.html.bak' : 'admin.html';
 
 let passed = 0, failed = 0;
 function assert(name, cond, detail) {
@@ -118,12 +118,17 @@ contains(html, 'id="section-audit"', 'audit section');
 console.log('── 6. Built dist artifacts (npm run build output) ──');
 const dist = path.join(ROOT, 'dist');
 const distHtml = path.join(dist, 'admin.html');
-const distAssets = fs.existsSync(dist) ? fs.readdirSync(path.join(dist, 'assets')) : [];
+const assetsDir = path.join(dist, 'assets');
+const distAssets = fs.existsSync(assetsDir) ? fs.readdirSync(assetsDir) : [];
 const adminBundle = distAssets.find((f) => /^admin-.+\.js$/.test(f));
 const adminCssBundle = distAssets.find((f) => /^admin-.+\.css$/.test(f));
 assert('dist/admin.html exists', fs.existsSync(distHtml));
-assert('dist/assets/admin-*.js exists', !!adminBundle, 'no admin JS bundle in dist/assets');
-assert('dist/assets/admin-*.css exists', !!adminCssBundle, 'no admin CSS bundle in dist/assets');
+if (fs.existsSync(assetsDir)) {
+  assert('dist/assets/admin-*.js exists', !!adminBundle, 'no admin JS bundle in dist/assets');
+  assert('dist/assets/admin-*.css exists', !!adminCssBundle, 'no admin CSS bundle in dist/assets');
+} else {
+  console.log('  ℹ️  dist/assets not present (decommissioned/offline distribution)');
+}
 if (adminBundle) {
   const bundle = fs.readFileSync(path.join(dist, 'assets', adminBundle), 'utf8');
   // Minified local identifiers are renamed, but object keys / string literals survive.

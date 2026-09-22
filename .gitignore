@@ -33,3 +33,9 @@ tools/upgrade_360/output/
 tools/upgrade_360/.venv/
 .vercel
 .env*
+*.bak
+docs/MCP_UAT_REPORT.md
+scripts/human_test*.mjs
+scripts/test_360_live*.mjs
+scripts/_probe_debug.mjs
+scripts/push_source_links.mjs

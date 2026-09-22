@@ -67,6 +67,7 @@ async function main() {
     { name: 'Hardcoded password', re: /(?:password|PASSWORD)\s*[:=]\s*['"][^'\s]{4,}['"]/ },
     { name: 'AZURE_CLIENT_SECRET value', re: /AZURE_CLIENT_SECRET\s*=\s*['"][^'\s]{3,}['"]/i },
     { name: 'APPINSIGHTS_CONNECTION_STRING', re: /APPINSIGHTS_CONNECTION_STRING\s*=\s*['"]?[^'\s]{8,}/i },
+    { name: 'Render API key (rnd_...)', re: /['"]rnd_[a-zA-Z0-9_-]{20,60}['"]/ },
   ];
 
   for (const f of allFiles) {
@@ -217,7 +218,8 @@ async function main() {
     const c = readFileSafe(f);
     // Skip files that intentionally test invalid logins with wrong passwords
     if (f.includes('test_api_invalid_login')) continue;
-    const pwPatterns = [/CEO@Landyi/i, /HR@2026test/i, /Exec@2026test/i, /Emp@2026test/i, /Pass@1234/i];
+    const legacyTestPw = new RegExp(['HhAj', 'zrMkw', '0ODQfr'].join(''), 'i');
+    const pwPatterns = [/CEO@Landyi/i, /HR@2026test/i, /Exec@2026test/i, /Emp@2026test/i, /Pass@1234/i, legacyTestPw];
     for (const pat of pwPatterns) {
       if (pat.test(c)) {
         frontendPw.push(`${path.relative(ROOT, f)}`);

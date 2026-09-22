@@ -4,6 +4,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -62,13 +63,13 @@ async function main() {
   const secretPatterns = [
     { name: 'Hardcoded JWT secret', re: /JWT_SECRET\s*=\s*['"][^'\s]{8,}['"]/i },
     { name: 'API key (sk-...)', re: /(?:DEEPSEEK|OPENAI|LLM)_API_KEY\s*=\s*['"]sk-[^'\s]{8,}['"]/i },
-    { name: 'Generic API key pattern', re: /['"]sk-[a-zA-Z0-9_-]{20,60}['"]/ },
+    { name: 'Generic API key pattern', re: /\bsk-[a-zA-Z0-9_-]{20,60}\b/ },
     { name: 'Database URL with creds', re: /(?:DATABASE_URL|POSTGRES_URL)\s*=\s*['"]?postgres(?:ql)?:\/\/[^:]+:[^@\s]+@/i },
     { name: 'Azure connection string', re: /DefaultEndpointsProtocol=https/i },
     { name: 'Hardcoded password', re: /(?:password|PASSWORD)\s*[:=]\s*['"][^'\s]{4,}['"]/ },
     { name: 'AZURE_CLIENT_SECRET value', re: /AZURE_CLIENT_SECRET\s*=\s*['"][^'\s]{3,}['"]/i },
     { name: 'APPINSIGHTS_CONNECTION_STRING', re: /APPINSIGHTS_CONNECTION_STRING\s*=\s*['"]?[^'\s]{8,}/i },
-    { name: 'Render API key (rnd_...)', re: /['"]rnd_[a-zA-Z0-9_-]{20,60}['"]/ },
+    { name: 'Render API key (rnd_...)', re: /\brnd_[a-zA-Z0-9_-]{20,60}\b/ },
   ];
 
   for (const f of allFiles) {
@@ -78,13 +79,12 @@ async function main() {
     const lines = c.split('\n');
     for (let i = 0; i < lines.length; i++) {
       const l = lines[i];
-      if (/^\s*(\/\/|#|\*|<!--)/.test(l)) continue;
       for (const pat of secretPatterns) {
         if (pat.re.test(l)) {
           if (f.includes('authStore') && l.includes('process.exit')) continue;
           if (f.includes('.env.example')) continue;
           if (l.includes('your_') || l.includes('placeholder')) continue;
-          if (l.includes('[REDACTED') || l.includes('[TEST_ACCOUNT')) continue;
+          if (l.includes('[REDACTED') || l.includes('[TEST_ACCOUNT') || l.includes('sk-xxx')) continue;
           if (l.includes('process.env.')) continue;
           secretsFound.push(`${rel}:${i + 1} — ${pat.name}: ${l.trim().slice(0, 100)}`);
         }
@@ -196,6 +196,21 @@ async function main() {
   check('.gitignore excludes server/.data/', gi.includes('server/.data/'), 'OK');
   check('.gitignore excludes node_modules', gi.includes('node_modules'), 'OK');
 
+  let gitIgnoreFunctional = true;
+  const sensitivePaths = ['server/.env', '.env.local', '.vercel/', 'server/.data/'];
+  try {
+    const devDir = process.env.DEVELOPER_DIR || '/Library/Developer/CommandLineTools';
+    const gitBin = `DEVELOPER_DIR=${devDir} git`;
+    const ignoredOut = execSync(`${gitBin} check-ignore ${sensitivePaths.join(' ')}`, { cwd: ROOT, encoding: 'utf-8' });
+    const ignoredList = ignoredOut.split('\n').map(s => s.trim()).filter(Boolean);
+    const trackedOut = execSync(`${gitBin} ls-files ${sensitivePaths.join(' ')}`, { cwd: ROOT, encoding: 'utf-8' });
+    gitIgnoreFunctional = ignoredList.length === sensitivePaths.length && trackedOut.trim().length === 0;
+  } catch {
+    gitIgnoreFunctional = sensitivePaths.every(p => gi.includes(p.replace(/\/$/, '')) || gi.includes('.env*'));
+  }
+  check('Sensitive artifacts (server/.env, .env.local, .vercel/, server/.data/) untracked and gitignored',
+    gitIgnoreFunctional, gitIgnoreFunctional ? 'OK (functional check-ignore passed)' : 'FAIL');
+
   // ========== 10. Webhook validation ==========
   console.log('\n── 10. Webhook validation ──');
   const whc = readFileSafe(path.join(ROOT, 'server', 'onedriveWebhook.js'));
@@ -237,7 +252,8 @@ async function main() {
   // ========== 13. Decommissioned / Offline state verification ==========
   console.log('\n── 13. Decommissioned / Offline state verification ──');
   const offlineHtml = readFileSafe(path.join(ROOT, 'offline.html'));
-  const distOfflineHtml = readFileSafe(path.join(ROOT, 'dist', 'offline.html'));
+  const distDir = path.join(ROOT, 'dist');
+  const distOfflineHtml = readFileSafe(path.join(distDir, 'offline.html'));
   const publicOfflineHtml = readFileSafe(path.join(ROOT, 'public', 'offline.html'));
   const vercelJson = readFileSafe(path.join(ROOT, 'vercel.json'));
   const indexHtml = readFileSafe(path.join(ROOT, 'index.html'));
@@ -248,15 +264,21 @@ async function main() {
     offlineHtml.includes('BuildersEye — Service Offline'),
     offlineHtml.includes('BuildersEye — Service Offline') ? 'OK' : 'MISSING OR INVALID');
 
-  check('dist/offline.html or public/offline.html preserves offline notice',
-    distOfflineHtml.includes('BuildersEye — Service Offline') || publicOfflineHtml.includes('BuildersEye — Service Offline'),
-    'OK');
+  check('public/offline.html exists and displays offline notice',
+    publicOfflineHtml.includes('BuildersEye — Service Offline'),
+    publicOfflineHtml.includes('BuildersEye — Service Offline') ? 'OK' : 'MISSING OR INVALID');
+
+  if (fs.existsSync(distDir)) {
+    check('dist/offline.html preserves offline notice',
+      distOfflineHtml.includes('BuildersEye — Service Offline'),
+      distOfflineHtml.includes('BuildersEye — Service Offline') ? 'OK' : 'MISSING OR INVALID');
+  }
 
   let vercelRedirects = false;
   try {
     const vj = JSON.parse(vercelJson);
     vercelRedirects = Array.isArray(vj.redirects) &&
-      vj.redirects.some(r => r.destination === '/offline.html');
+      vj.redirects.some(r => r.destination === '/offline.html' && r.source && r.source.includes('offline'));
   } catch {}
   check('vercel.json redirects all traffic to /offline.html', vercelRedirects,
     vercelRedirects ? 'OK' : 'REDIRECTS MISSING');

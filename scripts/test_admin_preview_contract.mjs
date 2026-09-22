@@ -137,25 +137,29 @@ console.log('── 6. Built dist artifacts (npm run build output) ──');
 const dist = path.join(ROOT, 'dist');
 const distHtml = path.join(dist, 'admin.html');
 const assetsDir = path.join(dist, 'assets');
-const distAssets = fs.existsSync(assetsDir) ? fs.readdirSync(assetsDir) : [];
-const adminBundle = distAssets.find((f) => /^admin-.+\.js$/.test(f));
-const adminCssBundle = distAssets.find((f) => /^admin-.+\.css$/.test(f));
-assert('dist/admin.html exists', fs.existsSync(distHtml));
-if (fs.existsSync(assetsDir)) {
-  assert('dist/assets/admin-*.js exists', !!adminBundle, 'no admin JS bundle in dist/assets');
-  assert('dist/assets/admin-*.css exists', !!adminCssBundle, 'no admin CSS bundle in dist/assets');
+if (fs.existsSync(dist)) {
+  assert('dist/admin.html exists', fs.existsSync(distHtml));
+  const distAssets = fs.existsSync(assetsDir) ? fs.readdirSync(assetsDir) : [];
+  const adminBundle = distAssets.find((f) => /^admin-.+\.js$/.test(f));
+  const adminCssBundle = distAssets.find((f) => /^admin-.+\.css$/.test(f));
+  if (fs.existsSync(assetsDir)) {
+    assert('dist/assets/admin-*.js exists', !!adminBundle, 'no admin JS bundle in dist/assets');
+    assert('dist/assets/admin-*.css exists', !!adminCssBundle, 'no admin CSS bundle in dist/assets');
+  } else {
+    console.log('  ℹ️  dist/assets not present (decommissioned/offline distribution)');
+  }
+  if (adminBundle) {
+    const bundle = fs.readFileSync(path.join(dist, 'assets', adminBundle), 'utf8');
+    // Minified local identifiers are renamed, but object keys / string literals survive.
+    contains(bundle, 'employeeCode:', 'built bundle preview payload key employeeCode');
+    contains(bundle, 'PREVIEW MODE', 'built bundle PREVIEW MODE badge');
+    contains(bundle, 'policyVersion', 'built bundle policyVersion');
+    assert('built bundle still discards stale preview responses (seq guard pattern)',
+      /if\([a-zA-Z$]+\!==[a-zA-Z$]+\)return;/.test(bundle) || bundle.includes('seq !== previewSeq'),
+      'no stale-guard pattern in bundle');
+  }
 } else {
-  console.log('  ℹ️  dist/assets not present (decommissioned/offline distribution)');
-}
-if (adminBundle) {
-  const bundle = fs.readFileSync(path.join(dist, 'assets', adminBundle), 'utf8');
-  // Minified local identifiers are renamed, but object keys / string literals survive.
-  contains(bundle, 'employeeCode:', 'built bundle preview payload key employeeCode');
-  contains(bundle, 'PREVIEW MODE', 'built bundle PREVIEW MODE badge');
-  contains(bundle, 'policyVersion', 'built bundle policyVersion');
-  assert('built bundle still discards stale preview responses (seq guard pattern)',
-    /if\([a-zA-Z$]+\!==[a-zA-Z$]+\)return;/.test(bundle) || bundle.includes('seq !== previewSeq'),
-    'no stale-guard pattern in bundle');
+  console.log('  ℹ️  dist directory not present (clean checkout — run npm run build to verify built artifacts)');
 }
 
 console.log(`\n📊 Results: ${passed} passed, ${failed} failed / ${passed + failed} total`);

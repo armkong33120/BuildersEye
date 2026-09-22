@@ -37,6 +37,7 @@ const TEST_SUITES = [
   { name: 'Admin Preview Contract (static)', file: 'test_admin_preview_contract.mjs', requiresAuth: false },
   { name: 'Persistence Restart',  file: 'test_persistence_restart.mjs', requiresAuth: false },
   { name: 'Legacy Shim Parity',   file: 'test_legacy_shim_parity.mjs',  requiresAuth: false },
+  { name: 'Security Verification', file: 'verify_security.mjs',         requiresAuth: false },
   { name: 'Isolation API (live)', file: 'test_isolation_api.mjs',      requiresAuth: true },
   { name: 'RBAC Matrix',          file: 'test_api_rbac_matrix.mjs',      requiresAuth: true },
 ];
@@ -116,12 +117,13 @@ function runTest(file) {
         passed: code === 0,
         exitCode: code,
         detail: code === 0 ? 'PASS' : `exit=${code}`,
-        stderr: stderr.slice(0, 200),
+        stderr: stderr.slice(0, 500),
+        stdout: stdout,
       });
     });
 
     child.on('error', (err) => {
-      resolve({ file, passed: false, exitCode: -2, detail: err.message });
+      resolve({ file, passed: false, exitCode: -2, detail: err.message, stdout: '', stderr: '' });
     });
   });
 }
@@ -167,6 +169,11 @@ async function main() {
     } else {
       totalFailed++;
       console.log(`  ❌ ${suite.name} FAILED (${result.detail})`);
+      if (result.stdout) {
+        const lines = result.stdout.trim().split('\n');
+        const tail = lines.slice(Math.max(0, lines.length - 10)).join('\n     ');
+        console.log(`     stdout (tail):\n     ${tail}`);
+      }
       if (result.stderr) console.log(`     stderr: ${result.stderr}`);
     }
   }

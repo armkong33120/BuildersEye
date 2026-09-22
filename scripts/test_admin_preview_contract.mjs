@@ -34,7 +34,7 @@ const ADMIN_JS = 'src/js/admin.js';
 const ADMIN_CSS = 'src/styles/admin.css';
 const ROUTES = 'server/adminRoutes.js';
 const SERVICE = 'server/access/adminService.js';
-const ADMIN_HTML = fs.existsSync(path.join(ROOT, 'admin.html.bak')) ? 'admin.html.bak' : 'admin.html';
+const ADMIN_HTML = 'admin.html';
 
 let passed = 0, failed = 0;
 function assert(name, cond, detail) {
@@ -106,12 +106,30 @@ contains(css, '.badge.preview', 'PREVIEW badge style');
 contains(css, '.preview-record', 'preview record style');
 contains(css, '.preview-summary', 'preview summary style');
 const html = read(ADMIN_HTML);
-contains(html, 'id="previewToolbar"', 'preview toolbar element');
-contains(html, 'id="previewBody"', 'preview body element');
-contains(html, 'id="policyVersionChip"', 'policy version chip');
-contains(html, 'id="section-org"', 'org section');
-contains(html, 'id="section-matrix"', 'matrix section');
-contains(html, 'id="section-audit"', 'audit section');
+const isOffline = html.includes('Service Offline') || html.includes('decommissioned');
+const bakExists = fs.existsSync(path.join(ROOT, 'admin.html.bak'));
+
+if (isOffline) {
+  assert('admin.html serves decommissioned offline notice', html.includes('BuildersEye — Service Offline'));
+  if (bakExists) {
+    const bakHtml = read('admin.html.bak');
+    contains(bakHtml, 'id="previewToolbar"', 'preview toolbar element (admin.html.bak)');
+    contains(bakHtml, 'id="previewBody"', 'preview body element (admin.html.bak)');
+    contains(bakHtml, 'id="policyVersionChip"', 'policy version chip (admin.html.bak)');
+    contains(bakHtml, 'id="section-org"', 'org section (admin.html.bak)');
+    contains(bakHtml, 'id="section-matrix"', 'matrix section (admin.html.bak)');
+    contains(bakHtml, 'id="section-audit"', 'audit section (admin.html.bak)');
+  } else {
+    console.log('  ℹ️  admin.html is in decommissioned/offline state (skipping pre-decommission DOM shell checks)');
+  }
+} else {
+  contains(html, 'id="previewToolbar"', 'preview toolbar element');
+  contains(html, 'id="previewBody"', 'preview body element');
+  contains(html, 'id="policyVersionChip"', 'policy version chip');
+  contains(html, 'id="section-org"', 'org section');
+  contains(html, 'id="section-matrix"', 'matrix section');
+  contains(html, 'id="section-audit"', 'audit section');
+}
 
 
 

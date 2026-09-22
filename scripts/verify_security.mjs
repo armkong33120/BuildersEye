@@ -19,12 +19,12 @@ function check(name, condition, detail) {
 
 function readFileSafe(p) { try { return fs.readFileSync(p, 'utf-8'); } catch { return ''; } }
 
-// Walk tracked source files (skip node_modules, .git, dist, archive, .agents, .venv, etc.)
-function walkDir(dir, exts = ['.js', '.html', '.md', '.json', '.css', '.mjs', '.cjs']) {
+// Walk tracked source files (skip node_modules, .git, dist, .agents, .venv, etc.)
+function walkDir(dir, exts = ['.js', '.html', '.md', '.json', '.css', '.mjs', '.cjs', '.py']) {
   const out = [];
   if (!fs.existsSync(dir)) return out;
-  const skipDirs = new Set(['node_modules', '.git', 'dist', 'archive', '.agents', '.venv',
-    '__pycache__', 'output', '.data', '.cache', 'artifacts', 'out', 'tools']);
+  const skipDirs = new Set(['node_modules', '.git', 'dist', '.agents', '.venv',
+    '__pycache__', 'output', '.data', '.cache', 'artifacts', 'out']);
   try {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
       const fp = path.join(dir, e.name);
@@ -48,10 +48,11 @@ async function main() {
     ...walkDir(path.join(ROOT, 'src')),
     ...walkDir(path.join(ROOT, 'scripts')),
     ...walkDir(path.join(ROOT, 'docs')),
-    ...walkDir(ROOT, ['.js', '.html', '.md', '.json', '.mjs']).filter(f => {
+    ...walkDir(path.join(ROOT, 'tools')),
+    ...walkDir(path.join(ROOT, 'eval')),
+    ...walkDir(ROOT, ['.js', '.html', '.md', '.json', '.mjs', '.py']).filter(f => {
       const rel = path.relative(ROOT, f);
-      return !rel.startsWith('server/') && !rel.startsWith('src/') &&
-             !rel.startsWith('scripts/') && !rel.startsWith('docs/');
+      return !rel.includes('/');
     }),
   ];
 
@@ -190,6 +191,9 @@ async function main() {
   check('.gitignore excludes .env files',
     gi.includes('.env') && gi.includes('!.env.example'),
     gi.includes('.env') ? 'OK' : 'MISSING .env exclusion');
+  check('.gitignore excludes .env.local', gi.includes('.env.local'), 'OK');
+  check('.gitignore excludes .vercel', gi.includes('.vercel'), 'OK');
+  check('.gitignore excludes server/.data/', gi.includes('server/.data/'), 'OK');
   check('.gitignore excludes node_modules', gi.includes('node_modules'), 'OK');
 
   // ========== 10. Webhook validation ==========
@@ -213,7 +217,7 @@ async function main() {
   console.log('\n── 12. Frontend password scan ──');
   let frontendPw = [];
   for (const f of allFiles) {
-    if (f.includes('node_modules') || f.includes('.git') || f.includes('archive') || f.includes('dist')) continue;
+    if (f.includes('node_modules') || f.includes('.git') || f.includes('dist')) continue;
     if (f.includes('verify_security') || f.includes('.env') || f.includes('test_api_invalid_login')) continue;
     const c = readFileSafe(f);
     // Skip files that intentionally test invalid logins with wrong passwords
@@ -229,6 +233,39 @@ async function main() {
   }
   check('No hardcoded test passwords in tracked files', frontendPw.length === 0,
     frontendPw.length ? `${frontendPw.length} file(s): ${frontendPw.slice(0, 5).join(', ')}` : 'clean');
+
+  // ========== 13. Decommissioned / Offline state verification ==========
+  console.log('\n── 13. Decommissioned / Offline state verification ──');
+  const offlineHtml = readFileSafe(path.join(ROOT, 'offline.html'));
+  const distOfflineHtml = readFileSafe(path.join(ROOT, 'dist', 'offline.html'));
+  const publicOfflineHtml = readFileSafe(path.join(ROOT, 'public', 'offline.html'));
+  const vercelJson = readFileSafe(path.join(ROOT, 'vercel.json'));
+  const indexHtml = readFileSafe(path.join(ROOT, 'index.html'));
+  const appHtml = readFileSafe(path.join(ROOT, 'app.html'));
+  const adminHtml = readFileSafe(path.join(ROOT, 'admin.html'));
+
+  check('offline.html exists and displays offline notice',
+    offlineHtml.includes('BuildersEye — Service Offline'),
+    offlineHtml.includes('BuildersEye — Service Offline') ? 'OK' : 'MISSING OR INVALID');
+
+  check('dist/offline.html or public/offline.html preserves offline notice',
+    distOfflineHtml.includes('BuildersEye — Service Offline') || publicOfflineHtml.includes('BuildersEye — Service Offline'),
+    'OK');
+
+  let vercelRedirects = false;
+  try {
+    const vj = JSON.parse(vercelJson);
+    vercelRedirects = Array.isArray(vj.redirects) &&
+      vj.redirects.some(r => r.destination === '/offline.html');
+  } catch {}
+  check('vercel.json redirects all traffic to /offline.html', vercelRedirects,
+    vercelRedirects ? 'OK' : 'REDIRECTS MISSING');
+
+  const entrypointsOffline = indexHtml.includes('BuildersEye — Service Offline') &&
+    appHtml.includes('BuildersEye — Service Offline') &&
+    adminHtml.includes('BuildersEye — Service Offline');
+  check('Main UI entrypoints (index/app/admin) serve offline notice', entrypointsOffline,
+    entrypointsOffline ? 'OK' : 'ENTRYPOINTS NOT OFFLINE');
 
   // ========== SUMMARY ==========
   console.log(`\n📊 Security: ${passed} passed, ${failed} failed / ${checks.length} total`);
